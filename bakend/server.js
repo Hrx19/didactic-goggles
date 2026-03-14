@@ -21,9 +21,9 @@ const app = express();
 // Connect to database
 connectDB();
 
-// Middleware
+// Middleware: allow frontend origin or fallback to all
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL || '*',
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));
