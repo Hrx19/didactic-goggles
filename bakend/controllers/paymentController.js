@@ -4,16 +4,26 @@ import Order from '../models/Order.js';
 import Course from '../models/Course.js';
 import User from '../models/User.js';
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+const hasRazorpayKeys = () =>
+  !!process.env.RAZORPAY_KEY_ID && !!process.env.RAZORPAY_KEY_SECRET;
 
 // @desc    Create Razorpay order
 // @route   POST /api/payment/create-order
 // @access  Private
 export const createOrder = async (req, res) => {
   try {
+    if (!hasRazorpayKeys()) {
+      return res.status(503).json({
+        success: false,
+        message: 'Payment gateway not configured. Please contact support.',
+      });
+    }
+
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    });
+
     const { courseId } = req.body;
 
     // Get course details
@@ -72,6 +82,13 @@ export const createOrder = async (req, res) => {
 // @access  Private
 export const verifyPayment = async (req, res) => {
   try {
+    if (!hasRazorpayKeys()) {
+      return res.status(503).json({
+        success: false,
+        message: 'Payment gateway not configured. Please contact support.',
+      });
+    }
+
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
     // Verify signature
