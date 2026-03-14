@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Session middleware for passport
 app.use(session({
-  secret: process.env.JWT_SECRET,
+  secret: process.env.JWT_SECRET || 'kalchakra_session_fallback',
   resave: false,
   saveUninitialized: false,
   cookie: {
