@@ -33,6 +33,38 @@ interface Course {
   enrolledStudents: string[];
 }
 
+const toEmbedUrl = (url?: string) => {
+  if (!url) return '';
+
+  try {
+    const parsed = new URL(url);
+
+    // youtu.be/<id>
+    if (parsed.hostname === 'youtu.be') {
+      return `https://www.youtube.com/embed/${parsed.pathname.replace('/', '')}`;
+    }
+
+    // youtube.com/watch?v=<id>
+    if (parsed.hostname.includes('youtube.com')) {
+      if (parsed.pathname === '/watch' && parsed.searchParams.get('v')) {
+        return `https://www.youtube.com/embed/${parsed.searchParams.get('v')}`;
+      }
+      // youtube.com/shorts/<id>
+      if (parsed.pathname.startsWith('/shorts/')) {
+        return `https://www.youtube.com/embed/${parsed.pathname.split('/').pop()}`;
+      }
+      // already embed or other path
+      if (parsed.pathname.startsWith('/embed/')) {
+        return url;
+      }
+    }
+
+    return url;
+  } catch {
+    return url;
+  }
+};
+
 declare global {
   interface Window {
     Razorpay: new (options: RazorpayOptions) => {
@@ -237,7 +269,7 @@ export default function CourseDetail() {
                 <h2 className="text-2xl font-bold mb-4">Course Preview</h2>
                 <div className="aspect-video">
                   <iframe
-                    src={course.previewVideo}
+                    src={toEmbedUrl(course.previewVideo)}
                     className="w-full h-full rounded-lg"
                     allowFullScreen
                   />

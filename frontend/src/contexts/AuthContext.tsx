@@ -121,24 +121,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     toast.success('Login successful!');
   };
 
-  const googleSignIn = async () => {
-    try {
-      // First check if Google OAuth is configured by making a test request
-      await api.get('/auth/google');
-      // If we get here, it means Google OAuth is not configured (we get the 503 error)
-      toast.error('Google sign-in is not configured yet. Please contact administrator or add Google OAuth credentials.');
-    } catch (error: unknown) {
-      // If it's a redirect (302) or other error, proceed with OAuth
-      const status = (typeof error === 'object' && error && 'response' in error)
-        ? (error as ApiError).response?.status
-        : undefined;
-
-      if (status !== 503) {
-        window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
-      } else {
-        toast.error('Google sign-in is not configured yet. Please contact administrator or add Google OAuth credentials.');
-      }
-    }
+  const googleSignIn = () => {
+    const base = process.env.NEXT_PUBLIC_API_URL || '';
+    window.location.href = `${base}/auth/google`;
   };
 
   const logout = () => {

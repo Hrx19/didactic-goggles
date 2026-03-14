@@ -198,10 +198,15 @@ export const googleAuth = (req, res, next) => {
 // @access  Public
 export const googleAuthCallback = (req, res) => {
   try {
+    if (!req.user || !req.user.getSignedJwtToken) {
+      return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=auth_failed`);
+    }
+
     const token = req.user.getSignedJwtToken();
 
-    // Redirect to frontend with token
-    res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/callback?token=${token}`);
+    // Redirect to frontend with token so AuthContext can pick it up from the query string
+    const frontendBase = process.env.FRONTEND_URL || 'http://localhost:3000';
+    res.redirect(`${frontendBase}/login?token=${token}&provider=google`);
   } catch (error) {
     res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=auth_failed`);
   }

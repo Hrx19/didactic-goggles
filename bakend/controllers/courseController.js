@@ -3,6 +3,40 @@ import Module from '../models/Module.js';
 import Lesson from '../models/Lesson.js';
 import { isDbConnected } from '../utils/userStore.js';
 
+// Demo data served when database is not connected (for quick preview)
+const demoCourses = [
+  {
+    _id: 'demo-1',
+    title: 'Intro to Web Dev (Demo)',
+    description: 'See how a course page looks. Replace this demo by adding real courses in MongoDB.',
+    price: 0,
+    thumbnail: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80',
+    instructor: { name: 'Kalchakra Team' },
+    category: 'Web Development',
+    level: 'beginner',
+    duration: 2,
+    previewVideo: 'https://www.youtube.com/embed/dMm5mQ21IxE',
+    isPublished: true,
+    modules: [
+      {
+        _id: 'demo-m1',
+        title: 'Getting Started',
+        lessons: [
+          {
+            _id: 'demo-l1',
+            title: 'Welcome & Setup',
+            duration: 10,
+            isPreview: true,
+          },
+        ],
+      },
+    ],
+    enrolledStudents: [],
+    averageRating: 5,
+    totalReviews: 1,
+  },
+];
+
 // @desc    Get all courses
 // @route   GET /api/courses
 // @access  Public
@@ -11,8 +45,8 @@ export const getCourses = async (req, res) => {
     if (!isDbConnected()) {
       return res.status(200).json({
         success: true,
-        count: 0,
-        data: [],
+        count: demoCourses.length,
+        data: demoCourses,
       });
     }
 
@@ -20,11 +54,15 @@ export const getCourses = async (req, res) => {
       .populate('instructor', 'name')
       .sort({ createdAt: -1 });
 
-    res.status(200).json({
-      success: true,
-      count: courses.length,
-      data: courses,
-    });
+    if (!courses.length) {
+      return res.status(200).json({
+        success: true,
+        count: demoCourses.length,
+        data: demoCourses,
+      });
+    }
+
+    res.status(200).json({ success: true, count: courses.length, data: courses });
   } catch (error) {
     console.error('Error in getCourses:', error);
     res.status(500).json({
@@ -41,9 +79,16 @@ export const getCourses = async (req, res) => {
 export const getCourse = async (req, res) => {
   try {
     if (!isDbConnected()) {
-      return res.status(404).json({
-        success: false,
-        message: 'Course not found (database not connected)',
+      const demo = demoCourses.find((c) => c._id === req.params.id);
+      if (!demo) {
+        return res.status(404).json({
+          success: false,
+          message: 'Course not found (database not connected)',
+        });
+      }
+      return res.status(200).json({
+        success: true,
+        data: demo,
       });
     }
 
@@ -58,10 +103,9 @@ export const getCourse = async (req, res) => {
       });
 
     if (!course) {
-      return res.status(404).json({
-        success: false,
-        message: 'Course not found',
-      });
+      // Fallback to demo course if DB has none
+      const demo = demoCourses.find((c) => c._id === req.params.id) || demoCourses[0];
+      return res.status(200).json({ success: true, data: demo });
     }
 
     res.status(200).json({
