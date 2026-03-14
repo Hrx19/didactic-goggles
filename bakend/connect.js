@@ -19,8 +19,6 @@ const connectDB = async () => {
 
   try {
     const conn = await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
       serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
     });
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
@@ -29,10 +27,7 @@ const connectDB = async () => {
     console.error(`❌ MongoDB Connection Error: ${error.message}`);
     console.log('💡 Make sure MongoDB is running locally or update MONGO_URI in .env');
     process.env.MONGO_CONNECTED = 'false';
-    // Don't exit process in development
-    if (process.env.NODE_ENV === 'production') {
-      process.exit(1);
-    }
+    // Do NOT exit; app should stay up even if DB is unreachable (e.g., IP not whitelisted)
   }
 };
 
