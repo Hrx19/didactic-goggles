@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Script from 'next/script';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
@@ -102,6 +103,7 @@ export default function CourseDetail() {
   const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState(true);
   const [enrolled, setEnrolled] = useState(false);
+  const [razorpayReady, setRazorpayReady] = useState(false);
 
   useEffect(() => {
     if (course && user) {
@@ -130,6 +132,10 @@ export default function CourseDetail() {
   const handlePayment = async () => {
     if (!isAuthenticated) {
       toast.error('Please login to purchase courses');
+      return;
+    }
+    if (!razorpayReady || typeof window === 'undefined' || !window.Razorpay) {
+      toast.error('Payment system is still loading. Please try again in a moment.');
       return;
     }
 
@@ -169,7 +175,7 @@ export default function CourseDetail() {
           email: user?.email,
         },
         theme: {
-          color: '#3B82F6',
+          color: '#0f172a',
         },
       };
 
@@ -204,44 +210,50 @@ export default function CourseDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 text-slate-900">
+      <Script
+        src="https://checkout.razorpay.com/v1/checkout.js"
+        strategy="afterInteractive"
+        onLoad={() => setRazorpayReady(true)}
+        onError={() => setRazorpayReady(false)}
+      />
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-700 text-white py-12">
+      <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-sky-900 text-white py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <span className="bg-slate-900 text-white px-3 py-1 rounded-full text-sm">
+                <span className="bg-white/10 text-white px-3 py-1 rounded-full text-sm border border-white/20">
                   {course.category}
                 </span>
-                <span className="bg-purple-500 text-white px-3 py-1 rounded-full text-sm">
+                <span className="bg-white/10 text-white px-3 py-1 rounded-full text-sm border border-white/20">
                   {course.level}
                 </span>
               </div>
               <h1 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">{course.title}</h1>
               <p className="text-lg sm:text-xl mb-6 text-white/80">{course.description}</p>
-              <div className="flex items-center space-x-6 mb-6">
+              <div className="flex flex-wrap items-center gap-4 mb-6">
                 <div className="flex items-center">
-                  <span className="text-2xl mr-2">👨‍🏫</span>
-                  <span>{course.instructor.name}</span>
+                  <span className="text-xs uppercase tracking-wide text-white/60 mr-2">Instructor</span>
+                  <span className="font-semibold">{course.instructor.name}</span>
                 </div>
                 <div className="flex items-center">
-                  <span className="text-2xl mr-2">⏱️</span>
-                  <span>{course.duration} hours</span>
+                  <span className="text-xs uppercase tracking-wide text-white/60 mr-2">Duration</span>
+                  <span className="font-semibold">{course.duration} hours</span>
                 </div>
               </div>
               <div className="text-2xl sm:text-3xl font-bold mb-6">₹{course.price}</div>
               {enrolled ? (
                 <Link
                   href="/dashboard"
-                  className="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition duration-300"
+                  className="bg-emerald-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-emerald-600 transition duration-300"
                 >
                   Go to Course
                 </Link>
               ) : (
                 <button
                   onClick={handlePayment}
-                  className="bg-white text-teal-700 px-8 py-3 rounded-lg font-semibold hover:bg-slate-100 transition duration-300"
+                  className="bg-white text-slate-900 px-8 py-3 rounded-full font-semibold hover:bg-slate-100 transition duration-300"
                 >
                   Enroll Now
                 </button>
@@ -251,7 +263,7 @@ export default function CourseDetail() {
               <img
                 src={course.thumbnail || '/placeholder-course.jpg'}
                 alt={course.title}
-                className="w-full rounded-lg shadow-lg"
+                className="w-full rounded-2xl shadow-2xl ring-1 ring-white/10"
               />
             </div>
           </div>
@@ -265,12 +277,12 @@ export default function CourseDetail() {
           <div className="lg:col-span-2">
             {/* Preview Video */}
             {course.previewVideo && (
-              <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+              <div className="bg-white rounded-2xl shadow-lg ring-1 ring-black/5 p-6 mb-8">
                 <h2 className="text-2xl font-bold mb-4">Course Preview</h2>
                 <div className="aspect-video">
                   <iframe
                     src={toEmbedUrl(course.previewVideo)}
-                    className="w-full h-full rounded-lg"
+                    className="w-full h-full rounded-xl"
                     allowFullScreen
                   />
                 </div>
@@ -278,15 +290,15 @@ export default function CourseDetail() {
             )}
 
             {/* Curriculum */}
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white rounded-2xl shadow-lg ring-1 ring-black/5 p-6">
               <h2 className="text-2xl font-bold mb-6">Course Curriculum</h2>
               <div className="space-y-4">
                 {course.modules.map((module, moduleIndex) => (
-                  <div key={module._id} className="border border-slate-200 rounded-lg">
+                  <div key={module._id} className="border border-slate-200 rounded-xl">
                     <div className="bg-slate-50 px-4 py-3 border-b border-slate-200">
                       <h3 className="font-semibold">Module {moduleIndex + 1}: {module.title}</h3>
                     </div>
-                    <div className="divide-y divide-gray-200">
+                    <div className="divide-y divide-slate-200">
                       {module.lessons.map((lesson, lessonIndex) => (
                         <div key={lesson._id} className="px-4 py-3 flex items-center justify-between">
                           <div className="flex items-center">
@@ -301,7 +313,7 @@ export default function CourseDetail() {
                           <div className="flex items-center text-sm text-slate-500">
                             <span className="mr-4">⏱️ {lesson.duration} min</span>
                             {enrolled || lesson.isPreview ? (
-                              <span className="text-green-600">✓</span>
+                              <span className="text-emerald-600">✓</span>
                             ) : (
                               <span className="text-slate-400">🔒</span>
                             )}
@@ -317,27 +329,27 @@ export default function CourseDetail() {
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-md p-6 sticky top-6">
+            <div className="bg-white rounded-2xl shadow-lg ring-1 ring-black/5 p-6 sticky top-6">
               <h3 className="text-xl font-bold mb-4">Course Includes</h3>
               <ul className="space-y-3">
                 <li className="flex items-center">
-                  <span className="text-green-600 mr-3">✓</span>
+                  <span className="text-emerald-600 mr-3">✓</span>
                   <span>{course.duration} hours of video content</span>
                 </li>
                 <li className="flex items-center">
-                  <span className="text-green-600 mr-3">✓</span>
+                  <span className="text-emerald-600 mr-3">✓</span>
                   <span>Downloadable resources</span>
                 </li>
                 <li className="flex items-center">
-                  <span className="text-green-600 mr-3">✓</span>
+                  <span className="text-emerald-600 mr-3">✓</span>
                   <span>Certificate of completion</span>
                 </li>
                 <li className="flex items-center">
-                  <span className="text-green-600 mr-3">✓</span>
+                  <span className="text-emerald-600 mr-3">✓</span>
                   <span>Lifetime access</span>
                 </li>
                 <li className="flex items-center">
-                  <span className="text-green-600 mr-3">✓</span>
+                  <span className="text-emerald-600 mr-3">✓</span>
                   <span>Mobile and TV access</span>
                 </li>
               </ul>
@@ -345,7 +357,7 @@ export default function CourseDetail() {
               {!enrolled && (
                 <button
                   onClick={handlePayment}
-                  className="w-full bg-slate-900 text-white py-3 rounded-lg font-semibold mt-6 hover:bg-slate-800 transition duration-300"
+                  className="w-full bg-slate-900 text-white py-3 rounded-xl font-semibold mt-6 hover:bg-slate-800 transition duration-300"
                 >
                   Enroll for ₹{course.price}
                 </button>
@@ -357,5 +369,9 @@ export default function CourseDetail() {
     </div>
   );
 }
+
+
+
+
 
 
