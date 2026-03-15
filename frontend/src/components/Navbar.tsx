@@ -38,6 +38,12 @@ export default function Navbar() {
             <Link href="/courses" className="text-slate-700 hover:text-slate-900 transition duration-300 font-medium">
               Courses
             </Link>
+            <Link href="/about" className="text-slate-700 hover:text-slate-900 transition duration-300 font-medium">
+              About
+            </Link>
+            <Link href="/contact" className="text-slate-700 hover:text-slate-900 transition duration-300 font-medium">
+              Contact
+            </Link>
 
             {isAuthenticated ? (
               <>
@@ -58,12 +64,12 @@ export default function Navbar() {
               </>
             ) : (
               <div className="flex items-center space-x-4">
-                <Link
-                  href="/login"
-                  className="text-slate-700 hover:text-slate-900 transition duration-300 font-medium"
-                >
-                  Login
-                </Link>
+              <Link
+                href="/login"
+                className="text-slate-700 hover:text-slate-900 transition duration-300 font-medium"
+              >
+                Login
+              </Link>
                 <Link
                   href="/register"
                   className="bg-slate-900 text-white px-4 py-2 rounded-full hover:bg-slate-800 transition duration-300"
@@ -108,6 +114,20 @@ export default function Navbar() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Courses
+              </Link>
+              <Link
+                href="/about"
+                className="block px-3 py-2 text-slate-700 hover:text-slate-900 transition duration-300 font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                About
+              </Link>
+              <Link
+                href="/contact"
+                className="block px-3 py-2 text-slate-700 hover:text-slate-900 transition duration-300 font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Contact
               </Link>
 
               {isAuthenticated ? (

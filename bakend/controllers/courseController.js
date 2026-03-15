@@ -27,6 +27,7 @@ const demoCourses = [
             title: 'Welcome & Setup',
             duration: 10,
             isPreview: true,
+            videoUrl: 'https://www.youtube.com/embed/dMm5mQ21IxE',
           },
         ],
       },
@@ -42,6 +43,7 @@ const demoCourses = [
 // @access  Public
 export const getCourses = async (req, res) => {
   try {
+    res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
     if (!isDbConnected()) {
       return res.status(200).json({
         success: true,
@@ -78,6 +80,7 @@ export const getCourses = async (req, res) => {
 // @access  Public
 export const getCourse = async (req, res) => {
   try {
+    res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
     if (!isDbConnected()) {
       const demo = demoCourses.find((c) => c._id === req.params.id);
       if (!demo) {
@@ -98,7 +101,7 @@ export const getCourse = async (req, res) => {
         path: 'modules',
         populate: {
           path: 'lessons',
-          select: 'title duration isPreview',
+          select: 'title duration isPreview videoUrl',
         },
       });
 

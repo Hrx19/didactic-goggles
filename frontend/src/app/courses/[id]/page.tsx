@@ -242,7 +242,7 @@ export default function CourseDetail() {
                   <span className="font-semibold">{course.duration} hours</span>
                 </div>
               </div>
-              <div className="text-2xl sm:text-3xl font-bold mb-6">₹{course.price}</div>
+              <div className="text-2xl sm:text-3xl font-bold mb-6">INR {course.price}</div>
               {enrolled ? (
                 <Link
                   href="/dashboard"
@@ -264,6 +264,7 @@ export default function CourseDetail() {
                 src={course.thumbnail || '/placeholder-course.jpg'}
                 alt={course.title}
                 className="w-full rounded-2xl shadow-2xl ring-1 ring-white/10"
+                loading="lazy"
               />
             </div>
           </div>
@@ -359,7 +360,7 @@ export default function CourseDetail() {
                   onClick={handlePayment}
                   className="w-full bg-slate-900 text-white py-3 rounded-xl font-semibold mt-6 hover:bg-slate-800 transition duration-300"
                 >
-                  Enroll for ₹{course.price}
+                  Enroll for INR {course.price}
                 </button>
               )}
             </div>

@@ -1,4 +1,9 @@
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
+import bcrypt from 'bcryptjs';
+import { isDbConnected } from '../utils/userStore.js';
+import User from '../models/User.js';
+import { sendEmail } from '../utils/sendEmail.js';
 import {
   createUser,
   findUserByEmail,
@@ -206,9 +211,118 @@ export const googleAuthCallback = (req, res) => {
 
     // Redirect to frontend with token so AuthContext can pick it up from the query string
     const frontendBase = process.env.FRONTEND_URL || 'http://localhost:3000';
-    res.redirect(`${frontendBase}/login?token=${token}&provider=google`);
+    res.redirect(`${frontendBase}/auth/callback?token=${token}&provider=google`);
   } catch (error) {
     res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=auth_failed`);
+  }
+};
+
+// @desc    Forgot password
+// @route   POST /api/auth/forgotpassword
+// @access  Public
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await findUserByEmail(email);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    if (!isDbConnected()) {
+      return res.status(503).json({
+        success: false,
+        message: 'Database not connected',
+      });
+    }
+
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetTokenHash = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+    await User.findByIdAndUpdate(user._id, {
+      resetPasswordToken: resetTokenHash,
+      resetPasswordExpire: Date.now() + 15 * 60 * 1000,
+    });
+
+    const frontendBase = process.env.FRONTEND_URL || 'http://localhost:3000';
+    const resetUrl = `${frontendBase}/reset-password?token=${resetToken}`;
+
+    const emailResult = await sendEmail({
+      to: user.email,
+      subject: 'Reset your password',
+      text: `You requested a password reset. Open this link to reset: ${resetUrl}`,
+      html: `<p>You requested a password reset.</p><p><a href="${resetUrl}">Reset your password</a></p>`,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: emailResult.queued
+        ? 'Password reset email sent'
+        : 'SMTP not configured. Use the reset URL returned in response.',
+      resetUrl: emailResult.queued ? undefined : resetUrl,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// @desc    Reset password
+// @route   POST /api/auth/resetpassword
+// @access  Public
+export const resetPassword = async (req, res) => {
+  try {
+    if (!isDbConnected()) {
+      return res.status(503).json({
+        success: false,
+        message: 'Database not connected',
+      });
+    }
+
+    const { token, password } = req.body;
+    if (!token || !password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Token and new password are required',
+      });
+    }
+
+    const resetTokenHash = crypto.createHash('sha256').update(token).digest('hex');
+
+    const user = await User.findOne({
+      resetPasswordToken: resetTokenHash,
+      resetPasswordExpire: { $gt: Date.now() },
+    }).select('+password');
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid or expired reset token',
+      });
+    }
+
+    user.password = password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save();
+
+    const jwtToken = getJwtToken(user);
+
+    res.status(200).json({
+      success: true,
+      token: jwtToken,
+      message: 'Password reset successful',
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
 

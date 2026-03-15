@@ -2,6 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 import session from 'express-session';
 import passport from './config/passport.js';
 import connectDB from "./connect.js";
@@ -10,6 +12,10 @@ import connectDB from "./connect.js";
 import auth from "./routes/auth.js";
 import courses from "./routes/courses.js";
 import payment from "./routes/payment.js";
+import progress from "./routes/progress.js";
+import modules from "./routes/modules.js";
+import lessons from "./routes/lessons.js";
+import admin from "./routes/admin.js";
 
 // Create auth router inline
 // import express from "express";
@@ -22,9 +28,16 @@ const app = express();
 connectDB();
 
 // Middleware: allow frontend origin or fallback to all
+app.use(helmet());
 app.use(cors({
   origin: process.env.FRONTEND_URL || '*',
   credentials: true
+}));
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 300,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
@@ -49,6 +62,10 @@ app.use(passport.session());
 app.use('/api/auth', auth);
 app.use('/api/courses', courses);
 app.use('/api/payment', payment);
+app.use('/api/progress', progress);
+app.use('/api/modules', modules);
+app.use('/api/lessons', lessons);
+app.use('/api/admin', admin);
 
 app.get("/", (req, res) => {
   res.send("Welcome to Kalchakra Learning Academy Backend API 🚀");

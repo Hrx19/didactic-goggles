@@ -3,6 +3,7 @@
 import { useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import api from '@/utils/api';
 
 function AuthCallbackContent() {
   const router = useRouter();
@@ -22,19 +23,9 @@ function AuthCallbackContent() {
 
       if (token) {
         try {
-          // Decode token to get user info
-          const payload = JSON.parse(atob(token.split('.')[1]));
-          const user = {
-            id: payload.id,
-            name: payload.name,
-            email: payload.email,
-            role: payload.role,
-          };
-
-          // Use the loginWithToken function from context
-          loginWithToken(user, token);
-
-          // Redirect to dashboard
+          localStorage.setItem('token', token);
+          const me = await api.get('/auth/me');
+          loginWithToken(me.data.data, token);
           router.push('/dashboard');
         } catch (error) {
           console.error('Error processing OAuth callback:', error);

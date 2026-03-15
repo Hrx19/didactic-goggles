@@ -37,7 +37,14 @@ export default function Dashboard() {
         );
         const courseResponses = await Promise.all(coursePromises);
         const courses = courseResponses.map(res => res.data.data);
-        setEnrolledCourses(courses);
+        const progressResponses = await Promise.all(
+          courses.map((course) => api.get(`/progress/${course._id}`).catch(() => ({ data: { data: { progressPercent: 0 } } })))
+        );
+        const coursesWithProgress = courses.map((course, index) => ({
+          ...course,
+          progress: progressResponses[index].data.data?.progressPercent || 0,
+        }));
+        setEnrolledCourses(coursesWithProgress);
       }
     } catch (error) {
       console.error('Error fetching enrolled courses:', error);
@@ -138,6 +145,7 @@ export default function Dashboard() {
                       src={course.thumbnail || '/placeholder-course.jpg'}
                       alt={course.title}
                       className="w-full h-32 object-cover"
+                      loading="lazy"
                     />
                     <div className="p-4">
                       <h3 className="font-semibold text-slate-900 mb-2">{course.title}</h3>

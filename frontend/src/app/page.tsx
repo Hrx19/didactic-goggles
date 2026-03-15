@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Script from 'next/script';
 import api from '@/utils/api';
 
 interface Course {
@@ -20,6 +22,7 @@ interface Course {
 export default function Home() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     fetchCourses();
@@ -27,10 +30,12 @@ export default function Home() {
 
   const fetchCourses = async () => {
     try {
+      setError('');
       const res = await api.get('/courses');
       setCourses(res.data.data.slice(0, 6)); // Show first 6 courses
     } catch (error) {
       console.error('Error fetching courses:', error);
+      setError('Unable to load courses. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -38,6 +43,19 @@ export default function Home() {
 
   return (
     <div className="min-h-screen text-slate-900">
+      <Script
+        id="ld-json"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'EducationalOrganization',
+            name: 'Kalchakra Learning Academy',
+            url: process.env.NEXT_PUBLIC_SITE_URL || 'https://frontend-chi-eosin-36.vercel.app',
+            description: 'Career-ready learning platform with expert-led courses.',
+          }),
+        }}
+      />
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-900 to-sky-900 text-white py-16 sm:py-20">
         <div className="pointer-events-none absolute inset-0">
@@ -46,7 +64,12 @@ export default function Home() {
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-            <div className="text-center lg:text-left">
+            <motion.div
+              className="text-center lg:text-left"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
               <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
                 Learn. Build. Grow.
               </span>
@@ -77,8 +100,13 @@ export default function Home() {
                 <span className="rounded-full border border-white/20 px-3 py-1">Career tracks</span>
                 <span className="rounded-full border border-white/20 px-3 py-1">Mentor support</span>
               </div>
-            </div>
-            <div className="relative">
+            </motion.div>
+            <motion.div
+              className="relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
               <div className="rounded-3xl border border-white/15 bg-white/10 p-6 shadow-2xl backdrop-blur">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
@@ -121,7 +149,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -141,14 +169,32 @@ export default function Home() {
 
           {loading ? (
             <div className="text-center">Loading courses...</div>
+          ) : error ? (
+            <div className="text-center text-slate-600">
+              {error}
+              <button
+                onClick={fetchCourses}
+                className="mt-4 inline-flex items-center justify-center rounded-full bg-slate-900 text-white px-6 py-2 text-sm font-semibold hover:bg-slate-800 transition duration-300"
+              >
+                Retry
+              </button>
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {courses.map((course) => (
-                <div key={course._id} className="group bg-white rounded-2xl shadow-lg overflow-hidden ring-1 ring-black/5 hover:-translate-y-1 hover:shadow-2xl transition duration-300">
+              {courses.map((course, index) => (
+                <motion.div
+                  key={course._id}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  className="group bg-white rounded-2xl shadow-lg overflow-hidden ring-1 ring-black/5 hover:-translate-y-1 hover:shadow-2xl transition duration-300"
+                >
                   <img
                     src={course.thumbnail || '/placeholder-course.jpg'}
                     alt={course.title}
                     className="w-full h-48 object-cover transition duration-300 group-hover:scale-[1.02]"
+                    loading="lazy"
                   />
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-2">
@@ -159,7 +205,7 @@ export default function Home() {
                     <p className="text-slate-600 text-sm mb-4 line-clamp-2">{course.description}</p>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
-                        <span className="text-2xl font-bold text-slate-900">₹{course.price}</span>
+                        <span className="text-2xl font-bold text-slate-900">INR {course.price}</span>
                       </div>
                       <Link
                         href={`/courses/${course._id}`}
@@ -169,7 +215,7 @@ export default function Home() {
                       </Link>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           )}

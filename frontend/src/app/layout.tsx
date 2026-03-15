@@ -5,6 +5,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-body",
@@ -19,6 +20,14 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   title: "Kalchakra Learning Academy - Learn Coding Online",
   description: "Master programming with expert-led courses",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://frontend-chi-eosin-36.vercel.app'),
+  openGraph: {
+    title: "Kalchakra Learning Academy",
+    description: "Master programming with expert-led courses",
+    url: "/",
+    siteName: "Kalchakra Learning Academy",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -34,6 +43,7 @@ export default function RootLayout({
         <AuthProvider>
           <Navbar />
           {children}
+          <Footer />
           <ToastContainer
             position="top-right"
             autoClose={3000}

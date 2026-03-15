@@ -141,6 +141,14 @@ export default function Login() {
                   className="appearance-none block w-full px-4 py-3 border border-slate-200 rounded-xl bg-white text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-slate-900 focus:border-slate-900 sm:text-sm"
                 />
               </div>
+              <div className="mt-2 text-right">
+                <Link
+                  href="/forgot-password"
+                  className="text-xs font-medium text-teal-700 hover:text-teal-600"
+                >
+                  Forgot password?
+                </Link>
+              </div>
             </div>
 
             {/* reCAPTCHA */}

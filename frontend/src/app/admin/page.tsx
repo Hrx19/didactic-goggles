@@ -32,12 +32,20 @@ interface Order {
   createdAt: string;
 }
 
+interface UserRow {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
 export default function Admin() {
   const { user } = useAuth();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('courses');
   const [courses, setCourses] = useState<Course[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
+  const [users, setUsers] = useState<UserRow[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -56,13 +64,15 @@ export default function Admin() {
 
   const fetchData = async () => {
     try {
-      const [coursesRes, ordersRes] = await Promise.all([
+      const [coursesRes, ordersRes, usersRes] = await Promise.all([
         api.get('/courses'),
         api.get('/payment/admin/orders'),
+        api.get('/admin/users'),
       ]);
 
       setCourses(coursesRes.data.data);
       setOrders(ordersRes.data.data);
+      setUsers(usersRes.data.data);
     } catch (error) {
       console.error('Error fetching admin data:', error);
       toast.error('Failed to load admin data');
@@ -92,6 +102,16 @@ export default function Admin() {
       fetchData(); // Refresh data
     } catch (error) {
       toast.error('Failed to delete course');
+    }
+  };
+
+  const updateRole = async (userId: string, role: string) => {
+    try {
+      await api.put(`/admin/users/${userId}/role`, { role });
+      toast.success('User role updated');
+      fetchData();
+    } catch (error) {
+      toast.error('Failed to update role');
     }
   };
 
@@ -135,7 +155,7 @@ export default function Admin() {
               onClick={() => setActiveTab('courses')}
               className={`py-2 px-1 border-b-2 font-medium text-sm ${
                 activeTab === 'courses'
-                  ? 'border-blue-500 text-teal-700'
+                  ? 'border-slate-900 text-slate-900'
                   : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
               }`}
             >
@@ -145,11 +165,21 @@ export default function Admin() {
               onClick={() => setActiveTab('orders')}
               className={`py-2 px-1 border-b-2 font-medium text-sm ${
                 activeTab === 'orders'
-                  ? 'border-blue-500 text-teal-700'
+                  ? 'border-slate-900 text-slate-900'
                   : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
               }`}
             >
               Orders ({orders.length})
+            </button>
+            <button
+              onClick={() => setActiveTab('users')}
+              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'users'
+                  ? 'border-slate-900 text-slate-900'
+                  : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
+              }`}
+            >
+              Users ({users.length})
             </button>
           </nav>
         </div>
@@ -207,7 +237,7 @@ export default function Admin() {
                         {course.category}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-900">
-                        ₹{course.price}
+                        INR {course.price}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-900">
                         {course.enrolledStudents.length}
@@ -296,7 +326,7 @@ export default function Admin() {
                         {order.course.title}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-900">
-                        ₹{order.amount}
+                        INR {order.amount}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span
@@ -313,6 +343,61 @@ export default function Admin() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                         {new Date(order.createdAt).toLocaleDateString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* Users Tab */}
+        {activeTab === 'users' && (
+          <div className="bg-white rounded-lg shadow overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-200">
+              <h2 className="text-xl font-semibold text-slate-900">All Users</h2>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-slate-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                      Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                      Email
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                      Role
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {users.map((row) => (
+                    <tr key={row._id}>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-900">
+                        {row.name}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                        {row.email}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-900">
+                        {row.role}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        <select
+                          value={row.role}
+                          onChange={(e) => updateRole(row._id, e.target.value)}
+                          className="border border-slate-200 rounded-lg px-3 py-1 text-sm"
+                        >
+                          <option value="student">Student</option>
+                          <option value="instructor">Instructor</option>
+                          <option value="admin">Admin</option>
+                        </select>
                       </td>
                     </tr>
                   ))}

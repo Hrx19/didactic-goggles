@@ -21,6 +21,7 @@ interface Course {
 export default function Courses() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
 
@@ -30,10 +31,12 @@ export default function Courses() {
 
   const fetchCourses = async () => {
     try {
+      setError('');
       const res = await api.get('/courses');
       setCourses(res.data.data);
     } catch (error) {
       console.error('Error fetching courses:', error);
+      setError('Unable to load courses. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -87,6 +90,16 @@ export default function Courses() {
         {/* Courses Grid */}
         {loading ? (
           <div className="text-center py-12">Loading courses...</div>
+        ) : error ? (
+          <div className="text-center py-12 text-slate-600">
+            {error}
+            <button
+              onClick={fetchCourses}
+              className="mt-4 inline-flex items-center justify-center rounded-full bg-slate-900 text-white px-6 py-2 text-sm font-semibold hover:bg-slate-800 transition duration-300"
+            >
+              Retry
+            </button>
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredCourses.map((course) => (
@@ -95,6 +108,7 @@ export default function Courses() {
                   src={course.thumbnail || '/placeholder-course.jpg'}
                   alt={course.title}
                   className="w-full h-48 object-cover transition duration-300 group-hover:scale-[1.02]"
+                  loading="lazy"
                 />
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-2">
@@ -105,7 +119,7 @@ export default function Courses() {
                   <p className="text-slate-600 text-sm mb-4 line-clamp-2">{course.description}</p>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center text-sm text-slate-500">
-                      <span>????? {course.instructor.name}</span>
+                      <span>Instructor: {course.instructor.name}</span>
                     </div>
                     <div className="text-sm text-slate-500">
                       {course.duration} hours
@@ -113,7 +127,7 @@ export default function Courses() {
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <span className="text-2xl font-bold text-slate-900">?{course.price}</span>
+                      <span className="text-2xl font-bold text-slate-900">INR {course.price}</span>
                     </div>
                     <Link
                       href={`/courses/${course._id}`}
