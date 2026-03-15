@@ -49,12 +49,12 @@ export default function Courses() {
   const categories = [...new Set(courses.map(course => course.category))];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen py-12 text-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">All Courses</h1>
-          <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
+          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">All Courses</h1>
+          <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto">
             Explore our comprehensive collection of programming courses designed for all skill levels
           </p>
         </div>
@@ -67,14 +67,14 @@ export default function Courses() {
               placeholder="Search courses..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-5 py-3 border border-slate-200 rounded-full bg-white text-slate-900 placeholder-slate-500 shadow-sm focus:ring-2 focus:ring-slate-900 focus:border-transparent"
             />
           </div>
           <div className="sm:w-48">
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-5 py-3 border border-slate-200 rounded-full bg-white text-slate-900 shadow-sm focus:ring-2 focus:ring-slate-900 focus:border-transparent"
             >
               <option value="">All Categories</option>
               {categories.map(category => (
@@ -90,34 +90,34 @@ export default function Courses() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredCourses.map((course) => (
-              <div key={course._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+              <div key={course._id} className="group bg-white rounded-2xl shadow-lg overflow-hidden ring-1 ring-black/5 hover:-translate-y-1 hover:shadow-2xl transition duration-300">
                 <img
                   src={course.thumbnail || '/placeholder-course.jpg'}
                   alt={course.title}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-48 object-cover transition duration-300 group-hover:scale-[1.02]"
                 />
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-blue-600 font-medium">{course.category}</span>
-                    <span className="text-sm text-gray-500">{course.level}</span>
+                    <span className="text-xs uppercase tracking-wide text-teal-700 font-semibold">{course.category}</span>
+                    <span className="text-xs text-slate-500">{course.level}</span>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{course.title}</h3>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">{course.description}</p>
+                  <h3 className="text-xl font-semibold text-slate-900 mb-2">{course.title}</h3>
+                  <p className="text-slate-600 text-sm mb-4 line-clamp-2">{course.description}</p>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center text-sm text-gray-500">
+                    <div className="flex items-center text-sm text-slate-500">
                       <span>????? {course.instructor.name}</span>
                     </div>
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-slate-500">
                       {course.duration} hours
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <span className="text-2xl font-bold text-gray-900">?{course.price}</span>
+                      <span className="text-2xl font-bold text-slate-900">?{course.price}</span>
                     </div>
                     <Link
                       href={`/courses/${course._id}`}
-                      className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+                      className="bg-slate-900 text-white px-4 py-2 rounded-full hover:bg-slate-800 transition duration-300"
                     >
                       View Details
                     </Link>
@@ -130,11 +130,12 @@ export default function Courses() {
 
         {filteredCourses.length === 0 && !loading && (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No courses found matching your criteria.</p>
+            <p className="text-slate-500 text-lg">No courses found matching your criteria.</p>
           </div>
         )}
       </div>
     </div>
   );
 }
+
 

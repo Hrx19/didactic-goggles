@@ -189,7 +189,7 @@ export default function CourseDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="text-center">Loading course details...</div>
       </div>
     );
@@ -197,21 +197,21 @@ export default function CourseDetail() {
 
   if (!course) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="text-center">Course not found</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-slate-50">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-700 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm">
+                <span className="bg-slate-900 text-white px-3 py-1 rounded-full text-sm">
                   {course.category}
                 </span>
                 <span className="bg-purple-500 text-white px-3 py-1 rounded-full text-sm">
@@ -219,7 +219,7 @@ export default function CourseDetail() {
                 </span>
               </div>
               <h1 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">{course.title}</h1>
-              <p className="text-lg sm:text-xl mb-6 text-gray-100/90">{course.description}</p>
+              <p className="text-lg sm:text-xl mb-6 text-white/80">{course.description}</p>
               <div className="flex items-center space-x-6 mb-6">
                 <div className="flex items-center">
                   <span className="text-2xl mr-2">👨‍🏫</span>
@@ -241,7 +241,7 @@ export default function CourseDetail() {
               ) : (
                 <button
                   onClick={handlePayment}
-                  className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300"
+                  className="bg-white text-teal-700 px-8 py-3 rounded-lg font-semibold hover:bg-slate-100 transition duration-300"
                 >
                   Enroll Now
                 </button>
@@ -282,28 +282,28 @@ export default function CourseDetail() {
               <h2 className="text-2xl font-bold mb-6">Course Curriculum</h2>
               <div className="space-y-4">
                 {course.modules.map((module, moduleIndex) => (
-                  <div key={module._id} className="border border-gray-200 rounded-lg">
-                    <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
+                  <div key={module._id} className="border border-slate-200 rounded-lg">
+                    <div className="bg-slate-50 px-4 py-3 border-b border-slate-200">
                       <h3 className="font-semibold">Module {moduleIndex + 1}: {module.title}</h3>
                     </div>
                     <div className="divide-y divide-gray-200">
                       {module.lessons.map((lesson, lessonIndex) => (
                         <div key={lesson._id} className="px-4 py-3 flex items-center justify-between">
                           <div className="flex items-center">
-                            <span className="text-gray-500 mr-3">
+                            <span className="text-slate-500 mr-3">
                               {moduleIndex + 1}.{lessonIndex + 1}
                             </span>
-                            <span className={enrolled || lesson.isPreview ? 'text-gray-900' : 'text-gray-500'}>
+                            <span className={enrolled || lesson.isPreview ? 'text-slate-900' : 'text-slate-500'}>
                               {lesson.title}
-                              {lesson.isPreview && <span className="ml-2 text-blue-600 text-sm">(Preview)</span>}
+                              {lesson.isPreview && <span className="ml-2 text-teal-700 text-sm">(Preview)</span>}
                             </span>
                           </div>
-                          <div className="flex items-center text-sm text-gray-500">
+                          <div className="flex items-center text-sm text-slate-500">
                             <span className="mr-4">⏱️ {lesson.duration} min</span>
                             {enrolled || lesson.isPreview ? (
                               <span className="text-green-600">✓</span>
                             ) : (
-                              <span className="text-gray-400">🔒</span>
+                              <span className="text-slate-400">🔒</span>
                             )}
                           </div>
                         </div>
@@ -345,7 +345,7 @@ export default function CourseDetail() {
               {!enrolled && (
                 <button
                   onClick={handlePayment}
-                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold mt-6 hover:bg-blue-700 transition duration-300"
+                  className="w-full bg-slate-900 text-white py-3 rounded-lg font-semibold mt-6 hover:bg-slate-800 transition duration-300"
                 >
                   Enroll for ₹{course.price}
                 </button>
@@ -357,3 +357,5 @@ export default function CourseDetail() {
     </div>
   );
 }
+
+

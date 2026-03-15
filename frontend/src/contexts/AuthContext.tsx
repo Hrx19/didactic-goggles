@@ -122,8 +122,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const googleSignIn = () => {
-    const base = process.env.NEXT_PUBLIC_API_URL || '';
-    window.location.href = `${base}/auth/google`;
+    const base = process.env.NEXT_PUBLIC_API_URL;
+    if (!base) {
+      toast.error('Google login is not configured');
+      return;
+    }
+    const normalizedBase = base.replace(/\/$/, '');
+    window.location.href = `${normalizedBase}/auth/google`;
   };
 
   const logout = () => {

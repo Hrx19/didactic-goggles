@@ -16,39 +16,42 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-lg">
+    <nav className="bg-white/80 backdrop-blur-md border-b border-white/40 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-3 md:h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <span className="text-lg sm:text-xl md:text-2xl font-bold text-blue-600 leading-tight max-w-[220px]">
-                Kalchakra Learning Academy
+              <span className="text-lg sm:text-xl md:text-2xl font-semibold text-slate-900 leading-tight max-w-[220px]">
+                <span className="block bg-gradient-to-r from-teal-600 to-blue-600 text-transparent bg-clip-text">
+                  Kalchakra
+                </span>
+                <span className="block text-slate-800">Learning Academy</span>
               </span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-gray-700 hover:text-blue-600 transition duration-300">
+            <Link href="/" className="text-slate-700 hover:text-slate-900 transition duration-300 font-medium">
               Home
             </Link>
-            <Link href="/courses" className="text-gray-700 hover:text-blue-600 transition duration-300">
+            <Link href="/courses" className="text-slate-700 hover:text-slate-900 transition duration-300 font-medium">
               Courses
             </Link>
 
             {isAuthenticated ? (
               <>
-                <Link href="/dashboard" className="text-gray-700 hover:text-blue-600 transition duration-300">
+                <Link href="/dashboard" className="text-slate-700 hover:text-slate-900 transition duration-300 font-medium">
                   Dashboard
                 </Link>
                 {user?.role === 'admin' && (
-                  <Link href="/admin" className="text-purple-600 hover:text-purple-700 transition duration-300">
+                  <Link href="/admin" className="text-teal-700 hover:text-teal-800 transition duration-300 font-medium">
                     Admin
                   </Link>
                 )}
                 <button
                   onClick={handleLogout}
-                  className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-300"
+                  className="bg-slate-800 text-white px-4 py-2 rounded-full hover:bg-slate-900 transition duration-300"
                 >
                   Logout
                 </button>
@@ -57,13 +60,13 @@ export default function Navbar() {
               <div className="flex items-center space-x-4">
                 <Link
                   href="/login"
-                  className="text-gray-700 hover:text-blue-600 transition duration-300"
+                  className="text-slate-700 hover:text-slate-900 transition duration-300 font-medium"
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+                  className="bg-slate-900 text-white px-4 py-2 rounded-full hover:bg-slate-800 transition duration-300"
                 >
                   Sign Up
                 </Link>
@@ -75,7 +78,7 @@ export default function Navbar() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 hover:text-blue-600 focus:outline-none focus:text-blue-600"
+              className="text-slate-700 hover:text-slate-900 focus:outline-none focus:text-slate-900"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {isMenuOpen ? (
@@ -91,17 +94,17 @@ export default function Navbar() {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/90 backdrop-blur-md">
               <Link
                 href="/"
-                className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition duration-300"
+                className="block px-3 py-2 text-slate-700 hover:text-slate-900 transition duration-300 font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
               </Link>
               <Link
                 href="/courses"
-                className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition duration-300"
+                className="block px-3 py-2 text-slate-700 hover:text-slate-900 transition duration-300 font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Courses
@@ -111,7 +114,7 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/dashboard"
-                    className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition duration-300"
+                    className="block px-3 py-2 text-slate-700 hover:text-slate-900 transition duration-300 font-medium"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Dashboard
@@ -119,7 +122,7 @@ export default function Navbar() {
                   {user?.role === 'admin' && (
                     <Link
                       href="/admin"
-                      className="block px-3 py-2 text-purple-600 hover:text-purple-700 transition duration-300"
+                      className="block px-3 py-2 text-teal-700 hover:text-teal-800 transition duration-300 font-medium"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Admin
@@ -130,7 +133,7 @@ export default function Navbar() {
                       handleLogout();
                       setIsMenuOpen(false);
                     }}
-                    className="block w-full text-left px-3 py-2 text-gray-700 hover:text-blue-600 transition duration-300"
+                    className="block w-full text-left px-3 py-2 text-slate-700 hover:text-slate-900 transition duration-300 font-medium"
                   >
                     Logout
                   </button>
@@ -139,14 +142,14 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/login"
-                    className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition duration-300"
+                    className="block px-3 py-2 text-slate-700 hover:text-slate-900 transition duration-300 font-medium"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Login
                   </Link>
                   <Link
                     href="/register"
-                    className="block px-3 py-2 bg-blue-600 text-white rounded-lg mx-3 my-2 text-center hover:bg-blue-700 transition duration-300"
+                    className="block px-3 py-2 bg-slate-900 text-white rounded-full mx-3 my-2 text-center hover:bg-slate-800 transition duration-300"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Sign Up
