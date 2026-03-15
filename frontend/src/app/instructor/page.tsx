@@ -44,6 +44,11 @@ export default function InstructorPanel() {
     order: 1,
     isPreview: false,
   });
+  const [quizForm, setQuizForm] = useState({
+    title: '',
+    passingScore: 70,
+    questionsJson: '',
+  });
 
   const fetchInstructorCourses = async () => {
     if (!user) return;
@@ -124,6 +129,25 @@ export default function InstructorPanel() {
         order: 1,
         isPreview: false,
       });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCreateQuiz = async () => {
+    if (!selectedCourseId) return;
+    setLoading(true);
+    try {
+      const questions = quizForm.questionsJson ? JSON.parse(quizForm.questionsJson) : [];
+      await api.post('/quizzes', {
+        courseId: selectedCourseId,
+        title: quizForm.title,
+        passingScore: quizForm.passingScore,
+        questions,
+      });
+      setQuizForm({ title: '', passingScore: 70, questionsJson: '' });
+    } catch {
+      // Invalid JSON or server error
     } finally {
       setLoading(false);
     }
@@ -326,6 +350,38 @@ export default function InstructorPanel() {
                         className="w-full rounded-full bg-slate-900 text-white px-4 py-2 font-semibold hover:bg-slate-800 transition duration-300"
                       >
                         Add lesson
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="rounded-xl border border-slate-200 p-4">
+                    <h3 className="font-semibold">Add quiz</h3>
+                    <div className="mt-3 grid gap-3">
+                      <input
+                        value={quizForm.title}
+                        onChange={(e) => setQuizForm({ ...quizForm, title: e.target.value })}
+                        placeholder="Quiz title"
+                        className="w-full px-4 py-3 border border-slate-200 rounded-xl"
+                      />
+                      <input
+                        type="number"
+                        value={quizForm.passingScore}
+                        onChange={(e) => setQuizForm({ ...quizForm, passingScore: Number(e.target.value) })}
+                        placeholder="Passing score"
+                        className="w-full px-4 py-3 border border-slate-200 rounded-xl"
+                      />
+                      <textarea
+                        value={quizForm.questionsJson}
+                        onChange={(e) => setQuizForm({ ...quizForm, questionsJson: e.target.value })}
+                        placeholder='Questions JSON: [{"prompt":"Q?","options":["A","B"],"correctIndex":0}]'
+                        className="w-full px-4 py-3 border border-slate-200 rounded-xl"
+                        rows={4}
+                      />
+                      <button
+                        onClick={handleCreateQuiz}
+                        className="w-full rounded-full bg-slate-900 text-white px-4 py-2 font-semibold hover:bg-slate-800 transition duration-300"
+                      >
+                        Add quiz
                       </button>
                     </div>
                   </div>

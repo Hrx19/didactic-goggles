@@ -16,14 +16,23 @@ interface Course {
   progress?: number; // For enrolled courses
 }
 
+interface Certificate {
+  _id: string;
+  certificateId: string;
+  course: { title: string };
+  issuedAt: string;
+}
+
 export default function Dashboard() {
   const { user, logout } = useAuth();
   const [enrolledCourses, setEnrolledCourses] = useState<Course[]>([]);
+  const [certificates, setCertificates] = useState<Certificate[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user) {
       fetchEnrolledCourses();
+      fetchCertificates();
     }
   }, [user]);
 
@@ -50,6 +59,15 @@ export default function Dashboard() {
       console.error('Error fetching enrolled courses:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchCertificates = async () => {
+    try {
+      const res = await api.get('/quizzes/certificates');
+      setCertificates(res.data.data || []);
+    } catch (error) {
+      setCertificates([]);
     }
   };
 
@@ -156,7 +174,13 @@ export default function Dashboard() {
                           href={`/learn/${course._id}`}
                           className="bg-slate-900 text-white px-3 py-1 rounded text-sm hover:bg-slate-800 transition duration-300"
                         >
-                          Continue Learning
+                          Continue
+                        </Link>
+                        <Link
+                          href={`/quiz/${course._id}`}
+                          className="border border-slate-200 px-3 py-1 rounded text-sm text-slate-700 hover:text-slate-900"
+                        >
+                          Quiz
                         </Link>
                       </div>
                       {/* Progress bar would go here */}
@@ -185,6 +209,31 @@ export default function Dashboard() {
                   Browse Courses
                 </Link>
               </div>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-8 bg-white rounded-lg shadow">
+          <div className="px-6 py-4 border-b border-slate-200">
+            <h2 className="text-xl font-semibold text-slate-900">Certificates</h2>
+          </div>
+          <div className="p-6">
+            {certificates.length > 0 ? (
+              <div className="space-y-3">
+                {certificates.map((cert) => (
+                  <div key={cert._id} className="flex items-center justify-between border border-slate-200 rounded-lg p-4">
+                    <div>
+                      <div className="font-semibold text-slate-900">{cert.course?.title}</div>
+                      <div className="text-xs text-slate-500">Certificate ID: {cert.certificateId}</div>
+                    </div>
+                    <div className="text-xs text-slate-500">
+                      {new Date(cert.issuedAt).toLocaleDateString()}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-sm text-slate-600">Complete quizzes to earn certificates.</div>
             )}
           </div>
         </div>

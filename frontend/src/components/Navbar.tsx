@@ -50,6 +50,11 @@ export default function Navbar() {
                 <Link href="/dashboard" className="text-slate-700 hover:text-slate-900 transition duration-300 font-medium">
                   Dashboard
                 </Link>
+                {(user?.role === 'instructor' || user?.role === 'admin') && (
+                  <Link href="/instructor" className="text-slate-700 hover:text-slate-900 transition duration-300 font-medium">
+                    Instructor
+                  </Link>
+                )}
                 {user?.role === 'admin' && (
                   <Link href="/admin" className="text-teal-700 hover:text-teal-800 transition duration-300 font-medium">
                     Admin
@@ -139,6 +144,15 @@ export default function Navbar() {
                   >
                     Dashboard
                   </Link>
+                  {(user?.role === 'instructor' || user?.role === 'admin') && (
+                    <Link
+                      href="/instructor"
+                      className="block px-3 py-2 text-slate-700 hover:text-slate-900 transition duration-300 font-medium"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Instructor
+                    </Link>
+                  )}
                   {user?.role === 'admin' && (
                     <Link
                       href="/admin"

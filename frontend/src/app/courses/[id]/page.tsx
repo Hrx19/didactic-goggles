@@ -244,12 +244,20 @@ export default function CourseDetail() {
               </div>
               <div className="text-2xl sm:text-3xl font-bold mb-6">INR {course.price}</div>
               {enrolled ? (
-                <Link
-                  href="/dashboard"
-                  className="bg-emerald-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-emerald-600 transition duration-300"
-                >
-                  Go to Course
-                </Link>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Link
+                    href="/dashboard"
+                    className="bg-emerald-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-emerald-600 transition duration-300"
+                  >
+                    Go to Course
+                  </Link>
+                  <Link
+                    href={`/quiz/${course._id}`}
+                    className="bg-white/10 text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-slate-900 transition duration-300"
+                  >
+                    Take Quiz
+                  </Link>
+                </div>
               ) : (
                 <button
                   onClick={handlePayment}

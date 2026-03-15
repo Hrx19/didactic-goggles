@@ -16,6 +16,7 @@ import progress from "./routes/progress.js";
 import modules from "./routes/modules.js";
 import lessons from "./routes/lessons.js";
 import admin from "./routes/admin.js";
+import quizzes from "./routes/quizzes.js";
 
 // Create auth router inline
 // import express from "express";
@@ -66,6 +67,7 @@ app.use('/api/progress', progress);
 app.use('/api/modules', modules);
 app.use('/api/lessons', lessons);
 app.use('/api/admin', admin);
+app.use('/api/quizzes', quizzes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to Kalchakra Learning Academy Backend API 🚀");
