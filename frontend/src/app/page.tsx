@@ -42,15 +42,15 @@ export default function Home() {
       <section className="bg-gradient-to-r from-blue-600 to-purple-700 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-6 leading-tight">
               Master Programming with
               <span className="block text-yellow-300">Kalchakra Learning Academy</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+            <p className="text-lg md:text-2xl mb-8 max-w-3xl mx-auto">
               Learn from industry experts and build real-world projects.
               Join thousands of students already learning with us.
             </p>
-            <div className="space-x-4">
+            <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 href="/courses"
                 className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300"

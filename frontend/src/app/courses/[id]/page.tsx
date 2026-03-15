@@ -218,8 +218,8 @@ export default function CourseDetail() {
                   {course.level}
                 </span>
               </div>
-              <h1 className="text-4xl font-bold mb-4">{course.title}</h1>
-              <p className="text-xl mb-6">{course.description}</p>
+              <h1 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">{course.title}</h1>
+              <p className="text-lg sm:text-xl mb-6 text-gray-100/90">{course.description}</p>
               <div className="flex items-center space-x-6 mb-6">
                 <div className="flex items-center">
                   <span className="text-2xl mr-2">👨‍🏫</span>
@@ -230,7 +230,7 @@ export default function CourseDetail() {
                   <span>{course.duration} hours</span>
                 </div>
               </div>
-              <div className="text-3xl font-bold mb-6">₹{course.price}</div>
+              <div className="text-2xl sm:text-3xl font-bold mb-6">₹{course.price}</div>
               {enrolled ? (
                 <Link
                   href="/dashboard"

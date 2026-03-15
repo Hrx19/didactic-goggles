@@ -53,8 +53,8 @@ export default function Courses() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">All Courses</h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">All Courses</h1>
+          <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
             Explore our comprehensive collection of programming courses designed for all skill levels
           </p>
         </div>
@@ -105,7 +105,7 @@ export default function Courses() {
                   <p className="text-gray-600 text-sm mb-4 line-clamp-2">{course.description}</p>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center text-sm text-gray-500">
-                      <span>👨‍🏫 {course.instructor.name}</span>
+                      <span>????? {course.instructor.name}</span>
                     </div>
                     <div className="text-sm text-gray-500">
                       {course.duration} hours
@@ -113,7 +113,7 @@ export default function Courses() {
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <span className="text-2xl font-bold text-gray-900">₹{course.price}</span>
+                      <span className="text-2xl font-bold text-gray-900">?{course.price}</span>
                     </div>
                     <Link
                       href={`/courses/${course._id}`}
@@ -137,3 +137,4 @@ export default function Courses() {
     </div>
   );
 }
+

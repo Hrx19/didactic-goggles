@@ -18,10 +18,12 @@ export default function Navbar() {
   return (
     <nav className="bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between items-center py-3 md:h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <span className="text-2xl font-bold text-blue-600">Kalchakra Learning Academy</span>
+              <span className="text-lg sm:text-xl md:text-2xl font-bold text-blue-600 leading-tight max-w-[220px]">
+                Kalchakra Learning Academy
+              </span>
             </Link>
           </div>
 
