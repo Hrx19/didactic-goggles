@@ -21,7 +21,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center py-3 md:h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <span className="text-lg sm:text-xl md:text-2xl font-semibold text-slate-900 leading-tight max-w-[220px]">
+              <span className="text-base sm:text-xl md:text-2xl font-semibold text-slate-900 leading-tight max-w-[160px] sm:max-w-[260px] md:max-w-none">
                 <span className="block bg-gradient-to-r from-teal-600 to-blue-600 text-transparent bg-clip-text">
                   Kalchakra
                 </span>

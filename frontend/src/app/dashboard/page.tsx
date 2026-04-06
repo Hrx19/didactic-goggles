@@ -84,12 +84,12 @@ export default function Dashboard() {
       {/* Header */}
       <div className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-6">
             <div>
               <h1 className="text-3xl font-bold text-slate-900">Dashboard</h1>
               <p className="text-slate-600">Welcome back, {user.name}!</p>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
               {user.role === 'admin' && (
                 <Link
                   href="/admin"
@@ -115,7 +115,7 @@ export default function Dashboard() {
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
               <div className="p-2 bg-teal-100 rounded-lg">
-                <span className="text-2xl">📚</span>
+                <span className="text-[10px] font-semibold text-teal-800">COURSES</span>
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-slate-600">Enrolled Courses</p>
@@ -126,7 +126,7 @@ export default function Dashboard() {
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
               <div className="p-2 bg-green-100 rounded-lg">
-                <span className="text-2xl">✅</span>
+                <span className="text-[10px] font-semibold text-green-800">COMPLETED</span>
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-slate-600">Completed</p>
@@ -137,7 +137,7 @@ export default function Dashboard() {
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
               <div className="p-2 bg-yellow-100 rounded-lg">
-                <span className="text-2xl">⏱️</span>
+                <span className="text-[10px] font-semibold text-yellow-800">IN PROGRESS</span>
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-slate-600">In Progress</p>
@@ -169,7 +169,7 @@ export default function Dashboard() {
                       <h3 className="font-semibold text-slate-900 mb-2">{course.title}</h3>
                       <p className="text-sm text-slate-600 mb-3 line-clamp-2">{course.description}</p>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-slate-500">👨‍🏫 {course.instructor.name}</span>
+                        <span className="text-sm text-slate-500">Instructor: {course.instructor.name}</span>
                         <Link
                           href={`/learn/${course._id}`}
                           className="bg-slate-900 text-white px-3 py-1 rounded text-sm hover:bg-slate-800 transition duration-300"
@@ -199,7 +199,7 @@ export default function Dashboard() {
               </div>
             ) : (
               <div className="text-center py-12">
-                <div className="text-6xl mb-4">📚</div>
+                <div className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400 mb-2">Courses</div>
                 <h3 className="text-xl font-semibold text-slate-900 mb-2">No courses yet</h3>
                 <p className="text-slate-600 mb-6">Start your learning journey by enrolling in a course</p>
                 <Link

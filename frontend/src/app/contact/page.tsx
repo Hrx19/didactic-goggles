@@ -23,7 +23,7 @@ export default function Contact() {
               <h3 className="text-lg font-semibold">Contact details</h3>
               <p className="mt-2 text-sm text-slate-600">Email: support@kalchakra.academy</p>
               <p className="mt-1 text-sm text-slate-600">Phone: +91 90000 00000</p>
-              <p className="mt-1 text-sm text-slate-600">Hours: Mon–Sat, 9:00 AM – 7:00 PM</p>
+              <p className="mt-1 text-sm text-slate-600">Hours: Mon-Sat, 9:00 AM - 7:00 PM</p>
             </div>
             <div className="bg-white rounded-2xl shadow-lg ring-1 ring-black/5 p-6">
               <h3 className="text-lg font-semibold">Send a message</h3>

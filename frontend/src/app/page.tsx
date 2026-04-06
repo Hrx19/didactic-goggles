@@ -244,7 +244,7 @@ export default function Home() {
             <div className="bg-white p-6 rounded-2xl shadow-lg ring-1 ring-black/5">
               <div className="flex items-center mb-4">
                 {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-amber-400">★</span>
+                  <span key={i} className="text-amber-400">*</span>
                 ))}
               </div>
               <p className="text-slate-600 mb-4">
@@ -256,7 +256,7 @@ export default function Home() {
             <div className="bg-white p-6 rounded-2xl shadow-lg ring-1 ring-black/5">
               <div className="flex items-center mb-4">
                 {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-amber-400">★</span>
+                  <span key={i} className="text-amber-400">*</span>
                 ))}
               </div>
               <p className="text-slate-600 mb-4">
@@ -268,7 +268,7 @@ export default function Home() {
             <div className="bg-white p-6 rounded-2xl shadow-lg ring-1 ring-black/5">
               <div className="flex items-center mb-4">
                 {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-amber-400">★</span>
+                  <span key={i} className="text-amber-400">*</span>
                 ))}
               </div>
               <p className="text-slate-600 mb-4">

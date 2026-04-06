@@ -38,7 +38,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-10 text-xs text-slate-500">
-          © {new Date().getFullYear()} Kalchakra Learning Academy. All rights reserved.
+          (c) {new Date().getFullYear()} Kalchakra Learning Academy. All rights reserved.
         </div>
       </div>
     </footer>

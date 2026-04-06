@@ -101,7 +101,7 @@ export default function CourseQuiz() {
 
           {result && (
             <div className="mt-6 text-sm text-slate-600">
-              Score: {result.score}% — {result.passed ? 'Passed' : 'Not passed'}
+              Score: {result.score}% - {result.passed ? 'Passed' : 'Not passed'}
             </div>
           )}
         </div>

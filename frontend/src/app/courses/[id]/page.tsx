@@ -134,6 +134,10 @@ export default function CourseDetail() {
       toast.error('Please login to purchase courses');
       return;
     }
+    if (!course) {
+      toast.error('Course details are missing.');
+      return;
+    }
     if (!razorpayReady || typeof window === 'undefined' || !window.Razorpay) {
       toast.error('Payment system is still loading. Please try again in a moment.');
       return;
@@ -142,7 +146,7 @@ export default function CourseDetail() {
     try {
       // Create order
       const orderRes = await api.post('/payment/create-order', {
-        courseId: course!._id,
+        courseId: course._id,
       });
 
       const { order, key } = orderRes.data;
@@ -153,7 +157,7 @@ export default function CourseDetail() {
         amount: order.amount,
         currency: order.currency,
         name: 'Kalchakra Learning Academy',
-        description: `Purchase ${course!.title}`,
+        description: `Purchase ${course.title}`,
         order_id: order.id,
         handler: async (response: RazorpayResponse) => {
           try {
@@ -320,11 +324,11 @@ export default function CourseDetail() {
                             </span>
                           </div>
                           <div className="flex items-center text-sm text-slate-500">
-                            <span className="mr-4">⏱️ {lesson.duration} min</span>
+                            <span className="mr-4">Duration: {lesson.duration} min</span>
                             {enrolled || lesson.isPreview ? (
-                              <span className="text-emerald-600">✓</span>
+                              <span className="text-emerald-600">Available</span>
                             ) : (
-                              <span className="text-slate-400">🔒</span>
+                              <span className="text-slate-400">Locked</span>
                             )}
                           </div>
                         </div>
@@ -340,27 +344,12 @@ export default function CourseDetail() {
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-lg ring-1 ring-black/5 p-6 sticky top-6">
               <h3 className="text-xl font-bold mb-4">Course Includes</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center">
-                  <span className="text-emerald-600 mr-3">✓</span>
-                  <span>{course.duration} hours of video content</span>
-                </li>
-                <li className="flex items-center">
-                  <span className="text-emerald-600 mr-3">✓</span>
-                  <span>Downloadable resources</span>
-                </li>
-                <li className="flex items-center">
-                  <span className="text-emerald-600 mr-3">✓</span>
-                  <span>Certificate of completion</span>
-                </li>
-                <li className="flex items-center">
-                  <span className="text-emerald-600 mr-3">✓</span>
-                  <span>Lifetime access</span>
-                </li>
-                <li className="flex items-center">
-                  <span className="text-emerald-600 mr-3">✓</span>
-                  <span>Mobile and TV access</span>
-                </li>
+              <ul className="space-y-3 text-slate-700">
+                <li>{course.duration} hours of video content</li>
+                <li>Downloadable resources</li>
+                <li>Certificate of completion</li>
+                <li>Lifetime access</li>
+                <li>Mobile and TV access</li>
               </ul>
 
               {!enrolled && (
