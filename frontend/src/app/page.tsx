@@ -52,13 +52,13 @@ export default function Home() {
             '@type': 'EducationalOrganization',
             name: 'Kalchakra Learning Academy',
             url: process.env.NEXT_PUBLIC_SITE_URL || 'https://frontend-chi-eosin-36.vercel.app',
-            description: 'Learn job-ready skills online with expert-led courses.',
+            description: 'Learn coding and tech skills from scratch with real projects.',
           }),
         }}
       />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-700 via-indigo-700 to-purple-700 text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-blue-700 via-blue-800 to-blue-900 text-white">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -top-32 left-0 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
           <div className="absolute -bottom-40 right-0 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
@@ -67,20 +67,26 @@ export default function Home() {
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
             <div className="text-center lg:text-left">
               <span className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
-                Online courses
+                Online learning platform
               </span>
               <h1 className="mt-6 text-3xl sm:text-4xl md:text-6xl font-bold leading-tight">
-                Learn Coding and Tech Skills Easily
+                Learn Coding and Tech Skills from Scratch
               </h1>
               <p className="mt-4 text-base sm:text-lg md:text-xl text-white/85 max-w-2xl mx-auto lg:mx-0">
                 Beginner to advanced courses with real projects for students, beginners, and job seekers.
               </p>
-              <div className="mt-8">
+              <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-start justify-center">
                 <Link
                   href="/courses"
-                  className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold text-slate-900 shadow-lg hover:bg-slate-100 transition duration-300"
+                  className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold text-blue-900 shadow-lg hover:bg-blue-50 transition duration-300"
                 >
                   Start Learning
+                </Link>
+                <Link
+                  href="/courses"
+                  className="inline-flex items-center justify-center rounded-full border border-white/40 px-8 py-3 text-sm font-semibold text-white hover:bg-white hover:text-blue-900 transition duration-300"
+                >
+                  Explore Courses
                 </Link>
               </div>
               <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
@@ -90,10 +96,10 @@ export default function Home() {
                 </div>
                 <div className="rounded-2xl border border-white/15 bg-white/10 px-4 py-3">
                   <div className="text-sm font-semibold">4.8 rating</div>
-                  <div className="text-xs text-white/70">Based on reviews</div>
+                  <div className="text-xs text-white/70">Verified feedback</div>
                 </div>
                 <div className="rounded-2xl border border-white/15 bg-white/10 px-4 py-3">
-                  <div className="text-sm font-semibold">Job ready</div>
+                  <div className="text-sm font-semibold">Job-ready</div>
                   <div className="text-xs text-white/70">Real projects</div>
                 </div>
               </div>
@@ -166,12 +172,12 @@ export default function Home() {
       <section className="py-16 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <span className="inline-flex items-center rounded-full bg-purple-600 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white">
+            <span className="inline-flex items-center rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white">
               Courses
             </span>
             <h2 className="mt-4 text-3xl font-bold text-slate-900">Choose your course</h2>
             <p className="mt-3 text-slate-600 max-w-2xl mx-auto">
-              Each course includes level, duration, projects, and a clear learning path.
+              Each course includes duration, level, and a clear learning path.
             </p>
           </div>
 
@@ -255,7 +261,7 @@ export default function Home() {
               <div className="mt-6">
                 <Link
                   href="/courses"
-                  className="inline-flex items-center justify-center rounded-full bg-purple-600 px-6 py-3 text-sm font-semibold text-white hover:bg-purple-700 transition duration-300"
+                  className="inline-flex items-center justify-center rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition duration-300"
                 >
                   Start Learning
                 </Link>
@@ -263,7 +269,7 @@ export default function Home() {
             </div>
             <div className="space-y-6">
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-sm">
-                <div className="text-sm font-semibold text-slate-900">Testimonials</div>
+                <div className="text-sm font-semibold text-slate-900">What students say</div>
                 <div className="mt-4 grid gap-4">
                   <div className="rounded-xl bg-white p-4 shadow-sm">
                     <div className="text-sm text-slate-700">Clear explanations and real projects. I finally understand web dev.</div>
@@ -272,10 +278,6 @@ export default function Home() {
                   <div className="rounded-xl bg-white p-4 shadow-sm">
                     <div className="text-sm text-slate-700">Great structure and support. I feel ready for interviews.</div>
                     <div className="mt-2 text-xs text-slate-500">Rahul, Job seeker</div>
-                  </div>
-                  <div className="rounded-xl bg-white p-4 shadow-sm">
-                    <div className="text-sm text-slate-700">Best value for money. The roadmap kept me consistent.</div>
-                    <div className="mt-2 text-xs text-slate-500">Neha, Student</div>
                   </div>
                 </div>
               </div>
@@ -331,7 +333,7 @@ export default function Home() {
                 />
                 <button
                   type="button"
-                  className="w-full rounded-full bg-purple-600 text-white px-6 py-3 font-semibold hover:bg-purple-700 transition duration-300"
+                  className="w-full rounded-full bg-blue-700 text-white px-6 py-3 font-semibold hover:bg-blue-800 transition duration-300"
                 >
                   Send message
                 </button>

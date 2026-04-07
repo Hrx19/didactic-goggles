@@ -8,7 +8,7 @@ export default function FloatingSocial() {
         target="_blank"
         rel="noreferrer"
         aria-label="Instagram"
-        className="flex h-11 w-11 items-center justify-center rounded-full bg-purple-600 text-white shadow-lg hover:bg-purple-700 transition duration-300"
+        className="flex h-11 w-11 items-center justify-center rounded-full bg-blue-700 text-white shadow-lg hover:bg-blue-800 transition duration-300"
       >
         IG
       </Link>
