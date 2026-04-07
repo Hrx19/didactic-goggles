@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="mt-16 border-t border-white/40 bg-white/70 backdrop-blur">
+    <footer className="mt-16 border-t border-slate-200 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid gap-8 md:grid-cols-5">
           <div>
@@ -10,6 +10,10 @@ export default function Footer() {
             <p className="mt-3 text-sm text-slate-600">
               Learn practical skills with structured programs, mentorship, and real-world projects.
             </p>
+            <div className="mt-4 text-sm text-slate-600">
+              <div>Phone: +91 90000 00000</div>
+              <div>Email: support@kalchakra.academy</div>
+            </div>
           </div>
           <div>
             <div className="text-sm font-semibold text-slate-900">Platform</div>
