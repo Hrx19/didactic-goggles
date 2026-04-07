@@ -111,29 +111,23 @@ export default function Courses() {
                   loading="lazy"
                 />
                 <div className="p-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs uppercase tracking-wide text-teal-700 font-semibold">{course.category}</span>
-                    <span className="text-xs text-slate-500">{course.level}</span>
+                  <div className="flex items-center justify-between mb-2 text-xs text-slate-500">
+                    <span className="rounded-full bg-slate-100 px-3 py-1">{course.level || 'Beginner'}</span>
+                    <span>{course.duration ? `${course.duration} hours` : 'Self-paced'}</span>
                   </div>
                   <h3 className="text-xl font-semibold text-slate-900 mb-2">{course.title}</h3>
                   <p className="text-slate-600 text-sm mb-4 line-clamp-2">{course.description}</p>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center text-sm text-slate-500">
-                      <span>Instructor: {course.instructor.name}</span>
-                    </div>
-                    <div className="text-sm text-slate-500">
-                      {course.duration} hours
-                    </div>
-                  </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <span className="text-2xl font-bold text-slate-900">INR {course.price}</span>
+                      <span className="text-2xl font-bold text-slate-900">
+                        {course.price > 0 ? `INR ${course.price}` : 'Free'}
+                      </span>
                     </div>
                     <Link
                       href={`/courses/${course._id}`}
                       className="bg-slate-900 text-white px-4 py-2 rounded-full hover:bg-slate-800 transition duration-300"
                     >
-                      View Details
+                      Enroll Now
                     </Link>
                   </div>
                 </div>
