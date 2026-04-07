@@ -65,20 +65,20 @@ export default function Home() {
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-            <div className="text-center lg:text-left">
+            <div className="text-center">
               <span className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
                 Learn Coding & Tech Skills from Scratch
               </span>
-              <h1 className="mt-7 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
-                Build Skills That Get You Hired 🚀
+              <h1 className="mt-8 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
+                Learn Skills That Get You Hired ??
               </h1>
-              <p className="mt-5 text-base sm:text-lg md:text-xl text-white/85 max-w-2xl mx-auto lg:mx-0">
-                Step-by-step learning with real-world projects and guidance
+              <p className="mt-5 text-base sm:text-lg md:text-xl text-white/85 max-w-2xl mx-auto">
+                No confusion. Just simple, practical learning with real projects.
               </p>
-              <div className="mt-9 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-start justify-center">
+              <div className="mt-9 flex flex-col sm:flex-row gap-4 items-center justify-center">
                 <Link
                   href="/courses"
-                  className="inline-flex items-center justify-center rounded-full bg-white px-9 py-3.5 text-sm font-semibold text-blue-900 shadow-lg hover:bg-blue-50 transition duration-300"
+                  className="inline-flex items-center justify-center rounded-full bg-purple-600 px-10 py-3.5 text-sm font-semibold text-white shadow-lg hover:bg-purple-700 hover:scale-[1.02] transition duration-300"
                 >
                   Start Learning Now
                 </Link>
@@ -91,7 +91,7 @@ export default function Home() {
               </div>
               <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
                 <div className="rounded-2xl border border-white/15 bg-white/10 px-4 py-3">
-                  <div className="text-sm font-semibold">500+ students</div>
+                  <div className="text-sm font-semibold">1000+ students</div>
                   <div className="text-xs text-white/70">Active learners</div>
                 </div>
                 <div className="rounded-2xl border border-white/15 bg-white/10 px-4 py-3">
@@ -104,10 +104,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="mt-5 text-sm text-white/85">
-                Best learning platform for beginners, students, and job seekers.
-              </div>
-              <div className="mt-2 text-sm text-white/85">
-                We don’t just teach skills — we help you change your life.
+                We do not just teach skills - we help you change your life.
               </div>
             </div>
             <div className="relative">
@@ -224,11 +221,11 @@ export default function Home() {
             <div className="text-center py-12 text-slate-600">{error}</div>
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {courses.map((course, index) => (
-                <div key={course._id} className="group bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden hover:-translate-y-1 hover:shadow-[0_28px_60px_-30px_rgba(15,23,42,0.5)] transition duration-300">
+              {courses.map((course) => (
+                <div key={course._id} className="group bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden hover:-translate-y-1 hover:shadow-[0_30px_70px_-35px_rgba(15,23,42,0.6)] transition duration-300">
                   <div className="relative aspect-[4/3] bg-slate-100">
                     <span className="absolute left-3 top-3 rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold text-white shadow">
-                      {index % 2 === 0 ? '🔥 Bestseller' : 'Popular'}
+                      🔥 Most Popular
                     </span>
                     <img
                       src={course.thumbnail || '/placeholder-course.jpg'}
@@ -350,8 +347,8 @@ export default function Home() {
               <h2 className="mt-4 text-3xl font-bold text-slate-900">Talk to our team</h2>
               <p className="mt-3 text-slate-600">We reply quickly on phone or WhatsApp.</p>
               <div className="mt-6 space-y-2 text-sm text-slate-600">
-                <div>Phone: +91 90000 00000</div>
-                <div>WhatsApp: +91 90000 00000</div>
+                <div>Phone: +91 9045315264</div>
+                <div>WhatsApp: +91 9045315264</div>
                 <div>Email: support@kalchakra.academy</div>
               </div>
               <div className="mt-6">
@@ -395,7 +392,7 @@ export default function Home() {
       {/* Final CTA */}
       <section className="py-16 bg-blue-700 text-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold">Your Future Starts Today</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold">Ready to Start Your Journey?</h2>
           <p className="mt-3 text-white/85">
             Start learning today and build skills that open new opportunities.
           </p>
