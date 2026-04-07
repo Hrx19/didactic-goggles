@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="mt-16 border-t border-white/40 bg-white/70 backdrop-blur">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid gap-8 md:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-5">
           <div>
             <div className="text-lg font-semibold text-slate-900">Kalchakra Learning Academy</div>
             <p className="mt-3 text-sm text-slate-600">
@@ -14,6 +14,7 @@ export default function Footer() {
           <div>
             <div className="text-sm font-semibold text-slate-900">Platform</div>
             <ul className="mt-3 space-y-2 text-sm text-slate-600">
+              <li><Link href="/" className="hover:text-slate-900">Home</Link></li>
               <li><Link href="/courses" className="hover:text-slate-900">Courses</Link></li>
               <li><Link href="/dashboard" className="hover:text-slate-900">Dashboard</Link></li>
               <li><Link href="/instructor" className="hover:text-slate-900">Instructor</Link></li>
@@ -34,6 +35,14 @@ export default function Footer() {
               <li><Link href="/forgot-password" className="hover:text-slate-900">Reset Password</Link></li>
               <li><Link href="/login" className="hover:text-slate-900">Login</Link></li>
               <li><Link href="/register" className="hover:text-slate-900">Signup</Link></li>
+            </ul>
+          </div>
+          <div>
+            <div className="text-sm font-semibold text-slate-900">Social</div>
+            <ul className="mt-3 space-y-2 text-sm text-slate-600">
+              <li><a href="#" className="hover:text-slate-900">YouTube</a></li>
+              <li><a href="#" className="hover:text-slate-900">Instagram</a></li>
+              <li><a href="#" className="hover:text-slate-900">LinkedIn</a></li>
             </ul>
           </div>
         </div>
