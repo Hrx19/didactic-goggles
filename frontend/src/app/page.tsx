@@ -67,13 +67,13 @@ export default function Home() {
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
             <div className="text-center lg:text-left">
               <span className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
-                Online learning platform
+                Learn Coding & Tech Skills from Scratch
               </span>
               <h1 className="mt-6 text-3xl sm:text-4xl md:text-6xl font-bold leading-tight">
-                Learn Coding and Tech Skills from Scratch
+                Master Coding & Tech Skills 🚀
               </h1>
               <p className="mt-4 text-base sm:text-lg md:text-xl text-white/85 max-w-2xl mx-auto lg:mx-0">
-                Beginner to advanced courses with real projects for students, beginners, and job seekers.
+                Learn from beginner to advanced with real-world projects
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-start justify-center">
                 <Link
@@ -102,6 +102,9 @@ export default function Home() {
                   <div className="text-sm font-semibold">Job-ready</div>
                   <div className="text-xs text-white/70">Real projects</div>
                 </div>
+              </div>
+              <div className="mt-4 text-sm text-white/75">
+                Best learning platform for beginners, students, and job seekers.
               </div>
             </div>
             <div className="relative">
@@ -165,6 +168,14 @@ export default function Home() {
               </Link>
             </div>
           </div>
+          <div className="text-center mt-8">
+            <Link
+              href="/courses"
+              className="inline-flex items-center justify-center rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition duration-300"
+            >
+              Get Started
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -199,11 +210,16 @@ export default function Home() {
                   </div>
                   <div className="p-6">
                     <h3 className="text-xl font-semibold text-slate-900">{course.title}</h3>
-                    <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
-                      <span className="rounded-full bg-blue-50 px-3 py-1 text-blue-700">{course.level || 'Beginner'}</span>
-                      <span>{course.duration ? `${course.duration} hours` : 'Self-paced'}</span>
+                    <div className="mt-3 grid gap-2 text-sm text-slate-600">
+                      <div>
+                        <span className="font-semibold text-slate-900">Duration:</span>{' '}
+                        {course.duration ? `${course.duration} hours` : 'Self-paced'}
+                      </div>
+                      <div>
+                        <span className="font-semibold text-slate-900">Level:</span>{' '}
+                        {course.level || 'Beginner'}
+                      </div>
                     </div>
-                    <p className="mt-3 text-sm text-slate-600 line-clamp-2">{course.description}</p>
                     <div className="mt-4 flex items-center justify-between">
                       <div className="text-sm font-semibold text-slate-900">
                         {course.price > 0 ? `INR ${course.price}` : 'Free'}

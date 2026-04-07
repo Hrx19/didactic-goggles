@@ -20,12 +20,16 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-3 md:h-16">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="flex items-center gap-3">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-700 text-white text-sm font-bold">
+                K
+              </span>
               <span className="text-base sm:text-xl md:text-2xl font-semibold text-slate-900 leading-tight max-w-[160px] sm:max-w-[260px] md:max-w-none">
                 <span className="block bg-gradient-to-r from-blue-600 to-blue-800 text-transparent bg-clip-text">
                   Kalchakra
                 </span>
                 <span className="block text-slate-800">Learning Academy</span>
+                <span className="hidden sm:block text-xs uppercase tracking-[0.2em] text-slate-400">Coding Courses</span>
               </span>
             </Link>
           </div>

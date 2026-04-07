@@ -45,7 +45,16 @@ export default function Footer() {
             <div className="text-sm font-semibold text-slate-900">Social</div>
             <ul className="mt-3 space-y-2 text-sm text-slate-600">
               <li><a href="#" className="hover:text-slate-900">YouTube</a></li>
-              <li><a href="#" className="hover:text-slate-900">Instagram</a></li>
+              <li>
+                <a
+                  href="https://www.instagram.com/iamharish__rana?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                  className="hover:text-slate-900"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Instagram
+                </a>
+              </li>
               <li><a href="#" className="hover:text-slate-900">LinkedIn</a></li>
             </ul>
           </div>
