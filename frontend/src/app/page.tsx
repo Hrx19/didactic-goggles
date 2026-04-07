@@ -69,22 +69,22 @@ export default function Home() {
               <span className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
                 Learn Coding & Tech Skills from Scratch
               </span>
-              <h1 className="mt-6 text-3xl sm:text-4xl md:text-6xl font-bold leading-tight">
-                Become Job-Ready with Real Skills
+              <h1 className="mt-7 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
+                Build Skills That Get You Hired 🚀
               </h1>
-              <p className="mt-4 text-base sm:text-lg md:text-xl text-white/85 max-w-2xl mx-auto lg:mx-0">
-                Learn coding step-by-step with practical projects and real-world training
+              <p className="mt-5 text-base sm:text-lg md:text-xl text-white/85 max-w-2xl mx-auto lg:mx-0">
+                Step-by-step learning with real-world projects and guidance
               </p>
-              <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-start justify-center">
+              <div className="mt-9 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-start justify-center">
                 <Link
                   href="/courses"
-                  className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold text-blue-900 shadow-lg hover:bg-blue-50 transition duration-300"
+                  className="inline-flex items-center justify-center rounded-full bg-white px-9 py-3.5 text-sm font-semibold text-blue-900 shadow-lg hover:bg-blue-50 transition duration-300"
                 >
-                  Start Learning Today
+                  Start Learning Now
                 </Link>
                 <Link
                   href="/courses"
-                  className="inline-flex items-center justify-center rounded-full border border-white/40 px-8 py-3 text-sm font-semibold text-white hover:bg-white hover:text-blue-900 transition duration-300"
+                  className="inline-flex items-center justify-center rounded-full border border-white/40 px-9 py-3.5 text-sm font-semibold text-white hover:bg-white hover:text-blue-900 transition duration-300"
                 >
                   Explore Courses
                 </Link>
@@ -103,11 +103,11 @@ export default function Home() {
                   <div className="text-xs text-white/70">Real projects</div>
                 </div>
               </div>
-              <div className="mt-4 text-sm text-white/80">
+              <div className="mt-5 text-sm text-white/85">
                 Best learning platform for beginners, students, and job seekers.
               </div>
-              <div className="mt-2 text-sm text-white/80">
-                Your journey to a better career starts here.
+              <div className="mt-2 text-sm text-white/85">
+                We don’t just teach skills — we help you change your life.
               </div>
             </div>
             <div className="relative">
@@ -224,21 +224,21 @@ export default function Home() {
             <div className="text-center py-12 text-slate-600">{error}</div>
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {courses.map((course) => (
-                <div key={course._id} className="group bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden hover:-translate-y-1 hover:shadow-2xl transition duration-300">
+              {courses.map((course, index) => (
+                <div key={course._id} className="group bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden hover:-translate-y-1 hover:shadow-[0_28px_60px_-30px_rgba(15,23,42,0.5)] transition duration-300">
                   <div className="relative aspect-[4/3] bg-slate-100">
                     <span className="absolute left-3 top-3 rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold text-white shadow">
-                      Most Popular
+                      {index % 2 === 0 ? '🔥 Bestseller' : 'Popular'}
                     </span>
                     <img
                       src={course.thumbnail || '/placeholder-course.jpg'}
                       alt={course.title}
-                      className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.04]"
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.06]"
                       loading="lazy"
                     />
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-semibold text-slate-900">{course.title}</h3>
+                    <h3 className="text-2xl font-semibold text-slate-900">{course.title}</h3>
                     <div className="mt-3 grid gap-2 text-sm text-slate-600">
                       <div>
                         <span className="font-semibold text-slate-900">Duration:</span>{' '}
@@ -250,8 +250,8 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
-                      <span>4.8 Rating</span>
-                      <span>1000+ Students</span>
+                      <span>⭐ 4.8 Rating</span>
+                      <span>👨‍🎓 1000+ Students</span>
                     </div>
                     <div className="mt-4 flex items-center justify-between">
                       <div className="text-sm font-semibold text-slate-900">
@@ -395,7 +395,7 @@ export default function Home() {
       {/* Final CTA */}
       <section className="py-16 bg-blue-700 text-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold">Ready to Start Your Career?</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold">Your Future Starts Today</h2>
           <p className="mt-3 text-white/85">
             Start learning today and build skills that open new opportunities.
           </p>
