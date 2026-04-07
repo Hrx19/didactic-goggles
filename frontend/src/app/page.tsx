@@ -70,17 +70,17 @@ export default function Home() {
                 Learn Coding & Tech Skills from Scratch
               </span>
               <h1 className="mt-6 text-3xl sm:text-4xl md:text-6xl font-bold leading-tight">
-                Master Coding & Tech Skills 🚀
+                From Beginner to Job-Ready 🚀
               </h1>
               <p className="mt-4 text-base sm:text-lg md:text-xl text-white/85 max-w-2xl mx-auto lg:mx-0">
-                Learn from beginner to advanced with real-world projects
+                Learn coding with real projects and practical skills
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-start justify-center">
                 <Link
                   href="/courses"
                   className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold text-blue-900 shadow-lg hover:bg-blue-50 transition duration-300"
                 >
-                  Start Learning
+                  Start Learning Free
                 </Link>
                 <Link
                   href="/courses"
@@ -105,6 +105,9 @@ export default function Home() {
               </div>
               <div className="mt-4 text-sm text-white/75">
                 Best learning platform for beginners, students, and job seekers.
+              </div>
+              <div className="mt-2 text-sm text-white/80">
+                Your journey to a better career starts here.
               </div>
             </div>
             <div className="relative">
@@ -198,13 +201,16 @@ export default function Home() {
             <div className="text-center py-12 text-slate-600">{error}</div>
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {courses.map((course) => (
-                <div key={course._id} className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden hover:-translate-y-1 hover:shadow-2xl transition duration-300">
-                  <div className="aspect-[4/3] bg-slate-100">
+              {courses.map((course, index) => (
+                <div key={course._id} className="group bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden hover:-translate-y-1 hover:shadow-2xl transition duration-300">
+                  <div className="relative aspect-[4/3] bg-slate-100">
+                    <span className="absolute left-3 top-3 rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold text-white shadow">
+                      {index % 2 === 0 ? '🔥 Bestseller' : 'Popular'}
+                    </span>
                     <img
                       src={course.thumbnail || '/placeholder-course.jpg'}
                       alt={course.title}
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
                       loading="lazy"
                     />
                   </div>
@@ -219,6 +225,10 @@ export default function Home() {
                         <span className="font-semibold text-slate-900">Level:</span>{' '}
                         {course.level || 'Beginner'}
                       </div>
+                    </div>
+                    <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
+                      <span>⭐ 4.8 Rating</span>
+                      <span>👨‍🎓 1200+ Students</span>
                     </div>
                     <div className="mt-4 flex items-center justify-between">
                       <div className="text-sm font-semibold text-slate-900">
@@ -355,6 +365,24 @@ export default function Home() {
                 </button>
               </form>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-16 bg-blue-700 text-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold">Ready to Change Your Future?</h2>
+          <p className="mt-3 text-white/85">
+            Start learning today and build skills that open new opportunities.
+          </p>
+          <div className="mt-6">
+            <Link
+              href="/courses"
+              className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold text-blue-900 hover:bg-blue-50 transition duration-300"
+            >
+              Join Now
+            </Link>
           </div>
         </div>
       </section>
