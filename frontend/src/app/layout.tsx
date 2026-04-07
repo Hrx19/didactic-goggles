@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FloatingSocial from "@/components/FloatingSocial";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-body",
@@ -43,6 +44,7 @@ export default function RootLayout({
         <AuthProvider>
           <Navbar />
           {children}
+          <FloatingSocial />
           <Footer />
           <ToastContainer
             position="top-right"
