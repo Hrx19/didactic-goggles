@@ -70,17 +70,17 @@ export default function Home() {
                 Learn Coding & Tech Skills from Scratch
               </span>
               <h1 className="mt-6 text-3xl sm:text-4xl md:text-6xl font-bold leading-tight">
-                From Beginner to Job-Ready 🚀
+                Become Job-Ready with Real Skills
               </h1>
               <p className="mt-4 text-base sm:text-lg md:text-xl text-white/85 max-w-2xl mx-auto lg:mx-0">
-                Learn coding with real projects and practical skills
+                Learn coding step-by-step with practical projects and real-world training
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-start justify-center">
                 <Link
                   href="/courses"
                   className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold text-blue-900 shadow-lg hover:bg-blue-50 transition duration-300"
                 >
-                  Start Learning Free
+                  Start Learning Today
                 </Link>
                 <Link
                   href="/courses"
@@ -103,7 +103,7 @@ export default function Home() {
                   <div className="text-xs text-white/70">Real projects</div>
                 </div>
               </div>
-              <div className="mt-4 text-sm text-white/75">
+              <div className="mt-4 text-sm text-white/80">
                 Best learning platform for beginners, students, and job seekers.
               </div>
               <div className="mt-2 text-sm text-white/80">
@@ -146,15 +146,30 @@ export default function Home() {
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-lg transition duration-300">
-              <div className="text-xs uppercase tracking-[0.2em] text-slate-500">01</div>
-              <h3 className="mt-3 text-lg font-semibold">Project based</h3>
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-md hover:shadow-xl transition duration-300">
+              <div className="flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-700">
+                  <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current" aria-hidden="true">
+                    <path d="M12 2a1 1 0 0 1 1 1v3.06a7 7 0 1 1-2 0V3a1 1 0 0 1 1-1z" />
+                  </svg>
+                </span>
+                <div className="text-xs uppercase tracking-[0.2em] text-slate-500">01</div>
+              </div>
+              <h3 className="mt-3 text-lg font-semibold">Practical learning</h3>
               <p className="mt-2 text-sm text-slate-600">Learn by building real projects and portfolios.</p>
               <Link href="/courses" className="mt-4 inline-flex text-sm font-semibold text-blue-700 hover:text-blue-800">
                 Start Learning
               </Link>
             </div>
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-lg transition duration-300">
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-md hover:shadow-xl transition duration-300">
+              <div className="flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-700">
+                  <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current" aria-hidden="true">
+                    <path d="M7 4h10a2 2 0 0 1 2 2v12l-7-3-7 3V6a2 2 0 0 1 2-2z" />
+                  </svg>
+                </span>
+                <div className="text-xs uppercase tracking-[0.2em] text-slate-500">02</div>
+              </div>
               <div className="text-xs uppercase tracking-[0.2em] text-slate-500">02</div>
               <h3 className="mt-3 text-lg font-semibold">Beginner friendly</h3>
               <p className="mt-2 text-sm text-slate-600">Step by step lessons designed for zero to hero.</p>
@@ -162,7 +177,15 @@ export default function Home() {
                 Start Learning
               </Link>
             </div>
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-lg transition duration-300">
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-md hover:shadow-xl transition duration-300">
+              <div className="flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-700">
+                  <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current" aria-hidden="true">
+                    <path d="M12 2 2 7l10 5 10-5-10-5zm0 8 10-5v9l-10 5-10-5V5l10 5z" />
+                  </svg>
+                </span>
+                <div className="text-xs uppercase tracking-[0.2em] text-slate-500">03</div>
+              </div>
               <div className="text-xs uppercase tracking-[0.2em] text-slate-500">03</div>
               <h3 className="mt-3 text-lg font-semibold">Career focused</h3>
               <p className="mt-2 text-sm text-slate-600">Skills aligned with current job requirements.</p>
@@ -201,16 +224,16 @@ export default function Home() {
             <div className="text-center py-12 text-slate-600">{error}</div>
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {courses.map((course, index) => (
+              {courses.map((course) => (
                 <div key={course._id} className="group bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden hover:-translate-y-1 hover:shadow-2xl transition duration-300">
                   <div className="relative aspect-[4/3] bg-slate-100">
                     <span className="absolute left-3 top-3 rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold text-white shadow">
-                      {index % 2 === 0 ? '🔥 Bestseller' : 'Popular'}
+                      Most Popular
                     </span>
                     <img
                       src={course.thumbnail || '/placeholder-course.jpg'}
                       alt={course.title}
-                      className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+                      className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.04]"
                       loading="lazy"
                     />
                   </div>
@@ -227,8 +250,8 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
-                      <span>⭐ 4.8 Rating</span>
-                      <span>👨‍🎓 1200+ Students</span>
+                      <span>4.8 Rating</span>
+                      <span>1000+ Students</span>
                     </div>
                     <div className="mt-4 flex items-center justify-between">
                       <div className="text-sm font-semibold text-slate-900">
@@ -266,22 +289,22 @@ export default function Home() {
               <span className="inline-flex items-center rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white">
                 Why choose us
               </span>
-              <h2 className="mt-4 text-3xl font-bold text-slate-900">Focused on clarity and outcomes</h2>
+              <h2 className="mt-4 text-3xl font-bold text-slate-900">Why choose us</h2>
               <p className="mt-4 text-slate-600">
-                We keep learning simple and goal driven so you can finish courses and build real skills.
+                A simple, proven path to learn faster and get job-ready.
               </p>
               <div className="mt-6 grid gap-4">
-                <div className="rounded-2xl border border-slate-200 p-4 shadow-sm">
-                  <div className="text-sm font-semibold">Expert designed curriculum</div>
-                  <div className="text-sm text-slate-600">Updated content aligned with industry demand.</div>
+                <div className="rounded-2xl border border-slate-200 p-4 shadow-md">
+                  <div className="text-sm font-semibold">Practical learning</div>
+                  <div className="text-sm text-slate-600">Work on real projects, not just theory.</div>
                 </div>
-                <div className="rounded-2xl border border-slate-200 p-4 shadow-sm">
-                  <div className="text-sm font-semibold">Progress tracking</div>
-                  <div className="text-sm text-slate-600">Stay consistent and see your improvement.</div>
+                <div className="rounded-2xl border border-slate-200 p-4 shadow-md">
+                  <div className="text-sm font-semibold">Beginner friendly</div>
+                  <div className="text-sm text-slate-600">Step-by-step lessons with clear guidance.</div>
                 </div>
-                <div className="rounded-2xl border border-slate-200 p-4 shadow-sm">
-                  <div className="text-sm font-semibold">Community support</div>
-                  <div className="text-sm text-slate-600">Get answers quickly and stay motivated.</div>
+                <div className="rounded-2xl border border-slate-200 p-4 shadow-md">
+                  <div className="text-sm font-semibold">Career focused</div>
+                  <div className="text-sm text-slate-600">Skills aligned with real job requirements.</div>
                 </div>
               </div>
               <div className="mt-6">
@@ -372,7 +395,7 @@ export default function Home() {
       {/* Final CTA */}
       <section className="py-16 bg-blue-700 text-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold">Ready to Change Your Future?</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold">Ready to Start Your Career?</h2>
           <p className="mt-3 text-white/85">
             Start learning today and build skills that open new opportunities.
           </p>
