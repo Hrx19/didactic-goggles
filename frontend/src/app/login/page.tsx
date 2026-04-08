@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -15,7 +15,9 @@ export default function Login() {
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   const { login, googleSignIn, isAuthenticated } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const authError = searchParams.get('error');
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -71,6 +73,15 @@ export default function Login() {
             create a new account
           </Link>
         </p>
+        {authError && (
+          <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+            {authError === 'google_auth_failed' && 'Google sign-in failed. Please try again or contact support.'}
+            {authError === 'oauth_failed' && 'Google sign-in was blocked. Please try again.'}
+            {authError === 'token_invalid' && 'Session expired. Please sign in again.'}
+            {authError === 'no_token' && 'Unable to complete sign-in. Please try again.'}
+            {authError && !['google_auth_failed', 'oauth_failed', 'token_invalid', 'no_token'].includes(authError) && 'Sign-in failed. Please try again.'}
+          </div>
+        )}
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
