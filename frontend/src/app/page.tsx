@@ -50,7 +50,7 @@ export default function Home() {
             '@context': 'https://schema.org',
             '@type': 'EducationalOrganization',
             name: 'Kalchakra Learning Academy',
-            url: process.env.NEXT_PUBLIC_SITE_URL || 'https://frontend-chi-eosin-36.vercel.app',
+            url: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.learnwithharry.com',
             description: 'Learn practical coding and tech skills with real projects.',
           }),
         }}
@@ -332,3 +332,4 @@ export default function Home() {
     </div>
   );
 }
+

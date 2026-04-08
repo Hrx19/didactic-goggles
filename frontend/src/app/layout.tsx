@@ -21,7 +21,7 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   title: "Kalchakra Learning Academy - Learn Coding Online",
   description: "Master programming with expert-led courses",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://frontend-chi-eosin-36.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.learnwithharry.com'),
   openGraph: {
     title: "Kalchakra Learning Academy",
     description: "Master programming with expert-led courses",
@@ -62,3 +62,4 @@ export default function RootLayout({
     </html>
   );
 }
+

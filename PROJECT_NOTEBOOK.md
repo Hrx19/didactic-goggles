@@ -17,9 +17,9 @@
 - **Fallback Demo**: DB डाउन/खाली होने पर 1 demo course + YouTube वीडियो लौटाता।
 
 ## 2) URLs (Live)
-- Frontend: `https://frontend-chi-eosin-36.vercel.app`
+- Frontend: `https://www.learnwithharry.com`
 - Backend: `https://kalchakra-backend.onrender.com`
-- Demo course (video visible): `https://frontend-chi-eosin-36.vercel.app/courses/demo-1`
+- Demo course (video visible): `https://www.learnwithharry.com/courses/demo-1`
 - Health/course API: `https://kalchakra-backend.onrender.com/api/courses`
 
 ## 3) Env Vars (Render Backend)
@@ -28,7 +28,7 @@
 | `MONGO_URI` | MongoDB Atlas कनेक्शन; DB चालू तो असली डेटा | Render डैशबोर्ड में सेट (URI कॉपी वहीं से) |
 | `JWT_SECRET` | JWT साइनिंग सीक्रेट | Render डैशबोर्ड में सेट |
 | `JWT_EXPIRE` | टोकन वैधता | `30d` |
-| `FRONTEND_URL` | CORS + OAuth redirect base | `https://frontend-chi-eosin-36.vercel.app` |
+| `FRONTEND_URL` | CORS + OAuth redirect base | `https://www.learnwithharry.com` |
 | `GOOGLE_CLIENT_ID` | Google OAuth | Google Console → OAuth Client ID |
 | `GOOGLE_CLIENT_SECRET` | Google OAuth | Google Console → OAuth Client Secret |
 
@@ -47,7 +47,7 @@
 - **Redirect URI** (Google Console → Credentials):  
   `https://kalchakra-backend.onrender.com/api/auth/google/callback`
 - **Authorized JS origin**:  
-  `https://frontend-chi-eosin-36.vercel.app`
+  `https://www.learnwithharry.com`
 - Test user whitelisted: `harshukbhai09@gmail.com`
 - Backend flow: `GET /api/auth/google` → Google consent → callback पर JWT बनता → फ्रंट पर redirect `?token=...&provider=google`।
 
@@ -125,3 +125,4 @@ git push origin main
 ---
 
 यह notebook उसी repo में रखा गया है (`PROJECT_NOTEBOOK.md`). इसे खोलकर ब्राउज़र से PDF एक्सपोर्ट कर सकते हैं। कोई और detail चाहिए तो बताइए। 
+
