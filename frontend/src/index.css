@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-[#100e2f] text-slate-100 antialiased;
+    font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  .section {
+    @apply px-6 py-16 sm:px-10 lg:px-16;
+  }
+
+  .section-title {
+    @apply text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl;
+  }
+
+  .section-kicker {
+    @apply text-sm uppercase tracking-[0.35em] text-[#FACC15] font-semibold;
+  }
+
+  .glass {
+    @apply rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-xl shadow-soft;
+  }
+
+  .card {
+    @apply rounded-[2rem] border border-white/10 bg-[#151139]/90 p-6 shadow-soft;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-[#3B82F6] px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_45px_-18px_rgba(59,130,246,0.9)] transition duration-300 hover:bg-[#60a5fa];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white/90 transition duration-300 hover:border-white/50 hover:text-white;
+  }
+
+  .input {
+    @apply w-full rounded-3xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 focus:border-[#3B82F6] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/20;
+  }
+}
+
+@layer utilities {
+  .shadow-soft {
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.55), 0 12px 24px -18px rgba(59, 130, 246, 0.16);
+  }
+}

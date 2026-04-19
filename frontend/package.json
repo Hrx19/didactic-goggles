@@ -1,38 +1,30 @@
 {
-  "name": "kalchakra-frontend",
-  "version": "0.1.0",
+  "name": "kalchakra-learning-academy",
   "private": true,
-  "engines": {
-    "node": ">=18.0.0"
-  },
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "cd ../bakend/frontend && npm run dev",
-    "build": "npm --prefix ../bakend/frontend install && npm --prefix ../bakend/frontend run build && node ../bakend/frontend/copy-dist.mjs",
-    "preview": "cd ../bakend/frontend && npm run preview",
-    "lint": "eslint"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "@types/react-google-recaptcha": "^2.1.9",
-    "axios": "^1.6.7",
-    "framer-motion": "^12.36.0",
-    "jwt-decode": "^4.0.0",
-    "next": "16.1.6",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "react-google-recaptcha": "^3.1.0",
-    "react-icons": "^5.0.1",
-    "react-player": "^2.16.0",
-    "react-router-dom": "^6.22.3",
-    "react-toastify": "^10.0.5"
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.1.6",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "@eslint/js": "^9.39.4",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.4.0",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.15",
+    "vite": "^8.0.4"
   }
 }
