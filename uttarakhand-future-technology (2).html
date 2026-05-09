@@ -1,0 +1,2199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uttarakhand Future Technology — Learn Today, Earn Tomorrow</title>
+<meta name="description" content="Premium online courses in Technology, Data Science, Cyber Security & Digital Marketing. Starting from ₹129. Learn from Harish Singh.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ===================== ROOT VARIABLES ===================== */
+:root {
+  --bg:       #04060f;
+  --bg2:      #070b18;
+  --bg3:      #0a1020;
+  --surf:     #0d1629;
+  --surf2:    #111d36;
+  --b1:       rgba(80,130,255,0.12);
+  --b2:       rgba(80,130,255,0.28);
+  --ink:      #eef0fb;
+  --ink2:     #8b97bc;
+  --ink3:     #4e5a7a;
+  --sky:      #4f8fff;
+  --violet:   #8b5cf6;
+  --cyan:     #06c8e8;
+  --emerald:  #10d98a;
+  --amber:    #fbbf24;
+  --rose:     #f43f5e;
+  --g1: linear-gradient(135deg,#4f8fff,#8b5cf6,#06c8e8);
+  --g2: linear-gradient(135deg,#0d1629,#111d36);
+  --glow-sky:    0 0 60px rgba(79,143,255,0.25);
+  --glow-violet: 0 0 60px rgba(139,92,246,0.2);
+  --shadow:   0 24px 80px rgba(0,0,0,0.6);
+  --r:  18px;
+  --r2: 12px;
+  --r3: 8px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Instrument Sans',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  overflow-x:hidden;
+  line-height:1.65;
+  cursor:none;
+}
+h1,h2,h3,h4,h5{font-family:'Bricolage Grotesque',sans-serif;letter-spacing:-0.02em}
+a{text-decoration:none;color:inherit}
+
+/* ===================== CUSTOM CURSOR ===================== */
+#cursor{
+  position:fixed;width:12px;height:12px;border-radius:50%;
+  background:var(--cyan);pointer-events:none;z-index:99999;
+  transition:transform 0.15s ease;mix-blend-mode:screen;
+}
+#cursor-ring{
+  position:fixed;width:40px;height:40px;border-radius:50%;
+  border:1.5px solid rgba(79,143,255,0.5);pointer-events:none;
+  z-index:99998;transition:all 0.12s ease;
+}
+
+/* ===================== 3D CANVAS ===================== */
+#heroCanvas{
+  position:absolute;inset:0;width:100%;height:100%;
+  opacity:0.85;pointer-events:none;
+}
+
+/* ===================== NAVBAR ===================== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:16px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(4,6,15,0.7);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--b1);
+  transition:all 0.3s;
+}
+.logo{display:flex;align-items:center;gap:12px;cursor:pointer}
+.logo-mark{
+  width:48px;height:48px;
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  position:relative;
+}
+.logo-mark img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+.logo-mark .logo-fallback{
+  display:none;
+}
+.logo-mark::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.25),transparent);
+}
+.logo-name{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:13px;line-height:1.1}
+.logo-tag{font-size:9px;color:var(--cyan);letter-spacing:3px;text-transform:uppercase;margin-top:1px}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{
+  font-size:14px;color:var(--ink2);
+  transition:color 0.2s;font-weight:500;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--ink)}
+.nav-btns{display:flex;gap:10px;align-items:center}
+.btn{
+  padding:10px 22px;border-radius:9px;
+  font-family:'Instrument Sans',sans-serif;
+  font-size:14px;font-weight:600;cursor:pointer;
+  transition:all 0.2s;border:none;display:inline-flex;
+  align-items:center;gap:7px;
+}
+.btn-ghost{
+  background:transparent;color:var(--ink2);
+  border:1.5px solid var(--b2);
+}
+.btn-ghost:hover{background:var(--surf);color:var(--ink)}
+.btn-prime{
+  background:var(--g1);color:#fff;
+  box-shadow:0 4px 24px rgba(79,143,255,0.45);
+}
+.btn-prime:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(79,143,255,0.55)}
+.btn-outline{background:transparent;color:var(--sky);border:1.5px solid var(--sky)}
+.btn-outline:hover{background:var(--sky);color:#fff}
+.btn-lg{padding:15px 34px;font-size:16px;border-radius:12px}
+.btn-xl{padding:18px 44px;font-size:18px;border-radius:14px;font-weight:700}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:all 0.3s}
+.mobile-menu{
+  display:none;position:fixed;top:73px;left:0;right:0;
+  background:rgba(4,6,15,0.97);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--b1);padding:20px;
+  flex-direction:column;gap:4px;z-index:999;
+}
+.mobile-menu.open{display:flex}
+.mobile-menu a{
+  padding:12px 16px;font-size:15px;color:var(--ink2);
+  border-radius:8px;transition:all 0.2s;
+}
+.mobile-menu a:hover{background:var(--surf);color:var(--ink)}
+
+/* ===================== URGENCY BANNER ===================== */
+.urgency{
+  background:linear-gradient(90deg,#8b5cf6,#4f8fff,#06c8e8,#4f8fff,#8b5cf6);
+  background-size:300% 100%;
+  animation:shimmer-bg 5s linear infinite;
+  padding:11px 40px;text-align:center;
+  font-size:13px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;
+}
+@keyframes shimmer-bg{0%{background-position:0%}100%{background-position:300%}}
+.urgency .cdown{
+  background:rgba(0,0,0,0.25);padding:3px 14px;border-radius:20px;
+  font-family:'Bricolage Grotesque',sans-serif;letter-spacing:3px;
+}
+
+/* ===================== PAGES ===================== */
+.page{display:none}
+.page.active{display:block}
+
+/* ===================== HERO ===================== */
+.hero{
+  min-height:100vh;position:relative;overflow:hidden;
+  display:flex;align-items:center;padding:100px 48px 80px;
+}
+.hero-mesh{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% -10%,rgba(79,143,255,0.14) 0%,transparent 70%),
+    radial-gradient(ellipse 45% 40% at 85% 60%,rgba(139,92,246,0.1) 0%,transparent 60%),
+    radial-gradient(ellipse 35% 30% at 15% 85%,rgba(6,200,232,0.07) 0%,transparent 55%);
+}
+.grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(79,143,255,0.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(79,143,255,0.035) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.6) 25%,rgba(0,0,0,0.6) 75%,transparent 100%);
+}
+/* Animated mountain SVG at bottom */
+.mtn-wrap{
+  position:absolute;bottom:0;left:0;right:0;height:240px;
+  opacity:0.13;pointer-events:none;
+}
+
+.hero-inner{
+  max-width:1240px;margin:0 auto;width:100%;
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+  position:relative;z-index:2;
+}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 18px;border-radius:50px;
+  background:rgba(79,143,255,0.08);
+  border:1px solid rgba(79,143,255,0.25);
+  font-size:12px;color:var(--cyan);
+  margin-bottom:26px;
+  animation:pulse-pill 2.5s infinite;
+}
+@keyframes pulse-pill{0%,100%{border-color:rgba(79,143,255,0.25)}50%{border-color:rgba(79,143,255,0.55)}}
+.pill-dot{width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:blink 1.2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.hero h1{
+  font-size:clamp(38px,4.5vw,68px);font-weight:800;line-height:1.05;
+  margin-bottom:22px;
+}
+.hero h1 .grad-text{
+  background:var(--g1);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{font-size:18px;color:var(--ink2);margin-bottom:36px;line-height:1.75;max-width:520px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px}
+.trust-row{display:flex;gap:24px;flex-wrap:wrap}
+.trust-item{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;color:var(--ink2);font-weight:500;
+}
+.trust-icon{
+  width:28px;height:28px;background:rgba(6,200,232,0.1);
+  border:1px solid rgba(6,200,232,0.2);border-radius:7px;
+  display:flex;align-items:center;justify-content:center;font-size:13px;
+}
+
+/* HERO RIGHT - 3D floating cards */
+.hero-right{position:relative;height:440px}
+.float-card{
+  position:absolute;background:var(--surf);
+  border:1px solid var(--b1);border-radius:var(--r);
+  padding:20px;box-shadow:var(--shadow);
+}
+.fc-main{width:310px;top:30px;right:0;animation:fc1 5s ease-in-out infinite}
+.fc-a{width:210px;top:0;left:10px;animation:fc2 6s ease-in-out infinite}
+.fc-b{width:230px;bottom:40px;left:0;animation:fc3 5.5s ease-in-out infinite}
+@keyframes fc1{0%,100%{transform:translateY(0) rotateY(0deg)}50%{transform:translateY(-14px) rotateY(2deg)}}
+@keyframes fc2{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-10px) rotate(0deg)}}
+@keyframes fc3{0%,100%{transform:translateY(0) rotate(1deg)}50%{transform:translateY(-12px) rotate(0deg)}}
+.fc-thumb{
+  width:100%;height:140px;border-radius:11px;
+  background:var(--g2);display:flex;align-items:center;
+  justify-content:center;position:relative;overflow:hidden;
+  margin-bottom:14px;cursor:pointer;
+}
+.fc-thumb::before{
+  content:'';position:absolute;inset:0;
+  background:var(--g1);opacity:0.07;
+  transition:opacity 0.3s;
+}
+.fc-thumb:hover::before{opacity:0.14}
+.play-ring{
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(255,255,255,0.12);backdrop-filter:blur(10px);
+  border:1.5px solid rgba(255,255,255,0.25);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;transition:all 0.2s;z-index:1;position:relative;
+}
+.play-ring:hover{transform:scale(1.12);background:rgba(255,255,255,0.22)}
+.fc-price{
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-size:22px;font-weight:800;color:var(--amber);
+}
+.fc-title{font-size:14px;font-weight:600;margin-bottom:6px}
+.fc-meta{font-size:12px;color:var(--ink3)}
+.fc-stars{color:var(--amber);font-size:11px}
+.stat-chip{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(6,200,232,0.07);border:1px solid rgba(6,200,232,0.18);
+  padding:5px 11px;border-radius:50px;font-size:12px;color:var(--cyan);
+}
+
+/* ===================== STATS BAR ===================== */
+.stats-bar{
+  background:var(--surf);
+  border-top:1px solid var(--b1);border-bottom:1px solid var(--b1);
+  padding:44px 48px;
+}
+.stats-inner{
+  max-width:1240px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center;
+}
+.stat-num{
+  font-family:'Bricolage Grotesque',sans-serif;font-size:42px;font-weight:800;
+  background:var(--g1);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px;
+}
+.stat-lbl{font-size:13px;color:var(--ink2)}
+
+/* ===================== SECTIONS ===================== */
+section{padding:88px 48px}
+.sec-inner{max-width:1240px;margin:0 auto}
+.sec-head{text-align:center;margin-bottom:56px}
+.sec-tag{
+  display:inline-block;padding:6px 16px;
+  background:rgba(79,143,255,0.08);border:1px solid rgba(79,143,255,0.22);
+  border-radius:50px;font-size:11px;color:var(--sky);letter-spacing:2.5px;
+  text-transform:uppercase;margin-bottom:14px;
+}
+.sec-title{
+  font-size:clamp(28px,3vw,46px);font-weight:800;margin-bottom:14px;
+}
+.sec-sub{font-size:17px;color:var(--ink2);max-width:540px;margin:0 auto}
+
+/* ===================== CATEGORIES ===================== */
+.cats-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;
+}
+.cat-card{
+  background:var(--surf);border:1px solid var(--b1);border-radius:var(--r2);
+  padding:28px 20px;text-align:center;cursor:pointer;
+  transition:all 0.3s;position:relative;overflow:hidden;
+}
+.cat-card::after{
+  content:'';position:absolute;inset:0;
+  background:var(--g1);opacity:0;transition:opacity 0.3s;
+}
+.cat-card:hover{border-color:var(--b2);transform:translateY(-6px);box-shadow:var(--glow-sky)}
+.cat-card:hover::after{opacity:0.04}
+.cat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--g1);transform:scaleX(0);transition:transform 0.3s;
+}
+.cat-card:hover::before{transform:scaleX(1)}
+.cat-icon{font-size:34px;margin-bottom:12px;display:block}
+.cat-name{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:15px;margin-bottom:4px}
+.cat-count{font-size:12px;color:var(--ink3)}
+
+/* ===================== COURSE CARDS ===================== */
+.courses-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:24px;
+}
+.course-card{
+  background:var(--surf);border:1px solid var(--b1);
+  border-radius:var(--r);overflow:hidden;cursor:pointer;
+  transition:all 0.35s;position:relative;
+}
+.course-card:hover{
+  border-color:var(--b2);
+  transform:translateY(-8px) scale(1.01);
+  box-shadow:0 32px 80px rgba(0,0,0,0.5),var(--glow-violet);
+}
+.c-thumb{
+  height:180px;background:var(--g2);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;cursor:pointer;
+}
+.c-thumb-icon{font-size:52px;opacity:0.55;position:relative;z-index:1}
+.c-thumb-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(7,11,24,0.92) 0%,transparent 50%);
+}
+.c-thumb .badge{
+  position:absolute;top:12px;left:12px;
+  padding:4px 11px;border-radius:7px;
+  font-size:11px;font-weight:700;letter-spacing:0.4px;z-index:2;
+}
+.badge-hot{background:linear-gradient(135deg,#ff6030,#ffb347);color:#1a0500}
+.badge-new{background:linear-gradient(135deg,#06c8e8,#0095aa);color:#001922}
+.badge-pop{background:linear-gradient(135deg,#8b5cf6,#c084fc);color:#fff}
+/* Mini demo button on thumb */
+.demo-btn{
+  position:absolute;bottom:12px;right:12px;z-index:2;
+  background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,0.15);border-radius:20px;
+  padding:5px 13px;font-size:11px;font-weight:600;color:#fff;
+  display:flex;align-items:center;gap:5px;
+  transition:all 0.2s;
+}
+.demo-btn:hover{background:rgba(79,143,255,0.6)}
+.c-body{padding:20px}
+.c-cat{font-size:11px;color:var(--cyan);text-transform:uppercase;letter-spacing:2px;margin-bottom:7px}
+.c-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:17px;margin-bottom:10px;line-height:1.3}
+.c-instructor{
+  display:flex;align-items:center;gap:7px;
+  font-size:13px;color:var(--ink2);margin-bottom:10px;
+}
+.inst-av{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--g1);display:flex;align-items:center;
+  justify-content:center;font-size:9px;font-weight:800;
+}
+.c-rating{display:flex;align-items:center;gap:6px;margin-bottom:14px;font-size:13px}
+.r-score{font-weight:700;color:var(--amber)}
+.stars{color:var(--amber);font-size:11px}
+.c-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:14px;border-top:1px solid var(--b1);
+}
+.c-price{
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-weight:800;font-size:24px;color:var(--amber);
+}
+.c-orig{
+  font-size:13px;color:var(--ink3);
+  text-decoration:line-through;margin-left:7px;font-weight:400;
+}
+.btn-enroll{
+  padding:9px 18px;background:var(--g1);border:none;
+  border-radius:8px;color:#fff;font-size:13px;font-weight:700;
+  cursor:pointer;transition:all 0.2s;font-family:'Instrument Sans',sans-serif;
+}
+.btn-enroll:hover{transform:scale(1.07);box-shadow:0 4px 16px rgba(79,143,255,0.5)}
+
+/* ===================== VIDEO MODAL ===================== */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(4,6,15,0.92);
+  z-index:5000;display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity 0.3s;
+}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{
+  width:min(720px,90vw);background:var(--surf);
+  border:1px solid var(--b2);border-radius:var(--r);
+  overflow:hidden;transform:scale(0.92);
+  transition:transform 0.3s;box-shadow:var(--shadow),0 0 80px rgba(79,143,255,0.15);
+}
+.modal-overlay.open .modal-box{transform:scale(1)}
+.modal-vid{
+  width:100%;aspect-ratio:16/9;
+  background:linear-gradient(135deg,#0a1020,#111d36);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.modal-vid::before{
+  content:'';position:absolute;inset:0;
+  background:var(--g1);opacity:0.06;
+}
+.modal-vid-icon{font-size:80px;margin-bottom:20px;opacity:0.7;position:relative;z-index:1}
+.modal-vid-label{
+  font-size:16px;color:var(--ink2);position:relative;z-index:1;
+  display:flex;align-items:center;gap:10px;
+}
+.ai-badge{
+  padding:4px 14px;background:rgba(139,92,246,0.2);
+  border:1px solid rgba(139,92,246,0.4);border-radius:20px;
+  font-size:12px;color:var(--violet);font-weight:600;
+}
+.modal-info{padding:24px}
+.modal-close{
+  position:absolute;top:14px;right:14px;
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(255,255,255,0.08);border:1px solid var(--b2);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:16px;transition:all 0.2s;z-index:2;
+}
+.modal-close:hover{background:rgba(244,63,94,0.2);border-color:var(--rose)}
+/* Waveform animation in modal */
+.waveform{
+  display:flex;align-items:center;gap:3px;
+  height:32px;position:relative;z-index:1;
+}
+.wave-bar{
+  width:4px;border-radius:2px;background:var(--g1);
+  animation:wave-anim 0.8s ease-in-out infinite alternate;
+}
+.wave-bar:nth-child(1){height:8px;animation-delay:0s}
+.wave-bar:nth-child(2){height:20px;animation-delay:0.1s}
+.wave-bar:nth-child(3){height:32px;animation-delay:0.2s}
+.wave-bar:nth-child(4){height:18px;animation-delay:0.3s}
+.wave-bar:nth-child(5){height:26px;animation-delay:0.4s}
+.wave-bar:nth-child(6){height:12px;animation-delay:0.5s}
+.wave-bar:nth-child(7){height:28px;animation-delay:0.6s}
+.wave-bar:nth-child(8){height:16px;animation-delay:0.3s}
+@keyframes wave-anim{from{transform:scaleY(0.4)}to{transform:scaleY(1)}}
+
+/* ===================== TESTIMONIALS ===================== */
+.testi-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:24px;
+}
+.testi-card{
+  background:var(--surf);border:1px solid var(--b1);
+  border-radius:var(--r);padding:28px;position:relative;overflow:hidden;
+  transition:all 0.3s;
+}
+.testi-card:hover{border-color:var(--b2);transform:translateY(-4px)}
+.testi-card::before{
+  content:'"';position:absolute;top:12px;right:18px;
+  font-size:80px;font-family:Georgia,serif;
+  color:rgba(79,143,255,0.1);line-height:1;
+}
+.testi-txt{font-size:15px;color:var(--ink2);line-height:1.75;margin-bottom:20px}
+.testi-author{display:flex;align-items:center;gap:12px}
+.auth-av{
+  width:46px;height:46px;border-radius:50%;background:var(--g1);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:17px;
+}
+.auth-name{font-weight:700;font-size:15px;margin-bottom:2px}
+.auth-role{font-size:12px;color:var(--ink3)}
+
+/* ===================== ABOUT ===================== */
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+}
+.founder-wrap{
+  background:var(--surf);border:1px solid var(--b1);
+  border-radius:var(--r);padding:36px;position:relative;overflow:hidden;
+}
+.founder-wrap::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--g1);
+}
+.f-photo{
+  width:96px;height:96px;border-radius:50%;object-fit:cover;
+  margin-bottom:22px;border:3px solid rgba(79,143,255,0.25);
+  box-shadow:0 0 30px rgba(79,143,255,0.2);
+}
+.f-name{font-family:'Bricolage Grotesque',sans-serif;font-size:26px;font-weight:800;margin-bottom:4px}
+.f-role{color:var(--cyan);font-size:14px;margin-bottom:16px}
+.f-bio{font-size:14px;color:var(--ink2);line-height:1.75;margin-bottom:22px}
+.f-tags{display:flex;flex-wrap:wrap;gap:8px}
+.f-tag{
+  padding:5px 13px;background:rgba(79,143,255,0.07);
+  border:1px solid rgba(79,143,255,0.18);border-radius:20px;
+  font-size:12px;color:var(--sky);
+}
+.about-txt h2{font-size:38px;font-weight:800;margin-bottom:18px}
+.about-txt p{color:var(--ink2);line-height:1.8;margin-bottom:18px}
+.val-list{list-style:none;margin-top:28px}
+.val-list li{display:flex;gap:14px;margin-bottom:22px;align-items:flex-start}
+.val-icon{
+  width:38px;height:38px;min-width:38px;
+  background:rgba(79,143,255,0.08);border:1px solid rgba(79,143,255,0.2);
+  border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;
+}
+.val-t{font-weight:700;margin-bottom:3px}
+.val-d{font-size:14px;color:var(--ink2)}
+
+/* ===================== BLOG ===================== */
+.blog-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:26px;
+}
+.blog-card{
+  background:var(--surf);border:1px solid var(--b1);
+  border-radius:var(--r);overflow:hidden;cursor:pointer;transition:all 0.3s;
+}
+.blog-card:hover{border-color:var(--b2);transform:translateY(-5px);box-shadow:var(--shadow)}
+.blog-thumb{
+  height:190px;display:flex;align-items:center;justify-content:center;font-size:60px;
+  position:relative;overflow:hidden;
+}
+.blog-body{padding:24px}
+.blog-meta{display:flex;gap:12px;font-size:12px;color:var(--ink3);margin-bottom:11px;align-items:center}
+.blog-cat{
+  background:rgba(139,92,246,0.1);color:var(--violet);
+  padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;
+}
+.blog-title{font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:700;margin-bottom:12px;line-height:1.3}
+.blog-exc{font-size:14px;color:var(--ink2);line-height:1.65;margin-bottom:16px}
+.blog-read{font-size:13px;color:var(--sky);font-weight:700}
+
+/* ===================== CONTACT ===================== */
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1.6fr;gap:60px;align-items:flex-start;
+}
+.c-info h3{font-size:30px;font-weight:800;margin-bottom:14px}
+.c-info p{color:var(--ink2);line-height:1.75;margin-bottom:28px}
+.c-items{display:flex;flex-direction:column;gap:16px}
+.c-item{display:flex;gap:16px;align-items:center}
+.c-icon{
+  width:46px;height:46px;min-width:46px;
+  background:rgba(79,143,255,0.08);border:1px solid rgba(79,143,255,0.18);
+  border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;
+}
+.c-lbl{font-size:12px;color:var(--ink3);margin-bottom:2px}
+.c-val{font-weight:600;font-size:15px}
+
+/* WhatsApp Banner */
+.wa-banner{
+  margin-top:28px;padding:20px;
+  background:linear-gradient(135deg,rgba(37,211,102,0.08),rgba(18,140,126,0.08));
+  border:1px solid rgba(37,211,102,0.25);border-radius:var(--r2);
+  display:flex;align-items:center;gap:14px;
+}
+.wa-icon{font-size:36px}
+.wa-txt strong{font-size:15px;font-weight:700;display:block;margin-bottom:4px}
+.wa-txt span{font-size:13px;color:var(--ink2)}
+
+.cf{background:var(--surf);border:1px solid var(--b1);border-radius:var(--r);padding:40px}
+.fg{margin-bottom:20px}
+.fl{display:block;font-size:13px;color:var(--ink2);margin-bottom:8px;font-weight:500}
+.fi,.fsel,.fta{
+  width:100%;padding:13px 16px;background:var(--bg2);
+  border:1px solid var(--b1);border-radius:8px;color:var(--ink);
+  font-family:'Instrument Sans',sans-serif;font-size:14px;
+  transition:border-color 0.2s;outline:none;
+}
+.fi:focus,.fsel:focus,.fta:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(79,143,255,0.1)}
+.fta{min-height:120px;resize:vertical}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* ===================== AUTH ===================== */
+.auth-wrap{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:100px 40px;position:relative;
+}
+.auth-card{
+  background:var(--surf);border:1px solid var(--b1);
+  border-radius:var(--r);padding:48px;width:100%;max-width:450px;
+  position:relative;z-index:1;
+}
+.auth-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--g1);border-radius:var(--r) var(--r) 0 0;
+}
+.auth-title{font-size:30px;font-weight:800;text-align:center;margin-bottom:8px}
+.auth-sub{text-align:center;color:var(--ink2);font-size:14px;margin-bottom:30px}
+.auth-soc{display:flex;gap:12px;margin-bottom:24px}
+.soc-btn{
+  flex:1;padding:12px;background:var(--bg2);border:1px solid var(--b1);
+  border-radius:8px;color:var(--ink2);cursor:pointer;font-size:13px;
+  font-family:'Instrument Sans',sans-serif;transition:all 0.2s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.soc-btn:hover{border-color:var(--b2);color:var(--ink);background:var(--surf2)}
+.auth-div{
+  display:flex;align-items:center;gap:12px;
+  margin:24px 0;color:var(--ink3);font-size:12px;
+}
+.auth-div::before,.auth-div::after{content:'';flex:1;height:1px;background:var(--b1)}
+.auth-lnk{color:var(--sky);cursor:pointer}
+.auth-lnk:hover{color:var(--cyan)}
+.auth-foot{text-align:center;font-size:13px;color:var(--ink2);margin-top:24px}
+
+/* ===================== DASHBOARD ===================== */
+.dash-layout{
+  display:grid;grid-template-columns:250px 1fr;min-height:100vh;padding-top:73px;
+}
+.sidebar{
+  background:var(--surf);border-right:1px solid var(--b1);
+  padding:28px 0;position:sticky;top:73px;height:calc(100vh - 73px);overflow-y:auto;
+}
+.sb-lbl{padding:0 24px;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--ink3);margin-bottom:8px}
+.sb-item{
+  display:flex;align-items:center;gap:12px;padding:12px 24px;
+  cursor:pointer;transition:all 0.2s;font-size:14px;color:var(--ink2);font-weight:500;
+}
+.sb-item:hover{background:var(--surf2);color:var(--ink)}
+.sb-item.active{background:rgba(79,143,255,0.1);color:var(--sky);border-right:3px solid var(--sky)}
+.sb-ico{font-size:17px;width:22px;text-align:center}
+.dash-main{padding:40px;overflow-y:auto}
+.dash-hi h2{font-size:30px;font-weight:800;margin-bottom:5px}
+.dash-hi p{color:var(--ink2);margin-bottom:32px}
+.dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.ds{background:var(--surf);border:1px solid var(--b1);border-radius:var(--r2);padding:22px}
+.ds-lbl{font-size:12px;color:var(--ink3);margin-bottom:8px}
+.ds-val{
+  font-family:'Bricolage Grotesque',sans-serif;font-size:30px;font-weight:800;
+  background:var(--g1);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;
+}
+.prog-wrap{background:rgba(255,255,255,0.05);border-radius:4px;height:7px;margin-top:9px;overflow:hidden}
+.prog-bar{height:100%;background:var(--g1);border-radius:4px;transition:width 1.2s ease}
+.enroll-list{display:flex;flex-direction:column;gap:16px}
+.enroll-item{
+  background:var(--surf);border:1px solid var(--b1);border-radius:var(--r2);
+  padding:20px;display:flex;gap:16px;align-items:center;
+}
+.e-thumb{
+  width:62px;height:62px;min-width:62px;border-radius:11px;
+  background:var(--g2);display:flex;align-items:center;justify-content:center;font-size:26px;
+}
+.e-info{flex:1}
+.e-title{font-weight:700;margin-bottom:4px}
+.e-meta{font-size:13px;color:var(--ink3);margin-bottom:9px}
+.e-prog{font-size:12px;color:var(--cyan)}
+
+/* ===================== COURSE DETAIL ===================== */
+.detail-layout{
+  display:grid;grid-template-columns:1fr 390px;gap:52px;
+  max-width:1240px;margin:0 auto;padding:100px 48px 80px;
+}
+.breadcrumb{font-size:13px;color:var(--ink3);margin-bottom:18px}
+.breadcrumb span{color:var(--sky);cursor:pointer}
+.detail-title{font-size:clamp(28px,3vw,42px);font-weight:800;margin-bottom:18px;line-height:1.15}
+.detail-meta{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:24px;font-size:14px;color:var(--ink2)}
+.m-badge{display:flex;align-items:center;gap:6px}
+.vid-player{
+  width:100%;aspect-ratio:16/9;
+  background:linear-gradient(135deg,#070b18,#111d36);
+  border-radius:var(--r);display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;margin-bottom:32px;
+  border:1px solid var(--b1);cursor:pointer;
+}
+.vid-player::before{content:'';position:absolute;inset:0;background:var(--g1);opacity:0.05}
+.vid-play-big{
+  width:80px;height:80px;border-radius:50%;
+  background:rgba(79,143,255,0.18);backdrop-filter:blur(10px);
+  border:2px solid rgba(79,143,255,0.45);
+  display:flex;align-items:center;justify-content:center;font-size:30px;
+  transition:all 0.2s;z-index:1;
+}
+.vid-play-big:hover{background:rgba(79,143,255,0.35);transform:scale(1.1)}
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--b1);margin-bottom:32px}
+.tab-btn{
+  padding:13px 26px;background:none;border:none;cursor:pointer;
+  font-family:'Instrument Sans',sans-serif;font-size:14px;font-weight:600;
+  color:var(--ink3);position:relative;transition:color 0.2s;
+}
+.tab-btn.active{color:var(--sky)}
+.tab-btn.active::after{
+  content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--sky);
+}
+.curr-item{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 0;border-bottom:1px solid var(--b1);font-size:14px;
+}
+.curr-ico{
+  width:34px;height:34px;min-width:34px;background:rgba(79,143,255,0.07);
+  border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;
+}
+.curr-title{flex:1}
+.curr-dur{font-size:12px;color:var(--ink3)}
+.buy-card{
+  background:var(--surf);border:1px solid var(--b1);
+  border-radius:var(--r);padding:30px;position:sticky;top:100px;
+}
+.buy-price{font-family:'Bricolage Grotesque',sans-serif;font-size:44px;font-weight:800;color:var(--amber);margin-bottom:5px}
+.buy-orig{font-size:16px;color:var(--ink3);text-decoration:line-through;margin-bottom:6px}
+.coupon-row{display:flex;gap:8px;margin-bottom:12px}
+.coup-fld{
+  flex:1;padding:11px 14px;background:var(--bg2);border:1px solid var(--b1);
+  border-radius:8px;color:var(--ink);font-family:'Instrument Sans',sans-serif;
+  font-size:13px;outline:none;text-transform:uppercase;
+}
+.coup-fld:focus{border-color:var(--sky)}
+.coup-btn{
+  padding:11px 16px;background:var(--surf2);border:1px solid var(--b1);
+  border-radius:8px;color:var(--ink);font-size:13px;cursor:pointer;
+  transition:all 0.2s;font-family:'Instrument Sans',sans-serif;
+}
+.coup-btn:hover{background:var(--sky);color:#fff;border-color:var(--sky)}
+.coup-hint{font-size:12px;color:var(--emerald);margin-bottom:14px}
+.buy-feats{list-style:none;margin:18px 0}
+.buy-feats li{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--ink2);margin-bottom:10px}
+.buy-feats li::before{content:'✓';color:var(--emerald);font-weight:700}
+
+/* ===================== ADMIN ===================== */
+.adm-head{
+  background:var(--surf);border-bottom:1px solid var(--b1);padding:18px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:fixed;top:0;left:0;right:0;z-index:100;
+}
+.adm-layout{display:grid;grid-template-columns:220px 1fr;min-height:100vh;padding-top:64px}
+.adm-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:40px}
+.adm-card{background:var(--surf);border:1px solid var(--b1);border-radius:var(--r2);padding:24px}
+.adm-ico{font-size:30px;margin-bottom:12px}
+.adm-val{
+  font-family:'Bricolage Grotesque',sans-serif;font-size:34px;font-weight:800;
+  background:var(--g1);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;
+}
+.adm-lbl{font-size:13px;color:var(--ink3)}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{
+  text-align:left;padding:12px 16px;font-size:12px;text-transform:uppercase;
+  letter-spacing:1px;color:var(--ink3);background:var(--bg2);border-bottom:1px solid var(--b1);
+}
+.tbl td{padding:14px 16px;font-size:14px;border-bottom:1px solid var(--b1);color:var(--ink2)}
+.tbl tr:hover td{background:var(--surf2)}
+.sp{display:inline-flex;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600}
+.sp-ok{background:rgba(16,217,138,0.1);color:var(--emerald)}
+.sp-pd{background:rgba(251,191,36,0.1);color:var(--amber)}
+
+/* ===================== AI CHAT WIDGET ===================== */
+.ai-bubble{
+  position:fixed;bottom:28px;left:28px;z-index:9000;
+}
+.ai-toggle{
+  width:60px;height:60px;border-radius:50%;background:var(--g1);
+  display:flex;align-items:center;justify-content:center;font-size:26px;
+  cursor:pointer;box-shadow:0 4px 30px rgba(79,143,255,0.55);
+  transition:all 0.3s;border:none;animation:ai-pulse 2.5s infinite;
+}
+.ai-toggle:hover{transform:scale(1.1)}
+@keyframes ai-pulse{
+  0%,100%{box-shadow:0 4px 30px rgba(79,143,255,0.55)}
+  50%{box-shadow:0 4px 50px rgba(139,92,246,0.7)}
+}
+.ai-label{
+  position:absolute;bottom:68px;left:0;
+  background:var(--surf);border:1px solid var(--b2);border-radius:9px;
+  padding:8px 14px;font-size:12px;font-weight:600;white-space:nowrap;
+  box-shadow:var(--shadow);pointer-events:none;
+}
+.ai-panel{
+  position:fixed;bottom:100px;left:28px;z-index:9000;
+  width:340px;background:var(--surf);
+  border:1px solid var(--b2);border-radius:var(--r);
+  box-shadow:var(--shadow),0 0 60px rgba(79,143,255,0.12);
+  display:none;flex-direction:column;overflow:hidden;max-height:480px;
+}
+.ai-panel.open{display:flex}
+.ai-head{
+  padding:16px 20px;background:var(--g1);
+  display:flex;align-items:center;gap:12px;
+}
+.ai-av{
+  width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.2);
+  display:flex;align-items:center;justify-content:center;font-size:17px;
+}
+.ai-head-txt strong{font-size:14px;display:block}
+.ai-head-txt span{font-size:11px;opacity:0.85}
+.ai-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.ai-msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.55}
+.ai-msg.bot{
+  background:var(--surf2);border:1px solid var(--b1);
+  align-self:flex-start;border-radius:4px 12px 12px 12px;
+}
+.ai-msg.user{
+  background:var(--g1);color:#fff;
+  align-self:flex-end;border-radius:12px 4px 12px 12px;
+}
+.ai-typing{display:flex;gap:4px;align-items:center;padding:10px 14px}
+.ai-typing span{
+  width:6px;height:6px;border-radius:50%;background:var(--ink3);
+  animation:type-dot 1.2s infinite;
+}
+.ai-typing span:nth-child(2){animation-delay:0.2s}
+.ai-typing span:nth-child(3){animation-delay:0.4s}
+@keyframes type-dot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.ai-inp-row{
+  display:flex;gap:8px;padding:14px 16px;
+  border-top:1px solid var(--b1);
+}
+.ai-inp{
+  flex:1;background:var(--bg2);border:1px solid var(--b1);
+  border-radius:8px;padding:10px 12px;color:var(--ink);font-size:13px;
+  font-family:'Instrument Sans',sans-serif;outline:none;
+}
+.ai-inp:focus{border-color:var(--sky)}
+.ai-send{
+  width:36px;height:36px;border-radius:8px;background:var(--g1);
+  border:none;color:#fff;font-size:15px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+}
+.ai-send:hover{transform:scale(1.08)}
+.ai-quick{padding:0 16px 14px;display:flex;flex-wrap:wrap;gap:6px}
+.ai-qbtn{
+  padding:5px 12px;background:rgba(79,143,255,0.08);
+  border:1px solid rgba(79,143,255,0.2);border-radius:20px;
+  font-size:11px;color:var(--sky);cursor:pointer;
+  transition:all 0.2s;font-family:'Instrument Sans',sans-serif;
+}
+.ai-qbtn:hover{background:rgba(79,143,255,0.18)}
+
+/* ===================== WA FLOAT ===================== */
+.wa-float{
+  position:fixed;bottom:28px;right:28px;z-index:9000;
+  width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(135deg,#25d366,#128c7e);
+  display:flex;align-items:center;justify-content:center;font-size:26px;
+  box-shadow:0 4px 24px rgba(37,211,102,0.5);
+  transition:all 0.3s;text-decoration:none;
+}
+.wa-float:hover{transform:scale(1.12);box-shadow:0 6px 36px rgba(37,211,102,0.65)}
+
+/* ===================== TOAST ===================== */
+.toast-zone{position:fixed;bottom:24px;right:100px;z-index:9999;display:flex;flex-direction:column;gap:10px}
+.toast{
+  background:var(--surf);border:1px solid var(--b1);border-left:4px solid var(--emerald);
+  border-radius:10px;padding:14px 20px;font-size:14px;
+  box-shadow:var(--shadow);animation:t-in 0.3s ease,t-out 0.3s ease 3.1s forwards;
+}
+.toast.info{border-left-color:var(--sky)}
+.toast.warn{border-left-color:var(--amber)}
+@keyframes t-in{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes t-out{to{opacity:0;transform:translateX(40px)}}
+
+/* ===================== FOOTER ===================== */
+footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 32px}
+.ft-inner{max-width:1240px;margin:0 auto}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:44px}
+.ft-brand p{font-size:14px;color:var(--ink2);line-height:1.75;margin-top:14px;margin-bottom:20px}
+.soc-links{display:flex;gap:10px}
+.soc-lnk{
+  width:38px;height:38px;background:var(--surf2);
+  border:1px solid var(--b1);border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;transition:all 0.2s;cursor:pointer;
+}
+.soc-lnk:hover{background:var(--sky);border-color:var(--sky)}
+.ft-col h4{font-family:'Bricolage Grotesque',sans-serif;font-size:15px;font-weight:700;margin-bottom:16px}
+.ft-links{list-style:none}
+.ft-links li{margin-bottom:10px}
+.ft-links a{font-size:14px;color:var(--ink2);transition:color 0.2s;cursor:pointer}
+.ft-links a:hover{color:var(--ink)}
+.ft-bot{
+  border-top:1px solid var(--b1);padding-top:24px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;color:var(--ink3);flex-wrap:wrap;gap:12px;
+}
+
+/* ===================== FADE ANIMATIONS ===================== */
+.fade-in{opacity:0;transform:translateY(32px);transition:opacity 0.7s ease,transform 0.7s ease}
+.fade-in.vis{opacity:1;transform:translateY(0)}
+.fade-in:nth-child(2){transition-delay:0.1s}
+.fade-in:nth-child(3){transition-delay:0.2s}
+.fade-in:nth-child(4){transition-delay:0.3s}
+
+/* ===================== RESPONSIVE ===================== */
+@media(max-width:960px){
+  nav{padding:14px 20px}
+  .nav-links,.nav-btns{display:none}
+  .hamburger{display:flex}
+  .hero{padding:90px 20px 60px}
+  .hero-inner{grid-template-columns:1fr;gap:40px}
+  .hero-right{display:none}
+  section{padding:64px 20px}
+  .stats-inner{grid-template-columns:repeat(2,1fr);gap:24px}
+  .about-grid,.contact-grid,.ft-grid{grid-template-columns:1fr}
+  .detail-layout{grid-template-columns:1fr;padding:90px 20px 60px}
+  .buy-card{position:static}
+  .dash-layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .dash-main{padding:20px}
+  .dash-stats{grid-template-columns:repeat(2,1fr)}
+  .adm-layout{grid-template-columns:1fr}
+  .adm-cards{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+<!-- CUSTOM CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- URGENCY BANNER -->
+<div class="urgency" id="urgBanner">
+  ⚡ All Courses at Massive Discounts — Limited Time Only!
+  <div class="cdown" id="cdown">11:47:22</div>
+  Use code <strong>UFT199</strong>
+  <span style="cursor:pointer;opacity:0.7;font-size:16px" onclick="this.closest('.urgency').style.display='none'">×</span>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="logo" onclick="showPage('home')">
+    <div class="logo-mark"><img src="logo.jpeg" alt="UFT logo"><span class="logo-fallback">⛰️</span></div>
+    <div>
+      <div class="logo-name">Uttarakhand Future Technology</div>
+      <div class="logo-tag">Learn Today, Earn Tomorrow</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')" class="active" id="nl-home">Home</a></li>
+    <li><a href="#" onclick="showPage('courses')" id="nl-courses">Courses</a></li>
+    <li><a href="#" onclick="showPage('about')" id="nl-about">About</a></li>
+    <li><a href="#" onclick="showPage('blog')" id="nl-blog">Blog</a></li>
+    <li><a href="#" onclick="showPage('contact')" id="nl-contact">Contact</a></li>
+    <li><a href="#" onclick="showPage('admin')" id="nl-admin" style="color:var(--violet);display:none">Admin</a></li>
+  </ul>
+  <div class="nav-btns">
+    <button class="btn btn-ghost" onclick="showPage('login')">Log In</button>
+    <button class="btn btn-prime" onclick="showPage('signup')">Get Started Free</button>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mMenu">
+  <a href="#" onclick="showPage('home');toggleMenu()">🏠 Home</a>
+  <a href="#" onclick="showPage('courses');toggleMenu()">📚 Courses</a>
+  <a href="#" onclick="showPage('about');toggleMenu()">👤 About</a>
+  <a href="#" onclick="showPage('blog');toggleMenu()">📝 Blog</a>
+  <a href="#" onclick="showPage('contact');toggleMenu()">📬 Contact</a>
+  <a href="#" onclick="showPage('login');toggleMenu()">🔐 Log In</a>
+  <a href="#" onclick="showPage('admin');toggleMenu()" id="ml-admin" style="display:none">⚙️ Admin</a>
+  <a href="#" onclick="showPage('signup');toggleMenu()">🚀 Sign Up Free</a>
+</div>
+
+<!-- ===================== HOME PAGE ===================== -->
+<div class="page active" id="page-home">
+
+  <section class="hero">
+    <canvas id="heroCanvas"></canvas>
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+
+    <!-- Mountain SVG -->
+    <div class="mtn-wrap">
+      <svg width="100%" height="100%" viewBox="0 0 1440 240" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="mg" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#4f8fff"/>
+            <stop offset="50%" style="stop-color:#8b5cf6"/>
+            <stop offset="100%" style="stop-color:#06c8e8"/>
+          </linearGradient>
+        </defs>
+        <polygon points="0,240 100,180 220,100 350,160 480,60 600,130 720,20 840,90 960,30 1080,110 1200,50 1320,120 1440,70 1440,240" fill="url(#mg)"/>
+        <polygon points="0,240 80,200 200,140 320,180 440,100 560,160 680,80 800,140 920,70 1040,130 1160,85 1280,150 1380,100 1440,130 1440,240" fill="url(#mg)" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <div class="hero-inner">
+      <div>
+        <div class="hero-pill"><span class="pill-dot"></span><img src="logo.jpeg" alt="UFT logo" style="width:20px;height:20px;vertical-align:middle;margin-right:5px;"> India's Most Affordable Tech Platform</div>
+        <h1>Learn <span class="grad-text">Future Skills</span><br>That Actually <span class="grad-text">Pay You</span></h1>
+        <p class="hero-sub">Real courses in Tech, Data Science, Cyber Security & Marketing — from an educator who grew up in Uttarakhand and knows exactly what it takes to succeed.</p>
+        <div class="hero-actions">
+          <button class="btn btn-prime btn-xl" onclick="showPage('courses')">🚀 Browse Courses</button>
+          <button class="btn btn-ghost btn-lg" onclick="openAI()">🤖 Ask AI Anything</button>
+        </div>
+        <div class="trust-row">
+          <div class="trust-item"><div class="trust-icon">👍</div>Beginner Friendly</div>
+          <div class="trust-item"><div class="trust-icon">⚡</div>Practical Skills</div>
+          <div class="trust-item"><div class="trust-icon">📜</div>Certificates</div>
+          <div class="trust-item"><div class="trust-icon">💬</div>WhatsApp Support</div>
+        </div>
+      </div>
+
+      <!-- Floating Course Cards -->
+      <div class="hero-right">
+        <!-- Main card -->
+        <div class="float-card fc-main">
+          <div class="fc-thumb" onclick="openDemoModal('Data Science Beginner','📊')">
+            <div class="play-ring">▶</div>
+          </div>
+          <div class="fc-price">₹349</div>
+          <div class="fc-title">Data Science Beginner</div>
+          <div class="fc-meta" style="margin-bottom:8px">Harish Singh · 6.5 hrs · 24 lessons</div>
+          <div style="display:flex;gap:8px"><div class="stat-chip">🐍 Python</div><div class="stat-chip">🤖 ML</div></div>
+        </div>
+        <!-- Small card A -->
+        <div class="float-card fc-a">
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:9px">
+            <div style="width:32px;height:32px;background:var(--g1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px">🎬</div>
+            <div>
+              <div class="fc-title" style="margin:0">Video Editing</div>
+              <div class="fc-stars">★★★★★</div>
+            </div>
+          </div>
+          <div class="fc-price" style="font-size:19px">₹199</div>
+          <div class="fc-meta">482 enrolled today</div>
+        </div>
+        <!-- Small card B -->
+        <div class="float-card fc-b">
+          <div style="font-size:11px;color:var(--emerald);font-weight:700;margin-bottom:5px">✓ Certificate Issued!</div>
+          <div class="fc-title">Priya S. completed</div>
+          <div class="fc-meta">Instagram Growth — ₹149</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar fade-in">
+    <div class="stats-inner">
+      <div><div class="stat-num" data-target="12847">0</div><div class="stat-lbl">Students Enrolled</div></div>
+      <div><div class="stat-num" data-target="25">0</div><div class="stat-lbl">Expert Courses</div></div>
+      <div><div class="stat-num">4.9★</div><div class="stat-lbl">Average Rating</div></div>
+      <div><div class="stat-num">100%</div><div class="stat-lbl">Job-Ready Skills</div></div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <section style="background:var(--bg2)">
+    <div class="sec-inner">
+      <div class="sec-head fade-in">
+        <div class="sec-tag">Explore</div>
+        <h2 class="sec-title">What Do You Want to Learn?</h2>
+        <p class="sec-sub">Practical courses built for real-world earning.</p>
+      </div>
+      <div class="cats-grid fade-in">
+        <div class="cat-card" onclick="showPage('courses')"><span class="cat-icon">💻</span><div class="cat-name">Technology</div><div class="cat-count">8 courses</div></div>
+        <div class="cat-card" onclick="showPage('courses')"><span class="cat-icon">📊</span><div class="cat-name">Data Science</div><div class="cat-count">4 courses</div></div>
+        <div class="cat-card" onclick="showPage('courses')"><span class="cat-icon">🔐</span><div class="cat-name">Cyber Security</div><div class="cat-count">3 courses</div></div>
+        <div class="cat-card" onclick="showPage('courses')"><span class="cat-icon">📱</span><div class="cat-name">Digital Marketing</div><div class="cat-count">6 courses</div></div>
+        <div class="cat-card" onclick="showPage('courses')"><span class="cat-icon">⌨️</span><div class="cat-name">Programming</div><div class="cat-count">5 courses</div></div>
+        <div class="cat-card" onclick="showPage('courses')"><span class="cat-icon">🗣️</span><div class="cat-name">Languages</div><div class="cat-count">3 courses</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED COURSES -->
+  <section>
+    <div class="sec-inner">
+      <div class="sec-head fade-in">
+        <div class="sec-tag">Best Sellers</div>
+        <h2 class="sec-title">Featured Courses</h2>
+        <p class="sec-sub">Our most loved courses — practical, affordable, results-driven.</p>
+      </div>
+      <div class="courses-grid fade-in" id="featuredGrid"></div>
+      <div style="text-align:center;margin-top:44px">
+        <button class="btn btn-outline btn-lg" onclick="showPage('courses')">View All Courses →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section style="background:var(--bg2)">
+    <div class="sec-inner">
+      <div class="sec-head fade-in">
+        <div class="sec-tag">Success Stories</div>
+        <h2 class="sec-title">Real Students, Real Results</h2>
+        <p class="sec-sub">Thousands of learners transforming their careers with UFT.</p>
+      </div>
+      <div class="testi-grid fade-in">
+        <div class="testi-card">
+          <p class="testi-txt">I paid ₹149 for the Instagram Growth course and within 2 months had 12K followers and 4 brand partnerships. Harish sir's teaching is world-class and crystal clear.</p>
+          <div class="testi-author"><div class="auth-av">PS</div><div><div class="auth-name">Priya Sharma</div><div class="auth-role">Content Creator, Dehradun</div></div></div>
+        </div>
+        <div class="testi-card">
+          <p class="testi-txt">The Data Science course at ₹349 is an unbelievable deal. I went from zero Python knowledge to landing my first freelance data project in 8 weeks. The certificate looks amazing on LinkedIn!</p>
+          <div class="testi-author"><div class="auth-av">AK</div><div><div class="auth-name">Aman Kumar</div><div class="auth-role">Freelance Data Analyst, Roorkee</div></div></div>
+        </div>
+        <div class="testi-card">
+          <p class="testi-txt">As a student from a small town in Uttarakhand, I never thought I could afford this quality of education. The Cyber Security course completely changed my career path. ₹499 best spent ever!</p>
+          <div class="testi-author"><div class="auth-av">RN</div><div><div class="auth-name">Ritu Negi</div><div class="auth-role">Security Analyst Trainee, Haridwar</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WhatsApp CTA Section -->
+  <section style="background:linear-gradient(135deg,rgba(37,211,102,0.04),rgba(18,140,126,0.04));border-top:1px solid rgba(37,211,102,0.1);border-bottom:1px solid rgba(37,211,102,0.1)">
+    <div class="sec-inner" style="text-align:center">
+      <div style="font-size:60px;margin-bottom:16px">💬</div>
+      <h2 class="sec-title">Join Our WhatsApp Community</h2>
+      <p class="sec-sub" style="margin-bottom:32px">Get free study tips, course updates, job opportunities & exclusive discounts directly on WhatsApp!</p>
+      <a href="https://whatsapp.com/channel/0029Vb7R7CdKAwEhKPOskT3G" target="_blank" class="btn btn-lg" style="background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;box-shadow:0 4px 24px rgba(37,211,102,0.45);display:inline-flex">💬 Follow Uttarakhand Future Technology on WhatsApp →</a>
+      <p style="margin-top:14px;font-size:13px;color:var(--ink3)">10,000+ members already learning together</p>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section style="text-align:center;position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(79,143,255,0.08),transparent)"></div>
+    <div class="sec-inner" style="position:relative;z-index:1">
+      <div class="fade-in">
+        <h2 class="sec-title">Ready to Transform Your Future?</h2>
+        <p class="sec-sub" style="margin:0 auto 36px">Join thousands of students from Uttarakhand and across India building real careers online.</p>
+        <button class="btn btn-prime btn-xl" onclick="showPage('signup')">🚀 Start Learning Today</button>
+        <p style="margin-top:16px;font-size:13px;color:var(--ink3)">No hidden fees · Lifetime access · Certificate included</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="ft-inner">
+      <div class="ft-grid">
+        <div class="ft-brand">
+          <div class="logo" style="cursor:default">
+            <div class="logo-mark"><img src="logo.jpeg" alt="UFT logo"><span class="logo-fallback">⛰️</span></div>
+            <div><div class="logo-name">Uttarakhand Future Technology</div><div class="logo-tag">Learn Today, Earn Tomorrow</div></div>
+          </div>
+          <p>Empowering students from Uttarakhand and all over India with affordable, world-class digital education.</p>
+          <div class="soc-links">
+            <a class="soc-lnk" href="https://instagram.com" target="_blank" title="Instagram"><span>📸</span> Instagram</a>
+            <a class="soc-lnk" href="https://whatsapp.com/channel/0029Vb7R7CdKAwEhKPOskT3G" target="_blank" title="WhatsApp"><span>💬</span> WhatsApp</a>
+            <a class="soc-lnk" href="https://youtube.com" target="_blank" title="YouTube"><span>▶️</span> YouTube</a>
+            <a class="soc-lnk" href="https://t.me" target="_blank" title="Telegram"><span>✈️</span> Telegram</a>
+            <a class="soc-lnk" href="mailto:Hzzzx06@gmail.com" title="Email"><span>📧</span> Email</a>
+          </div>
+        </div>
+        <div class="ft-col"><h4>Courses</h4><ul class="ft-links"><li><a onclick="showPage('courses')">Technology</a></li><li><a onclick="showPage('courses')">Data Science</a></li><li><a onclick="showPage('courses')">Cyber Security</a></li><li><a onclick="showPage('courses')">Digital Marketing</a></li><li><a onclick="showPage('courses')">Programming</a></li></ul></div>
+        <div class="ft-col"><h4>Company</h4><ul class="ft-links"><li><a onclick="showPage('about')">About Us</a></li><li><a onclick="showPage('blog')">Blog</a></li><li><a onclick="showPage('contact')">Contact</a></li><li><a>Careers</a></li><li><a>Teach on UFT</a></li></ul></div>
+        <div class="ft-col"><h4>Support</h4><ul class="ft-links"><li><a>Help Center</a></li><li><a>Privacy Policy</a></li><li><a>Terms of Service</a></li><li><a>Refund Policy</a></li><li><a onclick="openAI()">🤖 AI Support</a></li></ul></div>
+      </div>
+      <div class="ft-bot">
+        <span>© 2025 Uttarakhand Future Technology. All rights reserved. Founded by <strong>Harish Singh</strong>.</span>
+        <span>Made with ❤️ in Uttarakhand, India 🇮🇳</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ===================== COURSES PAGE ===================== -->
+<div class="page" id="page-courses">
+  <div style="max-width:1240px;margin:0 auto;padding:100px 48px 80px">
+    <div class="sec-head fade-in" style="text-align:left;margin-bottom:32px">
+      <div class="sec-tag">All Courses</div>
+      <h2 class="sec-title">Explore All Courses</h2>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px" class="fade-in">
+      <select class="fi" style="width:auto" onchange="filterC()" id="cf-cat">
+        <option value="all">All Categories</option>
+        <option value="Technology">Technology</option>
+        <option value="Data Science">Data Science</option>
+        <option value="Cyber Security">Cyber Security</option>
+        <option value="Digital Marketing">Digital Marketing</option>
+        <option value="Programming">Programming</option>
+        <option value="Languages">Languages</option>
+      </select>
+      <select class="fi" style="width:auto" onchange="filterC()" id="cf-lvl">
+        <option value="all">All Levels</option>
+        <option value="Beginner">Beginner</option>
+        <option value="Intermediate">Intermediate</option>
+      </select>
+      <select class="fi" style="width:auto" onchange="filterC()" id="cf-price">
+        <option value="all">All Prices</option>
+        <option value="low">Under ₹200</option>
+        <option value="mid">₹200–₹400</option>
+        <option value="high">₹400+</option>
+      </select>
+    </div>
+    <div class="courses-grid fade-in" id="allCoursesGrid"></div>
+  </div>
+  <footer><div class="ft-inner"><div class="ft-bot"><span>© 2025 Uttarakhand Future Technology</span><button class="btn btn-ghost" onclick="showPage('home')">← Back to Home</button></div></div></footer>
+</div>
+
+<!-- ===================== COURSE DETAIL PAGE ===================== -->
+<div class="page" id="page-detail">
+  <div class="detail-layout">
+    <div>
+      <div class="breadcrumb fade-in"><span onclick="showPage('home')">Home</span> › <span onclick="showPage('courses')">Courses</span> › <span id="dcat"></span></div>
+      <h1 class="detail-title fade-in" id="dtitle">Data Science Beginner</h1>
+      <div class="detail-meta fade-in">
+        <div class="m-badge">⭐ <strong style="color:var(--amber)">4.9</strong> (1,247 reviews)</div>
+        <div class="m-badge">👥 3,200 students</div>
+        <div class="m-badge">🕐 <span id="dhours">6.5</span> hours</div>
+        <div class="m-badge">📅 Updated 2025</div>
+        <div class="m-badge">🌐 English</div>
+      </div>
+      <div class="detail-meta fade-in" style="margin-bottom:28px;background:var(--surf);border:1px solid var(--b1);border-radius:var(--r2);padding:16px">
+        <img src="harish.jpeg" onerror="this.src='logo.jpeg'" alt="Instructor" style="width:52px;height:52px;border-radius:50%;object-fit:cover;">
+        <div><div style="font-size:11px;color:var(--ink3);margin-bottom:2px">Your Instructor</div><div style="font-weight:800;font-size:17px">Harish Singh</div><div style="font-size:13px;color:var(--ink2)">Founder, UFT · 5+ Years Teaching</div></div>
+      </div>
+      <!-- VIDEO PLAYER -->
+      <div class="vid-player fade-in">
+        <iframe id="detailVideo" width="100%" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Demo Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div style="position:absolute;top:14px;left:14px;padding:5px 14px;background:rgba(0,0,0,0.55);border:1px solid rgba(255,255,255,0.15);border-radius:20px;font-size:12px;z-index:2">🤖 AI-Generated Demo Preview</div>
+      </div>
+      <!-- TABS -->
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab(this,'curriculum')">Curriculum</button>
+        <button class="tab-btn" onclick="switchTab(this,'overview')">Overview</button>
+        <button class="tab-btn" onclick="switchTab(this,'reviews')">Reviews</button>
+        <button class="tab-btn" onclick="switchTab(this,'feedback')">Feedback</button>
+      </div>
+      <div id="tab-curriculum"><h3 style="font-size:18px;font-weight:700;margin-bottom:16px">Course Content · 6.5 hrs · 24 lessons</h3><div id="currList"></div></div>
+      <div id="tab-overview" style="display:none"><h3 style="font-size:18px;font-weight:700;margin-bottom:16px">What You'll Learn</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px"><div style="display:flex;gap:8px;font-size:14px;color:var(--ink2)"><span style="color:var(--emerald)">✓</span>Python programming</div><div style="display:flex;gap:8px;font-size:14px;color:var(--ink2)"><span style="color:var(--emerald)">✓</span>Data analysis with Pandas</div><div style="display:flex;gap:8px;font-size:14px;color:var(--ink2)"><span style="color:var(--emerald)">✓</span>Data visualization</div><div style="display:flex;gap:8px;font-size:14px;color:var(--ink2)"><span style="color:var(--emerald)">✓</span>Machine learning basics</div><div style="display:flex;gap:8px;font-size:14px;color:var(--ink2)"><span style="color:var(--emerald)">✓</span>Real project portfolio</div><div style="display:flex;gap:8px;font-size:14px;color:var(--ink2)"><span style="color:var(--emerald)">✓</span>Freelancing with data skills</div></div></div>
+      <div id="tab-reviews" style="display:none">
+        <div style="display:flex;gap:40px;margin-bottom:28px;align-items:center"><div style="text-align:center"><div style="font-size:64px;font-weight:800;font-family:'Bricolage Grotesque',sans-serif;color:var(--amber)">4.9</div><div class="stars" style="font-size:20px">★★★★★</div></div><div style="flex:1"><div style="display:flex;gap:10px;align-items:center;margin-bottom:6px"><div style="background:rgba(251,191,36,0.2);height:7px;border-radius:4px;flex:1;overflow:hidden"><div style="background:var(--amber);height:100%;width:92%;border-radius:4px"></div></div><span style="font-size:12px;color:var(--ink2);width:30px">92%</span></div><div style="display:flex;gap:10px;align-items:center;margin-bottom:6px"><div style="background:rgba(251,191,36,0.2);height:7px;border-radius:4px;flex:1;overflow:hidden"><div style="background:var(--amber);height:100%;width:6%;border-radius:4px"></div></div><span style="font-size:12px;color:var(--ink2);width:30px">6%</span></div><div style="display:flex;gap:10px;align-items:center"><div style="background:rgba(251,191,36,0.2);height:7px;border-radius:4px;flex:1;overflow:hidden"><div style="background:var(--amber);height:100%;width:2%;border-radius:4px"></div></div><span style="font-size:12px;color:var(--ink2);width:30px">2%</span></div></div></div>
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <div style="background:var(--surf);border:1px solid var(--b1);border-radius:12px;padding:20px"><div style="display:flex;gap:10px;margin-bottom:10px"><div style="width:36px;height:36px;background:var(--g1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800">AK</div><div><div style="font-weight:700">Aman Kumar</div><div class="stars">★★★★★ <span style="color:var(--ink3);font-size:12px">3 days ago</span></div></div></div><p style="font-size:14px;color:var(--ink2)">Best data science course anywhere — Indian examples, simple teaching, clear explanations. Got my first freelance project after 6 weeks! Harish sir is truly exceptional.</p></div>
+          <div style="background:var(--surf);border:1px solid var(--b1);border-radius:12px;padding:20px"><div style="display:flex;gap:10px;margin-bottom:10px"><div style="width:36px;height:36px;background:var(--g1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800">SV</div><div><div style="font-weight:700">Sneha Verma</div><div class="stars">★★★★★ <span style="color:var(--ink3);font-size:12px">1 week ago</span></div></div></div><p style="font-size:14px;color:var(--ink2)">The certificate looks incredibly professional! The course is structured so well that even my non-technical friends understood it. Absolutely worth every rupee.</p></div>
+        </div>
+      </div>
+      <div id="tab-feedback" style="display:none">
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:16px">Share Your Feedback</h3>
+        <form onsubmit="submitFeedback(event)">
+          <div style="margin-bottom:16px">
+            <label style="display:block;margin-bottom:8px;font-weight:600">Rating</label>
+            <div class="stars" style="font-size:24px">★★★★★</div>
+          </div>
+          <div style="margin-bottom:16px">
+            <label style="display:block;margin-bottom:8px;font-weight:600">Your Review</label>
+            <textarea style="width:100%;height:100px;padding:12px;border:1px solid var(--b1);border-radius:8px;background:var(--bg2);color:var(--ink);font-family:'Instrument Sans',sans-serif" placeholder="Tell us what you think about this course..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-prime">Submit Feedback</button>
+        </form>
+      </div>
+    </div>
+    <!-- BUY CARD -->
+    <div>
+      <div class="buy-card fade-in">
+        <div class="buy-price" id="dprice">₹349</div>
+        <div class="buy-orig" id="dorig">₹1,499 <span style="color:var(--emerald);font-size:14px;text-decoration:none">77% OFF</span></div>
+        <div style="font-size:13px;color:var(--amber);margin-bottom:20px">⏳ Offer ends in 2 days!</div>
+        <div class="coupon-row">
+          <input class="coup-fld" id="couponInp" placeholder="Enter code: UFT199" type="text">
+          <button class="coup-btn" onclick="applyCoupon()">Apply</button>
+        </div>
+        <div class="coup-hint" id="couponHint" style="display:none">✓ Code applied! Extra 20% off added.</div>
+        <button class="btn btn-prime btn-lg" style="width:100%;justify-content:center;margin-bottom:12px" onclick="showToast('🎉 Added to cart! Proceeding to payment...')">🛒 Add to Cart</button>
+        <button class="btn btn-outline btn-lg" style="width:100%;justify-content:center;margin-bottom:20px" onclick="openUpiModal()">💳 Pay with UPI</button>
+        <ul class="buy-feats">
+          <li>Lifetime access</li>
+          <li>Certificate of Completion</li>
+          <li>Downloadable resources</li>
+          <li>Mobile & tablet access</li>
+          <li>WhatsApp support group</li>
+          <li>30-day money-back guarantee</li>
+        </ul>
+        <div style="text-align:center;font-size:12px;color:var(--ink3);margin-bottom:16px">🔒 UPI payments accepted via PhonePe, GPay, Paytm, BHIM, and all UPI apps.</div>
+        <div style="background:rgba(79,143,255,0.08);border:1px solid rgba(79,143,255,0.18);border-radius:12px;padding:14px;font-size:13px;line-height:1.5;text-align:center">
+          <strong>UPI ID</strong><br>uft@upi<br><span style="color:var(--ink2);font-size:12px">Pay directly with your favorite UPI app.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== ABOUT PAGE ===================== -->
+<div class="page" id="page-about">
+  <section style="padding:110px 48px 80px">
+    <div class="sec-inner">
+      <div class="about-grid">
+        <div class="fade-in">
+          <div class="founder-wrap">
+            <img class="f-photo" src="harish.jpeg" onerror="this.src='logo.jpeg'" alt="Harish Singh">
+            <div class="f-name">Harish Singh</div>
+            <div class="f-role">Founder & Lead Instructor · Uttarakhand Future Technology</div>
+            <p class="f-bio">A passionate educator from the mountains of Uttarakhand, Harish built this platform with one simple mission: make world-class digital education truly accessible to every Indian student — regardless of their financial background or location.</p>
+            <div class="f-tags">
+              <span class="f-tag">EdTech Pioneer</span>
+              <span class="f-tag">Tech Educator</span>
+              <span class="f-tag">Uttarakhand Native</span>
+              <span class="f-tag">5+ Years Teaching</span>
+            </div>
+          </div>
+          <div style="margin-top:18px;background:var(--surf);border:1px solid var(--b1);border-radius:var(--r2);padding:20px">
+            <div style="font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px">Platform Milestones</div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;gap:12px"><div style="width:8px;height:8px;background:var(--sky);border-radius:50%;margin-top:5px"></div><div><div style="font-weight:700;font-size:14px">2024 — Platform Launch</div><div style="font-size:13px;color:var(--ink3)">First 500 students in 30 days</div></div></div>
+              <div style="display:flex;gap:12px"><div style="width:8px;height:8px;background:var(--violet);border-radius:50%;margin-top:5px"></div><div><div style="font-weight:700;font-size:14px">Mid 2024 — 5,000 Students</div><div style="font-size:13px;color:var(--ink3)">Expanded to 6 categories</div></div></div>
+              <div style="display:flex;gap:12px"><div style="width:8px;height:8px;background:var(--cyan);border-radius:50%;margin-top:5px"></div><div><div style="font-weight:700;font-size:14px">2025 — 12,000+ Students</div><div style="font-size:13px;color:var(--ink3)">India-wide recognition</div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="about-txt fade-in">
+          <div class="sec-tag" style="margin-bottom:14px">Our Story</div>
+          <h2>Empowering Uttarakhand.<br>Inspiring India.</h2>
+          <p>Growing up in the mountains of Uttarakhand, Harish Singh saw talented young people struggle to access quality education that could change their lives. High fees, distant cities, and complicated jargon kept millions from reaching their potential.</p>
+          <p>In 2024, he launched Uttarakhand Future Technology with a bold commitment: world-class digital education at prices that everyone can afford. Not as a gimmick — but as a genuine mission.</p>
+          <p>Today, 12,000+ students from across India are learning, earning, and building careers they once only dreamed of. And we're just getting started.</p>
+          <ul class="val-list">
+            <li><div class="val-icon">🌄</div><div><div class="val-t">Rooted in Uttarakhand</div><div class="val-d">Built to serve the hills, designed to impact the nation.</div></div></li>
+            <li><div class="val-icon">💡</div><div><div class="val-t">Practical-First Education</div><div class="val-d">Every lesson is hands-on, real-world, and immediately applicable.</div></div></li>
+            <li><div class="val-icon">❤️</div><div><div class="val-t">Radically Affordable</div><div class="val-d">Price should never be a barrier between a student and a better life.</div></div></li>
+          </ul>
+          <div style="display:flex;gap:12px;margin-top:32px;flex-wrap:wrap">
+            <button class="btn btn-prime btn-lg" onclick="showPage('courses')">Explore Courses</button>
+            <a class="btn btn-ghost btn-lg" href="mailto:Hzzzx06@gmail.com">📧 Contact Harish</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer><div class="ft-inner"><div class="ft-bot"><span>© 2025 Uttarakhand Future Technology · Harish Singh</span><button class="btn btn-ghost" onclick="showPage('home')">← Home</button></div></div></footer>
+</div>
+
+<!-- ===================== BLOG PAGE ===================== -->
+<div class="page" id="page-blog">
+  <section style="padding:110px 48px 80px">
+    <div class="sec-inner">
+      <div class="sec-head fade-in">
+        <div class="sec-tag">Blog</div>
+        <h2 class="sec-title">Learn & Grow</h2>
+        <p class="sec-sub">Tips, guides and insights to help you build a better future online.</p>
+      </div>
+      <div class="blog-grid fade-in">
+        <div class="blog-card"><div class="blog-thumb" style="background:linear-gradient(135deg,#0a1020,#111d36)">📊</div><div class="blog-body"><div class="blog-meta"><span class="blog-cat">Data Science</span><span>Jan 2025</span><span>8 min read</span></div><h3 class="blog-title">How to Start a Data Science Career in 2025 Without a Degree</h3><p class="blog-exc">You don't need a fancy degree or a big budget to break into data science. Here's the exact roadmap our students use to land their first freelance projects...</p><span class="blog-read" onclick="showToast('📖 Blog opening...')">Read More →</span></div></div>
+        <div class="blog-card"><div class="blog-thumb" style="background:linear-gradient(135deg,#1a001a,#2d0040)">📱</div><div class="blog-body"><div class="blog-meta"><span class="blog-cat">Digital Marketing</span><span>Jan 2025</span><span>6 min read</span></div><h3 class="blog-title">10 Instagram Growth Hacks That Actually Work in 2025</h3><p class="blog-exc">If you want to grow your Instagram following organically and convert followers into real income, these are the exact tactics our students use right now...</p><span class="blog-read" onclick="showToast('📖 Blog opening...')">Read More →</span></div></div>
+        <div class="blog-card"><div class="blog-thumb" style="background:linear-gradient(135deg,#001a00,#003300)">🔐</div><div class="blog-body"><div class="blog-meta"><span class="blog-cat">Cyber Security</span><span>Dec 2024</span><span>7 min read</span></div><h3 class="blog-title">Why Cyber Security is India's Hottest Career in 2025</h3><p class="blog-exc">India is facing a massive shortage of cybersecurity professionals. Companies are paying lakhs for certified experts — and the skills can be learned in 3 months...</p><span class="blog-read" onclick="showToast('📖 Blog opening...')">Read More →</span></div></div>
+      </div>
+    </div>
+  </section>
+  <footer><div class="ft-inner"><div class="ft-bot"><span>© 2025 Uttarakhand Future Technology</span><button class="btn btn-ghost" onclick="showPage('home')">← Home</button></div></div></footer>
+</div>
+
+<!-- ===================== CONTACT PAGE ===================== -->
+<div class="page" id="page-contact">
+  <section style="padding:110px 48px 80px">
+    <div class="sec-inner">
+      <div class="sec-head fade-in">
+        <div class="sec-tag">Contact</div>
+        <h2 class="sec-title">Let's Connect</h2>
+        <p class="sec-sub">Have a question? We reply within 24 hours.</p>
+      </div>
+      <div class="contact-grid fade-in">
+        <div class="c-info">
+          <h3>Reach Out Anytime</h3>
+          <p>Whether it's a course question, technical support, or partnership enquiry — our team is ready to help.</p>
+          <div class="c-items">
+            <div class="c-item"><div class="c-icon">📧</div><div><div class="c-lbl">Gmail (Direct)</div><div class="c-val"><a href="mailto:Hzzzx06@gmail.com" style="color:var(--sky)">Hzzzx06@gmail.com</a></div></div></div>
+            <div class="c-item"><div class="c-icon">📞</div><div><div class="c-lbl">Phone / WhatsApp</div><div class="c-val">+91 90453 15264</div></div></div>
+            <div class="c-item"><div class="c-icon">📍</div><div><div class="c-lbl">Location</div><div class="c-val">Dehradun, Uttarakhand, India</div></div></div>
+            <div class="c-item"><div class="c-icon">🕐</div><div><div class="c-lbl">Support Hours</div><div class="c-val">Mon–Sat, 9 AM – 7 PM IST</div></div></div>
+          </div>
+          <div class="wa-banner">
+            <div class="wa-icon">💬</div>
+            <div class="wa-txt">
+              <strong>Follow on WhatsApp Channel</strong>
+              <span>Get daily tips, updates & exclusive offers</span>
+              <a href="https://whatsapp.com/channel/0029Vb7R7CdKAwEhKPOskT3G" target="_blank" style="display:block;margin-top:8px;font-size:13px;color:#25d366;font-weight:700">Join Now → Uttarakhand Future Technology</a>
+            </div>
+          </div>
+        </div>
+          <form id="contactForm" class="cf" onsubmit="submitContactForm(event)">
+          <h3 style="font-size:22px;font-weight:800;margin-bottom:24px">Send a Message</h3>
+          <div class="fr"><div class="fg"><label class="fl">First Name</label><input class="fi" name="firstName" placeholder="Harish" type="text" required></div><div class="fg"><label class="fl">Last Name</label><input class="fi" name="lastName" placeholder="Singh" type="text" required></div></div>
+          <div class="fg"><label class="fl">Email</label><input class="fi" name="email" placeholder="you@gmail.com" type="email" required></div>
+          <div class="fg"><label class="fl">Subject</label><select class="fsel" name="subject"><option>Course Enquiry</option><option>Technical Support</option><option>Payment Issue</option><option>Partnership</option><option>Other</option></select></div>
+          <div class="fg"><label class="fl">Message</label><textarea class="fta" name="message" placeholder="How can we help you?" required></textarea></div>
+          <button class="btn btn-prime btn-lg" type="submit" style="width:100%;justify-content:center">Send Message 📨</button>
+        </form>
+      </div>
+    </div>
+  </section>
+  <footer><div class="ft-inner"><div class="ft-bot"><span>© 2025 Uttarakhand Future Technology · <a href="mailto:Hzzzx06@gmail.com" style="color:var(--sky)">Hzzzx06@gmail.com</a></span><button class="btn btn-ghost" onclick="showPage('home')">← Home</button></div></div></footer>
+</div>
+
+<!-- ===================== LOGIN PAGE ===================== -->
+<div class="page" id="page-login">
+  <div class="auth-wrap"><div style="position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 20%,rgba(79,143,255,0.08),transparent)"></div>
+    <div class="auth-card fade-in">
+      <div style="text-align:center;margin-bottom:28px"><div class="logo-mark" style="margin:0 auto 12px;width:54px;height:54px"><img src="logo.jpeg" alt="UFT logo"><span class="logo-fallback">⛰️</span></div><div class="logo-name">Uttarakhand Future Technology</div></div>
+      <h2 class="auth-title">Welcome Back 👋</h2>
+      <p class="auth-sub">Continue your learning journey</p>
+      <div class="auth-soc"><a href="/auth/google" class="soc-btn">🅖 Google</a><a href="/auth/facebook" class="soc-btn">Ⓕ Facebook</a></div>
+      <div class="auth-div">or continue with email</div>
+      <div class="fg"><label class="fl">Email</label><input class="fi" placeholder="you@gmail.com" type="email"></div>
+      <div class="fg"><label class="fl">Password</label><input class="fi" placeholder="••••••••" type="password"></div>
+      <div style="text-align:right;margin-bottom:20px"><span class="auth-lnk" style="font-size:13px">Forgot password?</span></div>
+      <button class="btn btn-prime btn-lg" style="width:100%;justify-content:center" onclick="doLogin()">Log In →</button>
+      <div class="auth-foot">No account? <span class="auth-lnk" onclick="showPage('signup')">Sign up free</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SIGNUP PAGE ===================== -->
+<div class="page" id="page-signup">
+  <div class="auth-wrap"><div style="position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 20%,rgba(139,92,246,0.08),transparent)"></div>
+    <div class="auth-card fade-in">
+      <div style="text-align:center;margin-bottom:28px"><div class="logo-mark" style="margin:0 auto 12px;width:54px;height:54px"><img src="logo.jpeg" alt="UFT logo"><span class="logo-fallback">⛰️</span></div><div class="logo-name">Uttarakhand Future Technology</div></div>
+      <h2 class="auth-title">Join UFT 🚀</h2>
+      <p class="auth-sub">12,000+ students already learning</p>
+      <div class="fr"><div class="fg"><label class="fl">First Name</label><input class="fi" placeholder="Harish" type="text"></div><div class="fg"><label class="fl">Last Name</label><input class="fi" placeholder="Singh" type="text"></div></div>
+      <div class="fg"><label class="fl">Email (Gmail)</label><input class="fi" placeholder="you@gmail.com" type="email"></div>
+      <div class="fg"><label class="fl">Phone (WhatsApp)</label><input class="fi" name="phone" placeholder="+91 90453 15264" type="tel"></div>
+      <div class="fg"><label class="fl">Password</label><input class="fi" placeholder="Min. 8 characters" type="password"></div>
+      <div style="margin-bottom:20px"><input type="checkbox" id="agree"> <label for="agree" style="font-size:13px;color:var(--ink2)">I agree to <span class="auth-lnk">Terms</span> & <span class="auth-lnk">Privacy Policy</span></label></div>
+      <button class="btn btn-prime btn-lg" style="width:100%;justify-content:center" onclick="doSignup()">Create Account 🎓</button>
+      <div class="auth-foot">Already a member? <span class="auth-lnk" onclick="showPage('login')">Log in</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== DASHBOARD ===================== -->
+<div class="page" id="page-dashboard">
+  <div class="dash-layout">
+    <aside class="sidebar">
+      <div style="padding:0 24px 20px;display:flex;gap:12px;align-items:center;border-bottom:1px solid var(--b1);margin-bottom:16px">
+        <div style="width:46px;height:46px;border-radius:50%;background:var(--g1);display:flex;align-items:center;justify-content:center;font-weight:800;font-family:'Bricolage Grotesque',sans-serif">SU</div>
+        <div><div style="font-weight:700;font-size:14px">Student User</div><div style="font-size:12px;color:var(--ink3)">Free Plan</div></div>
+      </div>
+      <div class="sb-lbl">Main</div>
+      <div class="sb-item active"><span class="sb-ico">🏠</span>Dashboard</div>
+      <div class="sb-item" onclick="showToast('📚 My Courses...')"><span class="sb-ico">📚</span>My Courses</div>
+      <div class="sb-item" onclick="showToast('📜 Certificates...')"><span class="sb-ico">📜</span>Certificates</div>
+      <div class="sb-item" onclick="showToast('❤️ Wishlist...')"><span class="sb-ico">❤️</span>Wishlist</div>
+      <div class="sb-lbl" style="margin-top:16px">Account</div>
+      <div class="sb-item" onclick="showToast('⚙️ Settings...')"><span class="sb-ico">⚙️</span>Settings</div>
+      <div class="sb-item" onclick="showPage('home')"><span class="sb-ico">🚪</span>Logout</div>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-hi"><h2>Good Morning, Student! 👋</h2><p>You have 2 courses in progress. Keep it up!</p></div>
+      <div class="dash-stats">
+        <div class="ds"><div class="ds-lbl">Enrolled Courses</div><div class="ds-val">3</div></div>
+        <div class="ds"><div class="ds-lbl">Hours Learned</div><div class="ds-val">4.2</div></div>
+        <div class="ds"><div class="ds-lbl">Certificates</div><div class="ds-val">1</div></div>
+        <div class="ds"><div class="ds-lbl">Day Streak</div><div class="ds-val">7🔥</div></div>
+      </div>
+      <div class="enrolled-courses"><h3 style="font-size:20px;font-weight:700;margin-bottom:20px">Continue Learning</h3>
+        <div class="enroll-list">
+          <div class="enroll-item"><div class="e-thumb">🎬</div><div class="e-info"><div class="e-title">Mobile Video Editing</div><div class="e-meta">Harish Singh · 3 of 12 lessons</div><div class="prog-wrap"><div class="prog-bar" style="width:25%"></div></div><div class="e-prog" style="margin-top:6px">25% complete</div></div><button class="btn-enroll" onclick="showToast('▶ Resuming...')">Resume →</button></div>
+          <div class="enroll-item"><div class="e-thumb">📱</div><div class="e-info"><div class="e-title">Instagram Growth Basics</div><div class="e-meta">Harish Singh · 7 of 10 lessons</div><div class="prog-wrap"><div class="prog-bar" style="width:70%"></div></div><div class="e-prog" style="margin-top:6px">70% — almost there!</div></div><button class="btn-enroll" onclick="showToast('▶ Resuming...')">Resume →</button></div>
+          <div class="enroll-item"><div class="e-thumb">🗣️</div><div class="e-info"><div class="e-title">Basic English Speaking</div><div class="e-meta">Harish Singh · 10 of 10 ✓ Completed!</div><div class="prog-wrap"><div class="prog-bar" style="width:100%"></div></div><div class="e-prog" style="margin-top:6px;color:var(--emerald)">✓ Certificate ready to download!</div></div><button class="btn-enroll" style="background:var(--emerald)" onclick="showToast('📜 Certificate downloading...')">Get Cert 📜</button></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ===================== ADMIN PAGE ===================== -->
+<div class="page" id="page-admin">
+  <div class="adm-head">
+    <div style="display:flex;align-items:center;gap:14px"><div class="logo-mark"><img src="logo.jpeg" alt="UFT logo"><span class="logo-fallback">⛰️</span></div><div><div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:15px">Admin Panel</div><div style="font-size:11px;color:var(--ink3)">Uttarakhand Future Technology</div></div></div>
+    <div style="display:flex;gap:12px;align-items:center"><div style="font-size:13px;color:var(--ink2)">Logged in as <strong>Harish Singh</strong> · <a href="mailto:Hzzzx06@gmail.com" style="color:var(--sky)">Hzzzx06@gmail.com</a></div><button class="btn btn-ghost" onclick="showPage('home')">← View Site</button></div>
+  </div>
+  <div class="adm-layout">
+    <aside class="sidebar" style="top:64px;height:calc(100vh - 64px)">
+      <div class="sb-lbl">Dashboard</div>
+      <div class="sb-item active"><span class="sb-ico">📊</span>Overview</div>
+      <div class="sb-lbl" style="margin-top:16px">Content</div>
+      <div class="sb-item" onclick="showToast('📚 Courses manager...')"><span class="sb-ico">📚</span>Courses</div>
+      <div class="sb-item" onclick="showToast('👥 Students list...')"><span class="sb-ico">👥</span>Students</div>
+      <div class="sb-item" onclick="showToast('🎥 Upload course...')"><span class="sb-ico">🎥</span>Upload Course</div>
+      <div class="sb-lbl" style="margin-top:16px">Finance</div>
+      <div class="sb-item" onclick="showToast('💰 Payments...')"><span class="sb-ico">💰</span>Payments</div>
+      <div class="sb-item" onclick="showToast('🎟️ Coupons...')"><span class="sb-ico">🎟️</span>Coupons</div>
+    </aside>
+    <div style="padding:40px">
+      <div style="margin-bottom:32px"><h2 style="font-size:28px;font-weight:800;margin-bottom:4px">Dashboard Overview</h2><p style="color:var(--ink2);font-size:14px">Contact: <a href="mailto:Hzzzx06@gmail.com" style="color:var(--sky)">Hzzzx06@gmail.com</a></p></div>
+      <div class="adm-cards">
+        <div class="adm-card"><div class="adm-ico">👥</div><div class="adm-val">12,847</div><div class="adm-lbl">Total Students</div></div>
+        <div class="adm-card"><div class="adm-ico">📚</div><div class="adm-val">6</div><div class="adm-lbl">Active Courses</div></div>
+        <div class="adm-card"><div class="adm-ico">💰</div><div class="adm-val">₹3.1L</div><div class="adm-lbl">Total Revenue</div></div>
+        <div class="adm-card"><div class="adm-ico">📜</div><div class="adm-val">8,320</div><div class="adm-lbl">Certificates Issued</div></div>
+      </div>
+      <div style="background:var(--surf);border:1px solid var(--b1);border-radius:var(--r2);overflow:hidden;margin-bottom:28px">
+        <div style="padding:18px 24px;border-bottom:1px solid var(--b1);display:flex;justify-content:space-between;align-items:center">
+          <h3 style="font-size:17px;font-weight:700">Recent Enrollments</h3>
+          <button class="btn btn-ghost" onclick="showToast('📋 Full list...')">View All</button>
+        </div>
+        <table class="tbl">
+          <thead><tr><th>Student</th><th>Course</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Priya Sharma</td><td>Instagram Growth Basics</td><td style="color:var(--amber)">₹149</td><td>Jan 2025</td><td><span class="sp sp-ok">Active</span></td></tr>
+            <tr><td>Aman Kumar</td><td>Data Science Beginner</td><td style="color:var(--amber)">₹349</td><td>Jan 2025</td><td><span class="sp sp-ok">Active</span></td></tr>
+            <tr><td>Ritu Negi</td><td>Cyber Security Intro</td><td style="color:var(--amber)">₹499</td><td>Jan 2025</td><td><span class="sp sp-ok">Active</span></td></tr>
+            <tr><td>Suresh Rawat</td><td>Mobile Video Editing</td><td style="color:var(--amber)">₹199</td><td>Jan 2025</td><td><span class="sp sp-pd">Pending</span></td></tr>
+            <tr><td>Anjali Bisht</td><td>Basic English Speaking</td><td style="color:var(--amber)">₹129</td><td>Dec 2024</td><td><span class="sp sp-ok">Active</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="background:var(--surf);border:1px solid var(--b1);border-radius:var(--r2);padding:24px">
+        <h3 style="font-size:17px;font-weight:700;margin-bottom:18px">Quick Actions</h3>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn btn-prime" onclick="showToast('🎥 Course upload panel...')">+ Upload New Course</button>
+          <button class="btn btn-ghost" onclick="showToast('🎟️ Coupon: UFT199 active')">🎟️ Manage Coupons</button>
+          <button class="btn btn-ghost" onclick="showToast('📧 Email campaign...')">📧 Newsletter</button>
+          <button class="btn btn-ghost" onclick="openAI()">🤖 AI Support Tool</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== VIDEO MODAL ===================== -->
+<div class="modal-overlay" id="demoModal" onclick="closeDemoModal(event)">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeDemoModal(true)">×</div>
+    <div class="modal-vid">
+      <div class="modal-vid-icon" id="modalIcon">📊</div>
+      <div class="waveform" id="waveform">
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+      </div>
+      <div class="modal-vid-label" style="margin-top:16px">
+        <span id="modalTitle">Demo Preview</span>
+        <span class="ai-badge">🤖 AI Generated</span>
+      </div>
+    </div>
+    <div class="modal-info">
+      <div style="font-size:13px;color:var(--ink2);line-height:1.65">
+        <strong style="color:var(--ink)">Free Demo Preview</strong> — This is an AI-generated preview of the course content. 
+        Enroll to unlock the full <strong id="modalLen">6.5 hours</strong> of content, exercises, and your certificate!
+      </div>
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button class="btn btn-prime" style="flex:1;justify-content:center" onclick="closeDemoModal(true);showPage('courses')">🚀 Enroll Now</button>
+        <button class="btn btn-ghost" onclick="closeDemoModal(true)">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== UPI PAYMENT MODAL -->
+<div class="modal-overlay" id="upiModal" onclick="closeUpiModal(event)">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeUpiModal(true)">×</div>
+    <div class="modal-info">
+      <h3 style="margin-bottom:16px">Complete Payment</h3>
+      <div style="display:grid;gap:16px">
+        <div style="background:rgba(79,143,255,0.08);border:1px solid rgba(79,143,255,0.18);border-radius:16px;padding:18px;text-align:center">
+          <div style="font-size:18px;font-weight:600;margin-bottom:8px">₹129</div>
+          <div style="font-size:14px;color:var(--ink2)">Basic English Speaking Course</div>
+          <div style="font-size:12px;color:var(--emerald);margin-top:4px">Lifetime Access + Certificate</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:18px;line-height:1.6">
+          <div><strong>Secure Payment via Razorpay</strong></div>
+          <div style="margin-top:8px;font-size:14px;color:var(--ink2)">Pay securely with UPI, Cards, Net Banking, Wallets</div>
+          <button class="btn btn-prime" style="width:100%;margin-top:16px" onclick="payWithRazorpay()">Pay ₹129 Now</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:18px"><button class="btn btn-ghost" onclick="closeUpiModal(true)">Close</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== AI CHAT ===================== -->
+<div class="ai-bubble">
+  <div class="ai-label">🤖 Ask AI Anything</div>
+  <button class="ai-toggle" onclick="openAI()" id="aiToggle">🤖</button>
+</div>
+
+<div class="ai-panel" id="aiPanel">
+  <div class="ai-head">
+    <div class="ai-av">🤖</div>
+    <div class="ai-head-txt"><strong>UFT AI Assistant</strong><span>Powered by Claude · Always here to help</span></div>
+    <div style="margin-left:auto;cursor:pointer;opacity:0.8;font-size:18px" onclick="closeAI()">×</div>
+  </div>
+  <div class="ai-msgs" id="aiMsgs">
+    <div class="ai-msg bot">👋 Namaste! I'm UFT's AI assistant powered by Claude. I can help you with course recommendations, doubts, career advice, and more. What's on your mind?</div>
+  </div>
+  <div class="ai-quick" id="aiQuick">
+    <button class="ai-qbtn" onclick="askAI('Which course should I start with?')">Which course first?</button>
+    <button class="ai-qbtn" onclick="askAI('How much can I earn after learning Data Science?')">Earning potential?</button>
+    <button class="ai-qbtn" onclick="askAI('What is the coupon code for a discount?')">Get discount 🎟️</button>
+    <button class="ai-qbtn" onclick="askAI('Tell me about the Cyber Security course')">Cyber Security?</button>
+  </div>
+  <div class="ai-inp-row">
+    <input class="ai-inp" id="aiInp" placeholder="Type your question..." onkeypress="if(event.key==='Enter')sendAI()">
+    <button class="ai-send" onclick="sendAI()">➤</button>
+  </div>
+</div>
+
+<!-- WA FLOAT BUTTON -->
+<a class="wa-float" href="https://whatsapp.com/channel/0029Vb7R7CdKAwEhKPOskT3G" target="_blank" title="Follow Uttarakhand Future Technology on WhatsApp">💬</a>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-zone" id="toastZone"></div>
+
+<script>
+// ===================== COURSE DATA (correct pricing) =====================
+const COURSES = [
+  {id:1, title:'Mobile Video Editing', cat:'Technology', level:'Beginner', price:199, orig:999, rating:4.8, students:2341, hours:'3.5', icon:'🎬', badge:'hot', bg:'linear-gradient(135deg,#1a0e00,#3d2200)'},
+  {id:2, title:'Instagram Growth Basics', cat:'Digital Marketing', level:'Beginner', price:149, orig:799, rating:4.9, students:3102, hours:'4', icon:'📱', badge:'pop', bg:'linear-gradient(135deg,#1a001a,#2d0040)'},
+  {id:3, title:'Basic English Speaking', cat:'Languages', level:'Beginner', price:129, orig:599, rating:4.7, students:1876, hours:'5', icon:'🗣️', badge:'new', bg:'linear-gradient(135deg,#001a26,#003347)'},
+  {id:4, title:'Cyber Security Intro', cat:'Cyber Security', level:'Beginner', price:499, orig:2499, rating:4.9, students:1204, hours:'6', icon:'🔐', badge:'hot', bg:'linear-gradient(135deg,#001a00,#003300)'},
+  {id:5, title:'Data Science Beginner', cat:'Data Science', level:'Beginner', price:349, orig:1499, rating:4.9, students:3200, hours:'6.5', icon:'📊', badge:'pop', bg:'linear-gradient(135deg,#0a1020,#111d36)'},
+  {id:6, title:'Python for Beginners', cat:'Programming', level:'Beginner', price:249, orig:999, rating:4.8, students:980, hours:'5.5', icon:'🐍', badge:'new', bg:'linear-gradient(135deg,#001a14,#003326)'},
+];
+
+const BADGE_MAP = {hot:'🔥 Hot',new:'✨ New',pop:'⭐ Popular'};
+const BADGE_CLS = {hot:'badge-hot',new:'badge-new',pop:'badge-pop'};
+
+function makeCard(c){
+  const disc = Math.round((1-c.price/c.orig)*100);
+  return `<div class="course-card" onclick="openDetail(${c.id})">
+    <div class="c-thumb" style="background:${c.bg}">
+      <div class="c-thumb-icon">${c.icon}</div>
+      <div class="c-thumb-overlay"></div>
+      <span class="badge ${BADGE_CLS[c.badge]}">${BADGE_MAP[c.badge]}</span>
+      <div class="demo-btn" onclick="event.stopPropagation();openDemoModal('${c.title}','${c.icon}')">▶ Demo</div>
+    </div>
+    <div class="c-body">
+      <div class="c-cat">${c.cat}</div>
+      <h3 class="c-title">${c.title}</h3>
+      <div class="c-instructor"><div class="inst-av">HS</div>Harish Singh · ${c.hours} hrs</div>
+      <div class="c-rating"><span class="r-score">${c.rating}</span><span class="stars">${'★'.repeat(Math.floor(c.rating))}</span><span style="font-size:12px;color:var(--ink3)">(${c.students.toLocaleString()})</span></div>
+      <div class="c-footer">
+        <div><span class="c-price">₹${c.price}</span><span class="c-orig">₹${c.orig}</span></div>
+        <button class="btn-enroll">Enroll Now</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderGrid(id, list){
+  const el=document.getElementById(id);
+  if(el) el.innerHTML=list.map(makeCard).join('');
+}
+
+renderGrid('featuredGrid', COURSES.slice(0,3));
+renderGrid('allCoursesGrid', COURSES);
+
+// ===================== CURRICULUM =====================
+const CURR = [
+  {i:'▶',t:'Welcome & Course Overview',d:'5:00'},
+  {i:'▶',t:'Setting Up Your Environment',d:'12:00'},
+  {i:'▶',t:'Python Basics — Variables & Types',d:'18:00'},
+  {i:'▶',t:'Control Flow — If, Loops',d:'15:00'},
+  {i:'▶',t:'Functions & Modules',d:'20:00'},
+  {i:'▶',t:'Introduction to Pandas',d:'25:00'},
+  {i:'▶',t:'Data Cleaning & Manipulation',d:'30:00'},
+  {i:'▶',t:'Data Visualization with Matplotlib',d:'22:00'},
+  {i:'▶',t:'Introduction to Machine Learning',d:'35:00'},
+  {i:'📄',t:'Quiz — Python Fundamentals',d:'10:00'},
+  {i:'▶',t:'Your First ML Model',d:'40:00'},
+  {i:'📄',t:'Final Project',d:'15:00'},
+];
+const cl=document.getElementById('currList');
+if(cl) cl.innerHTML=CURR.map(l=>`<div class="curr-item"><div class="curr-ico">${l.i}</div><div class="curr-title">${l.t}</div><div class="curr-dur">${l.d}</div></div>`).join('');
+
+// ===================== PAGE ROUTING =====================
+let currentUser = null;
+let isAdmin = false;
+const ADMIN_EMAIL = 'Hzzzx06@gmail.com';
+
+async function checkAuth(){
+  try{
+    const res = await fetch('/api/user');
+    if(!res.ok) throw new Error('not auth');
+    const user = await res.json();
+    currentUser = user;
+    isAdmin = (user?.emails?.[0]?.value || '').toLowerCase() === ADMIN_EMAIL.toLowerCase();
+    const navAdmin = document.getElementById('nl-admin');
+    if(navAdmin) navAdmin.style.display = isAdmin ? 'inline-flex' : 'none';
+    const mobileAdmin = document.getElementById('ml-admin');
+    if(mobileAdmin) mobileAdmin.style.display = isAdmin ? 'block' : 'none';
+  }catch(e){
+    currentUser = null;
+    isAdmin = false;
+    const navAdmin = document.getElementById('nl-admin');
+    if(navAdmin) navAdmin.style.display = 'none';
+    const mobileAdmin = document.getElementById('ml-admin');
+    if(mobileAdmin) mobileAdmin.style.display = 'none';
+  }
+}
+
+function showPage(name){
+  if(name === 'admin' && !isAdmin){
+    showToast('🔐 Admin access restricted. Please log in with the admin account.');
+    name = 'login';
+  }
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const t=document.getElementById('page-'+name);
+  if(t){t.classList.add('active');window.scrollTo(0,0);}
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  const nl=document.getElementById('nl-'+name);
+  if(nl) nl.classList.add('active');
+  initFadeIns();
+  closeAI();
+}
+
+const COURSE_VIDEOS = {
+  1: 'dQw4w9WgXcQ',
+  2: '3M_5oYU-IsU',
+  3: 'Z3Z-2bBqJc0',
+  4: 'aQ1aKIgxlyQ',
+  5: 'OE7lKfJt2nI',
+  6: 'lY2yjAdbvdQ'
+};
+
+function openDetail(id){
+  const c=COURSES.find(x=>x.id===id);
+  if(!c) return;
+  document.getElementById('dtitle').textContent=c.title;
+  document.getElementById('dcat').textContent=c.cat;
+  document.getElementById('dprice').textContent='₹'+c.price;
+  document.getElementById('dhours').textContent=c.hours;
+  const disc=Math.round((1-c.price/c.orig)*100);
+  document.getElementById('dorig').innerHTML=`₹${c.orig} <span style="color:var(--emerald);font-size:14px;text-decoration:none">${disc}% OFF</span>`;
+  const videoId = COURSE_VIDEOS[c.id] || 'dQw4w9WgXcQ';
+  const iframe = document.getElementById('detailVideo');
+  if(iframe) iframe.src = `https://www.youtube.com/embed/${videoId}`;
+  showPage('detail');
+}
+
+function switchTab(btn,id){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  ['curriculum','overview','reviews'].forEach(t=>{
+    const el=document.getElementById('tab-'+t);
+    if(el) el.style.display=t===id?'block':'none';
+  });
+}
+
+// ===================== FILTERS =====================
+function filterC(){
+  const cat=document.getElementById('cf-cat').value;
+  const lvl=document.getElementById('cf-lvl').value;
+  const pr=document.getElementById('cf-price').value;
+  let list=[...COURSES];
+  if(cat!=='all') list=list.filter(c=>c.cat===cat);
+  if(lvl!=='all') list=list.filter(c=>c.level===lvl);
+  if(pr==='low') list=list.filter(c=>c.price<200);
+  if(pr==='mid') list=list.filter(c=>c.price>=200&&c.price<=400);
+  if(pr==='high') list=list.filter(c=>c.price>400);
+  renderGrid('allCoursesGrid',list);
+}
+
+// ===================== AUTH =====================
+function doLogin(){showToast('🔐 Logging you in...');setTimeout(()=>showPage('dashboard'),700)}
+function doSignup(){showToast('🎉 Account created! Welcome to UFT!');setTimeout(()=>showPage('dashboard'),900)}
+
+// ===================== COUPON =====================
+function applyCoupon(){
+  const v=document.getElementById('couponInp').value.toUpperCase().trim();
+  const h=document.getElementById('couponHint');
+  h.style.display='block';
+  if(v==='UFT199'){h.style.color='var(--emerald)';h.textContent='✓ Code UFT199 applied! Extra 20% off.';showToast('🎉 Coupon applied!')}
+  else{h.style.color='var(--rose)';h.textContent='✗ Invalid. Try: UFT199'}
+}
+
+// ===================== DEMO MODAL =====================
+function openDemoModal(title,icon){
+  document.getElementById('modalTitle').textContent=title;
+  document.getElementById('modalIcon').textContent=icon;
+  document.getElementById('demoModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeDemoModal(force){
+  if(force===true || (force&&force.target===document.getElementById('demoModal'))){
+    document.getElementById('demoModal').classList.remove('open');
+    document.body.style.overflow='';
+  }
+}
+
+function openUpiModal(){
+  document.getElementById('upiModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeUpiModal(force){
+  if(force===true || (force&&force.target===document.getElementById('upiModal'))){
+    document.getElementById('upiModal').classList.remove('open');
+    document.body.style.overflow='';
+  }
+}
+function copyUpi(){
+  navigator.clipboard.writeText('uft@upi').then(()=>{
+    showToast('✅ UPI ID copied to clipboard');
+  }).catch(()=>{
+    showToast('❌ Copy failed. Please type it manually.', 'warn');
+  });
+}
+
+async function payWithRazorpay(){
+  try {
+    const response = await fetch('/api/create-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: 129 }) // amount in rupees
+    });
+    const order = await response.json();
+    if (!response.ok) throw new Error(order.error || 'Failed to create order');
+
+    const options = {
+      key: 'rzp_test_your_test_key_id', // Replace with your test key_id
+      amount: order.amount,
+      currency: order.currency,
+      name: 'Uttarakhand Future Technology',
+      description: 'Basic English Speaking Course',
+      order_id: order.id,
+      handler: function (response) {
+        showToast('✅ Payment successful! Check your email for course access.');
+        closeUpiModal(true);
+        // Here you can redirect to dashboard or send confirmation
+      },
+      prefill: {
+        name: currentUser?.displayName || '',
+        email: currentUser?.emails?.[0]?.value || '',
+        contact: ''
+      },
+      theme: {
+        color: '#4f8fff'
+      }
+    };
+    const rzp = new Razorpay(options);
+    rzp.on('payment.failed', function (response) {
+      console.log('Payment failed:', response);
+      showToast('Payment failed: ' + response.error.description, 'warn');
+    });
+    rzp.open();
+  } catch (error) {
+    console.error('Payment error:', error);
+    showToast('❌ Payment failed. Please try again.', 'warn');
+  }
+}
+
+// ===================== AI CHAT (Claude API) =====================
+let aiOpen=false;
+const aiConv=[];
+
+function openAI(){
+  aiOpen=true;
+  document.getElementById('aiPanel').classList.add('open');
+  document.getElementById('aiToggle').style.display='none';
+  document.querySelector('.ai-label').style.display='none';
+}
+function closeAI(){
+  aiOpen=false;
+  document.getElementById('aiPanel').classList.remove('open');
+  document.getElementById('aiToggle').style.display='flex';
+  document.querySelector('.ai-label').style.display='block';
+}
+
+function askAI(q){
+  document.getElementById('aiInp').value=q;
+  sendAI();
+}
+
+async function sendAI(){
+  const inp=document.getElementById('aiInp');
+  const q=inp.value.trim();
+  if(!q) return;
+  inp.value='';
+  // Hide quick buttons after first interaction
+  document.getElementById('aiQuick').style.display='none';
+
+  addMsg(q,'user');
+  aiConv.push({role:'user',content:q});
+
+  const typing=addTyping();
+
+  try {
+    const resp = await fetch('/api/ai',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        system:`You are the intelligent AI assistant for "Uttarakhand Future Technology" (UFT), a premier affordable ed-tech platform founded by Harish Singh from Uttarakhand, India. You provide expert help on courses, technology, career advice, and any questions users have. Respond conversationally like ChatGPT, being helpful, accurate, and engaging. Answer any question comprehensively but concisely.
+
+Key info about UFT:
+- Founder: Harish Singh | Email: Hzzzx06@gmail.com | Phone: +91 90453 15264
+- WhatsApp: https://whatsapp.com/channel/0029Vb7R7CdKAwEhKPOskT3G
+- Social: Instagram, YouTube, Telegram, Email
+- Coupon code: UFT199 for 20% off
+- Courses:
+  - Mobile Video Editing: ₹199 (orig ₹999) - Learn editing on phone
+  - Instagram Growth Basics: ₹149 (orig ₹799) - Grow Instagram account
+  - Basic English Speaking: ₹129 (orig ₹599) - Improve speaking skills
+  - Cyber Security Intro: ₹499 (orig ₹2499) - Basics of cybersecurity
+  - Data Science Beginner: ₹349 (orig ₹1499) - Python, Pandas, ML basics
+  - Python for Beginners: ₹249 (orig ₹999) - Programming fundamentals
+- All courses: Lifetime access, certificate, WhatsApp support, 4.9 rating, 12,000+ students
+- Platform features: 3D animated background, AI support, feedback system, demo videos
+If user asks about anything else, provide helpful information or direct to contact.`,
+        messages:aiConv
+      })
+    });
+    const data=await resp.json();
+    typing.remove();
+    const reply=data.content?.[0]?.text||data.error||'Sorry, I could not get a response. Please email Hzzzx06@gmail.com for help!';
+    addMsg(reply,'bot');
+    aiConv.push({role:'assistant',content:reply});
+  } catch(e){
+    typing.remove();
+    addMsg('Having trouble connecting 🛜 Please email us at Hzzzx06@gmail.com or join our WhatsApp channel for quick help!','bot');
+  }
+}
+
+function addMsg(txt,role){
+  const msgs=document.getElementById('aiMsgs');
+  const d=document.createElement('div');
+  d.className=`ai-msg ${role}`;
+  d.textContent=txt;
+  msgs.appendChild(d);
+  msgs.scrollTop=msgs.scrollHeight;
+  return d;
+}
+function addTyping(){
+  const msgs=document.getElementById('aiMsgs');
+  const d=document.createElement('div');
+  d.className='ai-msg bot';
+  d.innerHTML='<div class="ai-typing"><span></span><span></span><span></span></div>';
+  msgs.appendChild(d);
+  msgs.scrollTop=msgs.scrollHeight;
+  return d;
+}
+
+// ===================== CONTACT FORM BACKEND =====================
+async function submitContactForm(event){
+  event.preventDefault();
+  const form=document.getElementById('contactForm');
+  const data=new FormData(form);
+  const payload={
+    firstName:data.get('firstName'),
+    lastName:data.get('lastName'),
+    email:data.get('email'),
+    subject:data.get('subject'),
+    message:data.get('message')
+  };
+
+  try {
+    const resp=await fetch('/api/contact',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    });
+    if(!resp.ok) throw new Error('Network error');
+    form.reset();
+    showToast('✅ Message sent! We reply within 24 hours.');
+  } catch(err){
+    console.error(err);
+    showToast('⚠️ Could not submit. Please email Hzzzx06@gmail.com', 'warn');
+  }
+}
+
+// ===================== FEEDBACK =====================
+function submitFeedback(event){
+  event.preventDefault();
+  const form = event.target;
+  const rating = 5; // For simplicity, assume 5 stars
+  const review = form.querySelector('textarea').value;
+  if(!review.trim()) return showToast('Please write a review', 'warn');
+  // Send to backend
+  fetch('/api/feedback', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ course: document.getElementById('dtitle').textContent, rating, review })
+  }).then(resp => {
+    if(resp.ok) showToast('Thank you for your feedback!');
+    else throw new Error();
+  }).catch(() => showToast('Could not submit feedback', 'warn'));
+  form.reset();
+}
+
+// ===================== TOAST =====================
+function showToast(msg,type=''){
+  const z=document.getElementById('toastZone');
+  const t=document.createElement('div');
+  t.className=`toast ${type}`;t.textContent=msg;
+  z.appendChild(t);setTimeout(()=>t.remove(),3700);
+}
+
+// ===================== COUNTDOWN =====================
+let secs=11*3600+47*60+22;
+setInterval(()=>{
+  if(--secs<0) secs=86399;
+  const h=String(Math.floor(secs/3600)).padStart(2,'0');
+  const m=String(Math.floor((secs%3600)/60)).padStart(2,'0');
+  const s=String(secs%60).padStart(2,'0');
+  const el=document.getElementById('cdown');
+  if(el) el.textContent=`${h}:${m}:${s}`;
+},1000);
+
+// ===================== MOBILE MENU =====================
+function toggleMenu(){document.getElementById('mMenu').classList.toggle('open')}
+
+// ===================== FADE IN (IntersectionObserver) =====================
+function initFadeIns(){
+  setTimeout(()=>{
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}});
+    },{threshold:0.1});
+    document.querySelectorAll('.fade-in:not(.vis)').forEach(el=>io.observe(el));
+  },80);
+}
+initFadeIns();
+checkAuth();
+
+// ===================== NAVBAR SCROLL =====================
+window.addEventListener('scroll',()=>{
+  const nav=document.getElementById('navbar');
+  nav.style.background=window.scrollY>60?'rgba(4,6,15,0.97)':'rgba(4,6,15,0.7)';
+});
+
+// ===================== CUSTOM CURSOR =====================
+const cur=document.getElementById('cursor');
+const ring=document.getElementById('cursor-ring');
+let rx=0,ry=0,cx=0,cy=0;
+window.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;cur.style.left=(cx-6)+'px';cur.style.top=(cy-6)+'px'});
+(function animRing(){rx+=(cx-rx)*0.18;ry+=(cy-ry)*0.18;ring.style.left=(rx-20)+'px';ring.style.top=(ry-20)+'px';requestAnimationFrame(animRing)})();
+document.querySelectorAll('button,a,[onclick]').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='scale(2.5)';ring.style.transform='scale(0.5)';ring.style.borderColor='rgba(79,143,255,0.8)'});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='scale(1)';ring.style.transform='scale(1)';ring.style.borderColor='rgba(79,143,255,0.5)'});
+});
+
+// ===================== 3D CANVAS ANIMATION =====================
+(function(){
+  const canvas = document.getElementById('heroCanvas');
+  if(!canvas) return;
+
+  // Scene, Camera, Renderer
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(0x000000, 0); // Transparent background
+
+  // Resize handler
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+  window.addEventListener('resize', onWindowResize);
+
+  // Mountain Terrain (simple plane with height variation)
+  const terrainGeometry = new THREE.PlaneGeometry(20, 20, 32, 32);
+  const terrainMaterial = new THREE.MeshBasicMaterial({ color: 0x0a1020, wireframe: true, transparent: true, opacity: 0.3 });
+  const terrain = new THREE.Mesh(terrainGeometry, terrainMaterial);
+  terrain.rotation.x = -Math.PI / 2;
+  terrain.position.y = -5;
+  scene.add(terrain);
+
+  // Add height variation to simulate mountains
+  const vertices = terrainGeometry.attributes.position.array;
+  for (let i = 0; i < vertices.length; i += 3) {
+    vertices[i + 2] = Math.random() * 2 - 1; // Random height
+  }
+  terrainGeometry.attributes.position.needsUpdate = true;
+
+  // Tech Cubes
+  const cubes = [];
+  for (let i = 0; i < 10; i++) {
+    const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+    const material = new THREE.MeshBasicMaterial({ color: 0x4f8fff, wireframe: true, transparent: true, opacity: 0.5 });
+    const cube = new THREE.Mesh(geometry, material);
+    cube.position.set(
+      (Math.random() - 0.5) * 20,
+      (Math.random() - 0.5) * 10,
+      (Math.random() - 0.5) * 10
+    );
+    cube.rotationSpeed = { x: Math.random() * 0.01, y: Math.random() * 0.01, z: Math.random() * 0.01 };
+    scene.add(cube);
+    cubes.push(cube);
+  }
+
+  // Tech Spheres
+  const spheres = [];
+  for (let i = 0; i < 5; i++) {
+    const geometry = new THREE.SphereGeometry(0.3, 16, 16);
+    const material = new THREE.MeshBasicMaterial({ color: 0x8b5cf6, wireframe: true, transparent: true, opacity: 0.4 });
+    const sphere = new THREE.Mesh(geometry, material);
+    sphere.position.set(
+      (Math.random() - 0.5) * 15,
+      (Math.random() - 0.5) * 8,
+      (Math.random() - 0.5) * 8
+    );
+    sphere.rotationSpeed = { x: Math.random() * 0.005, y: Math.random() * 0.005, z: Math.random() * 0.005 };
+    scene.add(sphere);
+    spheres.push(sphere);
+  }
+
+  // Tech Rings (Torus)
+  const rings = [];
+  for (let i = 0; i < 3; i++) {
+    const geometry = new THREE.TorusGeometry(1, 0.1, 16, 100);
+    const material = new THREE.MeshBasicMaterial({ color: 0x06c8e8, wireframe: true, transparent: true, opacity: 0.5 });
+    const ring = new THREE.Mesh(geometry, material);
+    ring.position.set(
+      (Math.random() - 0.5) * 20,
+      (Math.random() - 0.5) * 10,
+      (Math.random() - 0.5) * 10
+    );
+    ring.rotationSpeed = { x: 0.01, y: 0.01, z: 0 };
+    scene.add(ring);
+    rings.push(ring);
+  }
+
+  // Particles
+  const particleGeometry = new THREE.BufferGeometry();
+  const particleCount = 200;
+  const positions = new Float32Array(particleCount * 3);
+  for (let i = 0; i < particleCount * 3; i++) {
+    positions[i] = (Math.random() - 0.5) * 30;
+  }
+  particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const particleMaterial = new THREE.PointsMaterial({ color: 0x06c8e8, size: 0.05, transparent: true, opacity: 0.6 });
+  const particles = new THREE.Points(particleGeometry, particleMaterial);
+  scene.add(particles);
+
+  camera.position.z = 10;
+
+  // Animation loop
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Rotate cubes
+    cubes.forEach(cube => {
+      cube.rotation.x += cube.rotationSpeed.x;
+      cube.rotation.y += cube.rotationSpeed.y;
+      cube.rotation.z += cube.rotationSpeed.z;
+    });
+
+    // Rotate spheres
+    spheres.forEach(sphere => {
+      sphere.rotation.x += sphere.rotationSpeed.x;
+      sphere.rotation.y += sphere.rotationSpeed.y;
+      sphere.rotation.z += sphere.rotationSpeed.z;
+    });
+
+    // Rotate rings
+    rings.forEach(ring => {
+      ring.rotation.x += ring.rotationSpeed.x;
+      ring.rotation.y += ring.rotationSpeed.y;
+      ring.rotation.z += ring.rotationSpeed.z;
+    });
+
+    // Rotate particles
+    particles.rotation.y += 0.001;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // Mouse interaction
+  let mouse = { x: 0, y: 0 };
+  document.addEventListener('mousemove', (event) => {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    camera.position.x = mouse.x * 2;
+    camera.position.y = mouse.y * 2;
+    camera.lookAt(scene.position);
+  });
+})();
+
+// ===================== COUNTER ANIMATION =====================
+function animateCounters(){
+  document.querySelectorAll('[data-target]').forEach(el=>{
+    const target=parseInt(el.dataset.target);
+    let current=0;
+    const inc=target/60;
+    const t=setInterval(()=>{
+      current+=inc;
+      if(current>=target){current=target;clearInterval(t)}
+      el.textContent=Math.floor(current).toLocaleString('en-IN');
+    },25);
+  });
+}
+setTimeout(animateCounters,600);
+</script>
+</body>
+</html>
