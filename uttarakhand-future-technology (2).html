@@ -1540,6 +1540,8 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <div class="hero-actions">
  <button class="btn btn-prime btn-xl" onclick="document.getElementById('waitlistForm').scrollIntoView({behavior:'smooth',block:'center'})">Get Free Starter Kit</button>
  <button class="btn btn-ghost btn-lg" onclick="document.getElementById('offer-ladder').scrollIntoView({behavior:'smooth',block:'start'})">View Flagship Programs</button>
+ <button class="btn btn-ghost btn-lg" onclick="showPage('academy')">Browse Academy</button>
+ <button class="btn btn-ghost btn-lg" onclick="showPage('login')">Login</button>
  </div>
  <div class="hero-badges">
  <span class="hero-badge">Hindi + English learning</span>
@@ -1610,6 +1612,22 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <div class="vision-card"><div class="vision-icon"> </div><h3>Starter Course</h3><p>A low-ticket win for momentum, designed to turn curious visitors into first-time customers without confusion or heavy commitment.</p></div>
  <div class="vision-card"><div class="vision-icon"> </div><h3>Flagship Program</h3><p>The main revenue engine: one outcome-focused program with projects, support, and proof that the brand can deliver real value.</p></div>
  <div class="vision-card"><div class="vision-icon"> </div><h3>Mentored Cohort</h3><p>A premium step-up for learners who want direct guidance, accountability, and a more serious path to projects or income.</p></div>
+ </div>
+ </div>
+ </section>
+
+ <section>
+ <div class="sec-inner">
+ <div class="sec-head fade-in">
+ <div class="sec-tag">Featured Courses</div>
+ <h2 class="sec-title">Choose a track, open the detail page, and pay securely</h2>
+ <p class="sec-sub">These are the first visible products on the site so the experience feels like a real academy, not a roadmap deck.</p>
+ </div>
+ <div class="courses-grid fade-in" id="featuredGrid"></div>
+ <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:28px" class="fade-in">
+ <button class="btn btn-prime btn-lg" onclick="showPage('academy')">Open Full Academy</button>
+ <button class="btn btn-ghost btn-lg" onclick="showPage('login')">Login to Buy</button>
+ <button class="btn btn-ghost btn-lg" onclick="showPage('workspace')">Open Workspace</button>
  </div>
  </div>
  </section>
