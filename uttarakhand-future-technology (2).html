@@ -1471,15 +1471,15 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
 <div class="hero-inner">
  <div class="hero-copy">
  <h1><span class="hero-title-grad">HUMAIX REALM</span></h1>
- <p class="hero-sub">Evolving Humanity through Intelligent Ecosystems</p>
+ <p class="hero-sub">Build AI-native skills that turn into real work, projects, and income.</p>
  <div class="hero-actions">
- <button class="btn btn-prime btn-xl" onclick="document.getElementById('waitlistForm').scrollIntoView({behavior:'smooth',block:'center'})">Request Early Access</button>
- <button class="btn btn-ghost btn-lg" onclick="document.getElementById('ecosystems').scrollIntoView({behavior:'smooth',block:'start'})">Read Whitepaper</button>
+ <button class="btn btn-prime btn-xl" onclick="document.getElementById('waitlistForm').scrollIntoView({behavior:'smooth',block:'center'})">Get Free Starter Kit</button>
+ <button class="btn btn-ghost btn-lg" onclick="document.getElementById('offer-ladder').scrollIntoView({behavior:'smooth',block:'start'})">View Flagship Programs</button>
  </div>
  <div class="hero-badges">
- <span class="hero-badge">Military-Grade Encryption</span>
- <span class="hero-badge">Decentralized Data</span>
- <span class="hero-badge">End-to-End Encrypted</span>
+ <span class="hero-badge">Hindi + English learning</span>
+ <span class="hero-badge">Secure Razorpay checkout</span>
+ <span class="hero-badge">Outcome-driven offers</span>
  </div>
  </div>
  <div class="hero-side">
@@ -1487,24 +1487,24 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <canvas id="heroScene" aria-hidden="true"></canvas>
  <div class="hero-visual-copy">
  <div class="status-chip"><span class="dot"></span> All Systems Operational</div>
- <div class="scene-label">Neural Field</div>
+ <div class="scene-label">Launch System</div>
  </div>
  </div>
  <div class="hero-terminal glass-panel">
- <div class="terminal-head">Live AI Terminal</div>
+ <div class="terminal-head">Launch Console</div>
  <div class="terminal-window"><span id="terminalText"></span><span class="terminal-caret"></span></div>
  </div>
  <form class="waitlist-card glass-panel waitlist-form" id="waitlistForm" onsubmit="submitWaitlist(event)">
- <div class="waitlist-head">Invite-Only Waitlist</div>
- <div class="waitlist-copy">Request early access to the HUMAIX REALM platform. We reply with the private launch path.</div>
+ <div class="waitlist-head">Free AI Career Starter Kit</div>
+ <div class="waitlist-copy">Get the first roadmap, offer ladder, and learning path by email. This is the fastest way to start without guessing.</div>
  <div class="waitlist-row">
  <input class="waitlist-input" id="waitlistEmail" type="email" placeholder="you@domain.com" autocomplete="email" required>
- <button class="waitlist-btn" type="submit">Request Early Access</button>
+ <button class="waitlist-btn" type="submit">Send Starter Kit</button>
  </div>
  <div class="trust-row-mini">
- <span class="trust-pill">Private launch</span>
- <span class="trust-pill">Encrypted onboarding</span>
- <span class="trust-pill">VIP access only</span>
+ <span class="trust-pill">Free lead magnet</span>
+ <span class="trust-pill">No spam</span>
+ <span class="trust-pill">Built for India first</span>
  </div>
  </form>
  </div>
@@ -1515,30 +1515,47 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <section id="ecosystems" style="background:var(--bg2)">
  <div class="sec-inner">
  <div class="sec-head fade-in">
- <div class="sec-tag">Core Modules</div>
- <h2 class="sec-title">Four Pillars of the Realm</h2>
- <p class="sec-sub">A minimalist system architecture designed to keep the platform calm, clear, and premium.</p>
+ <div class="sec-tag">Realm Sequence</div>
+ <h2 class="sec-title">Build the Academy First, Expand the Realm Second</h2>
+ <p class="sec-sub">The public brand should fund itself with course revenue now, while the Identity, Memory, and Workspace layers mature behind the scenes.</p>
  </div>
  <div class="cats-grid fade-in">
- <div class="cat-card" onclick="document.querySelector('.vision-section').scrollIntoView({behavior:'smooth',block:'start'})"><span class="cat-icon">ID</span><div class="cat-name">Humaix Identity</div><div class="cat-count">AI avatars and a premium personal presence layer.</div></div>
- <div class="cat-card" onclick="openAI()"><span class="cat-icon">ME</span><div class="cat-name">Humaix Memory</div><div class="cat-count">Digital memory evolution for context, notes, and continuity.</div></div>
- <div class="cat-card" onclick="document.getElementById('status').scrollIntoView({behavior:'smooth',block:'start'})"><span class="cat-icon">WS</span><div class="cat-name">Humaix Workspace</div><div class="cat-count">Intelligent co-working tools and focused productivity flows.</div></div>
- <div class="cat-card" onclick="document.getElementById('waitlistForm').scrollIntoView({behavior:'smooth',block:'center'})"><span class="cat-icon">AC</span><div class="cat-name">Humaix Academy</div><div class="cat-count">Advanced AI learning platform for serious growth.</div></div>
+ <div class="cat-card"><span class="cat-icon">AC</span><div class="cat-name">Humaix Academy</div><div class="cat-count">Live today. Courses that generate trust, revenue, and learner wins.</div></div>
+ <div class="cat-card"><span class="cat-icon">ID</span><div class="cat-name">Humaix Identity</div><div class="cat-count">Future AI avatar and personal brand layer for creators and founders.</div></div>
+ <div class="cat-card"><span class="cat-icon">ME</span><div class="cat-name">Humaix Memory</div><div class="cat-count">Personalized learning memory, notes, and context preserved across sessions.</div></div>
+ <div class="cat-card"><span class="cat-icon">WS</span><div class="cat-name">Humaix Workspace</div><div class="cat-count">Later: focused tools, teams, and productivity systems for builders.</div></div>
  </div>
  </div>
  </section>
 
- <section class="vision-section" style="background:rgba(255,255,255,0.02)">
+ <section class="vision-section" id="offer-ladder" style="background:rgba(255,255,255,0.02)">
  <div class="sec-inner">
  <div class="sec-head fade-in">
- <div class="sec-tag">Founder Vision</div>
- <h2 class="sec-title">From the Himalayas to the Future of Humanity</h2>
- <p class="sec-sub">HUMAIX REALM is a living ecosystem for future builders: AI, startups, creative systems, and serious career momentum built with meaning and community.</p>
+ <div class="sec-tag">Offer Ladder</div>
+ <h2 class="sec-title">One Free Entry, One Starter Win, One Flagship Promise</h2>
+ <p class="sec-sub">This sequence matches the bootstrapped strategy: capture attention with a free kit, convert with a starter course, and grow into a flagship learning product.</p>
  </div>
  <div class="vision-grid fade-in">
- <div class="vision-card"><div class="vision-icon"> </div><h3>Rooted in Purpose</h3><p>Built in the hills, shaped for the world every course is designed to create impact, not just certificates.</p></div>
- <div class="vision-card"><div class="vision-icon"> </div><h3>AI-Powered Learning</h3><p>Learn with future-ready tools, guided by intelligent workflows and mentor-led project paths.</p></div>
- <div class="vision-card"><div class="vision-icon"> </div><h3>Global Outcomes</h3><p>From local students to global careers HUMAIX REALM connects ambition to real work, freelance income, and startup opportunity.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Free Starter Kit</h3><p>Email capture with a clear roadmap, first steps, and confidence-building resources. This is the lowest-friction entry point.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Starter Course</h3><p>A low-ticket win for momentum, designed to turn curious visitors into first-time customers without confusion or heavy commitment.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Flagship Program</h3><p>The main revenue engine: one outcome-focused program with projects, support, and proof that the brand can deliver real value.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Mentored Cohort</h3><p>A premium step-up for learners who want direct guidance, accountability, and a more serious path to projects or income.</p></div>
+ </div>
+ </div>
+ </section>
+
+ <section style="background:#04050f;border-top:1px solid rgba(148,163,184,0.12);border-bottom:1px solid rgba(148,163,184,0.12)">
+ <div class="sec-inner">
+ <div class="sec-head fade-in">
+ <div class="sec-tag">Outcome Design</div>
+ <h2 class="sec-title">What the site should make obvious in the first 10 seconds</h2>
+ <p class="sec-sub">Who it is for, what result it delivers, why it is trusted, and how to buy safely. That is the conversion order.</p>
+ </div>
+ <div class="vision-grid fade-in">
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Audience</h3><p>Hindi and English speaking learners, students, freelancers, and founders starting from India and aiming for global relevance.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Outcome</h3><p>Projects, confidence, portfolio proof, course completion, and a clear path to the next purchase or cohort.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Trust</h3><p>Secure checkout, privacy and refund clarity, founder visibility, and a calm premium interface instead of a noisy sales page.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Motion</h3><p>Simple, fast, smooth, and readable. The site should feel premium without becoming theatrical or hard to scan.</p></div>
  </div>
  </div>
  </section>
@@ -1582,6 +1599,21 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  </div>
  </div>
  </footer>
+ <section style="background:rgba(255,255,255,0.02);border-top:1px solid rgba(148,163,184,0.12)">
+ <div class="sec-inner">
+ <div class="sec-head fade-in">
+ <div class="sec-tag">Roadmap</div>
+ <h2 class="sec-title">How Humaix Realm becomes a company</h2>
+ <p class="sec-sub">The public site should fund itself first, then expand into the deeper Realm layers after the learning business is predictable.</p>
+ </div>
+ <div class="vision-grid fade-in">
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Now: Academy</h3><p>Launch the homepage as a premium conversion engine with a free lead magnet, starter offer, flagship program, and clear payment flow.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Next: Proof & Content</h3><p>Publish verified testimonials, case studies, outcome pages, and a steady blog cadence that supports SEO and search trust.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Later: Tutor + Memory</h3><p>Use the course revenue to build the AI tutor, memory layer, and personalized learning systems that give the Realm a moat.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Then: Teams & College</h3><p>Add B2B learning, team dashboards, colleges, and partnerships once the core offers and metrics are stable.</p></div>
+ </div>
+ </div>
+ </section>
 </div>
 
 <!-- ===================== COURSES PAGE ===================== -->
@@ -1828,7 +1860,7 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <div class="fg"><label class="fl">Password</label><input id="loginPassword" name="password" class="fi" placeholder=" " type="password" required></div>
  <div style="text-align:right;margin-bottom:20px"><span class="auth-lnk" style="font-size:13px" onclick="showPage('signup')">Forgot password?</span></div>
  <button type="submit" class="btn btn-prime btn-lg" style="width:100%;justify-content:center">Request Access</button>
- <div class="auth-foot">Need an invite? <span class="auth-lnk" onclick="showPage('signup')">Join VIP Waitlist</span></div>
+ <div class="auth-foot">Need the roadmap? <span class="auth-lnk" onclick="showPage('signup')">Get the Free Starter Kit</span></div>
  </form>
  </div>
  </div>
@@ -1839,8 +1871,8 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <div class="auth-wrap"><div style="position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 20%,rgba(139,92,246,0.08),transparent)"></div>
  <div class="auth-card fade-in">
 <div style="text-align:center;margin-bottom:28px"><div class="logo-mark" style="margin:0 auto 12px;width:54px;height:54px"><img src="/logo.png" alt="HUMAIX REALM logo"><span class="logo-fallback">HR</span></div><div class="logo-name">HUMAIX REALM</div></div>
- <h2 class="auth-title">Join the VIP Waitlist</h2>
- <p class="auth-sub">Be first in line for the private HUMAIX REALM launch.</p>
+ <h2 class="auth-title">Get the Free Starter Kit</h2>
+ <p class="auth-sub">Join the list for the launch roadmap, offer ladder, and first updates.</p>
  <div class="auth-soc">
  <div id="googleSignupBtn" class="google-btn-shell"></div>
  <a href="/auth/google" class="soc-btn google-redirect">Request with Google</a>
@@ -1851,9 +1883,9 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <div class="fg"><label class="fl">Email (Gmail)</label><input class="fi" name="email" placeholder="you@gmail.com" type="email" required></div>
  <div class="fg"><label class="fl">Password</label><input class="fi" name="password" placeholder="Min. 8 characters" type="password" required></div>
  <div style="margin-bottom:20px"><input type="checkbox" id="agree" required> <label for="agree" style="font-size:13px;color:var(--ink2)">I agree to <a href="/terms-of-service" onclick="event.preventDefault();showPage('terms')" class="auth-lnk">Terms</a> & <a href="/privacy-policy" onclick="event.preventDefault();showPage('privacy')" class="auth-lnk">Privacy Policy</a></label></div>
- <button type="submit" class="btn btn-prime btn-lg" style="width:100%;justify-content:center">Request Early Access</button>
+ <button type="submit" class="btn btn-prime btn-lg" style="width:100%;justify-content:center">Send My Kit Request</button>
 </form>
- <div class="auth-foot">Already invited? <span class="auth-lnk" onclick="showPage('login')">Open VIP Access</span></div>
+ <div class="auth-foot">Already on the list? <span class="auth-lnk" onclick="showPage('login')">Open Access Portal</span></div>
  </div>
  </div>
 </div>
@@ -2120,12 +2152,12 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
 <script>
 // ===================== COURSE DATA (correct pricing) =====================
 const COURSES = [
- {id:1, title:'Mobile Video Editing', titleHi:'à¤®à¥‹à¤¬à¤¾à¤‡à¤² à¤µà¥€à¤¡à¤¿à¤¯à¥‹ à¤à¤¡à¤¿à¤Ÿà¤¿à¤‚à¤—', cat:'Technology', level:'Beginner', price:199, orig:999, rating:4.8, students:2341, hours:'3.5', lang:'Hindi + English', icon:'VE', thumb:'Creator Studio', badge:'hot', bg:'linear-gradient(135deg,#10211d,#1f3a35 45%,#b68a2c)', thumbPos:'78% 42%'},
- {id:2, title:'Instagram Growth Basics', titleHi:'à¤‡à¤‚à¤¸à¥à¤Ÿà¤¾à¤—à¥à¤°à¤¾à¤® à¤—à¥à¤°à¥‹à¤¥ à¤¬à¥‡à¤¸à¤¿à¤•à¥à¤¸', cat:'Digital Marketing', level:'Beginner', price:149, orig:799, rating:4.9, students:3102, hours:'4', lang:'Hindi + English', icon:'IG', thumb:'Growth Lab', badge:'pop', bg:'linear-gradient(135deg,#1d1530,#34204a 50%,#2dd4bf)', thumbPos:'66% 45%'},
- {id:3, title:'Basic English Speaking', titleHi:'à¤¬à¥‡à¤¸à¤¿à¤• à¤‡à¤‚à¤—à¥à¤²à¤¿à¤¶ à¤¸à¥à¤ªà¥€à¤•à¤¿à¤‚à¤—', cat:'Languages', level:'Beginner', price:129, orig:599, rating:4.7, students:1876, hours:'5', lang:'Hindi + English', icon:'EN', thumb:'Speaking Studio', badge:'new', bg:'linear-gradient(135deg,#0e1d2e,#17324c 55%,#38bdf8)', thumbPos:'50% 52%'},
- {id:4, title:'Cyber Security Intro', titleHi:'à¤¸à¤¾à¤‡à¤¬à¤° à¤¸à¤¿à¤•à¥à¤¯à¥‹à¤°à¤¿à¤Ÿà¥€ à¤¶à¥à¤°à¥à¤†à¤¤', cat:'Cyber Security', level:'Beginner', price:499, orig:2499, rating:4.9, students:1204, hours:'6', lang:'Hindi + English', icon:'CS', thumb:'Security Lab', badge:'hot', bg:'linear-gradient(135deg,#081a17,#10352d 55%,#34d399)', thumbPos:'42% 40%'},
- {id:5, title:'Data Science Beginner', titleHi:'à¤¡à¥‡à¤Ÿà¤¾ à¤¸à¤¾à¤‡à¤‚à¤¸ à¤¬à¤¿à¤—à¤¿à¤¨à¤°', cat:'Data Science', level:'Beginner', price:349, orig:1499, rating:4.9, students:3200, hours:'6.5', lang:'Hindi + English', icon:'DS', thumb:'AI Data Lab', badge:'pop', bg:'linear-gradient(135deg,#111827,#1e293b 55%,#a78bfa)', thumbPos:'72% 44%'},
- {id:6, title:'Python for Beginners', titleHi:'à¤ªà¤¾à¤¯à¤¥à¤¨ à¤«à¥‰à¤° à¤¬à¤¿à¤—à¤¿à¤¨à¤°à¥à¤¸', cat:'Programming', level:'Beginner', price:249, orig:999, rating:4.8, students:980, hours:'5.5', lang:'Hindi + English', icon:'PY', thumb:'Code Lab', badge:'new', bg:'linear-gradient(135deg,#0b1f1a,#123c32 55%,#2dd4bf)', thumbPos:'58% 38%'},
+ {id:1, title:'AI Productivity Sprint', titleHi:'Build a faster learning and work system', cat:'Technology', level:'Beginner', price:299, orig:1499, rating:4.9, students:2341, hours:'3.5', lang:'Hindi + English', icon:'AI', thumb:'Starter Kit', badge:'hot', bg:'linear-gradient(135deg,#10211d,#1f3a35 45%,#38bdf8)', thumbPos:'78% 42%'},
+ {id:2, title:'Data Science with AI', titleHi:'Learn analytics with project-based thinking', cat:'Data Science', level:'Beginner', price:399, orig:1999, rating:4.9, students:3102, hours:'5', lang:'Hindi + English', icon:'DS', thumb:'Insights Lab', badge:'pop', bg:'linear-gradient(135deg,#1d1530,#34204a 50%,#2dd4bf)', thumbPos:'66% 45%'},
+ {id:3, title:'Cyber Security Foundations', titleHi:'Practical security basics for the real web', cat:'Cyber Security', level:'Beginner', price:499, orig:2499, rating:4.9, students:1876, hours:'6', lang:'Hindi + English', icon:'CS', thumb:'Security Lab', badge:'hot', bg:'linear-gradient(135deg,#081a17,#10352d 55%,#34d399)', thumbPos:'42% 40%'},
+ {id:4, title:'Creator Growth System', titleHi:'Turn audience building into a repeatable system', cat:'Digital Marketing', level:'Beginner', price:249, orig:1299, rating:4.8, students:1204, hours:'4', lang:'Hindi + English', icon:'GR', thumb:'Growth Lab', badge:'pop', bg:'linear-gradient(135deg,#111827,#1e293b 55%,#a78bfa)', thumbPos:'72% 44%'},
+ {id:5, title:'Python Foundations', titleHi:'Start coding with clean logic and confidence', cat:'Programming', level:'Beginner', price:249, orig:999, rating:4.8, students:980, hours:'5.5', lang:'Hindi + English', icon:'PY', thumb:'Code Lab', badge:'new', bg:'linear-gradient(135deg,#0b1f1a,#123c32 55%,#2dd4bf)', thumbPos:'58% 38%'},
+ {id:6, title:'English for Builders', titleHi:'Speak clearly for interviews, clients, and community', cat:'Languages', level:'Beginner', price:129, orig:699, rating:4.7, students:1876, hours:'4.5', lang:'Hindi + English', icon:'EN', thumb:'Speaking Studio', badge:'new', bg:'linear-gradient(135deg,#0e1d2e,#17324c 55%,#38bdf8)', thumbPos:'50% 52%'},
 ];
 
 const BADGE_MAP = {hot:' Hot',new:' New',pop:' Popular'};
@@ -2181,11 +2213,11 @@ function initLenis(){
 }
 
 const TERMINAL_LINES = [
- '> Connecting to Humaix Neural Net...',
- '> Securing private launch channel... OK',
- '> Syncing Digital Memory... 100%',
- '> Decentralized data vault online.',
- '> All systems operational.'
+ '> Loading free starter kit... ready',
+ '> Validating flagship offer ladder... OK',
+ '> Verifying secure checkout workflow... OK',
+ '> Tracking outcomes and learning signals... live',
+ '> Academy engine ready to scale.'
 ];
 
 function startTerminal(){
@@ -2357,15 +2389,15 @@ let aiEnabled = false;
 const ADMIN_EMAIL = 'Hzzzx06@gmail.com';
 const PAGE_META = {
  home: {
- title: 'Humaix Realm | Evolving Humanity through Intelligent Ecosystems',
- description: 'A revolutionary tech platform blending human consciousness with cutting-edge AI networks across decentralized identity, memory, and intelligent workspaces.'
+   title: 'Humaix Realm | Evolving Humanity through Intelligent Ecosystems',
+   description: 'Humaix Realm is a premium founder-led academy for AI-native skills, secure learning products, and the future Realm roadmap.'
  },
  courses: {
- title: 'Courses | HUMAIX REALM',
- description: 'Explore course tracks for video editing, growth, English speaking, cyber security, data science, and Python.'
+   title: 'Courses | HUMAIX REALM',
+   description: 'Explore the Humaix Realm course ladder, from starter wins to flagship outcome-driven programs.'
  },
  about: {
- title: 'About | HUMAIX REALM',
+   title: 'About | HUMAIX REALM',
  description: 'Learn about HUMAIX REALM, the founder, the mission, and the community behind the platform.'
  },
  blog: {
@@ -2377,12 +2409,12 @@ const PAGE_META = {
  description: 'Reach HUMAIX REALM for support, questions, partnerships, and course guidance.'
  },
  login: {
- title: 'VIP Access | HUMAIX REALM',
- description: 'Request private access to HUMAIX REALM.'
+   title: 'Access Portal | HUMAIX REALM',
+   description: 'Continue to the HUMAIX REALM platform with secure sign-in.'
  },
  signup: {
- title: 'VIP Waitlist | HUMAIX REALM',
- description: 'Join the invite-only HUMAIX REALM waitlist.'
+   title: 'Free Starter Kit | HUMAIX REALM',
+   description: 'Join the HUMAIX REALM starter kit and receive the launch roadmap.'
  },
  dashboard: {
  title: 'Dashboard | HUMAIX REALM',
@@ -2405,8 +2437,8 @@ const PAGE_META = {
  description: 'Review the HUMAIX REALM refund guidelines for course purchases and checkout-related issues.'
  },
  detail: {
- title: 'Course Detail | HUMAIX REALM',
- description: 'View a HUMAIX REALM course overview, curriculum, and secure checkout options.'
+   title: 'Course Detail | HUMAIX REALM',
+   description: 'View a HUMAIX REALM course overview, curriculum, and secure checkout options.'
  }
 };
 
@@ -3123,17 +3155,17 @@ async function submitWaitlist(event){
  method: 'POST',
  headers: { 'Content-Type': 'application/json' },
  body: JSON.stringify({
- firstName: 'VIP',
- lastName: 'Waitlist',
- email,
- subject: 'VIP Waitlist',
- message: `Early access request submitted from ${email}.`
+  firstName: 'VIP',
+  lastName: 'Waitlist',
+  email,
+  subject: 'Free Starter Kit',
+  message: `Free starter kit request submitted from ${email}.`
  })
  });
  const result = await resp.json().catch(() => ({}));
  if(!resp.ok) throw new Error(result.error || 'Could not join waitlist');
  if(input) input.value = '';
- showToast('Request received. You are on the VIP waitlist.');
+ showToast('Request received. Your starter kit request is in.');
  } catch (err) {
  console.error(err);
  showToast(err.message || 'Could not join waitlist', 'warn');
