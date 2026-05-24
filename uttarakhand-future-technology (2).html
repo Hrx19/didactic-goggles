@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Humaix Realm | Evolving Humanity through Intelligent Ecosystems</title>
-<meta name="description" content="A revolutionary tech platform blending human consciousness with cutting-edge AI networks across decentralized identity, memory, and intelligent workspaces.">
+<meta name="description" content="Humaix Realm is a premium founder-led academy for AI-native skills, secure learning products, and the future Realm roadmap.">
 <meta name="keywords" content="HUMAIX REALM, intelligent ecosystems, AI courses, identity, memory, workspace, academy, data science, Python, cyber security, Uttarakhand">
 <meta name="author" content="HUMAIX REALM">
 <meta name="theme-color" content="#0f172a">
@@ -21,7 +21,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HUMAIX REALM">
 <meta property="og:title" content="Humaix Realm | Evolving Humanity through Intelligent Ecosystems">
-<meta property="og:description" content="A revolutionary tech platform blending human consciousness with cutting-edge AI networks across decentralized identity, memory, and intelligent workspaces.">
+<meta property="og:description" content="Humaix Realm is a premium founder-led academy for AI-native skills, secure learning products, and the future Realm roadmap.">
 <meta property="og:url" content="https://website-gamma-lyart-55.vercel.app/">
 <meta property="og:image" content="https://website-gamma-lyart-55.vercel.app/assets/humaix-og.png">
 <meta property="og:image:width" content="1200">
@@ -29,8 +29,35 @@
 <meta property="og:image:alt" content="HUMAIX REALM premium AI, tech courses, and innovation preview">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Humaix Realm | Evolving Humanity through Intelligent Ecosystems">
-<meta name="twitter:description" content="A revolutionary tech platform blending human consciousness with cutting-edge AI networks across decentralized identity, memory, and intelligent workspaces.">
+<meta name="twitter:description" content="Humaix Realm is a premium founder-led academy for AI-native skills, secure learning products, and the future Realm roadmap.">
 <meta name="twitter:image" content="https://website-gamma-lyart-55.vercel.app/assets/humaix-og.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "HUMAIX REALM",
+      "url": "https://website-gamma-lyart-55.vercel.app/",
+      "logo": "https://website-gamma-lyart-55.vercel.app/logo.png",
+      "sameAs": [
+        "https://www.instagram.com/humaix_realm/?utm_source=ig_web_button_share_sheet",
+        "https://whatsapp.com/channel/0029Vb7R7CdKAwEhKPOskT3G"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "name": "HUMAIX REALM",
+      "url": "https://website-gamma-lyart-55.vercel.app/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://website-gamma-lyart-55.vercel.app/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+}
+</script>
 <style>
 /* ===================== ROOT VARIABLES ===================== */
 :root {
@@ -1438,18 +1465,18 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
 
 <!-- NAVBAR -->
 <nav id="navbar">
- <div class="logo" onclick="showPage('home')">
+<div class="logo" onclick="showPage('home')">
  <div class="logo-name">HUMAIX REALM</div>
  <div class="logo-tag">Intelligent Ecosystems</div>
  </div>
  <ul class="nav-links">
- <li><a href="#ecosystems" onclick="event.preventDefault();document.getElementById('ecosystems').scrollIntoView({behavior:'smooth',block:'start'})" id="nl-workspace">Workspace</a></li>
- <li><a href="#status" onclick="event.preventDefault();document.getElementById('status').scrollIntoView({behavior:'smooth',block:'start'})" id="nl-memory">Memory</a></li>
- <li><a href="#ecosystems" onclick="event.preventDefault();document.getElementById('ecosystems').scrollIntoView({behavior:'smooth',block:'start'})" id="nl-academy">Academy</a></li>
+ <li><a href="/workspace" onclick="event.preventDefault();showPage('workspace')" id="nl-workspace">Workspace</a></li>
+ <li><a href="/memory" onclick="event.preventDefault();showPage('memory')" id="nl-memory">Memory</a></li>
+ <li><a href="/academy" onclick="event.preventDefault();showPage('academy')" id="nl-academy">Academy</a></li>
  </ul>
  <div class="nav-btns">
- <button class="btn btn-ghost" onclick="document.getElementById('status').scrollIntoView({behavior:'smooth',block:'start'})">System Status</button>
- <button class="btn btn-prime" onclick="document.getElementById('waitlistForm').scrollIntoView({behavior:'smooth',block:'center'})">Enter The Realm</button>
+  <button class="btn btn-ghost" onclick="document.getElementById('status').scrollIntoView({behavior:'smooth',block:'start'})">System Status</button>
+  <button class="btn btn-prime" onclick="document.getElementById('waitlistForm').scrollIntoView({behavior:'smooth',block:'center'})">Enter The Realm</button>
  </div>
  <div class="hamburger" onclick="toggleMenu()">
  <span></span><span></span><span></span>
@@ -1457,9 +1484,9 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
 </nav>
 
 <div class="mobile-menu" id="mMenu">
- <a href="#ecosystems" onclick="event.preventDefault();document.getElementById('ecosystems').scrollIntoView({behavior:'smooth',block:'start'});toggleMenu()"> Workspace</a>
- <a href="#status" onclick="event.preventDefault();document.getElementById('status').scrollIntoView({behavior:'smooth',block:'start'});toggleMenu()"> Memory</a>
- <a href="#ecosystems" onclick="event.preventDefault();document.getElementById('ecosystems').scrollIntoView({behavior:'smooth',block:'start'});toggleMenu()"> Academy</a>
+ <a href="/workspace" onclick="event.preventDefault();showPage('workspace');toggleMenu()"> Workspace</a>
+ <a href="/memory" onclick="event.preventDefault();showPage('memory');toggleMenu()"> Memory</a>
+ <a href="/academy" onclick="event.preventDefault();showPage('academy');toggleMenu()"> Academy</a>
 </div>
 
 <!-- ===================== HOME PAGE ===================== -->
@@ -1613,7 +1640,124 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <div class="vision-card"><div class="vision-icon"> </div><h3>Then: Teams & College</h3><p>Add B2B learning, team dashboards, colleges, and partnerships once the core offers and metrics are stable.</p></div>
  </div>
  </div>
- </section>
+</section>
+</div>
+
+<!-- ===================== WORKSPACE PAGE ===================== -->
+<div class="page" id="page-workspace">
+ <div style="max-width:1240px;margin:0 auto;padding:100px 48px 80px">
+ <div class="sec-head fade-in" style="text-align:left;margin-bottom:24px">
+ <div class="sec-tag">Workspace</div>
+ <h2 class="sec-title">Your learning operating system</h2>
+ <p class="sec-sub">Track what you are building, what is next, and what needs attention without leaving the platform.</p>
+ </div>
+ <div class="vision-grid fade-in">
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Current Goal</h3><p>Launch one starter course, gather the first set of testimonials, and refine the homepage until the funnel is smooth.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Weekly Focus</h3><p>Course content, SEO content, learner support, and payment reliability. Keep the scope tight and visible.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Project Stack</h3><p>Ideas, drafts, checklists, and tasks live here so the work does not disappear into scattered notes.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Progress View</h3><p>See the course ladder, content cadence, and launch readiness in one calm panel instead of many tabs.</p></div>
+ </div>
+ <div style="margin-top:28px" class="status-shell glass-panel fade-in">
+ <div>
+ <div class="sec-tag">Today</div>
+ <h3 style="font-size:24px;margin:6px 0 10px">Build the public funnel first</h3>
+ <p class="sec-sub" style="margin:0">The workspace is designed to keep the early product honest: one home page, one course ladder, one clean conversion flow.</p>
+ </div>
+ <div style="display:flex;gap:12px;flex-wrap:wrap">
+ <button class="btn btn-prime" onclick="showPage('academy')">Open Academy</button>
+ <button class="btn btn-ghost" onclick="showPage('memory')">Open Memory</button>
+ </div>
+ </div>
+ <div class="vision-grid fade-in" style="margin-top:28px">
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Launch Checklist</h3><p>Homepage, course cards, payment button, support email, policy pages, and analytics are the minimum viable stack.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Trust Signals</h3><p>Security policy, refund clarity, instructor presence, and live support keep the product feeling serious.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Next Upgrade</h3><p>Add verified learner proof, blog posts, and better onboarding before building deeper Realm features.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Realm Future</h3><p>Identity, Memory, and Workspace become richer only after the academy engine is already working.</p></div>
+ </div>
+ </div>
+</div>
+
+<!-- ===================== MEMORY PAGE ===================== -->
+<div class="page" id="page-memory">
+ <div style="max-width:1240px;margin:0 auto;padding:100px 48px 80px">
+ <div class="sec-head fade-in" style="text-align:left;margin-bottom:24px">
+ <div class="sec-tag">Memory</div>
+ <h2 class="sec-title">Keep your learning context in one place</h2>
+ <p class="sec-sub">A private memory layer for notes, course takeaways, prompts, and project ideas that you want to revisit later.</p>
+ </div>
+ <div class="vision-grid fade-in">
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Saved Notes</h3><p>Capture the idea that matters before it gets lost. Keep your biggest insights inside the platform.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Prompt Vault</h3><p>Reuse strong AI prompts, study questions, and project briefs instead of starting from zero every time.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Learning Context</h3><p>See what you were studying last, what project you left off on, and what to continue next.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Recall Search</h3><p>Search your notes quickly and come back to the exact snippet you need.</p></div>
+ </div>
+ <div class="status-shell glass-panel fade-in" style="margin-top:28px;align-items:flex-start">
+ <div style="flex:1">
+ <div class="sec-tag">Memory Vault</div>
+ <h3 style="font-size:24px;margin:6px 0 10px">Save a new learning note</h3>
+ <textarea id="memoryNoteInput" class="fta" style="min-height:120px" placeholder="Write a note about a course, project, prompt, or idea..."></textarea>
+ <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px">
+ <button class="btn btn-prime" onclick="saveMemoryNote()">Save Note</button>
+ <button class="btn btn-ghost" onclick="openAI()">Open AI Assistant</button>
+ </div>
+ </div>
+ <div style="flex:1">
+ <div class="sec-tag">Recent Notes</div>
+ <div id="memoryNotesList" class="vision-grid" style="grid-template-columns:1fr;margin-top:10px"></div>
+ </div>
+ </div>
+ </div>
+</div>
+
+<!-- ===================== ACADEMY PAGE ===================== -->
+<div class="page" id="page-academy">
+ <div style="max-width:1240px;margin:0 auto;padding:100px 48px 80px">
+ <div class="sec-head fade-in" style="text-align:left;margin-bottom:24px">
+ <div class="sec-tag">Academy</div>
+ <h2 class="sec-title">Courses designed to convert, retain, and deliver outcomes</h2>
+ <p class="sec-sub">A cleaner offer ladder: free starter kit, low-ticket starter wins, flagship tracks, and a premium cohort path.</p>
+ </div>
+ <div class="vision-grid fade-in">
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Free Starter Kit</h3><p>Lead magnet and onboarding path for visitors who are not ready to buy yet.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Starter Course</h3><p>Low-friction entry offer that helps people get a first result quickly.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Flagship Program</h3><p>The main revenue driver with practical curriculum, secure checkout, and proof of value.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Mentored Cohort</h3><p>High-touch support for learners who want guidance, accountability, and better outcomes.</p></div>
+ </div>
+ <div style="display:flex;gap:12px;flex-wrap:wrap;margin:30px 0 24px" class="fade-in">
+ <select class="fi" style="width:auto" onchange="filterAcademy()" id="ac-cat">
+ <option value="all">All Categories</option>
+ <option value="Technology">Technology</option>
+ <option value="Data Science">Data Science</option>
+ <option value="Cyber Security">Cyber Security</option>
+ <option value="Digital Marketing">Digital Marketing</option>
+ <option value="Programming">Programming</option>
+ <option value="Languages">Languages</option>
+ </select>
+ <select class="fi" style="width:auto" onchange="filterAcademy()" id="ac-lvl">
+ <option value="all">All Levels</option>
+ <option value="Beginner">Beginner</option>
+ <option value="Intermediate">Intermediate</option>
+ </select>
+ <select class="fi" style="width:auto" onchange="filterAcademy()" id="ac-price">
+ <option value="all">All Prices</option>
+ <option value="low">Under 200</option>
+ <option value="mid">200 400</option>
+ <option value="high">400+</option>
+ </select>
+ </div>
+ <div class="courses-grid fade-in" id="academyGrid"></div>
+ <div style="margin-top:28px" class="status-shell glass-panel fade-in">
+ <div>
+ <div class="sec-tag">Program Promise</div>
+ <h3 style="font-size:24px;margin:6px 0 10px">Simple, secure, and outcome-driven</h3>
+ <p class="sec-sub" style="margin:0">Every course should answer three questions fast: what will I learn, what will I build, and how do I pay safely?</p>
+ </div>
+ <div style="display:flex;gap:12px;flex-wrap:wrap">
+ <button class="btn btn-prime" onclick="document.getElementById('status').scrollIntoView({behavior:'smooth',block:'start'})">View Trust Layer</button>
+ <button class="btn btn-ghost" onclick="showPage('home')">Back to Home</button>
+ </div>
+ </div>
+ </div>
 </div>
 
 <!-- ===================== COURSES PAGE ===================== -->
@@ -1654,7 +1798,7 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
 <div class="page" id="page-detail">
  <div class="detail-layout">
  <div>
- <div class="breadcrumb fade-in"><span onclick="showPage('home')">Home</span> <span onclick="showPage('courses')">Courses</span> <span id="dcat"></span></div>
+ <div class="breadcrumb fade-in"><span onclick="showPage('home')">Home</span> <span onclick="showPage('academy')">Academy</span> <span id="dcat"></span></div>
  <h1 class="detail-title fade-in" id="dtitle">Data Science Beginner</h1>
  <div class="c-title-hi fade-in" id="dtitleHi" style="font-size:16px;margin-bottom:16px">à¤¡à¥‡à¤Ÿà¤¾ à¤¸à¤¾à¤‡à¤‚à¤¸ à¤¬à¤¿à¤—à¤¿à¤¨à¤°</div>
  <div class="detail-meta fade-in">
@@ -1768,7 +1912,7 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <li><div class="val-icon"> </div><div><div class="val-t">Radically Affordable</div><div class="val-d">Price should never be a barrier between a student and a better life.</div></div></li>
  </ul>
  <div style="display:flex;gap:12px;margin-top:32px;flex-wrap:wrap">
- <button class="btn btn-prime btn-lg" onclick="showPage('courses')">Explore Courses</button>
+ <button class="btn btn-prime btn-lg" onclick="showPage('academy')">Explore Academy</button>
  <a class="btn btn-ghost btn-lg" href="mailto:Hzzzx06@gmail.com"> Contact Harish</a>
  </div>
  </div>
@@ -2068,7 +2212,7 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  Enroll to unlock the full <strong id="modalLen">6.5 hours</strong> of content, exercises, and your certificate!
  </div>
  <div style="display:flex;gap:10px;margin-top:16px">
- <button class="btn btn-prime" style="flex:1;justify-content:center" onclick="closeDemoModal(true);showPage('courses')"> Enroll Now</button>
+ <button class="btn btn-prime" style="flex:1;justify-content:center" onclick="closeDemoModal(true);showPage('academy')"> Enroll Now</button>
  <button class="btn btn-ghost" onclick="closeDemoModal(true)">Close</button>
  </div>
  </div>
@@ -2195,6 +2339,70 @@ function renderGrid(id, list){
 
 renderGrid('featuredGrid', COURSES.slice(0,3));
 renderGrid('allCoursesGrid', COURSES);
+renderGrid('academyGrid', COURSES);
+
+function filterAcademy(){
+ const cat=document.getElementById('ac-cat')?.value || 'all';
+ const lvl=document.getElementById('ac-lvl')?.value || 'all';
+ const pr=document.getElementById('ac-price')?.value || 'all';
+ let list=[...COURSES];
+ if(cat!=='all') list=list.filter(c=>c.cat===cat);
+ if(lvl!=='all') list=list.filter(c=>c.level===lvl);
+ if(pr==='low') list=list.filter(c=>c.price<200);
+ if(pr==='mid') list=list.filter(c=>c.price>=200&&c.price<=400);
+ if(pr==='high') list=list.filter(c=>c.price>400);
+ renderGrid('academyGrid', list);
+}
+
+function getMemoryNotes(){
+ try{
+   return JSON.parse(localStorage.getItem('humaixMemoryNotes') || '[]');
+ }catch(_){
+   return [];
+ }
+}
+
+function setMemoryNotes(notes){
+ try{
+   localStorage.setItem('humaixMemoryNotes', JSON.stringify(notes.slice(0, 12)));
+ }catch(_){}
+}
+
+function renderMemoryNotes(){
+ const el = document.getElementById('memoryNotesList');
+ if(!el) return;
+ const notes = getMemoryNotes();
+ if(!notes.length){
+   el.innerHTML = '<div class="vision-card"><h3>Nothing saved yet</h3><p>Add a note and it will appear here for quick recall.</p></div>';
+   return;
+ }
+ el.innerHTML = notes.slice(0, 6).map((note, index) => `
+   <div class="vision-card">
+     <div class="sec-tag" style="margin-bottom:10px">Note ${notes.length - index}</div>
+     <h3 style="margin-bottom:8px">${note.title || 'Learning Note'}</h3>
+     <p style="margin:0">${note.body || ''}</p>
+   </div>
+ `).join('');
+}
+
+function saveMemoryNote(){
+ const input = document.getElementById('memoryNoteInput');
+ const value = String(input?.value || '').trim();
+ if(!value){
+   showToast('Write a note first.', 'warn');
+   return;
+ }
+ const notes = getMemoryNotes();
+ notes.unshift({
+   title: 'Saved ' + new Date().toLocaleDateString('en-IN', { day:'2-digit', month:'short' }),
+   body: value
+ });
+ setMemoryNotes(notes);
+ if(input) input.value = '';
+ renderMemoryNotes();
+ showToast('Memory note saved.');
+}
+renderMemoryNotes();
 
 // ===================== PREMIUM MOTION =====================
 function initLenis(){
@@ -2392,6 +2600,18 @@ const PAGE_META = {
    title: 'Humaix Realm | Evolving Humanity through Intelligent Ecosystems',
    description: 'Humaix Realm is a premium founder-led academy for AI-native skills, secure learning products, and the future Realm roadmap.'
  },
+ workspace: {
+   title: 'Workspace | HUMAIX REALM',
+   description: 'Track learning tasks, projects, notes, and focus systems inside the Humaix Realm workspace.'
+ },
+ memory: {
+   title: 'Memory | HUMAIX REALM',
+   description: 'Capture learning memory, notes, and context inside the Humaix Realm memory layer.'
+ },
+ academy: {
+   title: 'Academy | HUMAIX REALM',
+   description: 'Explore the Humaix Realm academy, course ladder, and flagship learning programs.'
+ },
  courses: {
    title: 'Courses | HUMAIX REALM',
    description: 'Explore the Humaix Realm course ladder, from starter wins to flagship outcome-driven programs.'
@@ -2444,17 +2664,19 @@ const PAGE_META = {
 
 const ROUTE_TO_PAGE = {
  '/': 'home',
- '/academy': 'courses',
+ '/workspace': 'workspace',
+ '/memory': 'memory',
+ '/academy': 'academy',
  '/courses': 'courses',
- '/about': 'about',
- '/blog': 'blog',
- '/contact': 'contact',
- '/login': 'login',
- '/signup': 'signup',
- '/workspace': 'dashboard',
- '/admin': 'admin',
- '/privacy-policy': 'privacy',
- '/terms-of-service': 'terms',
+  '/about': 'about',
+  '/blog': 'blog',
+  '/contact': 'contact',
+  '/login': 'login',
+  '/signup': 'signup',
+ '/dashboard': 'dashboard',
+  '/admin': 'admin',
+  '/privacy-policy': 'privacy',
+  '/terms-of-service': 'terms',
  '/refund-policy': 'refund',
  '/course': 'detail',
  '/course-detail': 'detail'
@@ -2462,13 +2684,16 @@ const ROUTE_TO_PAGE = {
 
 const PAGE_TO_ROUTE = {
  home: '/',
- courses: '/academy',
+ workspace: '/workspace',
+ memory: '/memory',
+ academy: '/academy',
+ courses: '/courses',
  about: '/about',
  blog: '/blog',
  contact: '/contact',
  login: '/login',
  signup: '/signup',
- dashboard: '/workspace',
+ dashboard: '/dashboard',
  admin: '/admin',
  privacy: '/privacy-policy',
  terms: '/terms-of-service',
@@ -2477,11 +2702,11 @@ const PAGE_TO_ROUTE = {
 };
 
 const PAGE_TO_NAV = {
- dashboard: 'nl-workspace',
+ workspace: 'nl-workspace',
+ memory: 'nl-memory',
+ academy: 'nl-academy',
  courses: 'nl-academy',
- about: 'nl-ecosystems',
- blog: 'nl-ecosystems',
- admin: 'nl-admin'
+ dashboard: 'nl-workspace'
 };
 
 function getPageFromLocation(){
@@ -2528,6 +2753,8 @@ function renderPage(name){
  const nl=document.getElementById(PAGE_TO_NAV[name] || '');
  if(nl) nl.classList.add('active');
  setPageMeta(name);
+ if(name === 'memory') renderMemoryNotes();
+ if(name === 'academy') filterAcademy();
  initFadeIns();
  closeAI();
 }
@@ -2657,7 +2884,7 @@ async function handleGoogleCredential(response){
  currentUser = result.user;
  showToast('Google signup successful. Welcome to HUMAIX REALM!');
  await checkAuth();
- showPage('dashboard');
+ showPage('workspace');
  }catch(err){
  console.error(err);
  showToast(err.message || 'Google signup failed. Please try email signup.', 'warn');
@@ -2775,7 +3002,7 @@ async function doLogin(event){
  showToast(' Logged in successfully!');
  form.reset();
  await checkAuth();
- showPage('dashboard');
+ showPage('workspace');
  } catch (err) {
  console.error(err);
  showToast(err.message || 'Login failed. Please check your credentials.', 'warn');
@@ -2806,7 +3033,7 @@ async function doSignup(event){
  showToast(' Account created! Welcome to HUMAIX REALM!');
  form.reset();
  await checkAuth();
- showPage('dashboard');
+ showPage('workspace');
  } catch (err) {
  console.error(err);
  showToast(err.message || 'Signup failed. Please try again.', 'warn');

@@ -19,6 +19,9 @@ app.use((req, res, next) => {
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()');
   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  if (req.secure || req.headers['x-forwarded-proto'] === 'https') {
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  }
   res.setHeader(
     'Content-Security-Policy',
     [
@@ -298,11 +301,40 @@ app.get('/api/config', (req, res) => {
   });
 });
 
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain').send(
+    'User-agent: *\n' +
+    'Allow: /\n' +
+    `Sitemap: ${baseUrl}/sitemap.xml\n`
+  );
+});
+
+app.get('/sitemap.xml', (req, res) => {
+  const routes = [
+    '/',
+    '/workspace',
+    '/memory',
+    '/academy',
+    '/courses',
+    '/about',
+    '/blog',
+    '/contact',
+    '/privacy-policy',
+    '/terms-of-service',
+    '/refund-policy'
+  ];
+  const body = `<?xml version="1.0" encoding="UTF-8"?>\n` +
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">` +
+    routes.map((route) => `<url><loc>${baseUrl}${route}</loc></url>`).join('') +
+    `</urlset>`;
+  res.type('application/xml').send(body);
+});
+
 app.get('/dashboard', (req, res) => {
   if (!req.isAuthenticated()) {
     return res.redirect('/#login');
   }
-  return res.redirect('/#dashboard');
+  return res.redirect('/workspace');
 });
 
 app.get('/admin', (req, res) => {
