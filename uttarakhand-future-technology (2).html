@@ -240,8 +240,37 @@ nav{
  background:radial-gradient(circle at 28% 22%,rgba(255,255,255,0.16),transparent 30%);
  pointer-events:none;
 }
-.logo-name{font-family:'Space Grotesk','Outfit',sans-serif;font-weight:800;font-size:15px;line-height:1.05;letter-spacing:0.02em}
-.logo-tag{font-size:9px;color:var(--cyan);letter-spacing:2.3px;text-transform:uppercase}
+.logo-name{
+ font-family:'Space Grotesk','Outfit',sans-serif;
+ font-weight:800;
+ font-size:15px;
+ line-height:1.02;
+ letter-spacing:0.18em;
+ text-transform:uppercase;
+ display:flex;
+ flex-direction:column;
+ align-items:flex-start;
+ background:linear-gradient(90deg,#f8fafc 0%,#7dd3fc 26%,#c084fc 68%,#ff7ab8 100%);
+ -webkit-background-clip:text;
+ -webkit-text-fill-color:transparent;
+ background-clip:text;
+ text-shadow:0 0 24px rgba(0,229,255,0.14);
+}
+.logo-name span,.logo-name em{
+ display:block;
+ font-style:normal;
+}
+.logo-name em{
+ letter-spacing:0.34em;
+ font-size:12px;
+ margin-top:2px;
+}
+.logo-tag{
+ font-size:9px;
+ color:var(--cyan);
+ letter-spacing:2.3px;
+ text-transform:uppercase;
+}
 .nav-links{display:flex;gap:28px;list-style:none}
 .nav-links a{
  font-size:13.5px;color:var(--ink2);
@@ -784,32 +813,23 @@ section{scroll-margin-top:90px}
  box-shadow:0 32px 80px rgba(0,0,0,0.5),0 0 50px rgba(0,229,255,0.14),0 0 60px rgba(112,0,255,0.12);
 }
 .c-thumb{
- height:180px;background:var(--g2);
- display:flex;align-items:center;justify-content:center;
+ height:204px;background:var(--g2);
+ display:flex;align-items:flex-end;justify-content:flex-start;
  position:relative;overflow:hidden;cursor:pointer;
  background-image:
- linear-gradient(135deg,rgba(3,4,10,0.32),rgba(3,4,10,0.76)),
- url('/assets/hero-ai-lab.png'),
+ radial-gradient(circle at 22% 22%, rgba(255,255,255,0.16), transparent 18%),
+ radial-gradient(circle at 76% 26%, rgba(0,229,255,0.12), transparent 16%),
+ radial-gradient(circle at 50% 78%, rgba(255,79,178,0.10), transparent 20%),
+ linear-gradient(135deg,rgba(3,4,10,0.14),rgba(3,4,10,0.78)),
+ var(--thumb-art, none),
  var(--thumb-bg, var(--g2));
- background-size:cover,cover,cover;
- background-position:center,var(--thumb-pos,center),center;
-}
-.c-thumb-icon{
- min-width:76px;height:76px;border-radius:22px;
- background:rgba(3,4,10,0.58);border:1px solid rgba(255,255,255,0.18);
- display:flex;align-items:center;justify-content:center;
- font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:800;
- color:#fff;position:relative;z-index:1;box-shadow:0 16px 42px rgba(0,0,0,0.35);
-}
-.c-thumb-caption{
- position:absolute;left:14px;bottom:14px;z-index:2;
- font-size:12px;font-weight:800;color:#fff;
- background:rgba(3,4,10,0.58);border:1px solid rgba(255,255,255,0.12);
- padding:6px 10px;border-radius:999px;backdrop-filter:blur(10px);
+ background-size:cover,cover,cover,cover,cover,cover;
+ background-position:center,center,center,center,center,var(--thumb-pos,center);
 }
 .c-thumb-overlay{
  position:absolute;inset:0;
- background:linear-gradient(to top,rgba(7,11,24,0.92) 0%,transparent 50%);
+ background:linear-gradient(to top,rgba(7,11,24,0.92) 0%,rgba(7,11,24,0.4) 42%,transparent 100%);
+ pointer-events:none;
 }
 .c-thumb .badge{
  position:absolute;top:12px;left:12px;
@@ -819,32 +839,72 @@ section{scroll-margin-top:90px}
 .badge-hot{background:linear-gradient(135deg,#ff6030,#ffb347);color:#1a0500}
 .badge-new{background:linear-gradient(135deg,#06c8e8,#0095aa);color:#001922}
 .badge-pop{background:linear-gradient(135deg,#8b5cf6,#c084fc);color:#fff}
-/* Mini demo button on thumb */
-.demo-btn{
- position:absolute;bottom:12px;right:12px;z-index:2;
- background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);
- border:1px solid rgba(255,255,255,0.15);border-radius:20px;
- padding:5px 13px;font-size:11px;font-weight:600;color:#fff;
- font-family:'Inter',sans-serif;
- display:flex;align-items:center;gap:5px;
- transition:all 0.2s;
+.c-thumb-core{
+ position:absolute;
+ inset:auto auto 18px 18px;
+ width:112px;
+ height:112px;
+ border-radius:28px;
+ background:
+  radial-gradient(circle at 38% 32%, rgba(255,255,255,0.16), transparent 24%),
+  radial-gradient(circle at 68% 70%, rgba(0,229,255,0.18), transparent 26%),
+  linear-gradient(145deg, rgba(7,11,20,0.68), rgba(7,11,20,0.12));
+ border:1px solid rgba(255,255,255,0.12);
+ backdrop-filter:blur(12px);
+ box-shadow:0 18px 40px rgba(0,0,0,0.32);
+ z-index:1;
 }
-.demo-btn:hover{background:rgba(79,143,255,0.6)}
-.c-body{padding:20px}
+.c-thumb-core::before,
+.c-thumb-core::after{
+ content:'';
+ position:absolute;
+ inset:16px;
+ border-radius:22px;
+ border:1px solid rgba(255,255,255,0.08);
+}
+.c-thumb-core::after{
+ inset:30px;
+ border-radius:18px;
+ border-color:rgba(0,229,255,0.14);
+ box-shadow:0 0 32px rgba(0,229,255,0.08);
+}
+.c-thumb-grid{
+ position:absolute;
+ inset:0;
+ background-image:
+  linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+ background-size:32px 32px;
+ opacity:0.18;
+ mix-blend-mode:screen;
+}
+.c-body{padding:20px 20px 22px}
 .c-cat{font-size:12px;color:var(--cyan);text-transform:none;letter-spacing:0.3px;margin-bottom:7px}
-.c-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:16px;margin-bottom:8px;line-height:1.28}
-.c-title-hi{font-size:12px;color:var(--ink2);line-height:1.45;margin-top:-2px;margin-bottom:10px}
-.c-lang{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:rgba(45,212,191,0.08);border:1px solid rgba(45,212,191,0.2);color:var(--cyan);font-size:11px;font-weight:700;margin-bottom:12px}
+.c-title{font-family:'Space Grotesk','Outfit',sans-serif;font-weight:700;font-size:18px;margin-bottom:10px;line-height:1.22}
+.c-meta-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.c-meta-chip{
+ display:inline-flex;
+ align-items:center;
+ gap:6px;
+ padding:6px 10px;
+ border-radius:999px;
+ background:rgba(255,255,255,0.05);
+ border:1px solid rgba(255,255,255,0.08);
+ color:var(--ink2);
+ font-size:11px;
+ font-weight:700;
+}
+.c-lang{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:rgba(45,212,191,0.08);border:1px solid rgba(45,212,191,0.2);color:var(--cyan);font-size:11px;font-weight:700;margin-bottom:0}
 .c-instructor{
  display:flex;align-items:center;gap:7px;
- font-size:13px;color:var(--ink2);margin-bottom:10px;
+ font-size:12px;color:var(--ink3);margin-bottom:10px;
 }
 .inst-av{
- width:22px;height:22px;border-radius:50%;
+ width:20px;height:20px;border-radius:50%;
  background:var(--g1);display:flex;align-items:center;
- justify-content:center;font-size:9px;font-weight:800;
+ justify-content:center;font-size:8px;font-weight:800;
 }
-.c-rating{display:flex;align-items:center;gap:6px;margin-bottom:14px;font-size:13px}
+.c-rating{display:flex;align-items:center;gap:6px;margin-bottom:16px;font-size:13px}
 .r-score{font-weight:700;color:var(--amber)}
 .stars{color:var(--amber);font-size:11px}
 .c-footer{
@@ -860,11 +920,12 @@ section{scroll-margin-top:90px}
  text-decoration:line-through;margin-left:7px;font-weight:400;
 }
 .btn-enroll{
- padding:9px 18px;background:var(--g1);border:none;
- border-radius:8px;color:#fff;font-size:13px;font-weight:700;
+ padding:10px 18px;background:var(--g1);border:none;
+ border-radius:999px;color:#fff;font-size:13px;font-weight:700;
  cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;
+ box-shadow:0 10px 28px rgba(79,143,255,0.16);
 }
-.btn-enroll:hover{transform:scale(1.07);box-shadow:0 4px 16px rgba(79,143,255,0.5)}
+.btn-enroll:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(79,143,255,0.28)}
 
 /* ===================== VIDEO MODAL ===================== */
 .modal-overlay{
@@ -1051,7 +1112,7 @@ section{scroll-margin-top:90px}
  border-radius:11px;display:flex;align-items:center;justify-content:center;
  color:#25d366;font-weight:900;
 }
-.wa-icon svg,.wa-float svg{
+.wa-icon svg,.dock-btn svg{
  width:22px;height:22px;display:block;
  fill:currentColor;stroke:currentColor;stroke-width:1.8;
  stroke-linecap:round;stroke-linejoin:round;
@@ -1259,16 +1320,37 @@ section{scroll-margin-top:90px}
 .sp-pd{background:rgba(251,191,36,0.1);color:var(--amber)}
 
 /* ===================== AI CHAT WIDGET ===================== */
-.ai-bubble{
- position:fixed;bottom:28px;left:28px;z-index:9000;
+.utility-dock{
+ position:fixed;bottom:22px;left:22px;z-index:9000;
+ display:flex;align-items:center;gap:10px;
+ padding:8px;
+ border-radius:999px;
+ background:rgba(7,11,20,0.58);
+ border:1px solid rgba(255,255,255,0.10);
+ backdrop-filter:blur(18px);
+ box-shadow:0 18px 46px rgba(0,0,0,0.3);
 }
-.ai-toggle{
- width:60px;height:60px;border-radius:50%;background:var(--g1);
- display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;
- cursor:pointer;box-shadow:0 4px 30px rgba(79,143,255,0.55);
- transition:all 0.3s;border:none;animation:ai-pulse 2.5s infinite;
+.dock-btn{
+ width:40px;height:40px;border-radius:50%;
+ display:flex;align-items:center;justify-content:center;
+ border:none;cursor:pointer;color:#fff;font-weight:800;font-size:11px;
+ transition:all 0.25s;
+ box-shadow:0 10px 24px rgba(0,0,0,0.24);
 }
-.ai-toggle:hover{transform:scale(1.1)}
+.dock-btn:hover{transform:translateY(-2px) scale(1.04)}
+.dock-btn.ai{background:linear-gradient(135deg,#38bdf8,#8b5cf6)}
+.dock-btn.wa{background:linear-gradient(135deg,#25d366,#128c7e)}
+.dock-btn svg{
+ width:18px;height:18px;display:block;
+ fill:currentColor;stroke:currentColor;stroke-width:1.8;
+ stroke-linecap:round;stroke-linejoin:round;
+}
+.dock-label{
+ display:inline-flex;align-items:center;gap:8px;
+ padding:0 8px 0 2px;
+ font-size:11px;font-weight:700;letter-spacing:0.18em;
+ text-transform:uppercase;color:var(--ink2);
+}
 @keyframes ai-pulse{
  0%,100%{box-shadow:0 4px 30px rgba(79,143,255,0.55)}
  50%{box-shadow:0 4px 50px rgba(139,92,246,0.7)}
@@ -1360,17 +1442,6 @@ section{scroll-margin-top:90px}
  transition:all 0.2s;font-family:'Inter',sans-serif;
 }
 .ai-qbtn:hover{background:rgba(79,143,255,0.18)}
-
-/* ===================== WA FLOAT ===================== */
-.wa-float{
- position:fixed;bottom:28px;right:28px;z-index:9000;
- width:58px;height:58px;border-radius:50%;
- background:linear-gradient(135deg,#25d366,#128c7e);
- display:flex;align-items:center;justify-content:center;color:#fff;
- box-shadow:0 4px 24px rgba(37,211,102,0.5);
- transition:all 0.3s;text-decoration:none;
-}
-.wa-float:hover{transform:scale(1.12);box-shadow:0 6px 36px rgba(37,211,102,0.65)}
 
 /* ===================== TOAST ===================== */
 .toast-zone{position:fixed;bottom:24px;right:100px;z-index:9999;display:flex;flex-direction:column;gap:10px}
@@ -1475,8 +1546,9 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  .auth-wrap{padding:88px 18px 40px}
  .auth-card{padding:32px 22px}
  .ai-panel{left:14px;right:14px;bottom:92px;width:auto;max-height:70vh}
- .ai-bubble{left:16px;bottom:20px}
- .wa-float{right:16px;bottom:20px}
+ .utility-dock{left:14px;bottom:14px;padding:7px}
+ .dock-label{display:none}
+ .dock-btn{width:38px;height:38px}
  .toast-zone{left:16px;right:16px;bottom:88px}
  .toast{font-size:13px;padding:12px 14px}
  .modal-box{width:calc(100vw - 24px);max-height:86vh;overflow:auto}
@@ -1792,8 +1864,8 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
 <!-- NAVBAR -->
 <nav id="navbar">
 <div class="logo" onclick="showPage('home')">
- <div class="logo-name">HUMAIX REALM</div>
- <div class="logo-tag">Intelligent Ecosystems</div>
+ <div class="logo-name"><span>HUMAIX</span><em>REALM</em></div>
+ <div class="logo-tag">Spatial AI Academy</div>
  </div>
  <ul class="nav-links">
  <li><a href="/workspace" onclick="event.preventDefault();showPage('workspace')" id="nl-workspace">Workspace</a></li>
@@ -1968,7 +2040,7 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
 <div class="ft-brand">
 <div class="logo" style="cursor:default">
 <div class="logo-mark"><img src="/logo.png" alt="HUMAIX REALM logo"><span class="logo-fallback">HR</span></div>
-<div><div class="logo-name">HUMAIX REALM</div><div class="logo-tag">Intelligent Ecosystems</div></div>
+<div><div class="logo-name"><span>HUMAIX</span><em>REALM</em></div><div class="logo-tag">Spatial AI Academy</div></div>
 </div>
 <p>Premium AI-native learning, product design, and future-building for students and founders.</p>
 </div>
@@ -2299,19 +2371,6 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <div class="c-item"><div class="c-icon"> </div><div><div class="c-lbl">Location</div><div class="c-val">Dehradun, Uttarakhand, India</div></div></div>
  <div class="c-item"><div class="c-icon"> </div><div><div class="c-lbl">Support Hours</div><div class="c-val">Mon Sat, 9 AM 7 PM IST</div></div></div>
  </div>
-<div class="wa-banner">
- <div class="wa-icon">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-   <path d="M12 3.6a8.4 8.4 0 0 0-7.2 12.8L4 20.4l4-1.1A8.4 8.4 0 1 0 12 3.6Z" fill="currentColor" stroke="none"></path>
-   <path d="M9.4 8.6c.2-.4.4-.4.7-.4h.6c.2 0 .4 0 .5.4l.7 1.8c.1.3.1.4 0 .6l-.4.5c-.1.2-.2.4-.1.6.2.5 1 1.4 1.6 1.8.2.1.5.1.7 0l.6-.4c.2-.1.4-.1.6 0l1.8.8c.3.1.4.3.4.6-.1.8-.8 1.4-1.6 1.4-3.8 0-6.8-3-6.8-6.8 0-.5.2-1 .4-1.5Z" fill="#03040a" opacity=".96" stroke="none"></path>
-  </svg>
- </div>
- <div class="wa-txt">
- <strong>Follow on WhatsApp Channel</strong>
- <span>Get daily tips, updates & exclusive offers</span>
- <a href="https://whatsapp.com/channel/0029Vb7R7CdKAwEhKPOskT3G" target="_blank" style="display:block;margin-top:8px;font-size:13px;color:#25d366;font-weight:700">Join Now HUMAIX REALM</a>
- </div>
- </div>
  </div>
  <form id="contactForm" class="cf" onsubmit="submitContactForm(event)">
  <h3 style="font-size:22px;font-weight:800;margin-bottom:24px">Send a Message</h3>
@@ -2331,7 +2390,7 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
 <div class="page" id="page-login">
  <div class="auth-wrap"><div style="position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 20%,rgba(79,143,255,0.08),transparent)"></div>
  <div class="auth-card fade-in">
-<div style="text-align:center;margin-bottom:28px"><div class="logo-mark" style="margin:0 auto 12px;width:54px;height:54px"><img src="/logo.png" alt="HUMAIX REALM logo"><span class="logo-fallback">HR</span></div><div class="logo-name">HUMAIX REALM</div></div>
+<div style="text-align:center;margin-bottom:28px"><div class="logo-mark" style="margin:0 auto 12px;width:54px;height:54px"><img src="/logo.png" alt="HUMAIX REALM logo"><span class="logo-fallback">HR</span></div><div class="logo-name"><span>HUMAIX</span><em>REALM</em></div></div>
  <h2 class="auth-title">VIP Access</h2>
  <p class="auth-sub">Invite-only access for approved members and early supporters.</p>
  <form id="loginForm" onsubmit="doLogin(event)">
@@ -2353,7 +2412,7 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
 <div class="page" id="page-signup">
  <div class="auth-wrap"><div style="position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 20%,rgba(139,92,246,0.08),transparent)"></div>
  <div class="auth-card fade-in">
-<div style="text-align:center;margin-bottom:28px"><div class="logo-mark" style="margin:0 auto 12px;width:54px;height:54px"><img src="/logo.png" alt="HUMAIX REALM logo"><span class="logo-fallback">HR</span></div><div class="logo-name">HUMAIX REALM</div></div>
+<div style="text-align:center;margin-bottom:28px"><div class="logo-mark" style="margin:0 auto 12px;width:54px;height:54px"><img src="/logo.png" alt="HUMAIX REALM logo"><span class="logo-fallback">HR</span></div><div class="logo-name"><span>HUMAIX</span><em>REALM</em></div></div>
  <h2 class="auth-title">Get the Free Starter Kit</h2>
  <p class="auth-sub">Join the list for the launch roadmap, offer ladder, and first updates.</p>
  <div class="auth-soc">
@@ -2413,7 +2472,7 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
 <!-- ===================== ADMIN PAGE ===================== -->
 <div class="page" id="page-admin">
  <div class="adm-head">
-<div style="display:flex;align-items:center;gap:14px"><div class="logo-mark"><img src="/logo.png" alt="HUMAIX REALM logo"><span class="logo-fallback">HR</span></div><div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:15px">Admin Panel</div><div style="font-size:11px;color:var(--ink3)">HUMAIX REALM</div></div></div>
+<div style="display:flex;align-items:center;gap:14px"><div class="logo-mark"><img src="/logo.png" alt="HUMAIX REALM logo"><span class="logo-fallback">HR</span></div><div><div class="logo-name"><span>HUMAIX</span><em>REALM</em></div><div class="logo-tag">Admin Panel</div></div></div>
  <div style="display:flex;gap:12px;align-items:center"><div style="font-size:13px;color:var(--ink2)">Logged in as <strong>Harish Singh</strong> <a href="mailto:Hzzzx06@gmail.com" style="color:var(--sky)">Hzzzx06@gmail.com</a></div><button class="btn btn-ghost" onclick="showPage('home')"> View Site</button></div>
  </div>
  <div class="adm-layout">
@@ -2585,9 +2644,15 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
 </div>
 
 <!-- ===================== AI CHAT ===================== -->
-<div class="ai-bubble">
- <div class="ai-label"> HUMAIX REALM AI Labs</div>
- <button class="ai-toggle" onclick="openAI()" id="aiToggle" aria-label="Open AI assistant">AI</button>
+<div class="utility-dock" aria-label="Quick support shortcuts">
+ <div class="dock-label">Assist</div>
+ <button class="dock-btn ai" onclick="openAI()" id="aiToggle" aria-label="Open AI assistant">AI</button>
+ <a class="dock-btn wa" href="https://whatsapp.com/channel/0029Vb7R7CdKAwEhKPOskT3G" target="_blank" rel="noopener noreferrer" title="Follow HUMAIX REALM on WhatsApp" aria-label="WhatsApp channel">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+   <path d="M12 3.6a8.4 8.4 0 0 0-7.2 12.8L4 20.4l4-1.1A8.4 8.4 0 1 0 12 3.6Z" fill="currentColor" stroke="none"></path>
+   <path d="M9.4 8.6c.2-.4.4-.4.7-.4h.6c.2 0 .4 0 .5.4l.7 1.8c.1.3.1.4 0 .6l-.4.5c-.1.2-.2.4-.1.6.2.5 1 1.4 1.6 1.8.2.1.5.1.7 0l.6-.4c.2-.1.4-.1.6 0l1.8.8c.3.1.4.3.4.6-.1.8-.8 1.4-1.6 1.4-3.8 0-6.8-3-6.8-6.8 0-.5.2-1 .4-1.5Z" fill="#03040a" opacity=".96" stroke="none"></path>
+  </svg>
+ </a>
 </div>
 
 <div class="ai-panel" id="aiPanel">
@@ -2622,47 +2687,101 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  </div>
 </div>
 
-<!-- WA FLOAT BUTTON -->
-<a class="wa-float" href="https://whatsapp.com/channel/0029Vb7R7CdKAwEhKPOskT3G" target="_blank" rel="noopener noreferrer" title="Follow HUMAIX REALM on WhatsApp" aria-label="WhatsApp channel">
- <svg viewBox="0 0 24 24" aria-hidden="true">
-  <path d="M12 3.6a8.4 8.4 0 0 0-7.2 12.8L4 20.4l4-1.1A8.4 8.4 0 1 0 12 3.6Z" fill="currentColor" stroke="none"></path>
-  <path d="M9.4 8.6c.2-.4.4-.4.7-.4h.6c.2 0 .4 0 .5.4l.7 1.8c.1.3.1.4 0 .6l-.4.5c-.1.2-.2.4-.1.6.2.5 1 1.4 1.6 1.8.2.1.5.1.7 0l.6-.4c.2-.1.4-.1.6 0l1.8.8c.3.1.4.3.4.6-.1.8-.8 1.4-1.6 1.4-3.8 0-6.8-3-6.8-6.8 0-.5.2-1 .4-1.5Z" fill="#03040a" opacity=".96" stroke="none"></path>
- </svg>
-</a>
-
 <!-- TOAST CONTAINER -->
 <div class="toast-zone" id="toastZone"></div>
 
 <script>
 // ===================== COURSE DATA (correct pricing) =====================
 const COURSES = [
- {id:1, title:'AI Productivity Sprint', titleHi:'Build a faster learning and work system', cat:'Technology', level:'Beginner', price:299, orig:1499, rating:4.9, students:2341, hours:'3.5', lang:'Hindi + English', icon:'AI', thumb:'Starter Kit', badge:'hot', bg:'linear-gradient(135deg,#10211d,#1f3a35 45%,#38bdf8)', thumbPos:'78% 42%'},
- {id:2, title:'Data Science with AI', titleHi:'Learn analytics with project-based thinking', cat:'Data Science', level:'Beginner', price:399, orig:1999, rating:4.9, students:3102, hours:'5', lang:'Hindi + English', icon:'DS', thumb:'Insights Lab', badge:'pop', bg:'linear-gradient(135deg,#1d1530,#34204a 50%,#2dd4bf)', thumbPos:'66% 45%'},
- {id:3, title:'Cyber Security Foundations', titleHi:'Practical security basics for the real web', cat:'Cyber Security', level:'Beginner', price:499, orig:2499, rating:4.9, students:1876, hours:'6', lang:'Hindi + English', icon:'CS', thumb:'Security Lab', badge:'hot', bg:'linear-gradient(135deg,#081a17,#10352d 55%,#34d399)', thumbPos:'42% 40%'},
- {id:4, title:'Creator Growth System', titleHi:'Turn audience building into a repeatable system', cat:'Digital Marketing', level:'Beginner', price:249, orig:1299, rating:4.8, students:1204, hours:'4', lang:'Hindi + English', icon:'GR', thumb:'Growth Lab', badge:'pop', bg:'linear-gradient(135deg,#111827,#1e293b 55%,#a78bfa)', thumbPos:'72% 44%'},
- {id:5, title:'Python Foundations', titleHi:'Start coding with clean logic and confidence', cat:'Programming', level:'Beginner', price:249, orig:999, rating:4.8, students:980, hours:'5.5', lang:'Hindi + English', icon:'PY', thumb:'Code Lab', badge:'new', bg:'linear-gradient(135deg,#0b1f1a,#123c32 55%,#2dd4bf)', thumbPos:'58% 38%'},
- {id:6, title:'English for Builders', titleHi:'Speak clearly for interviews, clients, and community', cat:'Languages', level:'Beginner', price:129, orig:699, rating:4.7, students:1876, hours:'4.5', lang:'Hindi + English', icon:'EN', thumb:'Speaking Studio', badge:'new', bg:'linear-gradient(135deg,#0e1d2e,#17324c 55%,#38bdf8)', thumbPos:'50% 52%'},
+ {id:1, title:'AI Productivity Sprint', titleHi:'Build a faster learning and work system', cat:'Technology', level:'Beginner', price:299, orig:1499, rating:4.9, students:2341, hours:'3.5', lang:'Hindi + English', badge:'hot', bg:'linear-gradient(135deg,#10211d,#1f3a35 45%,#38bdf8)', thumbPos:'78% 42%'},
+ {id:2, title:'Data Science with AI', titleHi:'Learn analytics with project-based thinking', cat:'Data Science', level:'Beginner', price:399, orig:1999, rating:4.9, students:3102, hours:'5', lang:'Hindi + English', badge:'pop', bg:'linear-gradient(135deg,#1d1530,#34204a 50%,#2dd4bf)', thumbPos:'66% 45%'},
+ {id:3, title:'Cyber Security Foundations', titleHi:'Practical security basics for the real web', cat:'Cyber Security', level:'Beginner', price:499, orig:2499, rating:4.9, students:1876, hours:'6', lang:'Hindi + English', badge:'hot', bg:'linear-gradient(135deg,#081a17,#10352d 55%,#34d399)', thumbPos:'42% 40%'},
+ {id:4, title:'Creator Growth System', titleHi:'Turn audience building into a repeatable system', cat:'Digital Marketing', level:'Beginner', price:249, orig:1299, rating:4.8, students:1204, hours:'4', lang:'Hindi + English', badge:'pop', bg:'linear-gradient(135deg,#111827,#1e293b 55%,#a78bfa)', thumbPos:'72% 44%'},
+ {id:5, title:'Python Foundations', titleHi:'Start coding with clean logic and confidence', cat:'Programming', level:'Beginner', price:249, orig:999, rating:4.8, students:980, hours:'5.5', lang:'Hindi + English', badge:'new', bg:'linear-gradient(135deg,#0b1f1a,#123c32 55%,#2dd4bf)', thumbPos:'58% 38%'},
+ {id:6, title:'English for Builders', titleHi:'Speak clearly for interviews, clients, and community', cat:'Languages', level:'Beginner', price:129, orig:699, rating:4.7, students:1876, hours:'4.5', lang:'Hindi + English', badge:'new', bg:'linear-gradient(135deg,#0e1d2e,#17324c 55%,#38bdf8)', thumbPos:'50% 52%'},
 ];
 
 const BADGE_MAP = {hot:' Hot',new:' New',pop:' Popular'};
 const BADGE_CLS = {hot:'badge-hot',new:'badge-new',pop:'badge-pop'};
 
+const THUMB_THEME = {
+  1: ['#38bdf8', '#8b5cf6', '#34d399'],
+  2: ['#2dd4bf', '#38bdf8', '#c084fc'],
+  3: ['#34d399', '#00e5ff', '#0ea5e9'],
+  4: ['#a78bfa', '#ff7ab8', '#38bdf8'],
+  5: ['#2dd4bf', '#38bdf8', '#22c55e'],
+  6: ['#38bdf8', '#7dd3fc', '#ff7ab8']
+};
+
+function courseThumbSvg(course){
+ const [a, b, c] = THUMB_THEME[course.id] || ['#38bdf8', '#8b5cf6', '#00e5ff'];
+ const tilt = 12 + (course.id * 7);
+ const orbit = 78 + (course.id * 3);
+ const orbit2 = 42 + (course.id * 2);
+ const svg = `
+ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 520" fill="none">
+  <defs>
+   <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#030014"/>
+    <stop offset="55%" stop-color="${course.bg.includes('#1d1530') ? '#101426' : '#08101d'}"/>
+    <stop offset="100%" stop-color="#030014"/>
+   </linearGradient>
+   <radialGradient id="g1" cx="50%" cy="44%" r="60%">
+    <stop offset="0%" stop-color="${a}" stop-opacity="0.88"/>
+    <stop offset="48%" stop-color="${b}" stop-opacity="0.28"/>
+    <stop offset="100%" stop-color="${c}" stop-opacity="0"/>
+   </radialGradient>
+   <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="white" stop-opacity="0.24"/>
+    <stop offset="100%" stop-color="white" stop-opacity="0.02"/>
+   </linearGradient>
+  </defs>
+  <rect width="840" height="520" rx="42" fill="url(#bg)"/>
+  <rect x="36" y="34" width="768" height="452" rx="32" fill="url(#g1)" opacity="0.9"/>
+  <g opacity="0.25">
+   <path d="M54 92H786M54 164H786M54 236H786M54 308H786M54 380H786" stroke="white" stroke-opacity="0.12"/>
+   <path d="M114 58V462M202 58V462M290 58V462M378 58V462M466 58V462M554 58V462M642 58V462M730 58V462" stroke="white" stroke-opacity="0.08"/>
+  </g>
+  <g transform="translate(420 260)">
+   <circle r="${orbit}" stroke="${a}" stroke-opacity="0.35" stroke-width="4" fill="none" transform="rotate(${tilt})"/>
+   <circle r="${orbit2}" stroke="${b}" stroke-opacity="0.28" stroke-width="2.5" fill="none" transform="rotate(${-tilt})"/>
+   <circle r="18" fill="${a}" fill-opacity="0.92"/>
+   <circle r="42" fill="url(#glass)" fill-opacity="0.55"/>
+   <path d="M-164 24C-108 -24 -54 -40 0 -40C54 -40 104 -12 164 40" stroke="${c}" stroke-opacity="0.54" stroke-width="8" stroke-linecap="round" fill="none"/>
+   <path d="M-164 -28C-104 10 -52 28 0 28C52 28 108 12 164 -28" stroke="${b}" stroke-opacity="0.42" stroke-width="6" stroke-linecap="round" fill="none"/>
+   <circle cx="-132" cy="-74" r="9" fill="${b}" fill-opacity="0.9"/>
+   <circle cx="108" cy="92" r="7" fill="${c}" fill-opacity="0.9"/>
+   <circle cx="152" cy="-86" r="6" fill="${a}" fill-opacity="0.9"/>
+   <circle cx="-94" cy="108" r="5" fill="white" fill-opacity="0.74"/>
+  </g>
+  <g opacity="0.55">
+   <rect x="72" y="74" width="156" height="20" rx="10" fill="white" fill-opacity="0.12"/>
+   <rect x="72" y="106" width="96" height="12" rx="6" fill="white" fill-opacity="0.08"/>
+   <rect x="610" y="402" width="158" height="18" rx="9" fill="white" fill-opacity="0.12"/>
+   <rect x="610" y="432" width="100" height="11" rx="5.5" fill="white" fill-opacity="0.08"/>
+  </g>
+ </svg>`;
+ return `url("data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}")`;
+}
+
 function makeCard(c){
  const disc = Math.round((1-c.price/c.orig)*100);
  return `<div class="course-card" onclick="openDetail(${c.id})">
- <div class="c-thumb" style="--thumb-bg:${c.bg};--thumb-pos:${c.thumbPos || 'center'}">
- <div class="c-thumb-icon">${c.icon}</div>
- <div class="c-thumb-caption">${c.thumb || c.cat}</div>
+ <div class="c-thumb" style="--thumb-bg:${c.bg};--thumb-pos:${c.thumbPos || 'center'};--thumb-art:${courseThumbSvg(c)}">
+ <div class="c-thumb-grid"></div>
+ <div class="c-thumb-core"></div>
  <div class="c-thumb-overlay"></div>
  <span class="badge ${BADGE_CLS[c.badge]}">${BADGE_MAP[c.badge]}</span>
- <div class="demo-btn" onclick="event.stopPropagation();openDemoModal('${c.title}','${c.icon}')"> Demo</div>
  </div>
  <div class="c-body">
  <div class="c-cat">${c.cat}</div>
  <h3 class="c-title">${c.title}</h3>
- <div class="c-title-hi">${c.titleHi}</div>
- <div class="c-lang">${c.lang}</div>
- <div class="c-instructor"><div class="inst-av">HS</div>Harish Singh ${c.hours} hrs</div>
+ <div class="c-meta-row">
+ <span class="c-meta-chip">${c.level}</span>
+ <span class="c-meta-chip">${c.hours} hrs</span>
+ <span class="c-meta-chip">${c.lang}</span>
+ </div>
+ <div class="c-instructor"><div class="inst-av">HS</div>Founder-led curriculum</div>
  <div class="c-rating"><span class="r-score">${c.rating}</span><span class="stars">${' '.repeat(Math.floor(c.rating))}</span><span style="font-size:12px;color:var(--ink3)">(${c.students.toLocaleString()})</span></div>
  <div class="c-footer">
  <div><span class="c-price"> ${c.price}</span><span class="c-orig"> ${c.orig}</span></div>
@@ -2826,40 +2945,41 @@ function initHeroScene(){
  const group = new THREE.Group();
  scene.add(group);
 
- const ambient = new THREE.AmbientLight(0x9fdcff, 0.9);
+ const ambient = new THREE.AmbientLight(0x9fdcff, 1.1);
  scene.add(ambient);
- const keyLight = new THREE.PointLight(0x38bdf8, 2.4, 30);
+ const keyLight = new THREE.PointLight(0x38bdf8, 3.1, 34);
  keyLight.position.set(4, 5, 7);
  scene.add(keyLight);
- const magentaLight = new THREE.PointLight(0xff4fb2, 1.6, 24);
+ const magentaLight = new THREE.PointLight(0xff4fb2, 2.1, 26);
  magentaLight.position.set(-5, -3, 6);
  scene.add(magentaLight);
 
  const globe = new THREE.Mesh(
-   new THREE.SphereGeometry(1.95, 48, 36),
-   new THREE.MeshPhongMaterial({
-     color: 0x09111f,
-     emissive: 0x081120,
-     emissiveIntensity: 0.8,
+   new THREE.SphereGeometry(2.1, 56, 42),
+   new THREE.MeshStandardMaterial({
+     color: 0x050915,
+     emissive: 0x08162d,
+     emissiveIntensity: 1.0,
      transparent: true,
-     opacity: 0.92,
+     opacity: 0.9,
      wireframe: true,
-     shininess: 120
+     metalness: 0.4,
+     roughness: 0.22
    })
  );
- globe.scale.set(1.15, 1.0, 1.08);
+ globe.scale.set(1.16, 1.0, 1.08);
  group.add(globe);
 
  const core = new THREE.Mesh(
-   new THREE.IcosahedronGeometry(0.98, 3),
-   new THREE.MeshPhongMaterial({
-     color: 0x38bdf8,
+   new THREE.TorusKnotGeometry(1.08, 0.28, 220, 30),
+   new THREE.MeshStandardMaterial({
+     color: 0x0f172a,
      emissive: 0x38bdf8,
-     emissiveIntensity: 1.1,
+     emissiveIntensity: 1.25,
      transparent: true,
-     opacity: 0.72,
-     flatShading: false,
-     shininess: 150
+     opacity: 0.92,
+     metalness: 0.72,
+     roughness: 0.16
    })
  );
  group.add(core);
@@ -2874,6 +2994,13 @@ function initHeroScene(){
    })
  );
  group.add(halo);
+
+ const scanRing = new THREE.Mesh(
+   new THREE.TorusGeometry(3.18, 0.026, 18, 320),
+   new THREE.MeshBasicMaterial({ color: 0xff4fb2, transparent: true, opacity: 0.24 })
+ );
+ scanRing.rotation.x = Math.PI / 2.15;
+ group.add(scanRing);
 
  const aura = new THREE.Mesh(
    new THREE.TorusGeometry(2.65, 0.055, 18, 220),
@@ -2959,21 +3086,25 @@ function initHeroScene(){
  function animate(){
    group.rotation.y += (target.y - group.rotation.y) * 0.05;
    group.rotation.x += (target.x - group.rotation.x) * 0.05;
-   group.rotation.y += 0.005;
-   group.rotation.x += 0.0016;
-   core.rotation.y += 0.007;
-   core.rotation.x += 0.004;
+   group.rotation.y += 0.004;
+   group.rotation.x += 0.0014;
+   core.rotation.y += 0.009;
+   core.rotation.x += 0.005;
    halo.rotation.y += 0.0014;
    halo.rotation.x -= 0.0006;
-   globe.rotation.y += 0.0018;
-   globe.rotation.x -= 0.0008;
-   aura.rotation.z += 0.005;
+   globe.rotation.y += 0.0024;
+   globe.rotation.x -= 0.0009;
+   scanRing.rotation.z += 0.0035;
+   aura.rotation.z += 0.006;
    aura.rotation.x += 0.002;
    ringTwo.rotation.y -= 0.004;
    particleCloud.rotation.y -= 0.0012;
    particleCloud.rotation.x += 0.0005;
    orbitNodes.rotation.y += 0.0025;
    orbitNodes.rotation.x += 0.001;
+   const time = Date.now() * 0.001;
+   core.scale.setScalar(1.0 + Math.sin(time * 1.8) * 0.03);
+   scanRing.scale.setScalar(1.0 + Math.cos(time * 1.5) * 0.02);
    keyLight.position.x = 4 + Math.sin(Date.now() * 0.0007) * 1.3;
    keyLight.position.y = 5 + Math.cos(Date.now() * 0.0008) * 0.6;
    magentaLight.position.x = -5 + Math.cos(Date.now() * 0.0005) * 1.1;
@@ -3247,14 +3378,16 @@ function updateGoogleAuthUi(){
  const noteLogin = document.getElementById('loginGoogleNote');
  const noteSignup = document.getElementById('signupGoogleNote');
  const text = googleStatusText || (googleDirectEnabled
-   ? 'Continue with Google is ready.'
-   : 'Google login is not configured on this deployment. Use email access for now.');
+   ? 'Google sign-in is available on this deployment.'
+   : 'Google sign-in is not configured on this deployment. Use email access for now.');
  if (noteLogin) noteLogin.textContent = text;
  if (noteSignup) noteSignup.textContent = text;
  document.querySelectorAll('.google-redirect').forEach(link => {
-   link.style.display = googleRedirectEnabled ? 'flex' : 'none';
-   link.disabled = !googleRedirectEnabled;
-   link.setAttribute('aria-hidden', googleRedirectEnabled ? 'false' : 'true');
+   const showGoogleAction = Boolean(googleDirectEnabled || googleRedirectEnabled);
+   link.style.display = showGoogleAction ? 'inline-flex' : 'none';
+   link.disabled = !(googleDirectEnabled || googleRedirectEnabled);
+   link.setAttribute('aria-hidden', showGoogleAction ? 'false' : 'true');
+   link.textContent = googleDirectEnabled ? 'Continue with Google' : 'Request with Google';
  });
 }
 
@@ -3609,7 +3742,7 @@ function renderDashboardData(){
      const actionStyle = item.progress >= 100 ? 'background:var(--emerald)' : '';
      return `
        <div class="enroll-item">
-         <div class="e-thumb">${item.icon || 'HR'}</div>
+         <div class="e-thumb" style="background-image:${courseThumbSvg(item)};background-size:cover;background-position:center"></div>
          <div class="e-info">
            <div class="e-title">${item.title}</div>
            <div class="e-meta">${userName} ${progressLabel}</div>
