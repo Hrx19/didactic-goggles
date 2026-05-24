@@ -1443,15 +1443,13 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <div class="logo-tag">Intelligent Ecosystems</div>
  </div>
  <ul class="nav-links">
- <li><a href="/workspace" onclick="event.preventDefault();showPage('dashboard')" id="nl-workspace">Workspace</a></li>
- <li><a href="/" onclick="event.preventDefault();openAI()" id="nl-memory">Memory</a></li>
- <li><a href="/academy" onclick="event.preventDefault();showPage('courses')" id="nl-academy">Academy</a></li>
- <li><a href="/" onclick="event.preventDefault();goHomeSection('ecosystems')" id="nl-ecosystems">Ecosystems</a></li>
- <li><a href="/admin" onclick="event.preventDefault();showPage('admin')" id="nl-admin" style="display:none">Admin</a></li>
+ <li><a href="#ecosystems" onclick="event.preventDefault();document.getElementById('ecosystems').scrollIntoView({behavior:'smooth',block:'start'})" id="nl-workspace">Workspace</a></li>
+ <li><a href="#status" onclick="event.preventDefault();document.getElementById('status').scrollIntoView({behavior:'smooth',block:'start'})" id="nl-memory">Memory</a></li>
+ <li><a href="#ecosystems" onclick="event.preventDefault();document.getElementById('ecosystems').scrollIntoView({behavior:'smooth',block:'start'})" id="nl-academy">Academy</a></li>
  </ul>
  <div class="nav-btns">
- <button class="btn btn-ghost" onclick="showPage('about')">Read Whitepaper</button>
- <button class="btn btn-prime" onclick="showPage('dashboard')">Launch App</button>
+ <button class="btn btn-ghost" onclick="document.getElementById('status').scrollIntoView({behavior:'smooth',block:'start'})">System Status</button>
+ <button class="btn btn-prime" onclick="document.getElementById('waitlistForm').scrollIntoView({behavior:'smooth',block:'center'})">Enter The Realm</button>
  </div>
  <div class="hamburger" onclick="toggleMenu()">
  <span></span><span></span><span></span>
@@ -1459,11 +1457,9 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
 </nav>
 
 <div class="mobile-menu" id="mMenu">
- <a href="/workspace" onclick="event.preventDefault();showPage('dashboard');toggleMenu()"> Workspace</a>
- <a href="/" onclick="event.preventDefault();openAI();toggleMenu()"> Memory</a>
- <a href="/academy" onclick="event.preventDefault();showPage('courses');toggleMenu()"> Academy</a>
- <a href="/" onclick="event.preventDefault();goHomeSection('ecosystems');toggleMenu()"> Ecosystems</a>
- <a href="/admin" onclick="event.preventDefault();showPage('admin');toggleMenu()" id="ml-admin" style="display:none"> Admin</a>
+ <a href="#ecosystems" onclick="event.preventDefault();document.getElementById('ecosystems').scrollIntoView({behavior:'smooth',block:'start'});toggleMenu()"> Workspace</a>
+ <a href="#status" onclick="event.preventDefault();document.getElementById('status').scrollIntoView({behavior:'smooth',block:'start'});toggleMenu()"> Memory</a>
+ <a href="#ecosystems" onclick="event.preventDefault();document.getElementById('ecosystems').scrollIntoView({behavior:'smooth',block:'start'});toggleMenu()"> Academy</a>
 </div>
 
 <!-- ===================== HOME PAGE ===================== -->
@@ -1477,8 +1473,8 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <h1><span class="hero-title-grad">HUMAIX REALM</span></h1>
  <p class="hero-sub">Evolving Humanity through Intelligent Ecosystems</p>
  <div class="hero-actions">
- <button class="btn btn-prime btn-xl" onclick="showPage('signup')">Request Early Access</button>
- <button class="btn btn-ghost btn-lg" onclick="showPage('about')">Read Whitepaper</button>
+ <button class="btn btn-prime btn-xl" onclick="document.getElementById('waitlistForm').scrollIntoView({behavior:'smooth',block:'center'})">Request Early Access</button>
+ <button class="btn btn-ghost btn-lg" onclick="document.getElementById('ecosystems').scrollIntoView({behavior:'smooth',block:'start'})">Read Whitepaper</button>
  </div>
  <div class="hero-badges">
  <span class="hero-badge">Military-Grade Encryption</span>
@@ -1524,10 +1520,10 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <p class="sec-sub">A minimalist system architecture designed to keep the platform calm, clear, and premium.</p>
  </div>
  <div class="cats-grid fade-in">
- <div class="cat-card" onclick="showPage('about')"><span class="cat-icon">ID</span><div class="cat-name">Humaix Identity</div><div class="cat-count">AI avatars and a premium personal presence layer.</div></div>
+ <div class="cat-card" onclick="document.querySelector('.vision-section').scrollIntoView({behavior:'smooth',block:'start'})"><span class="cat-icon">ID</span><div class="cat-name">Humaix Identity</div><div class="cat-count">AI avatars and a premium personal presence layer.</div></div>
  <div class="cat-card" onclick="openAI()"><span class="cat-icon">ME</span><div class="cat-name">Humaix Memory</div><div class="cat-count">Digital memory evolution for context, notes, and continuity.</div></div>
- <div class="cat-card" onclick="showPage('dashboard')"><span class="cat-icon">WS</span><div class="cat-name">Humaix Workspace</div><div class="cat-count">Intelligent co-working tools and focused productivity flows.</div></div>
- <div class="cat-card" onclick="showPage('courses')"><span class="cat-icon">AC</span><div class="cat-name">Humaix Academy</div><div class="cat-count">Advanced AI learning platform for serious growth.</div></div>
+ <div class="cat-card" onclick="document.getElementById('status').scrollIntoView({behavior:'smooth',block:'start'})"><span class="cat-icon">WS</span><div class="cat-name">Humaix Workspace</div><div class="cat-count">Intelligent co-working tools and focused productivity flows.</div></div>
+ <div class="cat-card" onclick="document.getElementById('waitlistForm').scrollIntoView({behavior:'smooth',block:'center'})"><span class="cat-icon">AC</span><div class="cat-name">Humaix Academy</div><div class="cat-count">Advanced AI learning platform for serious growth.</div></div>
  </div>
  </div>
  </section>
@@ -1543,59 +1539,6 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <div class="vision-card"><div class="vision-icon"> </div><h3>Rooted in Purpose</h3><p>Built in the hills, shaped for the world every course is designed to create impact, not just certificates.</p></div>
  <div class="vision-card"><div class="vision-icon"> </div><h3>AI-Powered Learning</h3><p>Learn with future-ready tools, guided by intelligent workflows and mentor-led project paths.</p></div>
  <div class="vision-card"><div class="vision-icon"> </div><h3>Global Outcomes</h3><p>From local students to global careers HUMAIX REALM connects ambition to real work, freelance income, and startup opportunity.</p></div>
- </div>
- </div>
- </section>
-
- <!-- FEATURED COURSES -->
- <section>
- <div class="sec-inner">
- <div class="sec-head fade-in">
- <div class="sec-tag">Signature Paths</div>
- <h2 class="sec-title">HUMAIX REALM Signature Courses</h2>
- <p class="sec-sub">Premium learning journeys shaped for creators, builders, and Himalayan founders.</p>
- </div>
- <div class="courses-grid fade-in" id="featuredGrid"></div>
- <div style="text-align:center;margin-top:44px">
- <button class="btn btn-outline btn-lg" onclick="showPage('courses')">View All Courses </button>
- </div>
- </div>
- </section>
-
- <!-- TESTIMONIALS -->
- <section style="background:var(--bg2)">
- <div class="sec-inner">
- <div class="sec-head fade-in">
- <div class="sec-tag">Success Stories</div>
- <h2 class="sec-title">Real Students, Real Results</h2>
- <p class="sec-sub">Thousands of learners transforming their careers with HUMAIX REALM.</p>
- </div>
- <div class="testi-grid fade-in">
- <div class="testi-card">
- <p class="testi-txt">I paid 149 for the Instagram Growth course and within 2 months had 12K followers and 4 brand partnerships. Harish sir's teaching is world-class and crystal clear.</p>
- <div class="testi-author"><div class="auth-av">PS</div><div><div class="auth-name">Priya Sharma</div><div class="auth-role">Content Creator, Dehradun</div></div></div>
- </div>
- <div class="testi-card">
- <p class="testi-txt">The Data Science course at 349 is an unbelievable deal. I went from zero Python knowledge to landing my first freelance data project in 8 weeks. The certificate looks amazing on LinkedIn!</p>
- <div class="testi-author"><div class="auth-av">AK</div><div><div class="auth-name">Aman Kumar</div><div class="auth-role">Freelance Data Analyst, Roorkee</div></div></div>
- </div>
- <div class="testi-card">
- <p class="testi-txt">As a student from a small town in Uttarakhand, I never thought I could afford this quality of education. The Cyber Security course completely changed my career path. 499 best spent ever!</p>
- <div class="testi-author"><div class="auth-av">RN</div><div><div class="auth-name">Ritu Negi</div><div class="auth-role">Security Analyst Trainee, Haridwar</div></div></div>
- </div>
- </div>
- </div>
- </section>
-
- <!-- FINAL CTA -->
- <section style="text-align:center;position:relative;overflow:hidden">
- <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(79,143,255,0.08),transparent)"></div>
- <div class="sec-inner" style="position:relative;z-index:1">
- <div class="fade-in">
- <h2 class="sec-title">Ready to Request Early Access?</h2>
- <p class="sec-sub" style="margin:0 auto 36px">Join the VIP waitlist and unlock the private launch path for HUMAIX REALM.</p>
- <button class="btn btn-prime btn-xl" onclick="showPage('signup')"> Join VIP Waitlist</button>
- <p style="margin-top:16px;font-size:13px;color:var(--ink3)">Invite-only. Encrypted onboarding. Private launch sequence.</p>
  </div>
  </div>
  </section>
@@ -1630,41 +1573,8 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
 <div><div class="logo-name">HUMAIX REALM</div><div class="logo-tag">Intelligent Ecosystems</div></div>
 </div>
 <p>Empowering students from Uttarakhand and all over India with affordable, world-class digital education.</p>
-<div class="soc-links">
- <a class="soc-lnk soc-ig" href="https://www.instagram.com/humaix_realm/?utm_source=ig_web_button_share_sheet" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-   <rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor"></rect>
-   <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor"></circle>
-   <circle cx="17" cy="7" r="1.2" fill="currentColor" stroke="none"></circle>
-  </svg>
-  <span class="sr-only">Instagram</span>
- </a>
- <a class="soc-lnk soc-wa" href="https://whatsapp.com/channel/0029Vb7R7CdKAwEhKPOskT3G" target="_blank" rel="noopener noreferrer" title="WhatsApp Channel" aria-label="WhatsApp Channel">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-   <path d="M12 3.6a8.4 8.4 0 0 0-7.2 12.8L4 20.4l4-1.1A8.4 8.4 0 1 0 12 3.6Z" fill="currentColor" stroke="none"></path>
-   <path d="M9.4 8.6c.2-.4.4-.4.7-.4h.6c.2 0 .4 0 .5.4l.7 1.8c.1.3.1.4 0 .6l-.4.5c-.1.2-.2.4-.1.6.2.5 1 1.4 1.6 1.8.2.1.5.1.7 0l.6-.4c.2-.1.4-.1.6 0l1.8.8c.3.1.4.3.4.6-.1.8-.8 1.4-1.6 1.4-3.8 0-6.8-3-6.8-6.8 0-.5.2-1 .4-1.5Z" fill="#03040a" opacity=".96" stroke="none"></path>
-  </svg>
-  <span class="sr-only">WhatsApp</span>
- </a>
- <a class="soc-lnk soc-yt" href="https://youtube.com" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-   <path d="M21.6 7.1c.2.9.4 2.8.4 4.9s-.2 4-.4 4.9a3 3 0 0 1-2.1 2.1c-1.8.5-7.5.5-7.5.5s-5.7 0-7.5-.5a3 3 0 0 1-2.1-2.1C2.2 16 2 14 2 12s.2-4 .4-4.9a3 3 0 0 1 2.1-2.1C6.3 4.5 12 4.5 12 4.5s5.7 0 7.5.5a3 3 0 0 1 2.1 2.1Z" fill="currentColor" stroke="none"></path>
-   <path d="M10 15.2V8.8L15.5 12Z" fill="#03040a" opacity=".96" stroke="none"></path>
-  </svg>
-  <span class="sr-only">YouTube</span>
- </a>
- <a class="soc-lnk soc-mail" href="mailto:Hzzzx06@gmail.com" title="Email" aria-label="Email">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-   <rect x="3.5" y="5" width="17" height="14" rx="3" fill="none" stroke="currentColor"></rect>
-   <path d="M5.2 7.2 12 12.6l6.8-5.4" fill="none" stroke="currentColor"></path>
-  </svg>
-  <span class="sr-only">Email</span>
- </a>
 </div>
-</div>
- <div class="ft-col"><h4>Courses</h4><ul class="ft-links"><li><a href="/academy" onclick="event.preventDefault();showPage('courses')">Technology</a></li><li><a href="/academy" onclick="event.preventDefault();showPage('courses')">Data Science</a></li><li><a href="/academy" onclick="event.preventDefault();showPage('courses')">Cyber Security</a></li><li><a href="/academy" onclick="event.preventDefault();showPage('courses')">Digital Marketing</a></li><li><a href="/academy" onclick="event.preventDefault();showPage('courses')">Programming</a></li></ul></div>
- <div class="ft-col"><h4>Company</h4><ul class="ft-links"><li><a href="/about" onclick="event.preventDefault();showPage('about')">About Us</a></li><li><a href="/blog" onclick="event.preventDefault();showPage('blog')">Blog</a></li><li><a href="/contact" onclick="event.preventDefault();showPage('contact')">Contact</a></li><li><a href="/contact" onclick="event.preventDefault();showPage('contact')">Careers</a></li><li><a href="/contact" onclick="event.preventDefault();showPage('contact')">Teach With Us</a></li></ul></div>
- <div class="ft-col"><h4>Support</h4><ul class="ft-links"><li><a href="/contact" onclick="event.preventDefault();showPage('contact')">Help Center</a></li><li><a href="#status" onclick="event.preventDefault();document.getElementById('status').scrollIntoView({behavior:'smooth',block:'start'})">System Status</a></li><li><a href="/privacy-policy" onclick="event.preventDefault();showPage('privacy')">Privacy Policy</a></li><li><a href="/terms-of-service" onclick="event.preventDefault();showPage('terms')">Terms of Service</a></li><li><a href="/refund-policy" onclick="event.preventDefault();showPage('refund')">Refund Policy</a></li></ul></div>
+ <div class="ft-col"><h4>Support</h4><ul class="ft-links"><li><a href="#status" onclick="event.preventDefault();document.getElementById('status').scrollIntoView({behavior:'smooth',block:'start'})">System Status</a></li><li><a href="/privacy-policy" onclick="event.preventDefault();showPage('privacy')">Privacy Policy</a></li><li><a href="/terms-of-service" onclick="event.preventDefault();showPage('terms')">Terms of Service</a></li><li><a href="/refund-policy" onclick="event.preventDefault();showPage('refund')">Refund Policy</a></li></ul></div>
  </div>
  <div class="ft-bot">
  <span> 2025 HUMAIX REALM. All rights reserved. Founded by <strong>Harish Singh</strong>.</span>
