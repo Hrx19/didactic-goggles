@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Humaix Realm | Evolving Humanity through Intelligent Ecosystems</title>
-<meta name="description" content="Humaix Realm is a premium founder-led academy for AI-native skills, secure learning products, and the future Realm roadmap.">
+<meta name="description" content="Humaix Realm is a spatial AI academy blending premium learning, 3D product storytelling, and future Workspace and Memory layers.">
 <meta name="keywords" content="HUMAIX REALM, intelligent ecosystems, AI courses, identity, memory, workspace, academy, data science, Python, cyber security, Uttarakhand">
 <meta name="author" content="HUMAIX REALM">
 <meta name="theme-color" content="#0f172a">
@@ -15,13 +15,12 @@
 <link rel="apple-touch-icon" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="/assets/hero-ai-lab.png">
 <link rel="preload" as="image" href="/assets/humaix-og.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HUMAIX REALM">
 <meta property="og:title" content="Humaix Realm | Evolving Humanity through Intelligent Ecosystems">
-<meta property="og:description" content="Humaix Realm is a premium founder-led academy for AI-native skills, secure learning products, and the future Realm roadmap.">
+<meta property="og:description" content="Humaix Realm is a spatial AI academy blending premium learning, 3D product storytelling, and future Workspace and Memory layers.">
 <meta property="og:url" content="https://website-gamma-lyart-55.vercel.app/">
 <meta property="og:image" content="https://website-gamma-lyart-55.vercel.app/assets/humaix-og.png">
 <meta property="og:image:width" content="1200">
@@ -29,7 +28,7 @@
 <meta property="og:image:alt" content="HUMAIX REALM premium AI, tech courses, and innovation preview">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Humaix Realm | Evolving Humanity through Intelligent Ecosystems">
-<meta name="twitter:description" content="Humaix Realm is a premium founder-led academy for AI-native skills, secure learning products, and the future Realm roadmap.">
+<meta name="twitter:description" content="Humaix Realm is a spatial AI academy blending premium learning, 3D product storytelling, and future Workspace and Memory layers.">
 <meta name="twitter:image" content="https://website-gamma-lyart-55.vercel.app/assets/humaix-og.png">
 <script type="application/ld+json">
 {
@@ -1487,6 +1486,295 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  body{cursor:auto}
  #cursor,#cursor-ring,#tapOrbit{display:none}
 }
+
+/* ===================== PREMIUM REFRESH ===================== */
+.hero-art{
+ inset:-8%;
+ background:
+ radial-gradient(circle at 16% 20%, rgba(0,229,255,0.16), transparent 20%),
+ radial-gradient(circle at 78% 18%, rgba(255,0,127,0.12), transparent 18%),
+ radial-gradient(circle at 58% 72%, rgba(112,0,255,0.2), transparent 24%),
+ linear-gradient(135deg, rgba(7,11,20,0.82), rgba(3,0,20,0.72));
+ opacity:1;
+ filter:saturate(135%);
+}
+.hero{
+ padding:140px 48px 96px;
+ background:
+ radial-gradient(circle at 12% 10%, rgba(56,189,248,0.12), transparent 20%),
+ radial-gradient(circle at 92% 14%, rgba(255,0,127,0.1), transparent 18%),
+ linear-gradient(180deg, rgba(3,0,20,0.98), rgba(5,5,5,0.98));
+}
+.hero-inner{gap:32px;align-items:stretch}
+.hero-copy{max-width:760px}
+.hero-kicker{
+ display:inline-flex;
+ align-items:center;
+ gap:8px;
+ padding:8px 12px;
+ border-radius:999px;
+ background:rgba(255,255,255,0.05);
+ border:1px solid rgba(255,255,255,0.1);
+ color:var(--cyan);
+ font-size:11px;
+ letter-spacing:1.8px;
+ text-transform:uppercase;
+ font-weight:800;
+ margin-bottom:14px;
+}
+.hero h1{
+ font-size:clamp(48px,7vw,88px);
+ letter-spacing:-0.08em;
+}
+.hero-sub{max-width:640px;font-size:19px;color:var(--ink2)}
+.hero-actions{margin-top:20px}
+.hero-actions .btn{border-radius:14px}
+.hero-badges{margin-top:24px}
+.hero-signal-strip{max-width:680px}
+.hero-side{gap:14px}
+.hero-visual{
+ min-height:560px;
+ border-radius:30px;
+ overflow:hidden;
+ position:relative;
+ background:rgba(255,255,255,0.03);
+ box-shadow:0 30px 80px rgba(0,0,0,0.36);
+}
+.hero-visual::before{
+ content:'';
+ position:absolute;
+ inset:0;
+ background:
+ radial-gradient(circle at 50% 46%, rgba(0,229,255,0.12), transparent 28%),
+ radial-gradient(circle at 50% 50%, rgba(112,0,255,0.08), transparent 36%);
+ pointer-events:none;
+}
+.hero-visual::after{
+ content:'';
+ position:absolute;
+ inset:0;
+ background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.28));
+ pointer-events:none;
+}
+#heroScene{mix-blend-mode:screen}
+.hero-orbit-card{
+ position:absolute;
+ right:18px;
+ bottom:18px;
+ z-index:3;
+ max-width:250px;
+ padding:14px 16px;
+ border-radius:18px;
+ background:rgba(7,11,20,0.72);
+ border:1px solid rgba(255,255,255,0.12);
+ backdrop-filter:blur(18px);
+ box-shadow:0 18px 45px rgba(0,0,0,0.24);
+}
+.hero-orbit-card strong{
+ display:block;
+ margin-bottom:6px;
+ font-size:12px;
+ letter-spacing:2px;
+ text-transform:uppercase;
+ color:var(--cyan);
+}
+.hero-orbit-card span{
+ display:block;
+ color:var(--ink2);
+ font-size:13px;
+ line-height:1.65;
+}
+.hero-terminal{
+ padding:16px 18px;
+ border-radius:18px;
+}
+.terminal-window{min-height:74px}
+.waitlist-card{padding:18px;border-radius:20px}
+.layer-section,.courses-section,.trust-section{padding:120px 48px}
+.bento-grid{
+ display:grid;
+ grid-template-columns:minmax(0,1.2fr) repeat(2,minmax(0,1fr));
+ gap:18px;
+ align-items:stretch;
+}
+.bento-card{
+ position:relative;
+ overflow:hidden;
+ min-height:240px;
+ padding:28px;
+ border-radius:24px;
+ background:rgba(255,255,255,0.05);
+ border:1px solid rgba(255,255,255,0.08);
+ backdrop-filter:blur(22px);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,0.12), 0 24px 60px rgba(0,0,0,0.22);
+ transition:transform 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease;
+}
+.bento-card::before{
+ content:'';
+ position:absolute;
+ inset:0;
+ background:radial-gradient(circle at 20% 20%, rgba(56,189,248,0.12), transparent 24%);
+ opacity:0.8;
+ pointer-events:none;
+}
+.bento-card:hover{
+ transform:translateY(-6px);
+ border-color:rgba(0,229,255,0.28);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,0.14), 0 28px 70px rgba(0,0,0,0.3), 0 0 44px rgba(0,229,255,0.1);
+}
+.bento-card h3{
+ position:relative;
+ z-index:1;
+ font-size:22px;
+ line-height:1.18;
+ margin-bottom:10px;
+}
+.bento-card p{
+ position:relative;
+ z-index:1;
+ font-size:14px;
+ line-height:1.7;
+ color:var(--ink2);
+}
+.bento-label{
+ position:relative;
+ z-index:1;
+ display:inline-flex;
+ align-items:center;
+ gap:8px;
+ padding:7px 11px;
+ margin-bottom:16px;
+ border-radius:999px;
+ background:rgba(255,255,255,0.05);
+ border:1px solid rgba(255,255,255,0.08);
+ color:var(--sky);
+ font-size:11px;
+ font-weight:800;
+ letter-spacing:1.8px;
+ text-transform:uppercase;
+}
+.bento-pills{
+ position:relative;
+ z-index:1;
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+ margin-top:18px;
+}
+.bento-pills span{
+ padding:7px 10px;
+ border-radius:999px;
+ background:rgba(255,255,255,0.04);
+ border:1px solid rgba(255,255,255,0.08);
+ color:var(--ink2);
+ font-size:11px;
+ font-weight:700;
+}
+.bento-card--large{grid-row:span 2;min-height:100%}
+.bento-card--accent{
+ background:linear-gradient(180deg, rgba(56,189,248,0.08), rgba(139,92,246,0.08), rgba(255,255,255,0.04));
+}
+.course-actions{
+ display:flex;
+ gap:12px;
+ flex-wrap:wrap;
+ justify-content:center;
+ margin-top:28px;
+}
+.trust-shell{
+ display:flex;
+ justify-content:space-between;
+ gap:28px;
+ padding:28px;
+ border-radius:26px;
+ align-items:center;
+}
+.proof-grid{
+ display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:16px;
+ margin-top:18px;
+}
+.proof-card{
+ padding:24px;
+ border-radius:22px;
+ background:rgba(255,255,255,0.05);
+ border:1px solid rgba(255,255,255,0.08);
+ backdrop-filter:blur(18px);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.proof-kicker{
+ font-size:11px;
+ letter-spacing:2px;
+ text-transform:uppercase;
+ color:var(--cyan);
+ font-weight:800;
+ margin-bottom:12px;
+}
+.proof-card h3{
+ font-size:20px;
+ line-height:1.2;
+ margin-bottom:10px;
+}
+.proof-card p{
+ font-size:14px;
+ line-height:1.7;
+ color:var(--ink2);
+}
+.status-shell{display:flex;justify-content:space-between;gap:24px;align-items:center}
+.security-badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
+.security-badge{
+ display:inline-flex;
+ align-items:center;
+ gap:8px;
+ padding:10px 12px;
+ border-radius:999px;
+ background:rgba(255,255,255,0.05);
+ border:1px solid rgba(255,255,255,0.08);
+ color:var(--ink2);
+ font-size:12px;
+ font-weight:700;
+}
+.security-badge .dot{
+ width:8px;
+ height:8px;
+ border-radius:50%;
+ background:var(--emerald);
+ box-shadow:0 0 12px rgba(52,211,153,0.7);
+}
+.status-link{
+ display:inline-flex;
+ margin-top:16px;
+ color:var(--sky);
+ font-size:13px;
+ font-weight:800;
+ letter-spacing:0.06em;
+ text-transform:uppercase;
+}
+@media(max-width:960px){
+ .hero{
+  padding:118px 18px 58px;
+ }
+ .hero-inner{
+  grid-template-columns:1fr;
+  gap:22px;
+  text-align:center;
+ }
+ .hero-copy{max-width:100%}
+ .hero-kicker{margin-left:auto;margin-right:auto}
+ .hero h1{font-size:clamp(38px,11vw,58px)}
+ .hero-sub{font-size:16px;max-width:100%}
+ .hero-actions{justify-content:center}
+ .hero-signal-strip{max-width:100%;grid-template-columns:1fr}
+ .hero-visual{min-height:320px}
+ .hero-orbit-card{left:18px;right:18px;bottom:18px;max-width:none}
+ .layer-section,.courses-section,.trust-section{padding:84px 20px}
+ .bento-grid,.proof-grid{grid-template-columns:1fr}
+ .bento-card--large{grid-row:auto;min-height:unset}
+ .trust-shell,.status-shell{flex-direction:column;align-items:flex-start}
+ .security-badges{justify-content:flex-start}
+ .course-actions{justify-content:center}
+}
 </style>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -1513,8 +1801,8 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <li><a href="/academy" onclick="event.preventDefault();showPage('academy')" id="nl-academy">Academy</a></li>
  </ul>
  <div class="nav-btns">
-  <button class="btn btn-ghost" onclick="document.getElementById('status').scrollIntoView({behavior:'smooth',block:'start'})">System Status</button>
-  <button class="btn btn-prime" onclick="document.getElementById('waitlistForm').scrollIntoView({behavior:'smooth',block:'center'})">Enter The Realm</button>
+  <button class="btn btn-ghost" onclick="showPage('login')">Login</button>
+  <button class="btn btn-prime" onclick="launchApp()">Launch App</button>
  </div>
  <div class="hamburger" onclick="toggleMenu()">
  <span></span><span></span><span></span>
@@ -1525,6 +1813,8 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <a href="/workspace" onclick="event.preventDefault();showPage('workspace');toggleMenu()"> Workspace</a>
  <a href="/memory" onclick="event.preventDefault();showPage('memory');toggleMenu()"> Memory</a>
  <a href="/academy" onclick="event.preventDefault();showPage('academy');toggleMenu()"> Academy</a>
+ <a href="/login" onclick="event.preventDefault();showPage('login');toggleMenu()"> Login</a>
+ <a href="/launch" onclick="event.preventDefault();launchApp();toggleMenu()"> Launch App</a>
 </div>
 
 <!-- ===================== HOME PAGE ===================== -->
@@ -1535,23 +1825,23 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
 
 <div class="hero-inner">
  <div class="hero-copy">
+ <div class="hero-kicker">Spatial AI / Cyber Premium</div>
  <h1><span class="hero-title-grad">HUMAIX REALM</span></h1>
- <p class="hero-sub">Build AI-native skills that turn into real work, projects, and income.</p>
+ <p class="hero-sub">An academy-first platform for AI-native learning, premium product storytelling, and the future Workspace / Memory stack.</p>
  <div class="hero-actions">
- <button class="btn btn-prime btn-xl" onclick="document.getElementById('waitlistForm').scrollIntoView({behavior:'smooth',block:'center'})">Get Free Starter Kit</button>
- <button class="btn btn-ghost btn-lg" onclick="document.getElementById('offer-ladder').scrollIntoView({behavior:'smooth',block:'start'})">View Flagship Programs</button>
+ <button class="btn btn-prime btn-xl" onclick="showPage('signup')">Request Early Access</button>
  <button class="btn btn-ghost btn-lg" onclick="showPage('academy')">Browse Academy</button>
- <button class="btn btn-ghost btn-lg" onclick="showPage('login')">Login</button>
+ <button class="btn btn-ghost btn-lg" onclick="launchApp()">Launch App</button>
  </div>
  <div class="hero-badges">
- <span class="hero-badge">Hindi + English learning</span>
- <span class="hero-badge">Secure Razorpay checkout</span>
- <span class="hero-badge">Outcome-driven offers</span>
+ <span class="hero-badge">3D spatial core</span>
+ <span class="hero-badge">Premium glass UI</span>
+ <span class="hero-badge">Responsive on every screen</span>
  </div>
  <div class="hero-signal-strip">
- <div class="signal-card"><span>01</span><strong>Free Starter Kit</strong><em>Lead capture, roadmap, and fast entry for new visitors.</em></div>
- <div class="signal-card"><span>02</span><strong>Academy Ladder</strong><em>Starter, flagship, and cohort offers with a clean path.</em></div>
- <div class="signal-card"><span>03</span><strong>Realm Build</strong><em>Workspace, Memory, and Identity grow after revenue.</em></div>
+ <div class="signal-card"><span>01</span><strong>Academy</strong><em>Courses built to convert interest into momentum.</em></div>
+ <div class="signal-card"><span>02</span><strong>Workspace</strong><em>Tools, progress, and focus for active learners.</em></div>
+ <div class="signal-card"><span>03</span><strong>Memory</strong><em>Notes, prompts, and context preserved across sessions.</em></div>
  </div>
  </div>
  <div class="hero-side">
@@ -1561,109 +1851,112 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <div class="status-chip"><span class="dot"></span> All Systems Operational</div>
  <div class="scene-label">Spatial AI Core</div>
  </div>
+ <div class="hero-orbit-card glass-panel">
+ <strong>Launch Deck</strong>
+ <span>3 flagship courses, live checkout, and a clean path from first visit to first purchase.</span>
+ </div>
  </div>
  <div class="hero-terminal glass-panel">
- <div class="terminal-head">Launch Console</div>
+ <div class="terminal-head">Live Terminal</div>
  <div class="terminal-window"><span id="terminalText"></span><span class="terminal-caret"></span></div>
  </div>
  <form class="waitlist-card glass-panel waitlist-form" id="waitlistForm" onsubmit="submitWaitlist(event)">
- <div class="waitlist-head">Free AI Career Starter Kit</div>
- <div class="waitlist-copy">Get the first roadmap, offer ladder, and learning path by email. This is the fastest way to start without guessing.</div>
+ <div class="waitlist-head">Request Early Access</div>
+ <div class="waitlist-copy">Get the launch roadmap, featured courses, and product updates by email.</div>
  <div class="waitlist-row">
  <input class="waitlist-input" id="waitlistEmail" type="email" placeholder="you@domain.com" autocomplete="email" required>
- <button class="waitlist-btn" type="submit">Send Starter Kit</button>
+ <button class="waitlist-btn" type="submit">Send Access</button>
  </div>
  <div class="trust-row-mini">
- <span class="trust-pill">Free lead magnet</span>
  <span class="trust-pill">No spam</span>
- <span class="trust-pill">Built for India first</span>
+ <span class="trust-pill">Built for phone, tablet, laptop</span>
  </div>
  </form>
  </div>
  </div>
 </section>
 
- <!-- CATEGORIES -->
- <section id="ecosystems" style="background:var(--bg2)">
+ <!-- SPATIAL LAYERS -->
+ <section class="layer-section">
  <div class="sec-inner">
  <div class="sec-head fade-in">
- <div class="sec-tag">Realm Sequence</div>
- <h2 class="sec-title">Build the Academy First, Expand the Realm Second</h2>
- <p class="sec-sub">The public brand should fund itself with course revenue now, while the Identity, Memory, and Workspace layers mature behind the scenes.</p>
+ <div class="sec-tag">Spatial Layers</div>
+ <h2 class="sec-title">The platform in four clean layers</h2>
+ <p class="sec-sub">Keep the product focused. Let the visual language feel rich, while the information architecture stays easy to scan.</p>
  </div>
- <div class="cats-grid fade-in">
- <div class="cat-card"><span class="cat-icon">AC</span><div class="cat-name">Humaix Academy</div><div class="cat-count">Live today. Courses that generate trust, revenue, and learner wins.</div></div>
- <div class="cat-card"><span class="cat-icon">ID</span><div class="cat-name">Humaix Identity</div><div class="cat-count">Future AI avatar and personal brand layer for creators and founders.</div></div>
- <div class="cat-card"><span class="cat-icon">ME</span><div class="cat-name">Humaix Memory</div><div class="cat-count">Personalized learning memory, notes, and context preserved across sessions.</div></div>
- <div class="cat-card"><span class="cat-icon">WS</span><div class="cat-name">Humaix Workspace</div><div class="cat-count">Later: focused tools, teams, and productivity systems for builders.</div></div>
+ <div class="bento-grid fade-in">
+ <article class="bento-card bento-card--large">
+ <div class="bento-label">Academy</div>
+ <h3>Flagship learning that can actually sell.</h3>
+ <p>Premium course cards, clear outcomes, secure checkout, and a product shelf that feels real on first view.</p>
+ <div class="bento-pills"><span>Featured Courses</span><span>Secure checkout</span><span>Hindi + English</span></div>
+ </article>
+ <article class="bento-card">
+ <div class="bento-label">Memory</div>
+ <h3>Notes, prompts, and context.</h3>
+ <p>A private layer for recall, study snippets, and AI prompt vaults that keep the learning flow alive.</p>
+ </article>
+ <article class="bento-card">
+ <div class="bento-label">Workspace</div>
+ <h3>Focus, tasks, and progress.</h3>
+ <p>Turn the platform into a launch console for what needs attention now, not later.</p>
+ </article>
+ <article class="bento-card bento-card--accent">
+ <div class="bento-label">Identity</div>
+ <h3>Future AI avatar and brand layer.</h3>
+ <p>Reserve the deeper identity system for when the academy has already earned trust and revenue.</p>
+ </article>
  </div>
  </div>
  </section>
 
- <section class="vision-section" id="offer-ladder" style="background:rgba(255,255,255,0.02)">
- <div class="sec-inner">
- <div class="sec-head fade-in">
- <div class="sec-tag">Offer Ladder</div>
- <h2 class="sec-title">One Free Entry, One Starter Win, One Flagship Promise</h2>
- <p class="sec-sub">This sequence matches the bootstrapped strategy: capture attention with a free kit, convert with a starter course, and grow into a flagship learning product.</p>
- </div>
- <div class="vision-grid fade-in">
- <div class="vision-card"><div class="vision-icon"> </div><h3>Free Starter Kit</h3><p>Email capture with a clear roadmap, first steps, and confidence-building resources. This is the lowest-friction entry point.</p></div>
- <div class="vision-card"><div class="vision-icon"> </div><h3>Starter Course</h3><p>A low-ticket win for momentum, designed to turn curious visitors into first-time customers without confusion or heavy commitment.</p></div>
- <div class="vision-card"><div class="vision-icon"> </div><h3>Flagship Program</h3><p>The main revenue engine: one outcome-focused program with projects, support, and proof that the brand can deliver real value.</p></div>
- <div class="vision-card"><div class="vision-icon"> </div><h3>Mentored Cohort</h3><p>A premium step-up for learners who want direct guidance, accountability, and a more serious path to projects or income.</p></div>
- </div>
- </div>
- </section>
-
- <section>
+ <section class="courses-section">
  <div class="sec-inner">
  <div class="sec-head fade-in">
  <div class="sec-tag">Featured Courses</div>
- <h2 class="sec-title">Choose a track, open the detail page, and pay securely</h2>
- <p class="sec-sub">These are the first visible products on the site so the experience feels like a real academy, not a roadmap deck.</p>
+ <h2 class="sec-title">Three flagship tracks, one elegant course shelf</h2>
+ <p class="sec-sub">The page should feel like a premium product catalog, not a crowded brochure.</p>
  </div>
  <div class="courses-grid fade-in" id="featuredGrid"></div>
- <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:28px" class="fade-in">
+ <div class="course-actions fade-in">
  <button class="btn btn-prime btn-lg" onclick="showPage('academy')">Open Full Academy</button>
- <button class="btn btn-ghost btn-lg" onclick="showPage('login')">Login to Buy</button>
+ <button class="btn btn-ghost btn-lg" onclick="launchApp()">Launch App</button>
  <button class="btn btn-ghost btn-lg" onclick="showPage('workspace')">Open Workspace</button>
  </div>
  </div>
  </section>
 
- <section style="background:#04050f;border-top:1px solid rgba(148,163,184,0.12);border-bottom:1px solid rgba(148,163,184,0.12)">
+ <section class="trust-section" id="status">
  <div class="sec-inner">
- <div class="sec-head fade-in">
- <div class="sec-tag">Outcome Design</div>
- <h2 class="sec-title">What the site should make obvious in the first 10 seconds</h2>
- <p class="sec-sub">Who it is for, what result it delivers, why it is trusted, and how to buy safely. That is the conversion order.</p>
- </div>
- <div class="vision-grid fade-in">
- <div class="vision-card"><div class="vision-icon"> </div><h3>Audience</h3><p>Hindi and English speaking learners, students, freelancers, and founders starting from India and aiming for global relevance.</p></div>
- <div class="vision-card"><div class="vision-icon"> </div><h3>Outcome</h3><p>Projects, confidence, portfolio proof, course completion, and a clear path to the next purchase or cohort.</p></div>
- <div class="vision-card"><div class="vision-icon"> </div><h3>Trust</h3><p>Secure checkout, privacy and refund clarity, founder visibility, and a calm premium interface instead of a noisy sales page.</p></div>
- <div class="vision-card"><div class="vision-icon"> </div><h3>Motion</h3><p>Simple, fast, smooth, and readable. The site should feel premium without becoming theatrical or hard to scan.</p></div>
- </div>
- </div>
- </section>
-
- <!-- SYSTEM STATUS -->
- <section id="status" style="background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-top:1px solid rgba(148,163,184,0.12);border-bottom:1px solid rgba(148,163,184,0.12)">
- <div class="sec-inner">
- <div class="status-shell glass-panel fade-in">
+ <div class="trust-shell glass-panel fade-in">
  <div>
  <div class="sec-tag">System Status</div>
  <h2 class="sec-title" style="margin-bottom:10px">All Systems Operational</h2>
- <p class="sec-sub" style="margin:0">HUMAIX REALM is designed like a real premium software platform, with clear trust signals and always-on experience cues.</p>
- <a class="status-link" href="#status" onclick="event.preventDefault();document.getElementById('status').scrollIntoView({behavior:'smooth',block:'start'})">Open System Status</a>
+ <p class="sec-sub" style="margin:0">The experience is designed to feel calm, premium, and dependable on phones, tablets, and desktops.</p>
  </div>
  <div class="security-badges">
- <span class="security-badge"><span class="dot"></span>Military-Grade Encryption</span>
- <span class="security-badge"><span class="dot"></span>Decentralized Data</span>
- <span class="security-badge"><span class="dot"></span>End-to-End Encrypted</span>
- <span class="security-badge"><span class="dot"></span>24/7 Operations</span>
+ <span class="security-badge"><span class="dot"></span>Secure checkout</span>
+ <span class="security-badge"><span class="dot"></span>Policy pages live</span>
+ <span class="security-badge"><span class="dot"></span>Mobile-first responsive</span>
+ <span class="security-badge"><span class="dot"></span>Founder-led support</span>
  </div>
+ </div>
+ <div class="proof-grid fade-in">
+ <article class="proof-card">
+ <div class="proof-kicker">Academy First</div>
+ <h3>One offer ladder instead of a crowded menu.</h3>
+ <p>The homepage should lead to buying and learning, not force the user to solve the whole roadmap up front.</p>
+ </article>
+ <article class="proof-card">
+ <div class="proof-kicker">Premium Motion</div>
+ <h3>3D that supports the story.</h3>
+ <p>The orbital core and glass panels exist to explain the platform, not to distract from it.</p>
+ </article>
+ <article class="proof-card">
+ <div class="proof-kicker">Built for Scale</div>
+ <h3>Simple now, deeper later.</h3>
+ <p>The future layers stay visible, but the site stays usable while the Academy funds the next buildout.</p>
+ </article>
  </div>
  </div>
  </section>
@@ -1677,7 +1970,7 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
 <div class="logo-mark"><img src="/logo.png" alt="HUMAIX REALM logo"><span class="logo-fallback">HR</span></div>
 <div><div class="logo-name">HUMAIX REALM</div><div class="logo-tag">Intelligent Ecosystems</div></div>
 </div>
-<p>Empowering students from Uttarakhand and all over India with affordable, world-class digital education.</p>
+<p>Premium AI-native learning, product design, and future-building for students and founders.</p>
 </div>
  <div class="ft-col"><h4>Support</h4><ul class="ft-links"><li><a href="#status" onclick="event.preventDefault();document.getElementById('status').scrollIntoView({behavior:'smooth',block:'start'})">System Status</a></li><li><a href="/privacy-policy" onclick="event.preventDefault();showPage('privacy')">Privacy Policy</a></li><li><a href="/terms-of-service" onclick="event.preventDefault();showPage('terms')">Terms of Service</a></li><li><a href="/refund-policy" onclick="event.preventDefault();showPage('refund')">Refund Policy</a></li></ul></div>
  </div>
@@ -1687,21 +1980,6 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  </div>
  </div>
  </footer>
- <section style="background:rgba(255,255,255,0.02);border-top:1px solid rgba(148,163,184,0.12)">
- <div class="sec-inner">
- <div class="sec-head fade-in">
- <div class="sec-tag">Roadmap</div>
- <h2 class="sec-title">How Humaix Realm becomes a company</h2>
- <p class="sec-sub">The public site should fund itself first, then expand into the deeper Realm layers after the learning business is predictable.</p>
- </div>
- <div class="vision-grid fade-in">
- <div class="vision-card"><div class="vision-icon"> </div><h3>Now: Academy</h3><p>Launch the homepage as a premium conversion engine with a free lead magnet, starter offer, flagship program, and clear payment flow.</p></div>
- <div class="vision-card"><div class="vision-icon"> </div><h3>Next: Proof & Content</h3><p>Publish verified testimonials, case studies, outcome pages, and a steady blog cadence that supports SEO and search trust.</p></div>
- <div class="vision-card"><div class="vision-icon"> </div><h3>Later: Tutor + Memory</h3><p>Use the course revenue to build the AI tutor, memory layer, and personalized learning systems that give the Realm a moat.</p></div>
- <div class="vision-card"><div class="vision-icon"> </div><h3>Then: Teams & College</h3><p>Add B2B learning, team dashboards, colleges, and partnerships once the core offers and metrics are stable.</p></div>
- </div>
- </div>
-</section>
 </div>
 
 <!-- ===================== WORKSPACE PAGE ===================== -->
@@ -2058,8 +2336,8 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <p class="auth-sub">Invite-only access for approved members and early supporters.</p>
  <form id="loginForm" onsubmit="doLogin(event)">
  <div id="googleLoginBtn" class="google-btn-shell"></div>
- <div class="auth-soc"><button type="button" class="soc-btn google-redirect" onclick="startGoogleRedirect()">Continue with Google</button></div>
- <div class="auth-note" id="loginGoogleNote">Use your private access details or continue with secure identity providers.</div>
+ <div class="auth-soc"><button type="button" class="soc-btn google-redirect" onclick="startGoogleAuth()">Continue with Google</button></div>
+ <div class="auth-note" id="loginGoogleNote">Google sign-in appears when configured on this deployment. Use email access for now.</div>
  <div class="auth-div">or continue with email</div>
  <div class="fg"><label class="fl">Email</label><input id="loginEmail" name="email" class="fi" placeholder="you@gmail.com" type="email" required></div>
  <div class="fg"><label class="fl">Password</label><input id="loginPassword" name="password" class="fi" placeholder=" " type="password" required></div>
@@ -2080,9 +2358,9 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <p class="auth-sub">Join the list for the launch roadmap, offer ladder, and first updates.</p>
  <div class="auth-soc">
  <div id="googleSignupBtn" class="google-btn-shell"></div>
- <button type="button" class="soc-btn google-redirect" onclick="startGoogleRedirect()">Request with Google</button>
+ <button type="button" class="soc-btn google-redirect" onclick="startGoogleAuth()">Request with Google</button>
  </div>
- <div class="auth-note" id="signupGoogleNote">Use Google if it is configured, otherwise request access with email.</div>
+ <div class="auth-note" id="signupGoogleNote">Google sign-in appears when configured on this deployment. Otherwise request access with email.</div>
  <div class="auth-div">or request with email</div>
  <form id="signupForm" onsubmit="doSignup(event)">
  <div class="fr"><div class="fg"><label class="fl">First Name</label><input class="fi" name="firstName" placeholder="Harish" type="text" required></div><div class="fg"><label class="fl">Last Name</label><input class="fi" name="lastName" placeholder="Singh" type="text" required></div></div>
@@ -2536,6 +2814,7 @@ function initHeroScene(){
  if(!canvas || !host || !window.THREE) return;
 
  const scene = new THREE.Scene();
+ scene.fog = new THREE.FogExp2(0x030014, 0.08);
  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
  camera.position.z = 9.5;
 
@@ -2584,6 +2863,17 @@ function initHeroScene(){
    })
  );
  group.add(core);
+
+ const halo = new THREE.Mesh(
+   new THREE.SphereGeometry(2.95, 40, 28),
+   new THREE.MeshBasicMaterial({
+     color: 0x7000ff,
+     transparent: true,
+     opacity: 0.08,
+     side: THREE.BackSide
+   })
+ );
+ group.add(halo);
 
  const aura = new THREE.Mesh(
    new THREE.TorusGeometry(2.65, 0.055, 18, 220),
@@ -2673,6 +2963,8 @@ function initHeroScene(){
    group.rotation.x += 0.0016;
    core.rotation.y += 0.007;
    core.rotation.x += 0.004;
+   halo.rotation.y += 0.0014;
+   halo.rotation.x -= 0.0006;
    globe.rotation.y += 0.0018;
    globe.rotation.x -= 0.0008;
    aura.rotation.z += 0.005;
@@ -2729,7 +3021,7 @@ const ADMIN_EMAIL = 'Hzzzx06@gmail.com';
 const PAGE_META = {
  home: {
    title: 'Humaix Realm | Evolving Humanity through Intelligent Ecosystems',
-   description: 'Humaix Realm is a premium founder-led academy for AI-native skills, secure learning products, and the future Realm roadmap.'
+   description: 'Humaix Realm is a spatial AI academy blending premium learning, 3D product storytelling, and future Workspace and Memory layers.'
  },
  workspace: {
    title: 'Workspace | HUMAIX REALM',
@@ -3036,12 +3328,33 @@ function initGoogleButtons(attempt = 0){
  }
 }
 
-function startGoogleRedirect(){
- if(!googleRedirectEnabled){
- showToast('Google redirect login is not configured on this deployment. Use email access for now.', 'warn');
+function startGoogleAuth(){
+ if(window.location.protocol === 'file:'){
+ showToast('Google login works on the live deployed site, not from a local file. Use email access here.', 'warn');
  return;
  }
- window.location.href = '/auth/google';
+ if(googleDirectEnabled && googleClientId && window.google?.accounts?.id){
+ try{
+ window.google.accounts.id.prompt();
+ return;
+ }catch(err){
+ console.warn('Google prompt failed', err);
+ }
+ }
+ if(googleRedirectEnabled && googleClientId){
+ try{
+ const target = new URL('/auth/google', window.location.href);
+ window.location.assign(target.toString());
+ return;
+ }catch(err){
+ console.warn('Google redirect failed', err);
+ }
+ }
+ showToast('Google login is not configured on this deployment. Use email access for now.', 'warn');
+}
+
+function startGoogleRedirect(){
+ return startGoogleAuth();
 }
 
 async function handleGoogleCredential(response){
@@ -3103,6 +3416,10 @@ function showPage(name){
  updateGoogleAuthUi();
  setTimeout(()=>initGoogleButtons(), 50);
  }
+}
+
+function launchApp(){
+ showPage(currentUser ? 'dashboard' : 'login');
 }
 
 const COURSE_VIDEOS = {
