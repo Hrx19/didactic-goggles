@@ -68,6 +68,10 @@ function pickEnv(...names) {
   return '';
 }
 
+function isValidGoogleClientId(value) {
+  return /^[0-9]+-[a-zA-Z0-9_-]+\.apps\.googleusercontent\.com$/.test(String(value || '').trim());
+}
+
 function createRateLimiter({ windowMs, limit, keyPrefix }) {
   const buckets = new Map();
   setInterval(() => {
@@ -177,10 +181,11 @@ app.use(passport.session());
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 
-const googleClientId = process.env.GOOGLE_CLIENT_ID || '1056601146656-85gibc5ggjgnj3629efhks331ghc258g.apps.googleusercontent.com';
-const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || '';
-const hasGoogleOAuth = googleClientId && googleClientSecret && googleClientId !== 'undefined' && googleClientSecret !== 'undefined';
-const hasGoogleClientId = googleClientId && googleClientId !== 'undefined';
+const googleClientIdRaw = pickEnv('GOOGLE_CLIENT_ID', 'NEXT_PUBLIC_GOOGLE_CLIENT_ID', 'GOOGLE_WEB_CLIENT_ID');
+const googleClientId = isValidGoogleClientId(googleClientIdRaw) ? googleClientIdRaw : '';
+const googleClientSecret = pickEnv('GOOGLE_CLIENT_SECRET');
+const hasGoogleClientId = Boolean(googleClientId);
+const hasGoogleOAuth = Boolean(hasGoogleClientId && googleClientSecret);
 const googleCallbackUrl = (process.env.GOOGLE_CALLBACK_URL || `${baseUrl}/auth/google/callback`).replace(/\/$/, '');
 
 if (hasGoogleOAuth) {
@@ -193,7 +198,11 @@ if (hasGoogleOAuth) {
     done(null, profile);
   }));
 } else {
-  console.warn('Google OAuth is not configured. /auth/google will be disabled until GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET are set.');
+  if (!hasGoogleClientId) {
+    console.warn('Google login is disabled. Set a valid GOOGLE_CLIENT_ID (web client id) to enable Google sign-in.');
+  } else {
+    console.warn('Google OAuth redirect flow is disabled until GOOGLE_CLIENT_SECRET is set. Direct GIS sign-in can still work.');
+  }
 }
 
 app.get('/auth/google', (req, res, next) => {
@@ -307,6 +316,11 @@ app.get('/api/config', (req, res) => {
     googleRedirectEnabled: Boolean(hasGoogleOAuth),
     googleClientId: hasGoogleClientId ? googleClientId : '',
     googleCallbackUrl,
+    googleStatus: hasGoogleClientId
+      ? (hasGoogleOAuth
+          ? 'Google sign-in is ready.'
+          : 'Google client ID is present. Add GOOGLE_CLIENT_SECRET only if you want redirect OAuth; the direct Google button can still work.')
+      : 'Google login is not configured on this deployment. Add a valid GOOGLE_CLIENT_ID to enable it.',
     aiEnabled: Boolean(aiKey || anthropicKey),
     aiProvider: aiKey || anthropicKey ? aiProvider : 'local'
   });

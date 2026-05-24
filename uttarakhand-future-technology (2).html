@@ -2058,8 +2058,8 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <p class="auth-sub">Invite-only access for approved members and early supporters.</p>
  <form id="loginForm" onsubmit="doLogin(event)">
  <div id="googleLoginBtn" class="google-btn-shell"></div>
- <div class="auth-soc"><a href="/auth/google" class="soc-btn google-redirect"> Continue with Google</a></div>
- <div class="auth-note">Use your private access details or continue with secure identity providers.</div>
+ <div class="auth-soc"><button type="button" class="soc-btn google-redirect" onclick="startGoogleRedirect()">Continue with Google</button></div>
+ <div class="auth-note" id="loginGoogleNote">Use your private access details or continue with secure identity providers.</div>
  <div class="auth-div">or continue with email</div>
  <div class="fg"><label class="fl">Email</label><input id="loginEmail" name="email" class="fi" placeholder="you@gmail.com" type="email" required></div>
  <div class="fg"><label class="fl">Password</label><input id="loginPassword" name="password" class="fi" placeholder=" " type="password" required></div>
@@ -2080,8 +2080,9 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  <p class="auth-sub">Join the list for the launch roadmap, offer ladder, and first updates.</p>
  <div class="auth-soc">
  <div id="googleSignupBtn" class="google-btn-shell"></div>
- <a href="/auth/google" class="soc-btn google-redirect">Request with Google</a>
+ <button type="button" class="soc-btn google-redirect" onclick="startGoogleRedirect()">Request with Google</button>
  </div>
+ <div class="auth-note" id="signupGoogleNote">Use Google if it is configured, otherwise request access with email.</div>
  <div class="auth-div">or request with email</div>
  <form id="signupForm" onsubmit="doSignup(event)">
  <div class="fr"><div class="fg"><label class="fl">First Name</label><input class="fi" name="firstName" placeholder="Harish" type="text" required></div><div class="fg"><label class="fl">Last Name</label><input class="fi" name="lastName" placeholder="Singh" type="text" required></div></div>
@@ -2714,13 +2715,16 @@ if(cl) cl.innerHTML=CURR.map((l, idx)=>`<div class="curr-item"><div class="curr-
 let currentUser = null;
 let isAdmin = false;
 let selectedCourse = null;
+let detailCourseId = null;
 let razorpayKeyId = '';
 let paymentEnabled = false;
 let googleEnabled = false;
 let googleDirectEnabled = false;
 let googleRedirectEnabled = false;
 let googleClientId = '';
+let googleStatusText = '';
 let aiEnabled = false;
+const ENROLLMENTS_KEY = 'hr_enrollments';
 const ADMIN_EMAIL = 'Hzzzx06@gmail.com';
 const PAGE_META = {
  home: {
@@ -2839,7 +2843,16 @@ const PAGE_TO_NAV = {
 function getPageFromLocation(){
  const path = (window.location.pathname || '/').replace(/\/+$/, '') || '/';
  const routePage = ROUTE_TO_PAGE[path] || ROUTE_TO_PAGE[path.toLowerCase()] || '';
- if (routePage) return routePage;
+ if (routePage) {
+ const params = new URLSearchParams(window.location.search || '');
+ if (routePage === 'detail') {
+ const id = parseInt(params.get('course') || params.get('id') || '', 10);
+ detailCourseId = Number.isFinite(id) && id > 0 ? id : detailCourseId;
+ } else {
+ detailCourseId = null;
+ }
+ return routePage;
+ }
  const hashPage = (window.location.hash || '').replace('#', '').trim();
  return hashPage || 'home';
 }
@@ -2882,16 +2895,23 @@ function renderPage(name){
  setPageMeta(name);
  if(name === 'memory') renderMemoryNotes();
  if(name === 'academy') filterAcademy();
+ if(name === 'dashboard') renderDashboardData();
+ if(name === 'detail') {
+ renderDetailCourse(detailCourseId || selectedCourse?.id || COURSES[0]?.id);
+ }
  initFadeIns();
  closeAI();
 }
 
 function syncRoute(name, replace = false){
  const route = PAGE_TO_ROUTE[name] || `/${name}`;
+ const finalRoute = name === 'detail' && selectedCourse?.id
+ ? `${route}?course=${selectedCourse.id}`
+ : route;
  try {
- history[replace ? 'replaceState' : 'pushState']({ page: name }, '', route);
+ history[replace ? 'replaceState' : 'pushState']({ page: name, courseId: selectedCourse?.id || null }, '', finalRoute);
  } catch (err) {
- location.hash = name;
+  location.hash = name;
  }
 }
 
@@ -2920,27 +2940,30 @@ async function loadConfig(){
  googleRedirectEnabled = Boolean(data.googleRedirectEnabled ?? data.googleEnabled);
  googleEnabled = googleRedirectEnabled;
  googleClientId = data.googleClientId || '';
+ googleStatusText = data.googleStatus || '';
  aiEnabled = Boolean(data.aiEnabled);
  updatePaymentUi();
+ updateGoogleAuthUi();
  initGoogleButtons();
- document.querySelectorAll('[href="/auth/google"]').forEach(link => {
- if (!googleRedirectEnabled) {
- link.style.display = 'none';
- link.setAttribute('aria-hidden', 'true');
- link.setAttribute('tabindex', '-1');
- return;
- }
- link.addEventListener('click', (event) => {
- if (!googleRedirectEnabled && !googleClientId) {
- event.preventDefault();
- showToast('Google signup needs GOOGLE_CLIENT_ID on the server. Use email signup for now.', 'warn');
- }
- });
- });
  }
  } catch (err) {
  console.warn('Could not load config', err);
  }
+}
+
+function updateGoogleAuthUi(){
+ const noteLogin = document.getElementById('loginGoogleNote');
+ const noteSignup = document.getElementById('signupGoogleNote');
+ const text = googleStatusText || (googleDirectEnabled
+   ? 'Continue with Google is ready.'
+   : 'Google login is not configured on this deployment. Use email access for now.');
+ if (noteLogin) noteLogin.textContent = text;
+ if (noteSignup) noteSignup.textContent = text;
+ document.querySelectorAll('.google-redirect').forEach(link => {
+   link.style.display = googleRedirectEnabled ? 'flex' : 'none';
+   link.disabled = !googleRedirectEnabled;
+   link.setAttribute('aria-hidden', googleRedirectEnabled ? 'false' : 'true');
+ });
 }
 
 function updatePaymentUi(){
@@ -3013,6 +3036,14 @@ function initGoogleButtons(attempt = 0){
  }
 }
 
+function startGoogleRedirect(){
+ if(!googleRedirectEnabled){
+ showToast('Google redirect login is not configured on this deployment. Use email access for now.', 'warn');
+ return;
+ }
+ window.location.href = '/auth/google';
+}
+
 async function handleGoogleCredential(response){
  if(!response?.credential){
  showToast('Google did not return a sign-in token.', 'warn');
@@ -3062,9 +3093,14 @@ function showPage(name){
  showToast(' Admin access restricted. Please log in with the admin account.');
  name = 'login';
  }
+ if(name === 'dashboard' && !currentUser){
+ showToast('Please log in to view your dashboard.', 'warn');
+ name = 'login';
+ }
  renderPage(name);
  syncRoute(name);
  if(name === 'login' || name === 'signup'){
+ updateGoogleAuthUi();
  setTimeout(()=>initGoogleButtons(), 50);
  }
 }
@@ -3078,29 +3114,43 @@ const COURSE_VIDEOS = {
  6: 'rfscVS0vtbw'
 };
 
-function openDetail(id){
- const c=COURSES.find(x=>x.id===id);
+function renderDetailCourse(id){
+ const c = COURSES.find(x=>x.id===Number(id)) || COURSES[0];
  if(!c) return;
  selectedCourse = c;
- document.getElementById('dtitle').textContent=c.title;
+ detailCourseId = c.id;
+ const title = document.getElementById('dtitle');
+ if(title) title.textContent = c.title;
  const dtitleHi=document.getElementById('dtitleHi');
  if(dtitleHi) dtitleHi.textContent=c.titleHi || '';
- document.getElementById('dcat').textContent=c.cat;
+ const dcat = document.getElementById('dcat');
+ if(dcat) dcat.textContent=c.cat;
  const dlang=document.getElementById('dlang');
  if(dlang) dlang.textContent=c.lang || 'Hindi + English';
- document.getElementById('dprice').textContent=' '+c.price;
- document.getElementById('dhours').textContent=c.hours;
- document.getElementById('modalCoursePrice').textContent=' '+c.price;
- document.getElementById('modalCourseDesc').textContent=c.title;
+ const dprice = document.getElementById('dprice');
+ if(dprice) dprice.textContent=' '+c.price;
+ const dhours = document.getElementById('dhours');
+ if(dhours) dhours.textContent=c.hours;
+ const modalCoursePrice = document.getElementById('modalCoursePrice');
+ if(modalCoursePrice) modalCoursePrice.textContent=' '+c.price;
+ const modalCourseDesc = document.getElementById('modalCourseDesc');
+ if(modalCourseDesc) modalCourseDesc.textContent=c.title;
  const disc=Math.round((1-c.price/c.orig)*100);
- document.getElementById('dorig').innerHTML=` ${c.orig} <span style="color:var(--emerald);font-size:14px;text-decoration:none">${disc}% OFF</span>`;
+ const dorig = document.getElementById('dorig');
+ if(dorig) dorig.innerHTML=` ${c.orig} <span style="color:var(--emerald);font-size:14px;text-decoration:none">${disc}% OFF</span>`;
  const videoId = COURSE_VIDEOS[c.id] || 'dQw4w9WgXcQ';
  const iframe = document.getElementById('detailVideo');
  if(iframe) iframe.src = `https://www.youtube.com/embed/${videoId}`;
+ const detailMeta = document.querySelector('.detail-meta');
+ if(detailMeta) detailMeta.setAttribute('data-course-id', String(c.id));
+}
+
+function openDetail(id){
+ renderDetailCourse(id);
  showPage('detail');
  setPageMeta('detail', {
- title: `${c.title} | HUMAIX REALM`,
- description: `${c.title} from HUMAIX REALM. Learn in Hindi + English with secure Razorpay checkout, certificate access, and a guided curriculum.`
+ title: `${selectedCourse?.title || 'Course Detail'} | HUMAIX REALM`,
+ description: `${selectedCourse?.title || 'Course'} from HUMAIX REALM. Learn in Hindi + English with secure Razorpay checkout, certificate access, and a guided curriculum.`
  });
 }
 
@@ -3125,6 +3175,134 @@ function filterC(){
  if(pr==='mid') list=list.filter(c=>c.price>=200&&c.price<=400);
  if(pr==='high') list=list.filter(c=>c.price>400);
  renderGrid('allCoursesGrid',list);
+}
+
+function readEnrollments(){
+ try {
+ const raw = localStorage.getItem(ENROLLMENTS_KEY);
+ const parsed = raw ? JSON.parse(raw) : {};
+ return parsed && typeof parsed === 'object' ? parsed : {};
+ } catch (err) {
+ console.warn('Could not read enrollments', err);
+ return {};
+ }
+}
+
+function writeEnrollments(map){
+ try {
+ localStorage.setItem(ENROLLMENTS_KEY, JSON.stringify(map || {}));
+ } catch (err) {
+ console.warn('Could not store enrollments', err);
+ }
+}
+
+function getCourseById(id){
+ return COURSES.find(c => Number(c.id) === Number(id));
+}
+
+function ensureEnrollment(courseId, progress = 5){
+ const course = getCourseById(courseId);
+ if(!course) return;
+ const enrollments = readEnrollments();
+ enrollments[String(course.id)] = {
+ id: course.id,
+ title: course.title,
+ progress: Math.max(0, Math.min(100, Number(progress) || 0)),
+ updatedAt: new Date().toISOString()
+ };
+ writeEnrollments(enrollments);
+}
+
+function resumeCourse(courseId){
+ const course = getCourseById(courseId);
+ if(!course) return;
+ const current = readEnrollments()[String(course.id)]?.progress || 0;
+ if(current < 100){
+ ensureEnrollment(course.id, Math.max(35, current + 25));
+ }
+ renderDetailCourse(course.id);
+ showPage('detail');
+}
+
+function downloadCertificate(courseId){
+ const course = getCourseById(courseId);
+ if(!course) return;
+ showToast(`${course.title} certificate is ready to download.`);
+}
+
+function renderDashboardData(){
+ const dash = document.getElementById('page-dashboard');
+ if(!dash) return;
+ const hiTitle = dash.querySelector('.dash-hi h2');
+ const hiCopy = dash.querySelector('.dash-hi p');
+ const statVals = Array.from(dash.querySelectorAll('.dash-stats .ds-val'));
+ const statLabels = Array.from(dash.querySelectorAll('.dash-stats .ds-lbl'));
+ const enrollList = dash.querySelector('.enroll-list');
+ const enrollments = Object.values(readEnrollments())
+   .map((entry) => {
+     const course = getCourseById(entry.id);
+     if(!course) return null;
+     const progress = Math.max(0, Math.min(100, Number(entry.progress) || 0));
+     const lessonsTotal = Math.max(8, Math.round(Number(course.hours || 4) * 2));
+     const lessonsDone = Math.max(1, Math.min(lessonsTotal, Math.round((progress / 100) * lessonsTotal)));
+     return { ...course, progress, lessonsTotal, lessonsDone };
+   })
+   .filter(Boolean)
+   .sort((a, b) => b.progress - a.progress);
+
+ const userName = currentUser?.displayName || currentUser?.firstName || 'Student';
+ if(hiTitle) hiTitle.textContent = `Good ${new Date().getHours() < 12 ? 'Morning' : new Date().getHours() < 18 ? 'Afternoon' : 'Evening'}, ${userName}!`;
+ if(hiCopy) hiCopy.textContent = enrollments.length
+   ? `You have ${enrollments.length} course${enrollments.length > 1 ? 's' : ''} in progress. Keep building the next layer of your Realm.`
+   : 'Your dashboard is ready. Enroll in a course to start tracking progress, certificates, and learning streaks.';
+
+ const enrolledCount = enrollments.length;
+ const certCount = enrollments.filter((item) => item.progress >= 100).length;
+ const streak = enrolledCount ? Math.min(14, Math.max(1, enrollments.reduce((sum, item) => sum + Math.round(item.progress / 30), 0))) : 1;
+ const totalHours = enrollments.reduce((sum, item) => sum + (Number(item.hours) || 0), 0);
+
+ if(statVals[0]) statVals[0].textContent = String(enrolledCount || 0);
+ if(statVals[1]) statVals[1].textContent = enrolledCount ? totalHours.toFixed(1) : '0';
+ if(statVals[2]) statVals[2].textContent = String(certCount || 0);
+ if(statVals[3]) statVals[3].textContent = String(streak || 1);
+ if(statLabels[0]) statLabels[0].textContent = 'Enrolled Courses';
+ if(statLabels[1]) statLabels[1].textContent = 'Hours Learned';
+ if(statLabels[2]) statLabels[2].textContent = 'Certificates';
+ if(statLabels[3]) statLabels[3].textContent = 'Day Streak';
+
+ if(enrollList){
+   if(!enrollments.length){
+     enrollList.innerHTML = `
+       <div class="enroll-item" style="justify-content:center">
+         <div class="e-info">
+           <div class="e-title">No enrolled courses yet</div>
+           <div class="e-meta">Open the Academy, pick a course, and complete checkout to start tracking progress here.</div>
+           <div class="prog-wrap"><div class="prog-bar" style="width:8%"></div></div>
+           <div class="e-prog" style="margin-top:6px">Ready when you are.</div>
+         </div>
+         <button class="btn-enroll" onclick="showPage('academy')">Browse Academy</button>
+       </div>`;
+     return;
+   }
+   enrollList.innerHTML = enrollments.map((item) => {
+     const progressLabel = item.progress >= 100
+       ? 'Certificate ready to download!'
+       : `${item.lessonsDone} of ${item.lessonsTotal} lessons`;
+     const resumeLabel = item.progress >= 100 ? 'Get Cert' : 'Resume';
+     const actionStyle = item.progress >= 100 ? 'background:var(--emerald)' : '';
+     return `
+       <div class="enroll-item">
+         <div class="e-thumb">${item.icon || 'HR'}</div>
+         <div class="e-info">
+           <div class="e-title">${item.title}</div>
+           <div class="e-meta">${userName} ${progressLabel}</div>
+           <div class="prog-wrap"><div class="prog-bar" style="width:${item.progress}%"></div></div>
+           <div class="e-prog" style="margin-top:6px;${item.progress >= 100 ? 'color:var(--emerald)' : ''}">${item.progress}% ${item.progress >= 100 ? 'complete' : 'in progress'}</div>
+         </div>
+         <button class="btn-enroll" style="${actionStyle}" onclick="${item.progress >= 100 ? `downloadCertificate(${item.id})` : `resumeCourse(${item.id})`}">${resumeLabel}</button>
+       </div>`;
+   }).join('');
+ }
 }
 
 // ===================== AUTH =====================
@@ -3302,7 +3480,10 @@ async function payWithRazorpay(){
  const verifyResult = await verifyResp.json();
  if(!verifyResp.ok) throw new Error(verifyResult.error || 'Payment verification failed');
  showToast('Payment verified. Full course access is now enabled.');
+ ensureEnrollment(selectedCourse.id, 100);
+ renderDashboardData();
  closeUpiModal(true);
+ showPage('dashboard');
  } catch (err) {
  showToast(err.message || 'Payment completed, but verification is pending. Please save your payment ID.', 'warn');
  }
