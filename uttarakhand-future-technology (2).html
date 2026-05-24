@@ -2717,6 +2717,8 @@ let selectedCourse = null;
 let razorpayKeyId = '';
 let paymentEnabled = false;
 let googleEnabled = false;
+let googleDirectEnabled = false;
+let googleRedirectEnabled = false;
 let googleClientId = '';
 let aiEnabled = false;
 const ADMIN_EMAIL = 'Hzzzx06@gmail.com';
@@ -2914,14 +2916,22 @@ async function loadConfig(){
  const data = await res.json();
  razorpayKeyId = data.razorpayKeyId || '';
  paymentEnabled = Boolean(data.paymentEnabled && razorpayKeyId);
- googleEnabled = Boolean(data.googleEnabled);
+ googleDirectEnabled = Boolean(data.googleDirectEnabled ?? data.googleClientId);
+ googleRedirectEnabled = Boolean(data.googleRedirectEnabled ?? data.googleEnabled);
+ googleEnabled = googleRedirectEnabled;
  googleClientId = data.googleClientId || '';
  aiEnabled = Boolean(data.aiEnabled);
  updatePaymentUi();
  initGoogleButtons();
  document.querySelectorAll('[href="/auth/google"]').forEach(link => {
+ if (!googleRedirectEnabled) {
+ link.style.display = 'none';
+ link.setAttribute('aria-hidden', 'true');
+ link.setAttribute('tabindex', '-1');
+ return;
+ }
  link.addEventListener('click', (event) => {
- if (!googleEnabled && !googleClientId) {
+ if (!googleRedirectEnabled && !googleClientId) {
  event.preventDefault();
  showToast('Google signup needs GOOGLE_CLIENT_ID on the server. Use email signup for now.', 'warn');
  }
@@ -2961,8 +2971,18 @@ function updatePaymentUi(){
 }
 
 function initGoogleButtons(attempt = 0){
- if(!googleClientId) return;
+ if(!googleDirectEnabled || !googleClientId) return;
+ const loginPage = document.getElementById('page-login');
+ const signupPage = document.getElementById('page-signup');
+ const authPageVisible = Boolean(
+ loginPage?.classList.contains('active') ||
+ signupPage?.classList.contains('active')
+ );
  if(!window.google?.accounts?.id){
+ if(attempt < 20) setTimeout(()=>initGoogleButtons(attempt + 1), 250);
+ return;
+ }
+ if(!authPageVisible){
  if(attempt < 20) setTimeout(()=>initGoogleButtons(attempt + 1), 250);
  return;
  }
@@ -2986,7 +3006,7 @@ function initGoogleButtons(attempt = 0){
  }
  });
  document.querySelectorAll('.google-redirect').forEach(link=>{
- link.style.display = googleEnabled ? 'flex' : 'none';
+ link.style.display = googleRedirectEnabled ? 'flex' : 'none';
  });
  }catch(err){
  console.warn('Google button init failed', err);
@@ -3044,6 +3064,9 @@ function showPage(name){
  }
  renderPage(name);
  syncRoute(name);
+ if(name === 'login' || name === 'signup'){
+ setTimeout(()=>initGoogleButtons(), 50);
+ }
 }
 
 const COURSE_VIDEOS = {

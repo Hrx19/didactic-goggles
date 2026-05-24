@@ -198,18 +198,27 @@ if (hasGoogleOAuth) {
 
 app.get('/auth/google', (req, res, next) => {
   if (!hasGoogleOAuth) {
+    if (hasGoogleClientId) {
+      return res.redirect('/login');
+    }
     return res.status(503).send('Google login is not configured. Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET.');
   }
   next();
 }, passport.authenticate('google', { scope: ['profile', 'email'] }));
 app.get('/auth/google/', (req, res, next) => {
   if (!hasGoogleOAuth) {
+    if (hasGoogleClientId) {
+      return res.redirect('/login');
+    }
     return res.status(503).send('Google login is not configured. Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET.');
   }
   next();
 }, passport.authenticate('google', { scope: ['profile', 'email'] }));
 app.get('/auth/google/callback', (req, res, next) => {
   if (!hasGoogleOAuth) {
+    if (hasGoogleClientId) {
+      return res.redirect('/login');
+    }
     return res.status(503).send('Google login is not configured. Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET.');
   }
   next();
@@ -294,6 +303,8 @@ app.get('/api/config', (req, res) => {
     paymentEnabled: Boolean(razorpay && razorpayKeyId),
     upiId,
     googleEnabled: Boolean(hasGoogleOAuth),
+    googleDirectEnabled: Boolean(hasGoogleClientId),
+    googleRedirectEnabled: Boolean(hasGoogleOAuth),
     googleClientId: hasGoogleClientId ? googleClientId : '',
     googleCallbackUrl,
     aiEnabled: Boolean(aiKey || anthropicKey),
