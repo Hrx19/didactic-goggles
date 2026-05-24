@@ -1,30 +1,170 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const crypto = require('crypto');
+require('dotenv').config();
 const session = require('express-session');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const FacebookStrategy = require('passport-facebook').Strategy;
 const Razorpay = require('razorpay');
 
 const app = express();
 const port = process.env.PORT || 3000;
-const dataFile = path.join(__dirname, 'contacts.json');
-const aiKey = process.env.ANTHROPIC_API_KEY || 'your-anthropic-api-key';
+app.set('trust proxy', 1);
+app.disable('x-powered-by');
 
-const razorpay = new Razorpay({
-  key_id: 'rzp_test_your_test_key_id', // Replace with your test key_id
-  key_secret: 'your_test_key_secret' // Replace with your test key_secret
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()');
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader(
+    'Content-Security-Policy',
+    [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "object-src 'none'",
+      "frame-ancestors 'none'",
+      "form-action 'self'",
+      "img-src 'self' data: blob:",
+      "font-src 'self' data:",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "script-src 'self' 'unsafe-inline' https://checkout.razorpay.com https://accounts.google.com https://cdn.jsdelivr.net",
+      "connect-src 'self' https://checkout.razorpay.com https://accounts.google.com https://fonts.googleapis.com https://fonts.gstatic.com",
+      "frame-src https://checkout.razorpay.com https://accounts.google.com"
+    ].join('; ')
+  );
+  next();
 });
 
+const baseUrl = (process.env.BASE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : `http://localhost:${port}`)).replace(/\/$/, '');
+const dataFile = path.join(__dirname, 'contacts.json');
+const usersFile = path.join(__dirname, 'users.json');
+const aiKey = pickEnv(
+  'OPENAI_API_KEY',
+  'OPENAI_KEY',
+  'OPENAI_SECRET_KEY',
+  'OPEN_AI_KEY',
+  'AI_API_KEY'
+);
+const anthropicKey = pickEnv('ANTHROPIC_API_KEY', 'CLAUDE_API_KEY');
+const aiProvider = (pickEnv('AI_PROVIDER') || (anthropicKey && !aiKey ? 'anthropic' : 'openai')).toLowerCase();
+const aiModel = pickEnv('OPENAI_MODEL', 'AI_MODEL') || 'gpt-4o-mini';
+const anthropicModel = pickEnv('ANTHROPIC_MODEL', 'CLAUDE_MODEL') || 'claude-3-5-sonnet-latest';
+const upiId = pickEnv('UPI_ID', 'PAYMENT_UPI_ID') || 'uft@upi';
+const adminEmail = normalizeEmail(pickEnv('ADMIN_EMAIL') || 'Hzzzx06@gmail.com');
+
+function pickEnv(...names) {
+  for (const name of names) {
+    const raw = process.env[name];
+    if (typeof raw !== 'string') continue;
+    const value = raw.trim().replace(/^['"]|['"]$/g, '');
+    if (value && value !== 'undefined') return value;
+  }
+  return '';
+}
+
+function createRateLimiter({ windowMs, limit, keyPrefix }) {
+  const buckets = new Map();
+  setInterval(() => {
+    const now = Date.now();
+    for (const [key, data] of buckets.entries()) {
+      if (now >= data.resetAt) buckets.delete(key);
+    }
+  }, Math.max(windowMs, 30_000)).unref?.();
+
+  return (req, res, next) => {
+    const key = `${keyPrefix}:${req.ip || req.headers['x-forwarded-for'] || 'anon'}`;
+    const now = Date.now();
+    const entry = buckets.get(key) || { count: 0, resetAt: now + windowMs };
+    if (now > entry.resetAt) {
+      entry.count = 0;
+      entry.resetAt = now + windowMs;
+    }
+    entry.count += 1;
+    buckets.set(key, entry);
+    if (entry.count > limit) {
+      return res.status(429).json({ error: 'Too many requests. Please try again shortly.' });
+    }
+    next();
+  };
+}
+
+function cleanText(input, maxLen = 1000) {
+  return String(input || '')
+    .replace(/<[^>]*>/g, '')
+    .replace(/[\u0000-\u001F\u007F]/g, '')
+    .replace(/\b(select|insert|update|delete|drop|alter|union|exec|truncate)\b/gi, '')
+    .replace(/[<>`{}[\]\\]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, maxLen);
+}
+
+function loginSession(req, user, res, callback) {
+  req.session.regenerate((regenErr) => {
+    if (regenErr) {
+      return callback(regenErr);
+    }
+    req.login(user, callback);
+  });
+}
+
+const rateLimiters = {
+  ai: createRateLimiter({ windowMs: 60_000, limit: 25, keyPrefix: 'ai' }),
+  auth: createRateLimiter({ windowMs: 60_000, limit: 12, keyPrefix: 'auth' }),
+  contact: createRateLimiter({ windowMs: 60_000, limit: 20, keyPrefix: 'contact' }),
+  payment: createRateLimiter({ windowMs: 60_000, limit: 20, keyPrefix: 'payment' })
+};
+
+const razorpayKeyId = pickEnv(
+  'RAZORPAY_KEY_ID',
+  'RAZORPAY_KEYID',
+  'RAZORPAY_ID',
+  'RAZORPAY_LIVE_KEY_ID',
+  'RAZORPAY_TEST_KEY_ID',
+  'NEXT_PUBLIC_RAZORPAY_KEY_ID'
+);
+const razorpayKeySecret = pickEnv(
+  'RAZORPAY_KEY_SECRET',
+  'RAZORPAY_KEYSECRET',
+  'RAZORPAY_SECRET',
+  'RAZORPAY_LIVE_KEY_SECRET',
+  'RAZORPAY_TEST_KEY_SECRET'
+);
+let razorpay = null;
+
+const hasRazorpayKeys = razorpayKeyId && razorpayKeyId !== 'undefined' && razorpayKeySecret && razorpayKeySecret !== 'undefined';
+if (hasRazorpayKeys) {
+  try {
+    razorpay = new Razorpay({
+      key_id: razorpayKeyId,
+      key_secret: razorpayKeySecret
+    });
+  } catch (err) {
+    console.warn('Razorpay initialization failed:', err.message || err);
+    razorpay = null;
+  }
+} else {
+  console.warn('Razorpay keys are not configured or invalid. Payment endpoints will be disabled.');
+}
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
 // Session
 app.use(session({
-  secret: 'uft-secret-key',
+  name: 'uft.sid',
+  secret: process.env.SESSION_SECRET || 'uft-local-dev-secret-change-me',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: 24 * 60 * 60 * 1000
+  }
 }));
 
 // Passport
@@ -34,80 +174,519 @@ app.use(passport.session());
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 
-// Google Strategy
-passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID || 'your-google-client-id',
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'your-google-client-secret',
-  callbackURL: '/auth/google/callback'
-}, (accessToken, refreshToken, profile, done) => {
-  // Here, check if user exists, else create
-  // For simplicity, just return profile
-  done(null, profile);
-}));
+const googleClientId = process.env.GOOGLE_CLIENT_ID || '1056601146656-85gibc5ggjgnj3629efhks331ghc258g.apps.googleusercontent.com';
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || '';
+const hasGoogleOAuth = googleClientId && googleClientSecret && googleClientId !== 'undefined' && googleClientSecret !== 'undefined';
+const hasGoogleClientId = googleClientId && googleClientId !== 'undefined';
+const googleCallbackUrl = (process.env.GOOGLE_CALLBACK_URL || `${baseUrl}/auth/google/callback`).replace(/\/$/, '');
 
-// Facebook Strategy
-passport.use(new FacebookStrategy({
-  clientID: process.env.FACEBOOK_APP_ID || 'your-facebook-app-id',
-  clientSecret: process.env.FACEBOOK_APP_SECRET || 'your-facebook-app-secret',
-  callbackURL: '/auth/facebook/callback',
-  profileFields: ['id', 'emails', 'name']
-}, (accessToken, refreshToken, profile, done) => {
-  done(null, profile);
-}));
+if (hasGoogleOAuth) {
+  passport.use(new GoogleStrategy({
+    clientID: googleClientId,
+    clientSecret: googleClientSecret,
+    callbackURL: googleCallbackUrl,
+    proxy: true
+  }, (accessToken, refreshToken, profile, done) => {
+    done(null, profile);
+  }));
+} else {
+  console.warn('Google OAuth is not configured. /auth/google will be disabled until GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET are set.');
+}
 
-// Auth routes
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-  res.redirect('/dashboard');
-});
-
-app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
-app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' }), (req, res) => {
+app.get('/auth/google', (req, res, next) => {
+  if (!hasGoogleOAuth) {
+    return res.status(503).send('Google login is not configured. Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET.');
+  }
+  next();
+}, passport.authenticate('google', { scope: ['profile', 'email'] }));
+app.get('/auth/google/', (req, res, next) => {
+  if (!hasGoogleOAuth) {
+    return res.status(503).send('Google login is not configured. Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET.');
+  }
+  next();
+}, passport.authenticate('google', { scope: ['profile', 'email'] }));
+app.get('/auth/google/callback', (req, res, next) => {
+  if (!hasGoogleOAuth) {
+    return res.status(503).send('Google login is not configured. Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET.');
+  }
+  next();
+}, passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
   res.redirect('/dashboard');
 });
 
 app.get('/logout', (req, res) => {
-  req.logout();
-  res.redirect('/');
+  req.logout(() => {
+    res.redirect('/');
+  });
 });
+
+function loadUsers() {
+  let users = [];
+  try {
+    if (fs.existsSync(usersFile)) {
+      users = JSON.parse(fs.readFileSync(usersFile, 'utf8') || '[]');
+    }
+  } catch (err) {
+    console.error('Error reading users file:', err);
+  }
+  return users;
+}
+
+function saveUsers(users) {
+  try {
+    fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
+  } catch (err) {
+    console.error('Error writing users file:', err);
+  }
+}
+
+function normalizeEmail(email) {
+  const value = cleanText(email, 254).toLowerCase();
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? value : '';
+}
+
+function isAdminUser(user) {
+  return normalizeEmail(user?.email || user?.emails?.[0]?.value || '') === adminEmail;
+}
+
+function hashPassword(password) {
+  const salt = crypto.randomBytes(16).toString('hex');
+  const hash = crypto.scryptSync(String(password), salt, 64).toString('hex');
+  return `${salt}:${hash}`;
+}
+
+function verifyPassword(password, storedHash) {
+  if (!password || !storedHash || !storedHash.includes(':')) return false;
+  const [salt, hash] = storedHash.split(':');
+  if (!salt || !hash) return false;
+  const candidate = crypto.scryptSync(String(password), salt, 64);
+  const expected = Buffer.from(hash, 'hex');
+  return expected.length === candidate.length && crypto.timingSafeEqual(expected, candidate);
+}
+
+function publicUser(user) {
+  return {
+    id: user.id,
+    displayName: user.displayName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email || 'Student',
+    email: user.email || user.emails?.[0]?.value || '',
+    firstName: user.firstName || '',
+    lastName: user.lastName || '',
+    avatar: user.avatar || user.photos?.[0]?.value || '',
+    provider: user.provider || 'local',
+    isAdmin: isAdminUser(user)
+  };
+}
 
 app.get('/api/user', (req, res) => {
   if (req.isAuthenticated()) {
-    res.json(req.user);
+    res.json(publicUser(req.user));
   } else {
     res.status(401).json({ error: 'Not authenticated' });
   }
 });
 
-app.post('/api/ai', async (req, res) => {
-  const { system, messages } = req.body;
-  if (!aiKey || aiKey === 'your-anthropic-api-key') {
-    return res.status(500).json({ error: 'AI API key is not configured on the server.' });
+app.get('/api/config', (req, res) => {
+  res.json({
+    razorpayKeyId: razorpayKeyId || '',
+    paymentEnabled: Boolean(razorpay && razorpayKeyId),
+    upiId,
+    googleEnabled: Boolean(hasGoogleOAuth),
+    googleClientId: hasGoogleClientId ? googleClientId : '',
+    googleCallbackUrl,
+    aiEnabled: Boolean(aiKey || anthropicKey),
+    aiProvider: aiKey || anthropicKey ? aiProvider : 'local'
+  });
+});
+
+app.get('/dashboard', (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.redirect('/#login');
+  }
+  return res.redirect('/#dashboard');
+});
+
+app.get('/admin', (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.redirect('/#login');
+  }
+  if (!isAdminUser(req.user)) {
+    return res.status(403).send('Admin access restricted.');
+  }
+  return res.redirect('/#admin');
+});
+
+app.post('/api/signup', rateLimiters.auth, (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
+  const normalizedEmail = normalizeEmail(email);
+  if (!normalizedEmail || !password) {
+    return res.status(400).json({ error: 'Email and password are required.' });
+  }
+  if (String(password).length < 6) {
+    return res.status(400).json({ error: 'Password must be at least 6 characters.' });
+  }
+
+  const users = loadUsers();
+  if (users.find(u => normalizeEmail(u.email) === normalizedEmail)) {
+    return res.status(400).json({ error: 'Email is already registered.' });
+  }
+
+  const user = {
+    id: Date.now(),
+    email: normalizedEmail,
+    password: '',
+    passwordHash: hashPassword(password),
+    firstName: firstName || '',
+    lastName: lastName || '',
+    displayName: `${firstName || ''} ${lastName || ''}`.trim() || normalizedEmail,
+    provider: 'local',
+    createdAt: new Date().toISOString()
+  };
+  users.push(user);
+  saveUsers(users);
+
+  loginSession(req, user, res, (err) => {
+    if (err) {
+      console.error('Signup login error:', err);
+      return res.status(500).json({ error: 'Signup failed.' });
+    }
+    res.json({ user: publicUser(user) });
+  });
+});
+
+app.post('/api/login', rateLimiters.auth, (req, res) => {
+  const { email, password } = req.body;
+  const normalizedEmail = normalizeEmail(email);
+  if (!normalizedEmail || !password) {
+    return res.status(400).json({ error: 'Email and password are required.' });
+  }
+
+  const users = loadUsers();
+  const user = users.find(u => normalizeEmail(u.email) === normalizedEmail);
+  const passwordMatches =
+    user &&
+    (verifyPassword(password, user.passwordHash) ||
+      (user.password && user.password === password));
+  if (!user) {
+    return res.status(401).json({ error: 'Invalid email or password.' });
+  }
+  if (!passwordMatches) {
+    return res.status(401).json({ error: 'Invalid email or password.' });
+  }
+  if (!user.passwordHash && user.password) {
+    user.passwordHash = hashPassword(password);
+    user.password = '';
+    saveUsers(users);
+  }
+
+  loginSession(req, user, res, (err) => {
+    if (err) {
+      console.error('Login error:', err);
+      return res.status(500).json({ error: 'Login failed.' });
+    }
+    res.json({ user: publicUser(user) });
+  });
+});
+
+app.post('/api/auth/google-token', rateLimiters.auth, async (req, res) => {
+  const { credential } = req.body;
+  if (!hasGoogleClientId) {
+    return res.status(503).json({ error: 'Google client ID is not configured.' });
+  }
+  if (!credential) {
+    return res.status(400).json({ error: 'Google credential is required.' });
   }
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-API-Key': aiKey
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system,
-        messages
-      })
+    const tokenResp = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(credential)}`);
+    const tokenInfo = await tokenResp.json();
+    if (!tokenResp.ok) {
+      console.error('Google token verification failed:', tokenInfo);
+      return res.status(401).json({ error: 'Google sign-in verification failed.' });
+    }
+    if (tokenInfo.aud !== googleClientId) {
+      return res.status(401).json({ error: 'Google client mismatch.' });
+    }
+    if (tokenInfo.email_verified !== 'true' && tokenInfo.email_verified !== true) {
+      return res.status(401).json({ error: 'Google email is not verified.' });
+    }
+
+    const email = String(tokenInfo.email || '').toLowerCase();
+    if (!email) {
+      return res.status(400).json({ error: 'Google account email is missing.' });
+    }
+
+    const users = loadUsers();
+    let user = users.find((item) => String(item.email || '').toLowerCase() === email);
+    if (user) {
+      user.googleId = tokenInfo.sub;
+      user.provider = user.provider || 'google';
+      user.displayName = user.displayName || tokenInfo.name || email;
+      user.firstName = user.firstName || tokenInfo.given_name || '';
+      user.lastName = user.lastName || tokenInfo.family_name || '';
+      user.avatar = tokenInfo.picture || user.avatar || '';
+    } else {
+      user = {
+        id: `google_${tokenInfo.sub}`,
+        googleId: tokenInfo.sub,
+        provider: 'google',
+        email,
+        password: '',
+        firstName: tokenInfo.given_name || '',
+        lastName: tokenInfo.family_name || '',
+        displayName: tokenInfo.name || email,
+        avatar: tokenInfo.picture || '',
+        createdAt: new Date().toISOString()
+      };
+      users.push(user);
+    }
+    saveUsers(users);
+
+    loginSession(req, user, res, (err) => {
+      if (err) {
+        console.error('Google token login error:', err);
+        return res.status(500).json({ error: 'Google login failed.' });
+      }
+      res.json({ user: publicUser(user) });
     });
-    const data = await response.json();
-    return res.json(data);
   } catch (err) {
-    console.error('AI proxy error:', err);
-    res.status(500).json({ error: 'AI service unavailable.' });
+    console.error('Google token auth error:', err);
+    res.status(500).json({ error: 'Google sign-in is temporarily unavailable.' });
   }
 });
 
-app.post('/api/contact', (req, res) => {
+app.post('/api/logout', (req, res) => {
+  req.logout(() => {
+    req.session.destroy(() => {
+      res.json({ ok: true });
+    });
+  });
+});
+
+app.post('/api/ai', rateLimiters.ai, async (req, res) => {
+  const { system, messages } = req.body;
+  const lastUserMessage = [...(messages || [])].reverse().find((message) => message.role !== 'assistant')?.content || '';
+  const fallbackAiReply = buildLocalAiReply(lastUserMessage);
+  if (!aiKey && !anthropicKey) {
+    return res.json({
+      reply: fallbackAiReply,
+      modelUsed: 'local-uft-assistant',
+      fallback: true
+    });
+  }
+
+  const normalizedMessages = (messages || []).map((message) => ({
+    role: message.role === 'assistant' ? 'assistant' : 'user',
+    content: cleanText(message.content, 4000)
+  }));
+
+  if (anthropicKey && aiProvider === 'anthropic') {
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': anthropicKey,
+          'anthropic-version': '2023-06-01'
+        },
+        body: JSON.stringify({
+          model: anthropicModel,
+          system: system || 'You are a helpful assistant.',
+          messages: normalizedMessages,
+          max_tokens: 900
+        })
+      });
+
+      const raw = await response.text();
+      let data = {};
+      try {
+        data = raw ? JSON.parse(raw) : {};
+      } catch (_) {
+        data = { error: raw };
+      }
+
+      if (!response.ok) {
+        return res.json({
+          reply: fallbackAiReply,
+          modelUsed: 'local-uft-assistant',
+          fallback: true,
+          provider: 'anthropic',
+          providerError: data?.error?.message || data?.message || 'Claude request failed.',
+          modelTried: anthropicModel
+        });
+      }
+
+      const reply = (data.content || []).map((part) => part.text || '').join('').trim();
+      return res.json({ reply: reply || 'Sorry, I could not get a response.', modelUsed: anthropicModel, raw: data });
+    } catch (err) {
+      console.error('Claude API error:', err);
+      return res.json({
+        reply: fallbackAiReply,
+        modelUsed: 'local-uft-assistant',
+        fallback: true,
+        provider: 'anthropic',
+        providerError: err.message || String(err),
+        modelTried: anthropicModel
+      });
+    }
+  }
+
+  if (!aiKey) {
+    return res.json({
+      reply: fallbackAiReply,
+      modelUsed: 'local-uft-assistant',
+      fallback: true
+    });
+  }
+
+  const modelsToTry = [aiModel, 'gpt-4o-mini', 'gpt-4.1-mini'].filter(Boolean).filter((m, i, arr) => arr.indexOf(m) === i);
+
+  try {
+    let lastFailure = null;
+
+    for (const model of modelsToTry) {
+      const response = await fetch('https://api.openai.com/v1/responses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${aiKey}`
+        },
+        body: JSON.stringify({
+          model,
+          instructions: system || 'You are a helpful assistant.',
+          input: normalizedMessages,
+          max_output_tokens: 800,
+          temperature: 0.7
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const reply =
+          data.output_text ||
+          data.output?.flatMap(item => item.content || []).map(part => part.text || '').join('').trim() ||
+          'Sorry, I could not get a response.';
+        return res.json({ reply, modelUsed: model, raw: data });
+      }
+
+      const bodyText = await response.text();
+      let reason = bodyText;
+      try {
+        const parsed = JSON.parse(bodyText);
+        reason =
+          parsed?.error?.message ||
+          parsed?.message ||
+          bodyText;
+      } catch (_) {
+        // keep original text as reason
+      }
+
+      lastFailure = { model, status: response.status, reason };
+      const isRetryable = response.status === 400 || response.status === 404 || response.status === 429;
+      if (!isRetryable) break;
+    }
+
+    const safeReason = lastFailure?.reason || 'Unknown AI provider error.';
+    console.error('OpenAI API error:', lastFailure);
+    return res.json({
+      reply: fallbackAiReply,
+      modelUsed: 'local-uft-assistant',
+      fallback: true,
+      provider: 'openai',
+      providerError: safeReason,
+      modelTried: lastFailure?.model || aiModel
+    });
+  } catch (err) {
+    console.error('AI proxy error:', err);
+    res.json({
+      reply: fallbackAiReply,
+      modelUsed: 'local-uft-assistant',
+      fallback: true,
+      provider: 'openai',
+      providerError: err.message || String(err),
+      modelTried: aiModel
+    });
+  }
+});
+
+const courseCatalog = [
+  { title: 'Mobile Video Editing', hindi: 'à¤®à¥‹à¤¬à¤¾à¤‡à¤² à¤µà¥€à¤¡à¤¿à¤¯à¥‹ à¤à¤¡à¤¿à¤Ÿà¤¿à¤‚à¤—', price: 199, original: 999, hours: '3.5', category: 'Technology', bestFor: 'short-form video, reels, creator skills' },
+  { title: 'Instagram Growth Basics', hindi: 'à¤‡à¤‚à¤¸à¥à¤Ÿà¤¾à¤—à¥à¤°à¤¾à¤® à¤—à¥à¤°à¥‹à¤¥ à¤¬à¥‡à¤¸à¤¿à¤•à¥à¤¸', price: 149, original: 799, hours: '4', category: 'Digital Marketing', bestFor: 'organic growth, content strategy, creator business' },
+  { title: 'Basic English Speaking', hindi: 'à¤¬à¥‡à¤¸à¤¿à¤• à¤‡à¤‚à¤—à¥à¤²à¤¿à¤¶ à¤¸à¥à¤ªà¥€à¤•à¤¿à¤‚à¤—', price: 129, original: 599, hours: '5', category: 'Languages', bestFor: 'confidence, interviews, daily speaking' },
+  { title: 'Cyber Security Intro', hindi: 'à¤¸à¤¾à¤‡à¤¬à¤° à¤¸à¤¿à¤•à¥à¤¯à¥‹à¤°à¤¿à¤Ÿà¥€ à¤¶à¥à¤°à¥à¤†à¤¤', price: 499, original: 2499, hours: '6', category: 'Cyber Security', bestFor: 'security basics, online safety, ethical hacking foundation' },
+  { title: 'Data Science Beginner', hindi: 'à¤¡à¥‡à¤Ÿà¤¾ à¤¸à¤¾à¤‡à¤‚à¤¸ à¤¬à¤¿à¤—à¤¿à¤¨à¤°', price: 349, original: 1499, hours: '6.5', category: 'Data Science', bestFor: 'Python, Pandas, visualization, first ML model' },
+  { title: 'Python for Beginners', hindi: 'à¤ªà¤¾à¤¯à¤¥à¤¨ à¤«à¥‰à¤° à¤¬à¤¿à¤—à¤¿à¤¨à¤°à¥à¤¸', price: 249, original: 999, hours: '5.5', category: 'Programming', bestFor: 'coding basics, logic, first projects' }
+];
+
+function buildCourseList() {
+  return courseCatalog
+    .map((course) => `${course.title} (${course.hindi}) - INR ${course.price}, ${course.hours} hrs, ${course.category}, Hindi + English`)
+    .join('\n');
+}
+
+function buildSiteSummary() {
+  return [
+    'HUMAIX REALM is a premium AI + tech learning website.',
+    'Founder/instructor shown on the site: Harish Singh.',
+    'Primary contact: Hzzzx06@gmail.com.',
+    'Main pages: Home, Courses, About, Blog, Contact, Login, Sign Up, Dashboard, Admin.',
+    'Key features: premium hero design, Hindi + English courses, course thumbnails, AI assistant, Razorpay checkout, contact form, feedback form, and downloadable-style learning experience.',
+    'Course benefits: lifetime access, certificate of completion, mobile/tablet access, downloadable resources, WhatsApp support group, and 30-day money-back guarantee.'
+  ].join('\n');
+}
+
+function findCourseByText(text) {
+  return courseCatalog.find((course) => {
+    const haystack = `${course.title} ${course.hindi} ${course.category} ${course.bestFor}`.toLowerCase();
+    return haystack.split(/[\s,]+/).some((word) => word.length > 3 && text.includes(word));
+  });
+}
+
+function buildLocalAiReply(question) {
+  const raw = String(question || '').trim();
+  const text = raw.toLowerCase();
+  const wantsHindi = /hindi|hinglish/.test(text);
+  const course = findCourseByText(text);
+  const prefix = wantsHindi ? 'Bilkul. ' : '';
+
+  if (!raw) {
+    return 'Ask me about any HUMAIX REALM course, fees, payment, roadmap, language, certificate, or support.';
+  }
+
+  if (/(site|website|about|home|home page|features|pages|founder|harish|who made|what is this|full details|details)/.test(text)) {
+    return prefix + buildSiteSummary() + "\n\nCourse catalog:\n" + buildCourseList();
+  }
+
+  if (/(all|list|courses|course|fees|price|pricing)/.test(text) && !course) {
+    return prefix + "HUMAIX REALM courses are available in Hindi + English:\n" + buildCourseList() + "\n\nBest beginner path: Python for Beginners -> Data Science Beginner -> Cyber Security Intro.";
+  }
+
+  if (course) {
+    return prefix + course.title + " (" + course.hindi + ") is a " + course.hours + "-hour " + course.category + " course in Hindi + English. Fee: INR " + course.price + " (original INR " + course.original + "). It is best for " + course.bestFor + ". Open the course card, watch the demo, then tap Pay Securely for Razorpay checkout.";
+  }
+
+  if (/(payment|pay|upi|razorpay|checkout)/.test(text)) {
+    return 'Payment is handled through Razorpay Secure Checkout. Open any course, tap Pay Securely, complete checkout using UPI, card, net banking, or wallet, and keep the payment ID for confirmation.';
+  }
+
+  if (/(certificate|certificat)/.test(text)) {
+    return 'Every listed course includes lifetime access and a certificate of completion after finishing the lessons and exercises.';
+  }
+
+  if (/(language|english|hindi|medium)/.test(text)) {
+    return 'Courses are planned in Hindi + English, so beginners can understand concepts in Hindi/Hinglish while learning English technical terms.';
+  }
+
+  if (/(contact|support|help|email|whatsapp)/.test(text)) {
+    return 'For support, use the Contact page or email Hzzzx06@gmail.com. You can also follow the WhatsApp channel linked on the site.';
+  }
+
+  if (/(career|job|earn|earning|income)/.test(text)) {
+    return 'For earning-focused learning, start with Python for Beginners, then Data Science Beginner for analytics/AI skills, or Mobile Video Editing plus Instagram Growth if you want creator/freelance work faster.';
+  }
+
+  return prefix + "Here is the practical HUMAIX REALM answer: tell me your current level and goal. For coding/AI, start with Python for Beginners. For analytics, choose Data Science Beginner. For security, choose Cyber Security Intro. For creator income, choose Mobile Video Editing plus Instagram Growth. All courses are Hindi + English and include certificate access.";
+}
+app.post('/api/contact', rateLimiters.contact, (req, res) => {
   const { firstName, lastName, email, subject, message } = req.body;
   if (!email || !message) {
     return res.status(400).json({ error: 'Email and message are required.' });
@@ -115,11 +694,11 @@ app.post('/api/contact', (req, res) => {
 
   const entry = {
     id: Date.now(),
-    firstName: firstName || '',
-    lastName: lastName || '',
-    email,
-    subject: subject || 'General',
-    message,
+    firstName: cleanText(firstName, 80),
+    lastName: cleanText(lastName, 80),
+    email: cleanText(email, 160),
+    subject: cleanText(subject, 120) || 'General',
+    message: cleanText(message, 4000),
     receivedAt: new Date().toISOString()
   };
 
@@ -158,7 +737,7 @@ app.get('/api/contacts', (req, res) => {
   }
 });
 
-app.post('/api/feedback', (req, res) => {
+app.post('/api/feedback', rateLimiters.contact, (req, res) => {
   const { course, rating, review } = req.body;
   if (!course || !review) {
     return res.status(400).json({ error: 'Course and review are required.' });
@@ -176,9 +755,9 @@ app.post('/api/feedback', (req, res) => {
 
   feedbacks.push({
     id: Date.now(),
-    course,
+    course: cleanText(course, 160),
     rating: rating || 5,
-    review,
+    review: cleanText(review, 4000),
     submittedAt: new Date().toISOString()
   });
 
@@ -193,16 +772,21 @@ app.post('/api/feedback', (req, res) => {
   res.status(201).json({ status: 'ok', message: 'Feedback received.' });
 });
 
-app.post('/api/create-order', async (req, res) => {
-  const { amount, currency = 'INR' } = req.body;
+app.post('/api/create-order', rateLimiters.payment, async (req, res) => {
+  if (!razorpay) {
+    return res.status(500).json({ error: 'Payment gateway is not configured on the server.' });
+  }
+
+  const amount = Number(req.body.amount);
+  const currency = req.body.currency || 'INR';
   console.log('Creating order for amount:', amount, 'currency:', currency);
-  if (!amount || amount <= 0) {
+  if (!Number.isFinite(amount) || amount <= 0) {
     return res.status(400).json({ error: 'Invalid amount' });
   }
 
   try {
     const options = {
-      amount: amount * 100, // amount in paisa
+      amount: Math.round(amount * 100),
       currency,
       receipt: `receipt_${Date.now()}`
     };
@@ -211,15 +795,61 @@ app.post('/api/create-order', async (req, res) => {
     console.log('Order created:', order);
     res.json(order);
   } catch (error) {
-    console.error('Razorpay order creation error:', error);
-    res.status(500).json({ error: 'Unable to create order' });
+    const reason =
+      error?.error?.description ||
+      error?.description ||
+      error?.message ||
+      'Unknown Razorpay error';
+    console.error('Razorpay order creation error:', {
+      reason,
+      code: error?.error?.code || error?.code || '',
+      statusCode: error?.statusCode || ''
+    });
+    res.status(500).json({ error: 'Unable to create order', reason });
   }
+});
+
+app.post('/api/verify-payment', rateLimiters.payment, (req, res) => {
+  if (!razorpayKeySecret) {
+    return res.status(500).json({ error: 'Payment verification is not configured on the server.' });
+  }
+
+  const {
+    razorpay_order_id: orderId,
+    razorpay_payment_id: paymentId,
+    razorpay_signature: signature
+  } = req.body || {};
+
+  if (!orderId || !paymentId || !signature) {
+    return res.status(400).json({ error: 'Payment verification details are missing.' });
+  }
+
+  const expected = crypto
+    .createHmac('sha256', razorpayKeySecret)
+    .update(`${orderId}|${paymentId}`)
+    .digest('hex');
+
+  const expectedBuffer = Buffer.from(expected, 'hex');
+  const receivedBuffer = Buffer.from(String(signature), 'hex');
+  const verified =
+    expectedBuffer.length === receivedBuffer.length &&
+    crypto.timingSafeEqual(expectedBuffer, receivedBuffer);
+
+  if (!verified) {
+    return res.status(400).json({ error: 'Payment signature verification failed.' });
+  }
+
+  res.json({ ok: true, paymentId, orderId });
 });
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'uttarakhand-future-technology (2).html'));
 });
 
-app.listen(port, () => {
-  console.log(`Backend server running at http://localhost:${port}`);
-});
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Backend server running at http://localhost:${port}`);
+  });
+} else {
+  module.exports = app;
+}
