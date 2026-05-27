@@ -222,15 +222,16 @@ a{text-decoration:none;color:inherit}
 .loader-bar span{
  display:block;
  height:100%;
- width:62%;
+ width:100%;
  border-radius:inherit;
  background:linear-gradient(90deg, #00e5ff, #7000ff, #ff007f);
- animation:loaderWave 1.9s ease-in-out infinite;
+ transform-origin:left center;
+ animation:loaderWave 1.4s ease-out forwards;
 }
 @keyframes loaderWave{
- 0%{transform:translateX(-38%); width:42%}
- 50%{transform:translateX(42%); width:78%}
- 100%{transform:translateX(132%); width:42%}
+ 0%{transform:scaleX(0.08); opacity:0.55}
+ 45%{transform:scaleX(0.72); opacity:0.9}
+ 100%{transform:scaleX(1); opacity:1}
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
@@ -5347,8 +5348,15 @@ function initFadeIns(){
 initFadeIns();
 initLenis();
 startTerminal();
-initHeroScene();
-initReelScene();
+function safeBoot(label, fn){
+ try {
+  fn();
+ } catch (err) {
+  console.warn(`${label} failed to start`, err);
+ }
+}
+safeBoot('Hero scene', initHeroScene);
+safeBoot('Reel scene', initReelScene);
 loadConfig();
 checkAuth();
 const initialRoute = getPageFromLocation();
@@ -5378,10 +5386,13 @@ function hideSiteLoader(){
  loader.classList.add('hidden');
  setTimeout(() => {
    if(loader && loader.parentNode) loader.remove();
- }, 650);
+  }, 650);
 }
+window.addEventListener('DOMContentLoaded', hideSiteLoader);
 window.addEventListener('load', hideSiteLoader);
-setTimeout(hideSiteLoader, 3800);
+setTimeout(hideSiteLoader, 1800);
+window.addEventListener('error', () => hideSiteLoader());
+window.addEventListener('unhandledrejection', () => hideSiteLoader());
 
 // ===================== CUSTOM CURSOR =====================
 const cur=document.getElementById('cursor');
