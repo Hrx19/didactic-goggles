@@ -316,6 +316,22 @@ textarea:focus-visible{
  transform:scale(1.02);
  pointer-events:none;
 }
+.lite-mode .hero-visual{
+ min-height:320px;
+}
+.lite-mode .hero-visual canvas,
+.lite-mode .motion-reel,
+.lite-mode .hero-orbit-card{
+ display:none !important;
+}
+.lite-mode .hero-visual-poster{
+ opacity:0.88;
+ filter:saturate(105%) contrast(104%);
+}
+.lite-mode .hero-terminal,
+.lite-mode .waitlist-card{
+ backdrop-filter:blur(16px);
+}
 
 /* ===================== NAVBAR ===================== */
 nav{
@@ -712,6 +728,28 @@ nav.scrolled{
  gap:12px;
  margin:30px 0 24px;
  align-items:center;
+}
+.mode-pill{
+ display:inline-flex;
+ align-items:center;
+ gap:8px;
+ padding:8px 12px;
+ border-radius:999px;
+ border:1px solid rgba(148,163,184,0.18);
+ background:rgba(255,255,255,0.04);
+ color:var(--ink2);
+ font-size:12px;
+ font-weight:700;
+ cursor:pointer;
+ transition:all 0.25s ease;
+}
+.mode-pill:hover{background:rgba(255,255,255,0.08); color:#fff}
+.mode-pill .pill-dot{
+ width:8px;
+ height:8px;
+ border-radius:50%;
+ background:var(--emerald);
+ box-shadow:0 0 12px rgba(52,211,153,0.8);
 }
 .search-input{
  min-width:0;
@@ -2253,9 +2291,13 @@ button:active, a:active, .btn:active, .course-card:active{
 <div class="site-loader" id="siteLoader" aria-live="polite" aria-busy="true">
  <div class="loader-card glass-panel">
   <div class="loader-ring" aria-hidden="true"></div>
-  <div class="loader-title">Humaix Realm</div>
-  <div class="loader-sub">Preparing the academy-first experience, course shelf, and spatial AI motion layer.</div>
-  <div class="loader-bar" aria-hidden="true"><span></span></div>
+ <div class="loader-title">Humaix Realm</div>
+ <div class="loader-sub">Preparing the academy-first experience, course shelf, and spatial AI motion layer.</div>
+ <div class="loader-bar" aria-hidden="true"><span></span></div>
+ <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px">
+  <button class="btn btn-ghost" type="button" onclick="applyLiteMode(true); hideSiteLoader();">Use Lite Mode</button>
+  <button class="btn btn-prime" type="button" onclick="hideSiteLoader()">Continue</button>
+ </div>
  </div>
 </div>
 <div class="grain-layer" aria-hidden="true"></div>
@@ -2277,13 +2319,17 @@ button:active, a:active, .btn:active, .course-card:active{
   </div>
  </div>
 </div>
- <ul class="nav-links">
+<ul class="nav-links">
  <li><a href="/workspace" onclick="event.preventDefault();showPage('workspace')" id="nl-workspace">Workspace</a></li>
  <li><a href="/memory" onclick="event.preventDefault();showPage('memory')" id="nl-memory">Memory</a></li>
  <li><a href="/academy" onclick="event.preventDefault();showPage('academy')" id="nl-academy">Academy</a></li>
  <li><a href="/about" onclick="event.preventDefault();showPage('about')" id="nl-about">About</a></li>
  </ul>
  <div class="nav-btns">
+  <button class="mode-pill" id="liteModeBtn" type="button" onclick="toggleLiteMode()" title="Switch to a lighter version for slower devices">
+   <span class="pill-dot"></span>
+   <span id="liteModeLabel">Lite Mode</span>
+  </button>
   <button class="btn btn-ghost" onclick="showPage('login')">Login</button>
   <button class="btn btn-prime" onclick="launchApp()">Launch App</button>
  </div>
@@ -3478,7 +3524,7 @@ function startTerminal(){
 function initHeroScene(){
  const canvas = document.getElementById('heroScene');
  const host = canvas?.parentElement;
- if(!canvas || !host || !window.THREE) return;
+ if(window.humaixLiteMode || !canvas || !host || !window.THREE) return;
  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const isCoarse = window.matchMedia('(pointer:coarse)').matches;
 
@@ -3999,7 +4045,7 @@ group.scale.setScalar(window.matchMedia('(pointer:coarse)').matches ? 0.9 : 0.82
 function initReelScene(){
  const canvas = document.getElementById('reelScene');
  const host = canvas?.parentElement;
- if(!canvas || !host || !window.THREE) return;
+ if(window.humaixLiteMode || !canvas || !host || !window.THREE) return;
  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const isCoarse = window.matchMedia('(pointer:coarse)').matches;
 
@@ -5348,6 +5394,7 @@ function initFadeIns(){
 initFadeIns();
 initLenis();
 startTerminal();
+applyLiteMode(getAutoLiteMode());
 function safeBoot(label, fn){
  try {
   fn();
@@ -5387,6 +5434,50 @@ function hideSiteLoader(){
  setTimeout(() => {
    if(loader && loader.parentNode) loader.remove();
   }, 650);
+}
+function getAutoLiteMode(){
+ try {
+  const saved = localStorage.getItem('humaixLiteMode');
+  if (saved === '1') return true;
+  if (saved === '0') return false;
+ } catch (err) {}
+ const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+ const slowConn = conn && (conn.saveData || /(^|[^a-z])2g([^a-z]|$)|slow-2g/i.test(conn.effectiveType || ''));
+ const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ return Boolean(slowConn || reduced);
+}
+function applyLiteMode(enabled){
+ const on = Boolean(enabled);
+ window.humaixLiteMode = on;
+ document.body.classList.toggle('lite-mode', on);
+ const label = document.getElementById('liteModeLabel');
+ if (label) label.textContent = on ? 'Lite On' : 'Lite Mode';
+ const btn = document.getElementById('liteModeBtn');
+ if (btn) btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+ try {
+  localStorage.setItem('humaixLiteMode', on ? '1' : '0');
+ } catch (err) {}
+ if (on) {
+  const hCanvas = document.getElementById('heroScene');
+  const rCanvas = document.getElementById('reelScene');
+  if (hCanvas) hCanvas.style.display = 'none';
+  if (rCanvas) rCanvas.style.display = 'none';
+ } else {
+  const hCanvas = document.getElementById('heroScene');
+  const rCanvas = document.getElementById('reelScene');
+  if (hCanvas) hCanvas.style.display = '';
+  if (rCanvas) rCanvas.style.display = '';
+ }
+}
+function toggleLiteMode(){
+ applyLiteMode(!window.humaixLiteMode);
+ showToast(window.humaixLiteMode ? 'Lite mode enabled for faster browsing.' : 'Full motion mode enabled.');
+ try {
+  if (!window.humaixLiteMode) {
+   safeBoot('Hero scene', initHeroScene);
+   safeBoot('Reel scene', initReelScene);
+  }
+ } catch (err) {}
 }
 window.addEventListener('DOMContentLoaded', hideSiteLoader);
 window.addEventListener('load', hideSiteLoader);
