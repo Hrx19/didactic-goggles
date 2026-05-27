@@ -1452,6 +1452,192 @@ section{scroll-margin-top:90px}
 .e-meta{font-size:13px;color:var(--ink3);margin-bottom:9px}
 .e-prog{font-size:12px;color:var(--cyan)}
 
+/* ===================== LEARNING STUDIO ===================== */
+.studio-wrap{
+ max-width:1240px;
+ margin:0 auto;
+ padding:100px 48px 80px;
+}
+.studio-grid{
+ display:grid;
+ grid-template-columns:280px minmax(0,1fr) 320px;
+ gap:18px;
+ align-items:start;
+}
+.studio-panel{
+ background:rgba(15,23,42,0.46);
+ border:1px solid rgba(148,163,184,0.18);
+ backdrop-filter:blur(18px);
+ border-radius:var(--r);
+ padding:22px;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.studio-panel h3{
+ font-size:18px;
+ line-height:1.25;
+ margin-bottom:12px;
+}
+.lesson-list{
+ display:flex;
+ flex-direction:column;
+ gap:10px;
+}
+.lesson-btn{
+ width:100%;
+ border:none;
+ text-align:left;
+ color:var(--ink2);
+ background:rgba(255,255,255,0.04);
+ border:1px solid rgba(255,255,255,0.08);
+ border-radius:12px;
+ padding:12px;
+ cursor:pointer;
+ transition:all 0.22s ease;
+ font-family:'Outfit','Inter',sans-serif;
+}
+.lesson-btn:hover,
+.lesson-btn.active{
+ color:#fff;
+ border-color:rgba(56,189,248,0.36);
+ background:rgba(56,189,248,0.08);
+}
+.lesson-btn.done{
+ border-color:rgba(52,211,153,0.28);
+}
+.lesson-btn strong{
+ display:block;
+ font-size:13px;
+ margin-bottom:3px;
+}
+.lesson-btn span{
+ display:block;
+ font-size:12px;
+ color:var(--ink3);
+ line-height:1.45;
+}
+.studio-lesson-stage{
+ min-height:330px;
+ border-radius:18px;
+ border:1px solid rgba(255,255,255,0.10);
+ background:
+  linear-gradient(180deg, rgba(3,0,20,0.22), rgba(3,0,20,0.72)),
+  var(--studio-art, linear-gradient(135deg,#07101d,#111827));
+ background-size:cover;
+ background-position:center;
+ display:flex;
+ flex-direction:column;
+ justify-content:flex-end;
+ padding:24px;
+ overflow:hidden;
+ position:relative;
+}
+.studio-lesson-stage::before{
+ content:'';
+ position:absolute;
+ inset:0;
+ background:
+  linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px),
+  linear-gradient(180deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+ background-size:42px 42px;
+ opacity:0.18;
+ pointer-events:none;
+}
+.studio-lesson-stage > *{position:relative;z-index:1}
+.studio-kicker{
+ font-size:11px;
+ color:var(--sky);
+ letter-spacing:1.8px;
+ text-transform:uppercase;
+ font-weight:800;
+ margin-bottom:8px;
+}
+.studio-title{
+ font-size:28px;
+ line-height:1.12;
+ margin-bottom:10px;
+}
+.studio-copy{
+ color:var(--ink2);
+ font-size:14px;
+ line-height:1.75;
+ max-width:640px;
+}
+.studio-actions{
+ display:flex;
+ gap:10px;
+ flex-wrap:wrap;
+ margin-top:18px;
+}
+.studio-progress-row{
+ display:grid;
+ grid-template-columns:1fr auto;
+ gap:12px;
+ align-items:center;
+ margin-top:18px;
+}
+.studio-progress{
+ height:9px;
+ border-radius:999px;
+ overflow:hidden;
+ background:rgba(255,255,255,0.07);
+ border:1px solid rgba(255,255,255,0.08);
+}
+.studio-progress span{
+ display:block;
+ height:100%;
+ width:0;
+ background:linear-gradient(90deg,#00e5ff,#34d399,#ff007f);
+ border-radius:inherit;
+ transition:width 0.35s ease;
+}
+.quiz-options{
+ display:grid;
+ gap:9px;
+ margin-top:12px;
+}
+.quiz-option{
+ width:100%;
+ border:1px solid rgba(148,163,184,0.16);
+ background:rgba(255,255,255,0.04);
+ color:var(--ink2);
+ border-radius:12px;
+ padding:11px 12px;
+ text-align:left;
+ cursor:pointer;
+ font-family:'Outfit','Inter',sans-serif;
+ transition:all 0.2s ease;
+}
+.quiz-option:hover,
+.quiz-option.selected{
+ color:#fff;
+ border-color:rgba(56,189,248,0.36);
+ background:rgba(56,189,248,0.08);
+}
+.community-list{
+ display:grid;
+ gap:10px;
+ max-height:260px;
+ overflow:auto;
+ padding-right:4px;
+}
+.community-post{
+ padding:12px;
+ border-radius:12px;
+ background:rgba(255,255,255,0.04);
+ border:1px solid rgba(255,255,255,0.08);
+}
+.community-post strong{
+ display:block;
+ font-size:13px;
+ margin-bottom:4px;
+}
+.community-post span{
+ display:block;
+ font-size:12px;
+ color:var(--ink3);
+ line-height:1.55;
+}
+
 /* ===================== COURSE DETAIL ===================== */
 .detail-layout{
  display:grid;grid-template-columns:1fr 390px;gap:52px;
@@ -1784,6 +1970,9 @@ footer{background:var(--surf);border-top:1px solid var(--b1);padding:64px 48px 3
  .sidebar{display:none}
  .dash-main{padding:20px}
  .dash-stats{grid-template-columns:repeat(2,1fr)}
+ .studio-wrap{padding:90px 20px 60px}
+ .studio-grid{grid-template-columns:1fr}
+ .studio-lesson-stage{min-height:280px}
  .adm-layout{grid-template-columns:1fr}
  .adm-cards{grid-template-columns:repeat(2,1fr)}
  .auth-wrap{padding:88px 18px 40px}
@@ -2323,6 +2512,7 @@ button:active, a:active, .btn:active, .course-card:active{
  <li><a href="/workspace" onclick="event.preventDefault();showPage('workspace')" id="nl-workspace">Workspace</a></li>
  <li><a href="/memory" onclick="event.preventDefault();showPage('memory')" id="nl-memory">Memory</a></li>
  <li><a href="/academy" onclick="event.preventDefault();showPage('academy')" id="nl-academy">Academy</a></li>
+ <li><a href="/studio" onclick="event.preventDefault();showPage('studio')" id="nl-studio">Studio</a></li>
  <li><a href="/about" onclick="event.preventDefault();showPage('about')" id="nl-about">About</a></li>
  </ul>
  <div class="nav-btns">
@@ -2342,6 +2532,7 @@ button:active, a:active, .btn:active, .course-card:active{
  <a href="/workspace" onclick="event.preventDefault();showPage('workspace');toggleMenu()"> Workspace</a>
  <a href="/memory" onclick="event.preventDefault();showPage('memory');toggleMenu()"> Memory</a>
  <a href="/academy" onclick="event.preventDefault();showPage('academy');toggleMenu()"> Academy</a>
+ <a href="/studio" onclick="event.preventDefault();showPage('studio');toggleMenu()"> Studio</a>
  <a href="/about" onclick="event.preventDefault();showPage('about');toggleMenu()"> About</a>
  <a href="/login" onclick="event.preventDefault();showPage('login');toggleMenu()"> Login</a>
  <a href="/launch" onclick="event.preventDefault();launchApp();toggleMenu()"> Launch App</a>
@@ -2364,7 +2555,7 @@ button:active, a:active, .btn:active, .course-card:active{
  <div class="hero-actions">
  <button class="btn btn-prime btn-xl" onclick="showPage('signup')">Request Early Access</button>
  <button class="btn btn-ghost btn-lg" onclick="showPage('academy')">Browse Academy</button>
- <button class="btn btn-ghost btn-lg" onclick="launchApp()">Launch App</button>
+ <button class="btn btn-ghost btn-lg" onclick="showPage('studio')">Try Studio</button>
  </div>
  <div class="hero-badges">
  <span class="hero-badge">3D spatial core</span>
@@ -2783,6 +2974,7 @@ button:active, a:active, .btn:active, .course-card:active{
  <div class="buy-orig" id="dorig"> 1,499 <span style="color:var(--emerald);font-size:14px;text-decoration:none">77% OFF</span></div>
  <div style="font-size:13px;color:var(--amber);margin-bottom:20px"> Offer ends in 2 days!</div>
  <button class="btn btn-prime btn-lg" style="width:100%;justify-content:center;margin-bottom:12px" onclick="addToCart()"> Add to Cart</button>
+ <button class="btn btn-ghost btn-lg" style="width:100%;justify-content:center;margin-bottom:12px" onclick="openStudioForCourse()">Preview Studio</button>
  <button class="btn btn-outline btn-lg" style="width:100%;justify-content:center;margin-bottom:20px" onclick="openUpiModal()">Pay Securely</button>
  <ul class="buy-feats">
  <li>Lifetime access</li>
@@ -2950,6 +3142,62 @@ button:active, a:active, .btn:active, .course-card:active{
  </div>
 </div>
 
+<!-- ===================== LEARNING STUDIO PAGE ===================== -->
+<div class="page" id="page-studio">
+ <div class="studio-wrap">
+  <div class="sec-head fade-in" style="text-align:left;margin-bottom:24px">
+   <div class="sec-tag">Learning Studio</div>
+   <h2 class="sec-title">Microlearning, notes, quizzes, and progress in one place</h2>
+   <p class="sec-sub">A practical preview of the full HUMAIX learning environment: short lessons, fast feedback, memory capture, and learner analytics.</p>
+  </div>
+  <div class="studio-grid">
+   <aside class="studio-panel fade-in">
+    <div class="sec-tag" style="margin-bottom:12px">Lesson Path</div>
+    <h3 id="studioCourseTitle">AI Productivity Sprint</h3>
+    <div class="studio-progress-row">
+     <div class="studio-progress"><span id="studioProgressBar"></span></div>
+     <strong id="studioProgressText" style="font-size:13px;color:var(--sky)">0%</strong>
+    </div>
+    <div id="studioLessonList" class="lesson-list" style="margin-top:18px"></div>
+   </aside>
+   <main class="studio-panel fade-in">
+    <div id="studioStage" class="studio-lesson-stage">
+     <div class="studio-kicker" id="studioLessonKicker">Micro Lesson 01</div>
+     <h3 class="studio-title" id="studioLessonTitle">Build your first learning system</h3>
+     <p class="studio-copy" id="studioLessonCopy">Choose a lesson to start a guided microlearning flow.</p>
+     <div class="studio-actions">
+      <button class="btn btn-prime" onclick="completeStudioLesson()">Mark Lesson Complete</button>
+      <button class="btn btn-ghost" onclick="saveStudioNote()">Save Studio Note</button>
+      <button class="btn btn-ghost" onclick="openAI()">Ask AI Coach</button>
+     </div>
+    </div>
+    <div class="detail-spotlight" style="margin-top:16px">
+     <div class="detail-panel">
+      <div class="sec-tag">Learning Notes</div>
+      <textarea id="studioNoteInput" class="fta" style="min-height:112px;margin-top:10px" placeholder="Write a note, doubt, prompt, or project idea from this lesson..."></textarea>
+     </div>
+     <div class="detail-panel">
+      <div class="sec-tag">Personal Recommendation</div>
+      <div id="studioRecommendation" class="detail-note">Complete one micro-lesson to unlock the next recommended action.</div>
+     </div>
+    </div>
+   </main>
+   <aside class="studio-panel fade-in">
+    <div class="sec-tag" style="margin-bottom:12px">AI Quiz</div>
+    <h3 id="studioQuizQuestion">What should this course help you build?</h3>
+    <div class="quiz-options" id="studioQuizOptions"></div>
+    <button class="btn btn-prime" style="width:100%;justify-content:center;margin-top:14px" onclick="submitStudioQuiz()">Submit Quiz</button>
+    <div class="detail-note" id="studioQuizResult">Answer one question to add quiz progress.</div>
+    <div style="height:1px;background:var(--b1);margin:20px 0"></div>
+    <div class="sec-tag" style="margin-bottom:12px">Community Pulse</div>
+    <div class="community-list" id="studioCommunityList"></div>
+    <textarea id="studioCommunityInput" class="fta" style="min-height:80px;margin-top:12px" placeholder="Ask a doubt or share a win..."></textarea>
+    <button class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:10px" onclick="addCommunityPost()">Post Update</button>
+   </aside>
+  </div>
+ </div>
+</div>
+
 <!-- ===================== DASHBOARD ===================== -->
 <div class="page" id="page-dashboard">
  <div class="dash-layout">
@@ -2960,7 +3208,8 @@ button:active, a:active, .btn:active, .course-card:active{
  </div>
  <div class="sb-lbl">Main</div>
  <div class="sb-item active"><span class="sb-ico"> </span>Dashboard</div>
- <div class="sb-item" onclick="showToast(' My Courses...')"><span class="sb-ico"> </span>My Courses</div>
+ <div class="sb-item" onclick="showPage('studio')"><span class="sb-ico"> </span>Learning Studio</div>
+ <div class="sb-item" onclick="showPage('academy')"><span class="sb-ico"> </span>My Courses</div>
  <div class="sb-item" onclick="showToast(' Certificates...')"><span class="sb-ico"> </span>Certificates</div>
  <div class="sb-item" onclick="showToast(' Wishlist...')"><span class="sb-ico"> </span>Wishlist</div>
  <div class="sb-lbl" style="margin-top:16px">Account</div>
@@ -3221,6 +3470,15 @@ const COURSES = [
 const BADGE_MAP = {hot:' Hot',new:' New',pop:' Popular'};
 const BADGE_CLS = {hot:'badge-hot',new:'badge-new',pop:'badge-pop'};
 
+function escapeHtml(value){
+ return String(value || '')
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&#39;');
+}
+
 const THUMB_THEME = {
   1: ['#38bdf8', '#8b5cf6', '#34d399'],
   2: ['#2dd4bf', '#38bdf8', '#c084fc'],
@@ -3432,8 +3690,8 @@ function renderMemoryNotes(){
  el.innerHTML = notes.slice(0, 6).map((note, index) => `
    <div class="vision-card">
      <div class="sec-tag" style="margin-bottom:10px">Note ${notes.length - index}</div>
-     <h3 style="margin-bottom:8px">${note.title || 'Learning Note'}</h3>
-     <p style="margin:0">${note.body || ''}</p>
+     <h3 style="margin-bottom:8px">${escapeHtml(note.title || 'Learning Note')}</h3>
+     <p style="margin:0">${escapeHtml(note.body || '')}</p>
    </div>
  `).join('');
 }
@@ -4273,6 +4531,8 @@ let googleClientId = '';
 let googleStatusText = '';
 let aiEnabled = false;
 const ENROLLMENTS_KEY = 'hr_enrollments';
+const STUDIO_STATE_KEY = 'hr_studio_state';
+const COMMUNITY_KEY = 'hr_community_posts';
 const ADMIN_EMAIL = 'Hzzzx06@gmail.com';
 const PAGE_META = {
  home: {
@@ -4290,6 +4550,10 @@ const PAGE_META = {
  academy: {
    title: 'Academy | HUMAIX REALM',
    description: 'Explore the Humaix Realm academy, course ladder, and flagship learning programs.'
+ },
+ studio: {
+   title: 'Learning Studio | HUMAIX REALM',
+   description: 'Practice inside the HUMAIX REALM learning studio with micro lessons, notes, quizzes, and progress tracking.'
  },
  courses: {
    title: 'Courses | HUMAIX REALM',
@@ -4346,6 +4610,7 @@ const ROUTE_TO_PAGE = {
  '/workspace': 'workspace',
  '/memory': 'memory',
  '/academy': 'academy',
+ '/studio': 'studio',
  '/courses': 'courses',
   '/about': 'about',
   '/blog': 'blog',
@@ -4366,6 +4631,7 @@ const PAGE_TO_ROUTE = {
  workspace: '/workspace',
  memory: '/memory',
  academy: '/academy',
+ studio: '/studio',
  courses: '/courses',
  about: '/about',
  blog: '/blog',
@@ -4384,6 +4650,7 @@ const PAGE_TO_NAV = {
  workspace: 'nl-workspace',
  memory: 'nl-memory',
  academy: 'nl-academy',
+ studio: 'nl-studio',
  courses: 'nl-academy',
  about: 'nl-about',
  dashboard: 'nl-workspace'
@@ -4444,6 +4711,7 @@ function renderPage(name){
  setPageMeta(name);
  if(name === 'memory') renderMemoryNotes();
  if(name === 'academy') filterAcademy();
+ if(name === 'studio') renderStudio();
  if(name === 'dashboard') renderDashboardData();
  if(name === 'detail') {
  renderDetailCourse(detailCourseId || selectedCourse?.id || COURSES[0]?.id);
@@ -4771,6 +5039,15 @@ function openDetail(id){
  });
 }
 
+function openStudioForCourse(id){
+ const course = getCourseById(id || selectedCourse?.id || COURSES[0]?.id);
+ if(course){
+  selectedCourse = course;
+  detailCourseId = course.id;
+ }
+ showPage('studio');
+}
+
 function switchTab(btn,id){
  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
  btn.classList.add('active');
@@ -4830,6 +5107,244 @@ function ensureEnrollment(courseId, progress = 5){
  updatedAt: new Date().toISOString()
  };
  writeEnrollments(enrollments);
+}
+
+function readStudioState(){
+ try{
+  const raw = localStorage.getItem(STUDIO_STATE_KEY);
+  const parsed = raw ? JSON.parse(raw) : {};
+  return parsed && typeof parsed === 'object' ? parsed : {};
+ } catch (err) {
+  return {};
+ }
+}
+
+function writeStudioState(state){
+ try{
+  localStorage.setItem(STUDIO_STATE_KEY, JSON.stringify(state || {}));
+ } catch (err) {}
+}
+
+function getStudioCourse(){
+ return getCourseById(selectedCourse?.id || detailCourseId || COURSES[0]?.id) || COURSES[0];
+}
+
+function getStudioLessons(course){
+ const detail = COURSE_DETAIL_MAP[course?.id] || COURSE_DETAIL_MAP[1];
+ const lessons = (detail.syllabus || []).map((item, index) => ({
+  title: item,
+  copy: (detail.outcomes || [])[index] || detail.summary || 'Build one practical step from this course.',
+  duration: index === 0 ? '5 min' : `${6 + index} min`
+ }));
+ return lessons.length ? lessons : [
+  { title:'Course orientation', copy:'Understand the outcome and learning path.', duration:'5 min' },
+  { title:'Practice block', copy:'Apply the concept with a guided activity.', duration:'7 min' },
+  { title:'Reflection', copy:'Save your notes and decide the next action.', duration:'5 min' }
+ ];
+}
+
+function getStudioCourseState(courseId){
+ const state = readStudioState();
+ const key = String(courseId);
+ if(!state[key]){
+  state[key] = { lesson: 0, completed: [], quizDone: false, quizAnswer: '', updatedAt: new Date().toISOString() };
+  writeStudioState(state);
+ }
+ return state[key];
+}
+
+function saveStudioCourseState(courseId, entry){
+ const state = readStudioState();
+ state[String(courseId)] = { ...entry, updatedAt: new Date().toISOString() };
+ writeStudioState(state);
+}
+
+function renderStudio(courseId){
+ const course = getCourseById(courseId || selectedCourse?.id || detailCourseId || COURSES[0]?.id) || COURSES[0];
+ selectedCourse = course;
+ detailCourseId = course.id;
+ const detail = COURSE_DETAIL_MAP[course.id] || COURSE_DETAIL_MAP[1];
+ const lessons = getStudioLessons(course);
+ const entry = getStudioCourseState(course.id);
+ const activeLesson = Math.max(0, Math.min(lessons.length - 1, Number(entry.lesson) || 0));
+ entry.lesson = activeLesson;
+ saveStudioCourseState(course.id, entry);
+ const completed = Array.isArray(entry.completed) ? entry.completed : [];
+ const progress = Math.min(100, Math.round((completed.length / lessons.length) * 100));
+
+ const courseTitle = document.getElementById('studioCourseTitle');
+ const lessonList = document.getElementById('studioLessonList');
+ const stage = document.getElementById('studioStage');
+ const kicker = document.getElementById('studioLessonKicker');
+ const title = document.getElementById('studioLessonTitle');
+ const copy = document.getElementById('studioLessonCopy');
+ const bar = document.getElementById('studioProgressBar');
+ const text = document.getElementById('studioProgressText');
+ const rec = document.getElementById('studioRecommendation');
+
+ if(courseTitle) courseTitle.textContent = course.title;
+ if(stage) stage.style.setProperty('--studio-art', courseThumbSvg(course));
+ if(kicker) kicker.textContent = `Micro Lesson ${String(activeLesson + 1).padStart(2, '0')} - ${lessons[activeLesson].duration}`;
+ if(title) title.textContent = lessons[activeLesson].title;
+ if(copy) copy.textContent = lessons[activeLesson].copy;
+ if(bar) bar.style.width = `${progress}%`;
+ if(text) text.textContent = `${progress}%`;
+ if(rec) {
+  rec.textContent = progress >= 100
+   ? 'Course preview complete. Open checkout or download your completion note from the dashboard flow.'
+   : `Next action: finish "${lessons[Math.min(activeLesson + 1, lessons.length - 1)].title}" and save one useful note.`;
+ }
+ if(lessonList){
+  lessonList.innerHTML = lessons.map((lesson, index) => `
+   <button class="lesson-btn ${index === activeLesson ? 'active' : ''} ${completed.includes(index) ? 'done' : ''}" type="button" onclick="setStudioLesson(${index})">
+    <strong>${String(index + 1).padStart(2, '0')} ${lesson.title}</strong>
+    <span>${lesson.duration} ${completed.includes(index) ? 'completed' : 'micro lesson'}</span>
+   </button>
+  `).join('');
+ }
+ renderStudioQuiz(course, detail);
+ renderCommunity();
+ ensureEnrollment(course.id, Math.max(progress, readEnrollments()[String(course.id)]?.progress || 0));
+ renderDashboardData();
+}
+
+function setStudioLesson(index){
+ const course = getStudioCourse();
+ const entry = getStudioCourseState(course.id);
+ entry.lesson = Number(index) || 0;
+ saveStudioCourseState(course.id, entry);
+ renderStudio(course.id);
+}
+
+function completeStudioLesson(){
+ const course = getStudioCourse();
+ const lessons = getStudioLessons(course);
+ const entry = getStudioCourseState(course.id);
+ const current = Math.max(0, Math.min(lessons.length - 1, Number(entry.lesson) || 0));
+ const completed = new Set(Array.isArray(entry.completed) ? entry.completed : []);
+ completed.add(current);
+ entry.completed = Array.from(completed).sort((a,b)=>a-b);
+ entry.lesson = Math.min(lessons.length - 1, current + 1);
+ saveStudioCourseState(course.id, entry);
+ showToast('Lesson progress saved.');
+ renderStudio(course.id);
+}
+
+function saveStudioNote(){
+ const input = document.getElementById('studioNoteInput');
+ const value = String(input?.value || '').trim();
+ if(!value){
+  showToast('Write a studio note first.', 'warn');
+  return;
+ }
+ const course = getStudioCourse();
+ const notes = getMemoryNotes();
+ notes.unshift({
+  title: `${course.title} Studio Note`,
+  body: value
+ });
+ setMemoryNotes(notes);
+ if(input) input.value = '';
+ renderMemoryNotes();
+ showToast('Studio note saved into Memory.');
+}
+
+function renderStudioQuiz(course, detail){
+ const question = document.getElementById('studioQuizQuestion');
+ const options = document.getElementById('studioQuizOptions');
+ const result = document.getElementById('studioQuizResult');
+ const entry = getStudioCourseState(course.id);
+ const correct = (detail.outcomes || [])[0] || 'Build a practical result';
+ const opts = [
+  correct,
+  'Only watch long videos without practice',
+  'Skip notes and avoid feedback'
+ ];
+ if(question) question.textContent = `What is the best first outcome for ${course.title}?`;
+ if(options){
+  options.innerHTML = opts.map((opt, index) => `
+   <button class="quiz-option ${entry.quizAnswer === opt ? 'selected' : ''}" type="button" onclick="selectStudioQuiz('${encodeURIComponent(opt)}')">${opt}</button>
+  `).join('');
+ }
+ if(result){
+  result.textContent = entry.quizDone
+   ? 'Quiz complete. Your learner analytics now include this practice signal.'
+   : 'Choose the strongest learning outcome and submit your answer.';
+ }
+}
+
+function selectStudioQuiz(encoded){
+ const course = getStudioCourse();
+ const entry = getStudioCourseState(course.id);
+ entry.quizAnswer = decodeURIComponent(encoded || '');
+ saveStudioCourseState(course.id, entry);
+ renderStudio(course.id);
+}
+
+function submitStudioQuiz(){
+ const course = getStudioCourse();
+ const entry = getStudioCourseState(course.id);
+ if(!entry.quizAnswer){
+  showToast('Choose one quiz option first.', 'warn');
+  return;
+ }
+ entry.quizDone = true;
+ saveStudioCourseState(course.id, entry);
+ const enrollments = readEnrollments();
+ const current = enrollments[String(course.id)]?.progress || 0;
+ ensureEnrollment(course.id, Math.max(current, 25));
+ showToast('Quiz signal saved.');
+ renderStudio(course.id);
+}
+
+function readCommunity(){
+ try{
+  const raw = localStorage.getItem(COMMUNITY_KEY);
+  const parsed = raw ? JSON.parse(raw) : [];
+  return Array.isArray(parsed) ? parsed : [];
+ } catch (err) {
+  return [];
+ }
+}
+
+function writeCommunity(posts){
+ try{
+  localStorage.setItem(COMMUNITY_KEY, JSON.stringify((posts || []).slice(0, 8)));
+ } catch (err) {}
+}
+
+function renderCommunity(){
+ const el = document.getElementById('studioCommunityList');
+ if(!el) return;
+ const posts = readCommunity();
+ const seed = posts.length ? posts : [
+  { name:'Harish', body:'Share one doubt or win from today. Short updates build momentum.' },
+  { name:'Learner', body:'I completed one micro lesson and saved my prompt into Memory.' }
+ ];
+ el.innerHTML = seed.slice(0, 5).map((post) => `
+  <div class="community-post">
+   <strong>${escapeHtml(post.name || 'Learner')}</strong>
+   <span>${escapeHtml(post.body || '')}</span>
+  </div>
+ `).join('');
+}
+
+function addCommunityPost(){
+ const input = document.getElementById('studioCommunityInput');
+ const body = String(input?.value || '').trim();
+ if(!body){
+  showToast('Write a community update first.', 'warn');
+  return;
+ }
+ const posts = readCommunity();
+ posts.unshift({
+  name: currentUser?.firstName || currentUser?.displayName || 'Learner',
+  body
+ });
+ writeCommunity(posts);
+ if(input) input.value = '';
+ renderCommunity();
+ showToast('Community update added.');
 }
 
 function resumeCourse(courseId){
