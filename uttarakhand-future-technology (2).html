@@ -15,6 +15,7 @@
 <link rel="apple-touch-icon" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="/assets/ai-tech-hero.png">
 <link rel="preload" as="image" href="/assets/humaix-og.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <meta property="og:type" content="website">
@@ -152,6 +153,87 @@ a{text-decoration:none;color:inherit}
  z-index:1;
 }
 
+.site-loader{
+ position:fixed;
+ inset:0;
+ z-index:9999;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:
+  radial-gradient(circle at 50% 20%, rgba(56,189,248,0.16), transparent 28%),
+  radial-gradient(circle at 18% 82%, rgba(112,0,255,0.10), transparent 30%),
+  linear-gradient(180deg, rgba(3,0,20,0.98), rgba(5,5,5,0.98));
+ backdrop-filter:blur(18px);
+ transition:opacity 0.45s ease, visibility 0.45s ease;
+}
+.site-loader.hidden{
+ opacity:0;
+ visibility:hidden;
+ pointer-events:none;
+}
+.loader-card{
+ width:min(420px, calc(100% - 32px));
+ padding:26px 24px;
+ border-radius:22px;
+ text-align:center;
+ background:rgba(255,255,255,0.06);
+ border:1px solid rgba(255,255,255,0.12);
+ box-shadow:0 28px 90px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.loader-ring{
+ width:72px;
+ height:72px;
+ margin:0 auto 14px;
+ border-radius:50%;
+ background:conic-gradient(from 0deg, #00e5ff, #7000ff, #ff007f, #00e5ff);
+ animation:spin 1.15s linear infinite;
+ position:relative;
+}
+.loader-ring::after{
+ content:'';
+ position:absolute;
+ inset:9px;
+ border-radius:50%;
+ background:linear-gradient(180deg, #030014, #0f172a);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.loader-title{
+ font-family:'Space Grotesk','Outfit',sans-serif;
+ font-size:18px;
+ font-weight:800;
+ letter-spacing:0.16em;
+ text-transform:uppercase;
+ margin-bottom:8px;
+}
+.loader-sub{
+ color:var(--ink2);
+ font-size:13px;
+ line-height:1.7;
+ margin-bottom:14px;
+}
+.loader-bar{
+ height:8px;
+ background:rgba(255,255,255,0.08);
+ border-radius:999px;
+ overflow:hidden;
+ border:1px solid rgba(255,255,255,0.1);
+}
+.loader-bar span{
+ display:block;
+ height:100%;
+ width:62%;
+ border-radius:inherit;
+ background:linear-gradient(90deg, #00e5ff, #7000ff, #ff007f);
+ animation:loaderWave 1.9s ease-in-out infinite;
+}
+@keyframes loaderWave{
+ 0%{transform:translateX(-38%); width:42%}
+ 50%{transform:translateX(42%); width:78%}
+ 100%{transform:translateX(132%); width:42%}
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
 /* ===================== CUSTOM CURSOR ===================== */
 #cursor{
  position:fixed;width:12px;height:12px;border-radius:50%;
@@ -219,6 +301,18 @@ textarea:focus-visible{
  url('/assets/hero-ai-lab.png') center right/cover no-repeat;
  opacity:0.52;
  transform:scale(1.015);
+ pointer-events:none;
+}
+.hero-visual-poster{
+ position:absolute;
+ inset:0;
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ object-position:center;
+ opacity:0.5;
+ filter:saturate(110%) contrast(108%);
+ transform:scale(1.02);
  pointer-events:none;
 }
 
@@ -610,6 +704,65 @@ nav.scrolled{
  display:grid;
  grid-template-columns:minmax(0,1fr) auto;
  gap:10px;
+}
+.search-strip{
+ display:grid;
+ grid-template-columns:minmax(0,1.2fr) repeat(3,minmax(160px,auto));
+ gap:12px;
+ margin:30px 0 24px;
+ align-items:center;
+}
+.search-input{
+ min-width:0;
+ height:48px;
+ border-radius:14px;
+ border:1px solid rgba(148,163,184,0.18);
+ background:rgba(5,10,18,0.64);
+ color:var(--ink);
+ padding:0 14px;
+ font-size:14px;
+ outline:none;
+}
+.search-input::placeholder{color:var(--ink3)}
+.search-input:focus{border-color:rgba(56,189,248,0.42); box-shadow:0 0 0 6px rgba(56,189,248,0.08)}
+.detail-spotlight{
+ display:grid;
+ grid-template-columns:minmax(0,1.15fr) minmax(0,0.85fr);
+ gap:14px;
+ margin-top:22px;
+}
+.detail-panel{
+ padding:20px;
+ border-radius:20px;
+ background:rgba(255,255,255,0.05);
+ border:1px solid rgba(255,255,255,0.09);
+ backdrop-filter:blur(20px);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,0.10);
+}
+.detail-list{
+ display:grid;
+ gap:10px;
+}
+.detail-list .detail-row{
+ padding:12px 14px;
+ border-radius:14px;
+ background:rgba(8,15,27,0.7);
+ border:1px solid rgba(148,163,184,0.14);
+ color:var(--ink2);
+ font-size:13px;
+ line-height:1.7;
+}
+.detail-list .detail-row strong{
+ display:block;
+ color:#fff;
+ margin-bottom:4px;
+ font-size:13px;
+}
+.detail-note{
+ color:var(--ink3);
+ font-size:13px;
+ line-height:1.8;
+ margin-top:10px;
 }
 .waitlist-input{
  height:48px;
@@ -2077,6 +2230,17 @@ button:active, a:active, .btn:active, .course-card:active{
  .trust-shell,.status-shell{flex-direction:column;align-items:flex-start}
  .security-badges{justify-content:flex-start}
  .course-actions{justify-content:center}
+ .search-strip{grid-template-columns:1fr; margin-top:18px}
+ .detail-spotlight{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){
+ *, *::before, *::after{
+  animation-duration:0.01ms !important;
+  animation-iteration-count:1 !important;
+  transition-duration:0.01ms !important;
+  scroll-behavior:auto !important;
+ }
+ body::after{animation:none}
 }
 </style>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -2085,6 +2249,14 @@ button:active, a:active, .btn:active, .course-card:active{
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
 </head>
 <body>
+<div class="site-loader" id="siteLoader" aria-live="polite" aria-busy="true">
+ <div class="loader-card glass-panel">
+  <div class="loader-ring" aria-hidden="true"></div>
+  <div class="loader-title">Humaix Realm</div>
+  <div class="loader-sub">Preparing the academy-first experience, course shelf, and spatial AI motion layer.</div>
+  <div class="loader-bar" aria-hidden="true"><span></span></div>
+ </div>
+</div>
 <div class="grain-layer" aria-hidden="true"></div>
 <div class="scroll-progress" aria-hidden="true"><span id="scrollProg"></span></div>
 
@@ -2158,8 +2330,9 @@ button:active, a:active, .btn:active, .course-card:active{
  <div class="signal-card"><span>03</span><strong>Memory</strong><em>Notes, prompts, and context preserved across sessions.</em></div>
  </div>
  </div>
- <div class="hero-side">
+<div class="hero-side">
  <div class="hero-visual glass-panel">
+ <img class="hero-visual-poster" src="/assets/ai-tech-hero.png" alt="" aria-hidden="true">
  <canvas id="heroScene" aria-hidden="true"></canvas>
  <div class="hero-visual-copy">
  <div class="status-chip"><span class="dot"></span> All Systems Operational</div>
@@ -2397,13 +2570,8 @@ button:active, a:active, .btn:active, .course-card:active{
  <h2 class="sec-title">Courses designed to convert, retain, and deliver outcomes</h2>
  <p class="sec-sub">A cleaner offer ladder: free starter kit, low-ticket starter wins, flagship tracks, and a premium cohort path.</p>
  </div>
- <div class="vision-grid fade-in">
- <div class="vision-card"><div class="vision-icon"> </div><h3>Free Starter Kit</h3><p>Lead magnet and onboarding path for visitors who are not ready to buy yet.</p></div>
- <div class="vision-card"><div class="vision-icon"> </div><h3>Starter Course</h3><p>Low-friction entry offer that helps people get a first result quickly.</p></div>
- <div class="vision-card"><div class="vision-icon"> </div><h3>Flagship Program</h3><p>The main revenue driver with practical curriculum, secure checkout, and proof of value.</p></div>
- <div class="vision-card"><div class="vision-icon"> </div><h3>Mentored Cohort</h3><p>High-touch support for learners who want guidance, accountability, and better outcomes.</p></div>
- </div>
- <div style="display:flex;gap:12px;flex-wrap:wrap;margin:30px 0 24px" class="fade-in">
+ <div class="search-strip fade-in">
+ <input id="ac-search" class="search-input" type="search" oninput="filterAcademy()" placeholder="Search courses, outcomes, or language">
  <select class="fi" style="width:auto" onchange="filterAcademy()" id="ac-cat">
  <option value="all">All Categories</option>
  <option value="Technology">Technology</option>
@@ -2424,6 +2592,12 @@ button:active, a:active, .btn:active, .course-card:active{
  <option value="mid">200 400</option>
  <option value="high">400+</option>
  </select>
+ </div>
+ <div class="vision-grid fade-in">
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Free Starter Kit</h3><p>Lead magnet and onboarding path for visitors who are not ready to buy yet.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Starter Course</h3><p>Low-friction entry offer that helps people get a first result quickly.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Flagship Program</h3><p>The main revenue driver with practical curriculum, secure checkout, and proof of value.</p></div>
+ <div class="vision-card"><div class="vision-icon"> </div><h3>Mentored Cohort</h3><p>High-touch support for learners who want guidance, accountability, and better outcomes.</p></div>
  </div>
  <div class="courses-grid fade-in" id="academyGrid"></div>
  <div style="margin-top:28px" class="status-shell glass-panel fade-in">
@@ -2447,7 +2621,8 @@ button:active, a:active, .btn:active, .course-card:active{
  <div class="sec-tag">All Courses</div>
  <h2 class="sec-title">Explore All Courses</h2>
  </div>
- <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px" class="fade-in">
+ <div class="search-strip fade-in" style="margin-bottom:36px">
+ <input id="cf-search" class="search-input" type="search" oninput="filterC()" placeholder="Search all courses, skills, or categories">
  <select class="fi" style="width:auto" onchange="filterC()" id="cf-cat">
  <option value="all">All Categories</option>
  <option value="Technology">Technology</option>
@@ -2527,6 +2702,32 @@ button:active, a:active, .btn:active, .course-card:active{
  <button type="submit" class="btn btn-prime">Submit Feedback</button>
  </form>
  </div>
+ </div>
+ <div class="detail-spotlight fade-in">
+  <div class="detail-panel">
+   <div class="sec-tag">Course Snapshot</div>
+   <h3 id="courseSummaryTitle" style="font-size:22px;margin:10px 0 8px">Premium learning, tightly scoped</h3>
+   <p id="courseSummary" class="detail-note" style="margin-top:0">The selected course will show its outcome, format, and why it matters before checkout.</p>
+   <div class="detail-list" id="courseFacts" style="margin-top:16px"></div>
+  </div>
+  <div class="detail-panel">
+   <div class="sec-tag">Learner Outcomes</div>
+   <div class="detail-list" id="courseOutcomes" style="margin-top:12px"></div>
+  </div>
+ </div>
+ <div class="detail-spotlight fade-in" style="margin-top:14px">
+  <div class="detail-panel">
+   <div class="sec-tag">Syllabus Snapshot</div>
+   <div class="detail-list" id="courseSyllabus" style="margin-top:12px"></div>
+  </div>
+  <div class="detail-panel">
+   <div class="sec-tag">Preview Lessons</div>
+   <div class="detail-list" id="coursePreview" style="margin-top:12px"></div>
+  </div>
+ </div>
+ <div class="detail-panel fade-in" style="margin-top:14px">
+  <div class="sec-tag">Support & Trust</div>
+  <div class="detail-list" id="courseSupport" style="margin-top:12px"></div>
  </div>
  <!-- BUY CARD -->
  <div>
@@ -2982,6 +3183,81 @@ const THUMB_THEME = {
   6: ['#38bdf8', '#7dd3fc', '#ff7ab8']
 };
 
+const COURSE_DETAIL_MAP = {
+  1: {
+    summary: 'A quick-start system for learners who want better focus, faster execution, and a cleaner daily workflow.',
+    facts: [
+      { title: 'Format', body: 'Microlearning, hands-on templates, and immediate workflow upgrades.' },
+      { title: 'Best for', body: 'Students, creators, and freelancers who need an organised routine.' },
+      { title: 'Outcome', body: 'Build a practical system that saves time and improves consistency.' }
+    ],
+    outcomes: ['Set up a personal AI productivity workflow', 'Learn note capture and task batching', 'Use prompts for research and planning', 'Turn daily chaos into a repeatable system'],
+    syllabus: ['System setup and mindset reset', 'Templates for focus, tasks, and study', 'Prompt routines for weekly planning', 'Mini project: your own productivity stack'],
+    preview: ['Preview 01 - Workflow map', 'Preview 02 - Prompt vault', 'Preview 03 - Focus sprint'],
+    support: ['Certificate on completion', 'Mobile and tablet friendly access', 'Razorpay secure checkout available']
+  },
+  2: {
+    summary: 'A practical analytics course that makes AI-assisted data work feel approachable, visual, and portfolio-ready.',
+    facts: [
+      { title: 'Format', body: 'Real examples, notebook-style thinking, and project outputs.' },
+      { title: 'Best for', body: 'Beginners who want a strong entry into data and AI work.' },
+      { title: 'Outcome', body: 'Build one portfolio project and understand the data pipeline clearly.' }
+    ],
+    outcomes: ['Read and clean datasets confidently', 'Explain key data patterns with charts', 'Use AI for analysis support', 'Create a beginner portfolio project'],
+    syllabus: ['Intro to data thinking', 'Cleaning and charting', 'AI-assisted insights', 'Portfolio project build'],
+    preview: ['Preview 01 - Dataset walkthrough', 'Preview 02 - Chart stack', 'Preview 03 - AI summary prompts'],
+    support: ['Hindi + English delivery', 'Downloadable practice files', 'Progress tracked in dashboard']
+  },
+  3: {
+    summary: 'A beginner-friendly security track designed to make the web feel less mysterious and more controlled.',
+    facts: [
+      { title: 'Format', body: 'Plain-language lessons with practical security examples.' },
+      { title: 'Best for', body: 'Learners exploring cyber security and safe web habits.' },
+      { title: 'Outcome', body: 'Understand common threats and how secure systems defend against them.' }
+    ],
+    outcomes: ['Recognise basic web threats', 'Learn safe browsing and account habits', 'Understand secure checkout signals', 'Build security awareness for the real web'],
+    syllabus: ['Threat basics', 'Authentication and safety', 'Secure browsing habits', 'Mini audit project'],
+    preview: ['Preview 01 - Threat map', 'Preview 02 - Password safety', 'Preview 03 - Secure checkout cues'],
+    support: ['Security-focused curriculum', 'System status and policy pages', 'Founder-led support']
+  },
+  4: {
+    summary: 'A compact growth course for creators and solo builders who want simple reach strategies that still feel premium.',
+    facts: [
+      { title: 'Format', body: 'Short lessons, action checklists, and growth experiments.' },
+      { title: 'Best for', body: 'Creators, freelancers, and small business owners.' },
+      { title: 'Outcome', body: 'Create a repeatable content and conversion system.' }
+    ],
+    outcomes: ['Map your audience and message', 'Plan weekly content with less stress', 'Use AI for idea generation', 'Turn attention into consistent leads'],
+    syllabus: ['Positioning basics', 'Content loops', 'AI idea engine', 'Lead capture flow'],
+    preview: ['Preview 01 - Audience map', 'Preview 02 - Content rhythm', 'Preview 03 - Conversion hook'],
+    support: ['Email lead capture', 'Prompt-ready resources', 'Future community support']
+  },
+  5: {
+    summary: 'A clean Python starting point for learners who want to write code, not just watch code.',
+    facts: [
+      { title: 'Format', body: 'Simple syntax, guided exercises, and logic practice.' },
+      { title: 'Best for', body: 'Absolute beginners and students building a coding base.' },
+      { title: 'Outcome', body: 'Write your first real scripts with confidence.' }
+    ],
+    outcomes: ['Understand variables and logic', 'Write small scripts independently', 'Build a coding habit', 'Prepare for data or automation paths'],
+    syllabus: ['Setup and fundamentals', 'Control flow and functions', 'Data structures', 'Mini project'],
+    preview: ['Preview 01 - First script', 'Preview 02 - Functions', 'Preview 03 - Mini project'],
+    support: ['Beginner-friendly pacing', 'Downloadable code samples', 'Certificate access']
+  },
+  6: {
+    summary: 'A practical communication course for learners who want to speak clearly for study, work, and interviews.',
+    facts: [
+      { title: 'Format', body: 'Short lessons, speaking drills, and confidence building.' },
+      { title: 'Best for', body: 'Learners who want stronger spoken English in daily life.' },
+      { title: 'Outcome', body: 'Build clear communication habits for real situations.' }
+    ],
+    outcomes: ['Speak with more clarity and rhythm', 'Handle interviews and calls better', 'Practice everyday vocabulary', 'Build confidence through repetition'],
+    syllabus: ['Pronunciation basics', 'Conversation practice', 'Interview-ready language', 'Confidence project'],
+    preview: ['Preview 01 - Speaking drill', 'Preview 02 - Call practice', 'Preview 03 - Interview phrases'],
+    support: ['Hindi + English support', 'Mobile-friendly access', 'WhatsApp support group']
+  }
+};
+
 function courseThumbSvg(course){
  const [a, b, c] = THUMB_THEME[course.id] || ['#38bdf8', '#8b5cf6', '#00e5ff'];
  const tilt = 12 + (course.id * 7);
@@ -3073,12 +3349,14 @@ function filterAcademy(){
  const cat=document.getElementById('ac-cat')?.value || 'all';
  const lvl=document.getElementById('ac-lvl')?.value || 'all';
  const pr=document.getElementById('ac-price')?.value || 'all';
+ const query=String(document.getElementById('ac-search')?.value || '').trim().toLowerCase();
  let list=[...COURSES];
  if(cat!=='all') list=list.filter(c=>c.cat===cat);
  if(lvl!=='all') list=list.filter(c=>c.level===lvl);
  if(pr==='low') list=list.filter(c=>c.price<200);
  if(pr==='mid') list=list.filter(c=>c.price>=200&&c.price<=400);
  if(pr==='high') list=list.filter(c=>c.price>400);
+ if(query) list=list.filter(c=>[c.title,c.titleHi,c.cat,c.level,c.lang].join(' ').toLowerCase().includes(query));
  renderGrid('academyGrid', list);
 }
 
@@ -4372,6 +4650,7 @@ function renderDetailCourse(id){
  if(!c) return;
  selectedCourse = c;
  detailCourseId = c.id;
+ const detail = COURSE_DETAIL_MAP[c.id] || COURSE_DETAIL_MAP[1];
  const title = document.getElementById('dtitle');
  if(title) title.textContent = c.title;
  const dtitleHi=document.getElementById('dtitleHi');
@@ -4396,6 +4675,44 @@ function renderDetailCourse(id){
  if(iframe) iframe.src = `https://www.youtube.com/embed/${videoId}`;
  const detailMeta = document.querySelector('.detail-meta');
  if(detailMeta) detailMeta.setAttribute('data-course-id', String(c.id));
+ const summaryTitle = document.getElementById('courseSummaryTitle');
+ const summary = document.getElementById('courseSummary');
+ const facts = document.getElementById('courseFacts');
+ const outcomes = document.getElementById('courseOutcomes');
+ const syllabus = document.getElementById('courseSyllabus');
+ const preview = document.getElementById('coursePreview');
+ const support = document.getElementById('courseSupport');
+
+ if(summaryTitle) summaryTitle.textContent = c.title;
+ if(summary) summary.textContent = detail.summary;
+ if(facts) {
+   facts.innerHTML = (detail.facts || []).map((item) => `
+     <div class="detail-row">
+      <strong>${item.title}</strong>
+      ${item.body}
+     </div>
+   `).join('');
+ }
+ if(outcomes) {
+   outcomes.innerHTML = (detail.outcomes || []).map((item) => `
+     <div class="detail-row">${item}</div>
+   `).join('');
+ }
+ if(syllabus) {
+   syllabus.innerHTML = (detail.syllabus || []).map((item, index) => `
+     <div class="detail-row"><strong>Module ${String(index + 1).padStart(2, '0')}</strong>${item}</div>
+   `).join('');
+ }
+ if(preview) {
+   preview.innerHTML = (detail.preview || []).map((item) => `
+     <div class="detail-row">${item}</div>
+   `).join('');
+ }
+ if(support) {
+   support.innerHTML = (detail.support || []).map((item) => `
+     <div class="detail-row">${item}</div>
+   `).join('');
+ }
 }
 
 function openDetail(id){
@@ -4421,12 +4738,14 @@ function filterC(){
  const cat=document.getElementById('cf-cat').value;
  const lvl=document.getElementById('cf-lvl').value;
  const pr=document.getElementById('cf-price').value;
+ const query=String(document.getElementById('cf-search')?.value || '').trim().toLowerCase();
  let list=[...COURSES];
  if(cat!=='all') list=list.filter(c=>c.cat===cat);
  if(lvl!=='all') list=list.filter(c=>c.level===lvl);
  if(pr==='low') list=list.filter(c=>c.price<200);
  if(pr==='mid') list=list.filter(c=>c.price>=200&&c.price<=400);
  if(pr==='high') list=list.filter(c=>c.price>400);
+ if(query) list=list.filter(c=>[c.title,c.titleHi,c.cat,c.level,c.lang].join(' ').toLowerCase().includes(query));
  renderGrid('allCoursesGrid',list);
 }
 
@@ -5051,6 +5370,18 @@ function syncNavState(){
 }
 window.addEventListener('scroll', syncNavState, { passive: true });
 syncNavState();
+
+// ===================== LOADING SHELL =====================
+function hideSiteLoader(){
+ const loader = document.getElementById('siteLoader');
+ if(!loader) return;
+ loader.classList.add('hidden');
+ setTimeout(() => {
+   if(loader && loader.parentNode) loader.remove();
+ }, 650);
+}
+window.addEventListener('load', hideSiteLoader);
+setTimeout(hideSiteLoader, 3800);
 
 // ===================== CUSTOM CURSOR =====================
 const cur=document.getElementById('cursor');
