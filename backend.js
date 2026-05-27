@@ -320,7 +320,9 @@ app.get('/api/config', (req, res) => {
       ? (hasGoogleOAuth
           ? 'Google sign-in is ready.'
           : 'Google client ID is present. Add GOOGLE_CLIENT_SECRET only if you want redirect OAuth; the direct Google button can still work.')
-      : 'Google login is not configured on this deployment. Add a valid GOOGLE_CLIENT_ID to enable it.',
+      : (googleClientIdRaw
+          ? 'Google client ID is present but invalid. Use a Web OAuth client ID ending in .apps.googleusercontent.com.'
+          : 'Google login is not configured on this deployment. Add a valid GOOGLE_CLIENT_ID to enable it.'),
     aiEnabled: Boolean(aiKey || anthropicKey),
     aiProvider: aiKey || anthropicKey ? aiProvider : 'local'
   });
@@ -340,6 +342,8 @@ app.get('/sitemap.xml', (req, res) => {
     '/workspace',
     '/memory',
     '/academy',
+    '/studio',
+    '/community',
     '/courses',
     '/about',
     '/blog',
@@ -666,17 +670,23 @@ app.post('/api/ai', rateLimiters.ai, async (req, res) => {
 });
 
 const courseCatalog = [
-  { title: 'Mobile Video Editing', hindi: 'à¤®à¥‹à¤¬à¤¾à¤‡à¤² à¤µà¥€à¤¡à¤¿à¤¯à¥‹ à¤à¤¡à¤¿à¤Ÿà¤¿à¤‚à¤—', price: 199, original: 999, hours: '3.5', category: 'Technology', bestFor: 'short-form video, reels, creator skills' },
-  { title: 'Instagram Growth Basics', hindi: 'à¤‡à¤‚à¤¸à¥à¤Ÿà¤¾à¤—à¥à¤°à¤¾à¤® à¤—à¥à¤°à¥‹à¤¥ à¤¬à¥‡à¤¸à¤¿à¤•à¥à¤¸', price: 149, original: 799, hours: '4', category: 'Digital Marketing', bestFor: 'organic growth, content strategy, creator business' },
-  { title: 'Basic English Speaking', hindi: 'à¤¬à¥‡à¤¸à¤¿à¤• à¤‡à¤‚à¤—à¥à¤²à¤¿à¤¶ à¤¸à¥à¤ªà¥€à¤•à¤¿à¤‚à¤—', price: 129, original: 599, hours: '5', category: 'Languages', bestFor: 'confidence, interviews, daily speaking' },
-  { title: 'Cyber Security Intro', hindi: 'à¤¸à¤¾à¤‡à¤¬à¤° à¤¸à¤¿à¤•à¥à¤¯à¥‹à¤°à¤¿à¤Ÿà¥€ à¤¶à¥à¤°à¥à¤†à¤¤', price: 499, original: 2499, hours: '6', category: 'Cyber Security', bestFor: 'security basics, online safety, ethical hacking foundation' },
-  { title: 'Data Science Beginner', hindi: 'à¤¡à¥‡à¤Ÿà¤¾ à¤¸à¤¾à¤‡à¤‚à¤¸ à¤¬à¤¿à¤—à¤¿à¤¨à¤°', price: 349, original: 1499, hours: '6.5', category: 'Data Science', bestFor: 'Python, Pandas, visualization, first ML model' },
-  { title: 'Python for Beginners', hindi: 'à¤ªà¤¾à¤¯à¤¥à¤¨ à¤«à¥‰à¤° à¤¬à¤¿à¤—à¤¿à¤¨à¤°à¥à¤¸', price: 249, original: 999, hours: '5.5', category: 'Programming', bestFor: 'coding basics, logic, first projects' }
+  { title: 'AI Productivity Sprint', price: 299, original: 1499, hours: '3.5', category: 'Technology', bestFor: 'focus, workflow, prompt routines, student productivity' },
+  { title: 'Data Science with AI', price: 399, original: 1999, hours: '5', category: 'Data Science', bestFor: 'analytics, charts, portfolio project, AI-assisted insights' },
+  { title: 'Cyber Security Foundations', price: 499, original: 2499, hours: '6', category: 'Cyber Security', bestFor: 'online safety, secure habits, beginner security awareness' },
+  { title: 'Creator Growth System', price: 249, original: 1299, hours: '4', category: 'Digital Marketing', bestFor: 'content planning, audience growth, creator income systems' },
+  { title: 'Python Foundations', price: 249, original: 999, hours: '5.5', category: 'Programming', bestFor: 'coding basics, logic, first scripts, automation' },
+  { title: 'English for Builders', price: 129, original: 699, hours: '4.5', category: 'Languages', bestFor: 'speaking confidence, interviews, clients, community' },
+  { title: 'Generative AI Builder Track', price: 799, original: 3499, hours: '8', category: 'Generative AI', bestFor: 'prompt systems, AI workflows, mini-products, automation' },
+  { title: 'Full-Stack Web Development', price: 999, original: 4499, hours: '10', category: 'Full-Stack', bestFor: 'frontend, backend, databases, auth, deployment' },
+  { title: 'Blockchain and Web3 Foundations', price: 699, original: 2999, hours: '7', category: 'Web3', bestFor: 'wallet safety, tokens, smart contracts, web3 basics' },
+  { title: 'Ethical Hacking Practice Lab', price: 899, original: 3999, hours: '9', category: 'Cyber Security', bestFor: 'defensive labs, responsible disclosure, audit notes' },
+  { title: 'Product Management for Builders', price: 599, original: 2499, hours: '6', category: 'Product', bestFor: 'MVP planning, product specs, validation, launch feedback' },
+  { title: 'Entrepreneurship Launch Lab', price: 799, original: 3499, hours: '8', category: 'Entrepreneurship', bestFor: 'offer design, funnels, lead capture, first revenue roadmap' }
 ];
 
 function buildCourseList() {
   return courseCatalog
-    .map((course) => `${course.title} (${course.hindi}) - INR ${course.price}, ${course.hours} hrs, ${course.category}, Hindi + English`)
+    .map((course) => `${course.title} - INR ${course.price}, ${course.hours} hrs, ${course.category}, Hindi + English`)
     .join('\n');
 }
 
@@ -693,7 +703,7 @@ function buildSiteSummary() {
 
 function findCourseByText(text) {
   return courseCatalog.find((course) => {
-    const haystack = `${course.title} ${course.hindi} ${course.category} ${course.bestFor}`.toLowerCase();
+    const haystack = `${course.title} ${course.category} ${course.bestFor}`.toLowerCase();
     return haystack.split(/[\s,]+/).some((word) => word.length > 3 && text.includes(word));
   });
 }
@@ -714,11 +724,11 @@ function buildLocalAiReply(question) {
   }
 
   if (/(all|list|courses|course|fees|price|pricing)/.test(text) && !course) {
-    return prefix + "HUMAIX REALM courses are available in Hindi + English:\n" + buildCourseList() + "\n\nBest beginner path: Python for Beginners -> Data Science Beginner -> Cyber Security Intro.";
+    return prefix + "HUMAIX REALM courses are available in Hindi + English:\n" + buildCourseList() + "\n\nBest beginner path: AI Productivity Sprint -> Python Foundations -> Data Science with AI. For security, choose Cyber Security Foundations first.";
   }
 
   if (course) {
-    return prefix + course.title + " (" + course.hindi + ") is a " + course.hours + "-hour " + course.category + " course in Hindi + English. Fee: INR " + course.price + " (original INR " + course.original + "). It is best for " + course.bestFor + ". Open the course card, watch the demo, then tap Pay Securely for Razorpay checkout.";
+    return prefix + course.title + " is a " + course.hours + "-hour " + course.category + " course in Hindi + English. Fee: INR " + course.price + " (original INR " + course.original + "). It is best for " + course.bestFor + ". Open the course card, preview the Studio, then tap Pay Securely for Razorpay checkout.";
   }
 
   if (/(payment|pay|upi|razorpay|checkout)/.test(text)) {
@@ -738,10 +748,10 @@ function buildLocalAiReply(question) {
   }
 
   if (/(career|job|earn|earning|income)/.test(text)) {
-    return 'For earning-focused learning, start with Python for Beginners, then Data Science Beginner for analytics/AI skills, or Mobile Video Editing plus Instagram Growth if you want creator/freelance work faster.';
+    return 'For earning-focused learning, start with AI Productivity Sprint, then choose Data Science with AI, Full-Stack Web Development, Creator Growth System, or Entrepreneurship Launch Lab depending on your goal.';
   }
 
-  return prefix + "Here is the practical HUMAIX REALM answer: tell me your current level and goal. For coding/AI, start with Python for Beginners. For analytics, choose Data Science Beginner. For security, choose Cyber Security Intro. For creator income, choose Mobile Video Editing plus Instagram Growth. All courses are Hindi + English and include certificate access.";
+  return prefix + "Here is the practical HUMAIX REALM answer: tell me your current level and goal. For a fast first result, start with AI Productivity Sprint. For coding, choose Python Foundations or Full-Stack Web Development. For analytics, choose Data Science with AI. For security, choose Cyber Security Foundations. All courses are Hindi + English and include certificate access.";
 }
 app.post('/api/contact', rateLimiters.contact, (req, res) => {
   const { firstName, lastName, email, subject, message } = req.body;

@@ -1638,6 +1638,156 @@ section{scroll-margin-top:90px}
  line-height:1.55;
 }
 
+/* ===================== COMMUNITY HUB + ACCESSIBILITY ===================== */
+.community-wrap{
+ max-width:1240px;
+ margin:0 auto;
+ padding:100px 48px 80px;
+}
+.community-hero{
+ display:grid;
+ grid-template-columns:minmax(0,1.05fr) minmax(300px,0.95fr);
+ gap:20px;
+ align-items:stretch;
+ margin-bottom:22px;
+}
+.community-command{
+ min-height:300px;
+ display:flex;
+ flex-direction:column;
+ justify-content:space-between;
+ background:
+  radial-gradient(circle at 20% 10%, rgba(56,189,248,0.16), transparent 26%),
+  radial-gradient(circle at 80% 20%, rgba(255,0,127,0.12), transparent 28%),
+  rgba(15,23,42,0.42);
+ border:1px solid rgba(148,163,184,0.18);
+ border-radius:var(--r);
+ padding:26px;
+ backdrop-filter:blur(20px);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,0.10);
+}
+.community-command h3{
+ font-size:clamp(24px,2.5vw,36px);
+ line-height:1.05;
+ margin:10px 0 12px;
+}
+.community-command p{
+ color:var(--ink2);
+ line-height:1.8;
+ max-width:64ch;
+}
+.community-feed-panel,
+.community-card{
+ background:rgba(15,23,42,0.46);
+ border:1px solid rgba(148,163,184,0.18);
+ border-radius:var(--r);
+ padding:22px;
+ backdrop-filter:blur(18px);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.community-feed-panel{
+ display:flex;
+ flex-direction:column;
+ gap:12px;
+}
+.community-hub-list{
+ display:grid;
+ gap:10px;
+ max-height:300px;
+ overflow:auto;
+ padding-right:4px;
+}
+.community-form{
+ display:grid;
+ gap:10px;
+ margin-top:auto;
+}
+.community-grid{
+ display:grid;
+ grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:16px;
+ margin-top:18px;
+}
+.community-card{
+ min-height:176px;
+ transition:transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.community-card:hover{
+ transform:translateY(-5px);
+ border-color:rgba(56,189,248,0.36);
+ box-shadow:0 24px 60px rgba(0,0,0,0.28), 0 0 34px rgba(56,189,248,0.10);
+}
+.community-card strong{
+ display:block;
+ font-size:17px;
+ margin-bottom:8px;
+}
+.community-card span{
+ display:block;
+ color:var(--ink2);
+ font-size:13px;
+ line-height:1.7;
+}
+.community-meter{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ margin-top:18px;
+ color:var(--ink2);
+ font-size:12px;
+ font-weight:700;
+}
+.community-meter i{
+ display:block;
+ width:42px;
+ height:42px;
+ border-radius:14px;
+ background:linear-gradient(135deg,rgba(56,189,248,0.18),rgba(255,0,127,0.12));
+ border:1px solid rgba(255,255,255,0.12);
+ position:relative;
+}
+.community-meter i::after{
+ content:'';
+ position:absolute;
+ inset:12px;
+ border-radius:50%;
+ background:var(--sky);
+ box-shadow:0 0 24px rgba(56,189,248,0.58);
+}
+body.high-contrast{
+ --bg:#020617;
+ --bg2:#030712;
+ --ink:#f8fafc;
+ --ink2:#edf6ff;
+ --ink3:#cbd5e1;
+ --b1:rgba(226,232,240,0.28);
+}
+body.high-contrast::after{opacity:0.22}
+body.high-contrast .hero,
+body.high-contrast .page{
+ color:var(--ink);
+}
+body.high-contrast .btn-ghost,
+body.high-contrast .mode-pill,
+body.high-contrast .course-card,
+body.high-contrast .vision-card,
+body.high-contrast .studio-panel,
+body.high-contrast .community-card,
+body.high-contrast .community-feed-panel{
+ border-color:rgba(226,232,240,0.28);
+}
+body.font-comfort{
+ font-size:17px;
+}
+body.font-comfort .sec-sub,
+body.font-comfort .hero-sub,
+body.font-comfort .studio-copy,
+body.font-comfort .detail-note,
+body.font-comfort .vision-card p,
+body.font-comfort .community-card span{
+ font-size:1rem;
+}
+
 /* ===================== COURSE DETAIL ===================== */
 .detail-layout{
  display:grid;grid-template-columns:1fr 390px;gap:52px;
@@ -2460,6 +2610,10 @@ button:active, a:active, .btn:active, .course-card:active{
  .course-actions{justify-content:center}
  .search-strip{grid-template-columns:1fr; margin-top:18px}
  .detail-spotlight{grid-template-columns:1fr}
+ .community-wrap{padding:90px 18px 60px}
+ .community-hero{grid-template-columns:1fr}
+ .community-grid{grid-template-columns:1fr}
+ .community-command{min-height:unset}
 }
 @media (prefers-reduced-motion: reduce){
  *, *::before, *::after{
@@ -2513,6 +2667,7 @@ button:active, a:active, .btn:active, .course-card:active{
  <li><a href="/memory" onclick="event.preventDefault();showPage('memory')" id="nl-memory">Memory</a></li>
  <li><a href="/academy" onclick="event.preventDefault();showPage('academy')" id="nl-academy">Academy</a></li>
  <li><a href="/studio" onclick="event.preventDefault();showPage('studio')" id="nl-studio">Studio</a></li>
+ <li><a href="/community" onclick="event.preventDefault();showPage('community')" id="nl-community">Community</a></li>
  <li><a href="/about" onclick="event.preventDefault();showPage('about')" id="nl-about">About</a></li>
  </ul>
  <div class="nav-btns">
@@ -2520,6 +2675,8 @@ button:active, a:active, .btn:active, .course-card:active{
    <span class="pill-dot"></span>
    <span id="liteModeLabel">Lite Mode</span>
   </button>
+  <button class="mode-pill" id="contrastModeBtn" type="button" onclick="toggleContrastMode()" title="Improve contrast for readability">Contrast</button>
+  <button class="mode-pill" id="fontComfortBtn" type="button" onclick="toggleFontComfort()" title="Increase readable text size">A+</button>
   <button class="btn btn-ghost" onclick="showPage('login')">Login</button>
   <button class="btn btn-prime" onclick="launchApp()">Launch App</button>
  </div>
@@ -2533,8 +2690,11 @@ button:active, a:active, .btn:active, .course-card:active{
  <a href="/memory" onclick="event.preventDefault();showPage('memory');toggleMenu()"> Memory</a>
  <a href="/academy" onclick="event.preventDefault();showPage('academy');toggleMenu()"> Academy</a>
  <a href="/studio" onclick="event.preventDefault();showPage('studio');toggleMenu()"> Studio</a>
+ <a href="/community" onclick="event.preventDefault();showPage('community');toggleMenu()"> Community</a>
  <a href="/about" onclick="event.preventDefault();showPage('about');toggleMenu()"> About</a>
  <a href="/login" onclick="event.preventDefault();showPage('login');toggleMenu()"> Login</a>
+ <a href="#" onclick="event.preventDefault();toggleContrastMode()"> Contrast Mode</a>
+ <a href="#" onclick="event.preventDefault();toggleFontComfort()"> Larger Text</a>
  <a href="/launch" onclick="event.preventDefault();launchApp();toggleMenu()"> Launch App</a>
 </div>
 
@@ -2818,6 +2978,11 @@ button:active, a:active, .btn:active, .course-card:active{
  <option value="Digital Marketing">Digital Marketing</option>
  <option value="Programming">Programming</option>
  <option value="Languages">Languages</option>
+ <option value="Generative AI">Generative AI</option>
+ <option value="Full-Stack">Full-Stack</option>
+ <option value="Web3">Web3</option>
+ <option value="Product">Product</option>
+ <option value="Entrepreneurship">Entrepreneurship</option>
  </select>
  <select class="fi" style="width:auto" onchange="filterAcademy()" id="ac-lvl">
  <option value="all">All Levels</option>
@@ -2869,6 +3034,11 @@ button:active, a:active, .btn:active, .course-card:active{
  <option value="Digital Marketing">Digital Marketing</option>
  <option value="Programming">Programming</option>
  <option value="Languages">Languages</option>
+ <option value="Generative AI">Generative AI</option>
+ <option value="Full-Stack">Full-Stack</option>
+ <option value="Web3">Web3</option>
+ <option value="Product">Product</option>
+ <option value="Entrepreneurship">Entrepreneurship</option>
  </select>
  <select class="fi" style="width:auto" onchange="filterC()" id="cf-lvl">
  <option value="all">All Levels</option>
@@ -3198,6 +3368,60 @@ button:active, a:active, .btn:active, .course-card:active{
  </div>
 </div>
 
+<!-- ===================== COMMUNITY PAGE ===================== -->
+<div class="page" id="page-community">
+ <div class="community-wrap">
+  <div class="community-hero">
+   <section class="community-command fade-in" style="padding:26px">
+    <div>
+     <div class="sec-tag">Community Hub</div>
+     <h3>Peer learning, live doubt loops, and builder accountability.</h3>
+     <p>HumaiX Realm becomes stronger when learners ask, share, review, and build together. This hub previews the discussion forum, peer review, study groups, and mentor Q&A layer from the full platform roadmap.</p>
+    </div>
+    <div class="community-meter">
+     <i aria-hidden="true"></i>
+     <span>Forums, live Q&A, peer feedback, and cohort groups are staged for the MVP launch.</span>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px">
+     <button class="btn btn-prime" onclick="showPage('studio')">Open Learning Studio</button>
+     <button class="btn btn-ghost" onclick="openAI()">Ask AI Coach</button>
+    </div>
+   </section>
+   <aside class="community-feed-panel fade-in">
+    <div>
+     <div class="sec-tag">Live Community Pulse</div>
+     <h3 style="font-size:22px;margin:8px 0 6px">Share a doubt, win, or project update</h3>
+     <p class="detail-note" style="margin:0">Posts are stored locally in this MVP preview. The production platform will use authenticated forum threads.</p>
+    </div>
+    <div class="community-hub-list" id="communityHubList"></div>
+    <div class="community-form">
+     <textarea id="communityHubInput" class="fta" style="min-height:92px" placeholder="Example: I finished the AI productivity workflow and need feedback on my prompt vault..."></textarea>
+     <button class="btn btn-prime" style="justify-content:center" onclick="addCommunityHubPost()">Post to Community</button>
+    </div>
+   </aside>
+  </div>
+  <div class="community-grid fade-in">
+   <div class="community-card"><strong>AI Builder Circle</strong><span>Weekly prompt challenges, AI tool workflows, and practical automation experiments for students and freelancers.</span></div>
+   <div class="community-card"><strong>Cyber Practice Lab</strong><span>Guided safety discussions, beginner-friendly threat maps, and ethical security habits for the real web.</span></div>
+   <div class="community-card"><strong>Peer Review Board</strong><span>Share portfolios, landing pages, dashboards, and course projects for structured feedback from other learners.</span></div>
+   <div class="community-card"><strong>Mentor AMA Room</strong><span>Founder-led Q&A sessions, roadmap guidance, and career decisions for learners building toward income outcomes.</span></div>
+  </div>
+  <div class="status-shell glass-panel fade-in" style="margin-top:24px">
+   <div>
+    <div class="sec-tag">Engagement System</div>
+    <h3 style="font-size:24px;margin:6px 0 10px">Gamification is designed around real skill proof</h3>
+    <p class="sec-sub" style="margin:0">Badges, certificates, progress bars, leaderboards, and peer reviews should reward useful work, not empty activity.</p>
+   </div>
+   <div class="security-badges">
+    <span class="security-badge"><span class="dot"></span> Study Groups</span>
+    <span class="security-badge"><span class="dot"></span> Peer Review</span>
+    <span class="security-badge"><span class="dot"></span> Live Q&A</span>
+    <span class="security-badge"><span class="dot"></span> Certificates</span>
+   </div>
+  </div>
+ </div>
+</div>
+
 <!-- ===================== DASHBOARD ===================== -->
 <div class="page" id="page-dashboard">
  <div class="dash-layout">
@@ -3256,9 +3480,13 @@ button:active, a:active, .btn:active, .course-card:active{
  <div style="margin-bottom:32px"><h2 style="font-size:28px;font-weight:800;margin-bottom:4px">Dashboard Overview</h2><p style="color:var(--ink2);font-size:14px">Contact: <a href="mailto:Hzzzx06@gmail.com" style="color:var(--sky)">Hzzzx06@gmail.com</a></p></div>
  <div class="adm-cards">
  <div class="adm-card"><div class="adm-ico"> </div><div class="adm-val">12,847</div><div class="adm-lbl">Total Students</div></div>
- <div class="adm-card"><div class="adm-ico"> </div><div class="adm-val">6</div><div class="adm-lbl">Active Courses</div></div>
+ <div class="adm-card"><div class="adm-ico"> </div><div class="adm-val">12</div><div class="adm-lbl">Active Courses</div></div>
  <div class="adm-card"><div class="adm-ico"> </div><div class="adm-val"> 3.1L</div><div class="adm-lbl">Total Revenue</div></div>
  <div class="adm-card"><div class="adm-ico"> </div><div class="adm-val">8,320</div><div class="adm-lbl">Certificates Issued</div></div>
+ </div>
+ <div style="margin-bottom:28px">
+  <h3 style="font-size:17px;font-weight:700;margin:0 0 14px">Learning Analytics Preview</h3>
+  <div class="adm-cards" id="adminAnalyticsPanel"></div>
  </div>
  <div style="background:var(--surf);border:1px solid var(--b1);border-radius:var(--r2);overflow:hidden;margin-bottom:28px">
  <div style="padding:18px 24px;border-bottom:1px solid var(--b1);display:flex;justify-content:space-between;align-items:center">
@@ -3465,6 +3693,12 @@ const COURSES = [
  {id:4, title:'Creator Growth System', titleHi:'Turn audience building into a repeatable system', cat:'Digital Marketing', level:'Beginner', price:249, orig:1299, rating:4.8, students:1204, hours:'4', lang:'Hindi + English', badge:'pop', bg:'linear-gradient(135deg,#111827,#1e293b 55%,#a78bfa)', thumbPos:'72% 44%'},
  {id:5, title:'Python Foundations', titleHi:'Start coding with clean logic and confidence', cat:'Programming', level:'Beginner', price:249, orig:999, rating:4.8, students:980, hours:'5.5', lang:'Hindi + English', badge:'new', bg:'linear-gradient(135deg,#0b1f1a,#123c32 55%,#2dd4bf)', thumbPos:'58% 38%'},
  {id:6, title:'English for Builders', titleHi:'Speak clearly for interviews, clients, and community', cat:'Languages', level:'Beginner', price:129, orig:699, rating:4.7, students:1876, hours:'4.5', lang:'Hindi + English', badge:'new', bg:'linear-gradient(135deg,#0e1d2e,#17324c 55%,#38bdf8)', thumbPos:'50% 52%'},
+ {id:7, title:'Generative AI Builder Track', titleHi:'Build practical AI workflows, prompts, and mini-products', cat:'Generative AI', level:'Intermediate', price:799, orig:3499, rating:4.9, students:842, hours:'8', lang:'Hindi + English', badge:'new', bg:'linear-gradient(135deg,#160a2e,#2d1b69 52%,#00e5ff)', thumbPos:'64% 40%'},
+ {id:8, title:'Full-Stack Web Development', titleHi:'Ship responsive apps with frontend, backend, and deployment basics', cat:'Full-Stack', level:'Beginner', price:999, orig:4499, rating:4.8, students:1120, hours:'10', lang:'Hindi + English', badge:'pop', bg:'linear-gradient(135deg,#071a2d,#102a45 54%,#34d399)', thumbPos:'58% 38%'},
+ {id:9, title:'Blockchain and Web3 Foundations', titleHi:'Understand wallets, smart contracts, tokens, and safer web3 habits', cat:'Web3', level:'Beginner', price:699, orig:2999, rating:4.8, students:706, hours:'7', lang:'Hindi + English', badge:'new', bg:'linear-gradient(135deg,#120b24,#241442 55%,#a78bfa)', thumbPos:'54% 44%'},
+ {id:10, title:'Ethical Hacking Practice Lab', titleHi:'Learn defensive security through safe, beginner labs', cat:'Cyber Security', level:'Intermediate', price:899, orig:3999, rating:4.9, students:654, hours:'9', lang:'Hindi + English', badge:'hot', bg:'linear-gradient(135deg,#071412,#13342c 54%,#00e5ff)', thumbPos:'46% 42%'},
+ {id:11, title:'Product Management for Builders', titleHi:'Plan products, write specs, test demand, and ship cleaner MVPs', cat:'Product', level:'Beginner', price:599, orig:2499, rating:4.8, students:531, hours:'6', lang:'Hindi + English', badge:'new', bg:'linear-gradient(135deg,#17111f,#2b1b38 56%,#ff7ab8)', thumbPos:'65% 48%'},
+ {id:12, title:'Entrepreneurship Launch Lab', titleHi:'Validate offers, build funnels, and create a revenue-first roadmap', cat:'Entrepreneurship', level:'Beginner', price:799, orig:3499, rating:4.9, students:488, hours:'8', lang:'Hindi + English', badge:'hot', bg:'linear-gradient(135deg,#111827,#222f48 54%,#fbbf24)', thumbPos:'70% 44%'},
 ];
 
 const BADGE_MAP = {hot:' Hot',new:' New',pop:' Popular'};
@@ -3485,7 +3719,13 @@ const THUMB_THEME = {
   3: ['#34d399', '#00e5ff', '#0ea5e9'],
   4: ['#a78bfa', '#ff7ab8', '#38bdf8'],
   5: ['#2dd4bf', '#38bdf8', '#22c55e'],
-  6: ['#38bdf8', '#7dd3fc', '#ff7ab8']
+  6: ['#38bdf8', '#7dd3fc', '#ff7ab8'],
+  7: ['#00e5ff', '#8b5cf6', '#ff007f'],
+  8: ['#34d399', '#38bdf8', '#0ea5e9'],
+  9: ['#a78bfa', '#7000ff', '#00e5ff'],
+  10: ['#34d399', '#00e5ff', '#f43f5e'],
+  11: ['#ff7ab8', '#c084fc', '#38bdf8'],
+  12: ['#fbbf24', '#38bdf8', '#ff007f']
 };
 
 const COURSE_DETAIL_MAP = {
@@ -3560,6 +3800,78 @@ const COURSE_DETAIL_MAP = {
     syllabus: ['Pronunciation basics', 'Conversation practice', 'Interview-ready language', 'Confidence project'],
     preview: ['Preview 01 - Speaking drill', 'Preview 02 - Call practice', 'Preview 03 - Interview phrases'],
     support: ['Hindi + English support', 'Mobile-friendly access', 'WhatsApp support group']
+  },
+  7: {
+    summary: 'A deeper AI builder track for learners who want to create prompts, automations, and mini-products instead of only using tools casually.',
+    facts: [
+      { title: 'Format', body: 'Project-led micro lessons, prompt patterns, and AI workflow demos.' },
+      { title: 'Best for', body: 'Learners who already use AI and now want practical output systems.' },
+      { title: 'Outcome', body: 'Ship one useful AI workflow and one mini-product concept.' }
+    ],
+    outcomes: ['Design reliable prompt systems', 'Build an AI research workflow', 'Create mini-product specs', 'Use AI safely with human review'],
+    syllabus: ['Prompt architecture', 'AI workflow design', 'Mini-product planning', 'Capstone: your AI builder kit'],
+    preview: ['Preview 01 - Prompt architecture', 'Preview 02 - Workflow map', 'Preview 03 - AI product brief'],
+    support: ['AI coach prompts included', 'Studio notes saved to Memory', 'Project feedback path']
+  },
+  8: {
+    summary: 'A full-stack foundation for learners who want to build responsive web apps, connect backend APIs, and deploy a real project.',
+    facts: [
+      { title: 'Format', body: 'Frontend, backend, database, auth, and deployment lessons.' },
+      { title: 'Best for', body: 'Students and builders who want a portfolio-ready web app path.' },
+      { title: 'Outcome', body: 'Build and deploy a working full-stack MVP.' }
+    ],
+    outcomes: ['Build responsive UI', 'Create API routes', 'Connect data models', 'Deploy and debug a live app'],
+    syllabus: ['HTML, CSS, and React basics', 'API and database flow', 'Auth and secure forms', 'Deployment and performance'],
+    preview: ['Preview 01 - App architecture', 'Preview 02 - API route demo', 'Preview 03 - Deploy checklist'],
+    support: ['Project checklist', 'Deployment QA guide', 'Certificate-ready capstone']
+  },
+  9: {
+    summary: 'A simple, safety-first Web3 foundation that explains wallets, smart contracts, tokens, and blockchain use cases without hype.',
+    facts: [
+      { title: 'Format', body: 'Concept maps, wallet safety, and beginner smart contract walkthroughs.' },
+      { title: 'Best for', body: 'Learners curious about blockchain, web3 products, and digital ownership.' },
+      { title: 'Outcome', body: 'Understand core web3 concepts and avoid common security mistakes.' }
+    ],
+    outcomes: ['Explain blockchain basics', 'Use wallets more safely', 'Understand token models', 'Read smart contract concepts'],
+    syllabus: ['Blockchain fundamentals', 'Wallets and safety', 'Smart contract basics', 'Web3 product case studies'],
+    preview: ['Preview 01 - Wallet safety map', 'Preview 02 - Token logic', 'Preview 03 - Smart contract overview'],
+    support: ['Security-first lessons', 'Glossary included', 'Beginner-friendly roadmap']
+  },
+  10: {
+    summary: 'A guided ethical hacking lab for learners who want defensive security practice through safe exercises and clear rules.',
+    facts: [
+      { title: 'Format', body: 'Safe lab tasks, defensive thinking, and practical vulnerability awareness.' },
+      { title: 'Best for', body: 'Beginners moving from security awareness into structured practice.' },
+      { title: 'Outcome', body: 'Run beginner security checks ethically and document findings clearly.' }
+    ],
+    outcomes: ['Understand responsible disclosure', 'Map common vulnerabilities', 'Practice safe lab workflows', 'Write a simple audit note'],
+    syllabus: ['Ethics and lab rules', 'Recon and web basics', 'Vulnerability patterns', 'Mini audit report'],
+    preview: ['Preview 01 - Lab setup', 'Preview 02 - Vulnerability map', 'Preview 03 - Report template'],
+    support: ['No illegal hacking content', 'Defensive security focus', 'Practice checklist']
+  },
+  11: {
+    summary: 'A product thinking course for builders who want to test demand, write clearer specs, and ship MVPs with less confusion.',
+    facts: [
+      { title: 'Format', body: 'Product strategy templates, user story writing, and validation exercises.' },
+      { title: 'Best for', body: 'Creators, founders, developers, and students building first products.' },
+      { title: 'Outcome', body: 'Create a practical MVP plan and launch checklist.' }
+    ],
+    outcomes: ['Define a user problem', 'Write a clean product spec', 'Prioritize features', 'Plan a testable MVP'],
+    syllabus: ['Problem discovery', 'MVP scoping', 'Product specs', 'Launch and feedback loops'],
+    preview: ['Preview 01 - Problem canvas', 'Preview 02 - Feature priority', 'Preview 03 - MVP brief'],
+    support: ['Founder-led product examples', 'Templates included', 'Peer review ready']
+  },
+  12: {
+    summary: 'A revenue-first entrepreneurship lab for learners who want to validate an offer, build a simple funnel, and plan the next 90 days.',
+    facts: [
+      { title: 'Format', body: 'Offer design, pricing, landing flow, and outreach experiments.' },
+      { title: 'Best for', body: 'Students, solo founders, creators, and service builders.' },
+      { title: 'Outcome', body: 'Launch a small offer and track the first real signals.' }
+    ],
+    outcomes: ['Choose a focused offer', 'Write conversion copy', 'Build a lean funnel', 'Track leads and first revenue'],
+    syllabus: ['Offer selection', 'Landing and CTA flow', 'Lead capture and follow-up', '90-day execution plan'],
+    preview: ['Preview 01 - Offer ladder', 'Preview 02 - Funnel sketch', 'Preview 03 - Revenue dashboard'],
+    support: ['Revenue-first roadmap', 'Founder support path', 'Community accountability']
   }
 };
 
@@ -4533,6 +4845,7 @@ let aiEnabled = false;
 const ENROLLMENTS_KEY = 'hr_enrollments';
 const STUDIO_STATE_KEY = 'hr_studio_state';
 const COMMUNITY_KEY = 'hr_community_posts';
+const ANALYTICS_KEY = 'hr_local_events';
 const ADMIN_EMAIL = 'Hzzzx06@gmail.com';
 const PAGE_META = {
  home: {
@@ -4554,6 +4867,10 @@ const PAGE_META = {
  studio: {
    title: 'Learning Studio | HUMAIX REALM',
    description: 'Practice inside the HUMAIX REALM learning studio with micro lessons, notes, quizzes, and progress tracking.'
+ },
+ community: {
+   title: 'Community Hub | HUMAIX REALM',
+   description: 'Join the HUMAIX REALM community hub for peer learning, study groups, project reviews, and live AI-native support.'
  },
  courses: {
    title: 'Courses | HUMAIX REALM',
@@ -4611,6 +4928,7 @@ const ROUTE_TO_PAGE = {
  '/memory': 'memory',
  '/academy': 'academy',
  '/studio': 'studio',
+ '/community': 'community',
  '/courses': 'courses',
   '/about': 'about',
   '/blog': 'blog',
@@ -4632,6 +4950,7 @@ const PAGE_TO_ROUTE = {
  memory: '/memory',
  academy: '/academy',
  studio: '/studio',
+ community: '/community',
  courses: '/courses',
  about: '/about',
  blog: '/blog',
@@ -4651,6 +4970,7 @@ const PAGE_TO_NAV = {
  memory: 'nl-memory',
  academy: 'nl-academy',
  studio: 'nl-studio',
+ community: 'nl-community',
  courses: 'nl-academy',
  about: 'nl-about',
  dashboard: 'nl-workspace'
@@ -4712,7 +5032,9 @@ function renderPage(name){
  if(name === 'memory') renderMemoryNotes();
  if(name === 'academy') filterAcademy();
  if(name === 'studio') renderStudio();
+ if(name === 'community') renderCommunityHub();
  if(name === 'dashboard') renderDashboardData();
+ if(name === 'admin') renderAdminAnalytics();
  if(name === 'detail') {
  renderDetailCourse(detailCourseId || selectedCourse?.id || COURSES[0]?.id);
  }
@@ -4957,7 +5279,13 @@ const COURSE_VIDEOS = {
  3: '2eSLWZ6qSeo',
  4: 'U_P23SqJaDc',
  5: 'LHBE6Q9XlzI',
- 6: 'rfscVS0vtbw'
+  6: 'rfscVS0vtbw',
+  7: 'qfHX2cNA4MY',
+  8: 'LHBE6Q9XlzI',
+  9: 'qfHX2cNA4MY',
+  10: '2eSLWZ6qSeo',
+  11: 'U_P23SqJaDc',
+  12: 'qfHX2cNA4MY'
 };
 
 function renderDetailCourse(id){
@@ -4985,7 +5313,7 @@ function renderDetailCourse(id){
  const disc=Math.round((1-c.price/c.orig)*100);
  const dorig = document.getElementById('dorig');
  if(dorig) dorig.innerHTML=` ${c.orig} <span style="color:var(--emerald);font-size:14px;text-decoration:none">${disc}% OFF</span>`;
- const videoId = COURSE_VIDEOS[c.id] || 'dQw4w9WgXcQ';
+ const videoId = COURSE_VIDEOS[c.id] || 'qfHX2cNA4MY';
  const iframe = document.getElementById('detailVideo');
  if(iframe) iframe.src = `https://www.youtube.com/embed/${videoId}`;
  const detailMeta = document.querySelector('.detail-meta');
@@ -4997,6 +5325,8 @@ function renderDetailCourse(id){
  const syllabus = document.getElementById('courseSyllabus');
  const preview = document.getElementById('coursePreview');
  const support = document.getElementById('courseSupport');
+ const currList = document.getElementById('currList');
+ const currHead = document.querySelector('#tab-curriculum h3');
 
  if(summaryTitle) summaryTitle.textContent = c.title;
  if(summary) summary.textContent = detail.summary;
@@ -5028,10 +5358,25 @@ function renderDetailCourse(id){
      <div class="detail-row">${item}</div>
    `).join('');
  }
+ if(currHead) currHead.textContent = `Course Content ${c.hours} hrs ${Math.max(8, (detail.syllabus || []).length * 3)} lessons`;
+ if(currList) {
+   currList.innerHTML = (detail.syllabus || []).flatMap((item, index) => ([
+     { title: item, duration: `${6 + index * 2}:00` },
+     { title: `${item} - practice activity`, duration: '8:00' },
+     { title: `${item} - summary quiz`, duration: '5:00' }
+   ])).map((lesson, index) => `
+    <div class="curr-item">
+     <div class="curr-ico">${String(index + 1).padStart(2, '0')}</div>
+     <div class="curr-title">${lesson.title}</div>
+     <div class="curr-dur">${lesson.duration}</div>
+    </div>
+   `).join('');
+ }
 }
 
 function openDetail(id){
  renderDetailCourse(id);
+ trackEvent('course_view', { courseId: selectedCourse?.id, title: selectedCourse?.title });
  showPage('detail');
  setPageMeta('detail', {
  title: `${selectedCourse?.title || 'Course Detail'} | HUMAIX REALM`,
@@ -5045,6 +5390,7 @@ function openStudioForCourse(id){
   selectedCourse = course;
   detailCourseId = course.id;
  }
+ trackEvent('studio_open', { courseId: selectedCourse?.id, title: selectedCourse?.title });
  showPage('studio');
 }
 
@@ -5169,6 +5515,7 @@ function renderStudio(courseId){
  const activeLesson = Math.max(0, Math.min(lessons.length - 1, Number(entry.lesson) || 0));
  entry.lesson = activeLesson;
  saveStudioCourseState(course.id, entry);
+ trackEvent('studio_open', { courseId: course.id, title: course.title });
  const completed = Array.isArray(entry.completed) ? entry.completed : [];
  const progress = Math.min(100, Math.round((completed.length / lessons.length) * 100));
 
@@ -5226,6 +5573,7 @@ function completeStudioLesson(){
  entry.completed = Array.from(completed).sort((a,b)=>a-b);
  entry.lesson = Math.min(lessons.length - 1, current + 1);
  saveStudioCourseState(course.id, entry);
+ trackEvent('lesson_complete', { courseId: course.id, lesson: current });
  showToast('Lesson progress saved.');
  renderStudio(course.id);
 }
@@ -5290,6 +5638,7 @@ function submitStudioQuiz(){
  }
  entry.quizDone = true;
  saveStudioCourseState(course.id, entry);
+ trackEvent('quiz_submit', { courseId: course.id, answer: entry.quizAnswer });
  const enrollments = readEnrollments();
  const current = enrollments[String(course.id)]?.progress || 0;
  ensureEnrollment(course.id, Math.max(current, 25));
@@ -5329,6 +5678,23 @@ function renderCommunity(){
  `).join('');
 }
 
+function renderCommunityHub(){
+ const el = document.getElementById('communityHubList');
+ if(!el) return;
+ const posts = readCommunity();
+ const seed = posts.length ? posts : [
+  { name:'Harish', body:'Welcome to the builder hub. Share one doubt, one win, or one project update.' },
+  { name:'AI Builder Circle', body:'This week: create a prompt vault, test it on one real task, and save the result into Memory.' },
+  { name:'Peer Review Board', body:'Post one portfolio screenshot or project link and ask for specific feedback.' }
+ ];
+ el.innerHTML = seed.slice(0, 8).map((post) => `
+  <div class="community-post">
+   <strong>${escapeHtml(post.name || 'Learner')}</strong>
+   <span>${escapeHtml(post.body || '')}</span>
+  </div>
+ `).join('');
+}
+
 function addCommunityPost(){
  const input = document.getElementById('studioCommunityInput');
  const body = String(input?.value || '').trim();
@@ -5344,7 +5710,71 @@ function addCommunityPost(){
  writeCommunity(posts);
  if(input) input.value = '';
  renderCommunity();
+ renderCommunityHub();
+ trackEvent('community_post', { source: 'studio' });
  showToast('Community update added.');
+}
+
+function addCommunityHubPost(){
+ const input = document.getElementById('communityHubInput');
+ const body = String(input?.value || '').trim();
+ if(!body){
+  showToast('Write a community post first.', 'warn');
+  return;
+ }
+ const posts = readCommunity();
+ posts.unshift({
+  name: currentUser?.firstName || currentUser?.displayName || 'Learner',
+  body
+ });
+ writeCommunity(posts);
+ if(input) input.value = '';
+ renderCommunity();
+ renderCommunityHub();
+ trackEvent('community_post', { source: 'hub' });
+ showToast('Community post added.');
+}
+
+function readAnalyticsEvents(){
+ try{
+  const raw = localStorage.getItem(ANALYTICS_KEY);
+  const parsed = raw ? JSON.parse(raw) : [];
+  return Array.isArray(parsed) ? parsed : [];
+ } catch (err) {
+  return [];
+ }
+}
+
+function writeAnalyticsEvents(events){
+ try{
+  localStorage.setItem(ANALYTICS_KEY, JSON.stringify((events || []).slice(0, 80)));
+ } catch (err) {}
+}
+
+function trackEvent(type, data = {}){
+ const events = readAnalyticsEvents();
+ events.unshift({
+  type: String(type || 'event'),
+  data,
+  at: new Date().toISOString()
+ });
+ writeAnalyticsEvents(events);
+ renderAdminAnalytics();
+}
+
+function renderAdminAnalytics(){
+ const panel = document.getElementById('adminAnalyticsPanel');
+ if(!panel) return;
+ const events = readAnalyticsEvents();
+ const studio = events.filter(e => e.type === 'studio_open' || e.type === 'lesson_complete' || e.type === 'quiz_submit').length;
+ const leads = events.filter(e => e.type === 'course_view' || e.type === 'community_post').length;
+ const enrolled = Object.keys(readEnrollments()).length;
+ panel.innerHTML = `
+  <div class="adm-card"><div class="adm-ico"></div><div class="adm-val">${events.length}</div><div class="adm-lbl">Tracked Signals</div></div>
+  <div class="adm-card"><div class="adm-ico"></div><div class="adm-val">${studio}</div><div class="adm-lbl">Studio Actions</div></div>
+  <div class="adm-card"><div class="adm-ico"></div><div class="adm-val">${leads}</div><div class="adm-lbl">Community / Course Signals</div></div>
+  <div class="adm-card"><div class="adm-ico"></div><div class="adm-val">${enrolled}</div><div class="adm-lbl">Local Enrollments</div></div>
+ `;
 }
 
 function resumeCourse(courseId){
@@ -5657,14 +6087,8 @@ Known HUMAIX REALM details:
 - Contact email: Hzzzx06@gmail.com.
 - Courses are Hindi + English and include lifetime access, certificate, mobile/tablet access, resources, WhatsApp support group, and 30-day money-back guarantee.
 - Payment: Razorpay Secure Checkout for UPI, Cards, Net Banking, Wallets.
-- Courses:
-1. Mobile Video Editing / à¤®à¥‹à¤¬à¤¾à¤‡à¤² à¤µà¥€à¤¡à¤¿à¤¯à¥‹ à¤à¤¡à¤¿à¤Ÿà¤¿à¤‚à¤— - INR 199, original INR 999, 3.5 hrs, Technology.
-2. Instagram Growth Basics / à¤‡à¤‚à¤¸à¥à¤Ÿà¤¾à¤—à¥à¤°à¤¾à¤® à¤—à¥à¤°à¥‹à¤¥ à¤¬à¥‡à¤¸à¤¿à¤•à¥à¤¸ - INR 149, original INR 799, 4 hrs, Digital Marketing.
-3. Basic English Speaking / à¤¬à¥‡à¤¸à¤¿à¤• à¤‡à¤‚à¤—à¥à¤²à¤¿à¤¶ à¤¸à¥à¤ªà¥€à¤•à¤¿à¤‚à¤— - INR 129, original INR 599, 5 hrs, Languages.
-4. Cyber Security Intro / à¤¸à¤¾à¤‡à¤¬à¤° à¤¸à¤¿à¤•à¥à¤¯à¥‹à¤°à¤¿à¤Ÿà¥€ à¤¶à¥à¤°à¥à¤†à¤¤ - INR 499, original INR 2499, 6 hrs, Cyber Security.
-5. Data Science Beginner / à¤¡à¥‡à¤Ÿà¤¾ à¤¸à¤¾à¤‡à¤‚à¤¸ à¤¬à¤¿à¤—à¤¿à¤¨à¤° - INR 349, original INR 1499, 6.5 hrs, Data Science.
-6. Python for Beginners / à¤ªà¤¾à¤¯à¤¥à¤¨ à¤«à¥‰à¤° à¤¬à¤¿à¤—à¤¿à¤¨à¤°à¥à¤¸ - INR 249, original INR 999, 5.5 hrs, Programming.
-If asked for a recommendation: Python for Beginners for coding basics, Data Science Beginner for AI/data career, Cyber Security Intro for security, Mobile Video Editing + Instagram Growth for creator/freelance work.
+- Current course catalog: AI Productivity Sprint, Data Science with AI, Cyber Security Foundations, Creator Growth System, Python Foundations, English for Builders, Generative AI Builder Track, Full-Stack Web Development, Blockchain and Web3 Foundations, Ethical Hacking Practice Lab, Product Management for Builders, and Entrepreneurship Launch Lab.
+- If asked for a recommendation: AI Productivity Sprint for fastest first result, Data Science with AI for analytics career, Cyber Security Foundations or Ethical Hacking Practice Lab for security, Full-Stack Web Development for app building, Generative AI Builder Track for AI workflows, and Entrepreneurship Launch Lab for founder/revenue planning.
 Never say you do not know site details when they are listed here. Do not invent unavailable courses.`;
 
 function getCurrentAIPrompt(){
@@ -5909,6 +6333,8 @@ function initFadeIns(){
 initFadeIns();
 initLenis();
 startTerminal();
+applyContrastMode(getSavedContrastMode());
+applyFontComfort(getSavedFontComfort());
 applyLiteMode(getAutoLiteMode());
 function safeBoot(label, fn){
  try {
@@ -5993,6 +6419,48 @@ function toggleLiteMode(){
    safeBoot('Reel scene', initReelScene);
   }
  } catch (err) {}
+}
+function getSavedContrastMode(){
+ try {
+  return localStorage.getItem('humaixContrastMode') === '1';
+ } catch (err) {
+  return false;
+ }
+}
+function applyContrastMode(enabled){
+ const on = Boolean(enabled);
+ window.humaixContrastMode = on;
+ document.body.classList.toggle('high-contrast', on);
+ const btn = document.getElementById('contrastModeBtn');
+ if(btn) btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+ try {
+  localStorage.setItem('humaixContrastMode', on ? '1' : '0');
+ } catch (err) {}
+}
+function toggleContrastMode(){
+ applyContrastMode(!window.humaixContrastMode);
+ showToast(window.humaixContrastMode ? 'High contrast enabled.' : 'High contrast disabled.');
+}
+function getSavedFontComfort(){
+ try {
+  return localStorage.getItem('humaixFontComfort') === '1';
+ } catch (err) {
+  return false;
+ }
+}
+function applyFontComfort(enabled){
+ const on = Boolean(enabled);
+ window.humaixFontComfort = on;
+ document.body.classList.toggle('font-comfort', on);
+ const btn = document.getElementById('fontComfortBtn');
+ if(btn) btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+ try {
+  localStorage.setItem('humaixFontComfort', on ? '1' : '0');
+ } catch (err) {}
+}
+function toggleFontComfort(){
+ applyFontComfort(!window.humaixFontComfort);
+ showToast(window.humaixFontComfort ? 'Comfort text enabled.' : 'Comfort text disabled.');
 }
 window.addEventListener('DOMContentLoaded', hideSiteLoader);
 window.addEventListener('load', hideSiteLoader);
