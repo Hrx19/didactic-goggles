@@ -44,6 +44,7 @@ app.use((req, res, next) => {
 const baseUrl = (process.env.BASE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : `http://localhost:${port}`)).replace(/\/$/, '');
 const dataFile = path.join(__dirname, 'contacts.json');
 const usersFile = path.join(__dirname, 'users.json');
+const appShellFile = path.join(__dirname, 'uttarakhand-future-technology (2).html');
 const aiKey = pickEnv(
   'OPENAI_API_KEY',
   'OPENAI_KEY',
@@ -115,6 +116,38 @@ function loginSession(req, user, res, callback) {
       return callback(regenErr);
     }
     req.login(user, callback);
+  });
+}
+
+function sendMaintenancePage(res, statusCode = 503) {
+  res.status(statusCode).type('html').send(`<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HUMAIX REALM | Temporarily Unavailable</title>
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#030014;color:#e2e8f0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+main{width:min(560px,92vw);padding:32px;border:1px solid rgba(148,163,184,.22);border-radius:22px;background:rgba(15,23,42,.72);box-shadow:0 24px 90px rgba(0,0,0,.4)}
+h1{margin:0 0 10px;font-size:clamp(28px,5vw,44px);line-height:1;background:linear-gradient(90deg,#38bdf8,#a78bfa,#ff7ab8);-webkit-background-clip:text;background-clip:text;color:transparent}
+p{color:#cbd5e1;line-height:1.7}
+a{display:inline-flex;margin-top:14px;color:#38bdf8;font-weight:800;text-decoration:none}
+</style>
+</head>
+<body><main><h1>HUMAIX REALM</h1><p>The platform shell is temporarily unavailable. Please refresh in a moment. The health endpoint is active, so the service can recover cleanly after deployment updates.</p><a href="/">Try again</a></main></body>
+</html>`);
+}
+
+function sendAppShell(req, res) {
+  if (!fs.existsSync(appShellFile)) {
+    console.error('App shell file missing:', appShellFile);
+    return sendMaintenancePage(res, 503);
+  }
+  res.sendFile(appShellFile, (err) => {
+    if (err) {
+      console.error('App shell delivery error:', err);
+      if (!res.headersSent) sendMaintenancePage(res, 503);
+    }
   });
 }
 
@@ -325,6 +358,16 @@ app.get('/api/config', (req, res) => {
           : 'Google login is not configured on this deployment. Add a valid GOOGLE_CLIENT_ID to enable it.'),
     aiEnabled: Boolean(aiKey || anthropicKey),
     aiProvider: aiKey || anthropicKey ? aiProvider : 'local'
+  });
+});
+
+app.get(['/healthz', '/api/health'], (req, res) => {
+  res.json({
+    ok: true,
+    service: 'humaix-realm',
+    shell: fs.existsSync(appShellFile),
+    version: process.env.VERCEL_GIT_COMMIT_SHA || 'local',
+    time: new Date().toISOString()
   });
 });
 
@@ -909,8 +952,16 @@ app.post('/api/verify-payment', rateLimiters.payment, (req, res) => {
   res.json({ ok: true, paymentId, orderId });
 });
 
+app.use((err, req, res, next) => {
+  console.error('Unhandled request error:', err);
+  if (req.path.startsWith('/api/')) {
+    return res.status(500).json({ error: 'Temporary platform error. Please try again shortly.' });
+  }
+  return sendMaintenancePage(res, 503);
+});
+
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'uttarakhand-future-technology (2).html'));
+  sendAppShell(req, res);
 });
 
 if (require.main === module) {
