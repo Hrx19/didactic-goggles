@@ -54,6 +54,33 @@
         "target": "https://website-gamma-lyart-55.vercel.app/?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
+    },
+    {
+      "@type": "ItemList",
+      "name": "HUMAIX REALM AI-native course catalog",
+      "itemListElement": [
+        {
+          "@type": "Course",
+          "position": 1,
+          "name": "AI Productivity Sprint",
+          "description": "A Hindi and English microlearning course for AI productivity workflows, prompt routines, and student focus systems.",
+          "provider": {"@type": "Organization", "name": "HUMAIX REALM", "sameAs": "https://website-gamma-lyart-55.vercel.app/"}
+        },
+        {
+          "@type": "Course",
+          "position": 2,
+          "name": "Data Science with AI",
+          "description": "A project-based course for beginner analytics, charts, AI-assisted insights, and portfolio building.",
+          "provider": {"@type": "Organization", "name": "HUMAIX REALM", "sameAs": "https://website-gamma-lyart-55.vercel.app/"}
+        },
+        {
+          "@type": "Course",
+          "position": 3,
+          "name": "Generative AI Builder Track",
+          "description": "An AI builder track covering prompt systems, AI workflows, automation, and mini-product planning.",
+          "provider": {"@type": "Organization", "name": "HUMAIX REALM", "sameAs": "https://website-gamma-lyart-55.vercel.app/"}
+        }
+      ]
     }
   ]
 }
@@ -724,7 +751,7 @@ nav.scrolled{
 }
 .search-strip{
  display:grid;
- grid-template-columns:minmax(0,1.2fr) repeat(3,minmax(160px,auto));
+ grid-template-columns:minmax(0,1.2fr) repeat(4,minmax(140px,auto));
  gap:12px;
  margin:30px 0 24px;
  align-items:center;
@@ -1787,6 +1814,173 @@ body.font-comfort .vision-card p,
 body.font-comfort .community-card span{
  font-size:1rem;
 }
+.skip-link{
+ position:fixed;
+ top:10px;
+ left:10px;
+ z-index:10001;
+ padding:10px 14px;
+ border-radius:999px;
+ background:#e2e8f0;
+ color:#020617;
+ font-weight:900;
+ transform:translateY(-160%);
+ transition:transform 0.2s ease;
+}
+.skip-link:focus{transform:translateY(0)}
+.workspace-tools,
+.memory-tools{
+ margin-top:28px;
+ padding:24px;
+ border-radius:var(--r);
+ background:rgba(15,23,42,0.48);
+ border:1px solid rgba(148,163,184,0.18);
+ backdrop-filter:blur(18px);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.workspace-head,
+.memory-head{
+ display:flex;
+ justify-content:space-between;
+ align-items:flex-start;
+ gap:16px;
+ flex-wrap:wrap;
+ margin-bottom:18px;
+}
+.workspace-head h3,
+.memory-head h3{
+ font-size:24px;
+ line-height:1.2;
+ margin:6px 0;
+}
+.task-input-row,
+.memory-search-row{
+ display:grid;
+ grid-template-columns:minmax(0,1fr) minmax(140px,auto) auto;
+ gap:10px;
+ margin-bottom:18px;
+}
+.workspace-board{
+ display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:14px;
+}
+.workspace-column{
+ min-height:220px;
+ padding:14px;
+ border-radius:16px;
+ background:rgba(255,255,255,0.035);
+ border:1px solid rgba(255,255,255,0.08);
+}
+.workspace-column h4{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ font-size:13px;
+ text-transform:uppercase;
+ letter-spacing:1.2px;
+ color:var(--sky);
+ margin-bottom:12px;
+}
+.task-list{
+ display:grid;
+ gap:10px;
+}
+.task-card{
+ padding:12px;
+ border-radius:12px;
+ background:rgba(8,15,27,0.76);
+ border:1px solid rgba(148,163,184,0.15);
+ color:var(--ink2);
+}
+.task-card strong{
+ display:block;
+ color:var(--ink);
+ font-size:13px;
+ margin-bottom:6px;
+}
+.task-card.done{
+ border-color:rgba(52,211,153,0.35);
+ background:rgba(52,211,153,0.08);
+}
+.task-actions{
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap;
+ margin-top:10px;
+}
+.mini-action{
+ border:none;
+ border-radius:999px;
+ padding:6px 9px;
+ background:rgba(255,255,255,0.06);
+ color:var(--ink2);
+ cursor:pointer;
+ font-size:11px;
+ font-weight:800;
+}
+.mini-action:hover{color:#fff;background:rgba(56,189,248,0.12)}
+.workspace-metrics{
+ display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:12px;
+ margin-top:16px;
+}
+.workspace-metric{
+ padding:14px;
+ border-radius:14px;
+ border:1px solid rgba(148,163,184,0.14);
+ background:rgba(255,255,255,0.035);
+}
+.workspace-metric strong{
+ display:block;
+ font-size:22px;
+ color:#fff;
+}
+.workspace-metric span{
+ display:block;
+ font-size:12px;
+ color:var(--ink3);
+}
+.memory-search-row{
+ grid-template-columns:minmax(0,1fr) auto auto;
+}
+.memory-result-list{
+ display:grid;
+ gap:12px;
+}
+.memory-note-card{
+ padding:16px;
+ border-radius:16px;
+ background:rgba(8,15,27,0.72);
+ border:1px solid rgba(148,163,184,0.14);
+}
+.memory-note-card h3{
+ font-size:16px;
+ margin-bottom:8px;
+}
+.memory-note-card p{
+ color:var(--ink2);
+ font-size:13px;
+ line-height:1.7;
+}
+.memory-summary{
+ margin-top:10px;
+ padding:10px 12px;
+ border-radius:12px;
+ background:rgba(56,189,248,0.08);
+ border:1px solid rgba(56,189,248,0.16);
+ color:#dffbff;
+ font-size:12px;
+ line-height:1.6;
+}
+.memory-note-actions{
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap;
+ margin-top:12px;
+}
 
 /* ===================== COURSE DETAIL ===================== */
 .detail-layout{
@@ -2610,6 +2804,8 @@ button:active, a:active, .btn:active, .course-card:active{
  .course-actions{justify-content:center}
  .search-strip{grid-template-columns:1fr; margin-top:18px}
  .detail-spotlight{grid-template-columns:1fr}
+ .task-input-row,.memory-search-row{grid-template-columns:1fr}
+ .workspace-board,.workspace-metrics{grid-template-columns:1fr}
  .community-wrap{padding:90px 18px 60px}
  .community-hero{grid-template-columns:1fr}
  .community-grid{grid-template-columns:1fr}
@@ -2631,6 +2827,7 @@ button:active, a:active, .btn:active, .course-card:active{
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#page-home">Skip to main content</a>
 <div class="site-loader" id="siteLoader" aria-live="polite" aria-busy="true">
  <div class="loader-card glass-panel">
   <div class="loader-ring" aria-hidden="true"></div>
@@ -2730,7 +2927,7 @@ button:active, a:active, .btn:active, .course-card:active{
  </div>
 <div class="hero-side">
  <div class="hero-visual glass-panel">
- <img class="hero-visual-poster" src="/assets/ai-tech-hero.png" alt="" aria-hidden="true">
+ <img class="hero-visual-poster" src="/assets/ai-tech-hero.png" alt="3D AI compute core visual for HUMAIX REALM">
  <canvas id="heroScene" aria-hidden="true"></canvas>
  <div class="hero-visual-copy">
  <div class="status-chip"><span class="dot"></span> All Systems Operational</div>
@@ -2745,7 +2942,7 @@ button:active, a:active, .btn:active, .course-card:active{
  <div>
   <div class="motion-reel-head"><strong>Neural Tech Panel</strong><span>Looping AI compute visual</span></div>
   <div class="motion-stage glass-panel">
-   <img class="motion-art" src="/assets/ai-tech-hero.png" alt="" aria-hidden="true">
+   <img class="motion-art" src="/assets/ai-tech-hero.png" alt="Animated neural technology panel preview">
   </div>
  </div>
  <div class="motion-stack">
@@ -2919,6 +3116,35 @@ button:active, a:active, .btn:active, .course-card:active{
  <button class="btn btn-ghost" onclick="showPage('memory')">Open Memory</button>
  </div>
  </div>
+ <div class="workspace-tools fade-in">
+ <div class="workspace-head">
+  <div>
+   <div class="sec-tag">Interactive Workspace</div>
+   <h3>Task board, goals, and launch progress</h3>
+   <p class="detail-note" style="margin:0">This MVP saves your tasks locally and turns the Workspace from a roadmap block into a working launch console.</p>
+  </div>
+  <button class="btn btn-ghost" onclick="seedWorkspaceTasks()">Load MVP Plan</button>
+ </div>
+ <div class="task-input-row">
+  <input id="workspaceTaskInput" class="search-input" type="text" placeholder="Add a task: record lesson 01, write course page, test checkout...">
+  <select id="workspaceTaskStage" class="fi" style="width:auto">
+   <option value="todo">To Do</option>
+   <option value="doing">Doing</option>
+   <option value="done">Done</option>
+  </select>
+  <button class="btn btn-prime" onclick="addWorkspaceTask()">Add Task</button>
+ </div>
+ <div class="workspace-board">
+  <div class="workspace-column"><h4>To Do <span id="wsTodoCount">0</span></h4><div class="task-list" id="wsTodoList"></div></div>
+  <div class="workspace-column"><h4>Doing <span id="wsDoingCount">0</span></h4><div class="task-list" id="wsDoingList"></div></div>
+  <div class="workspace-column"><h4>Done <span id="wsDoneCount">0</span></h4><div class="task-list" id="wsDoneList"></div></div>
+ </div>
+ <div class="workspace-metrics">
+  <div class="workspace-metric"><strong id="wsCompletion">0%</strong><span>Launch completion</span></div>
+  <div class="workspace-metric"><strong id="wsActiveTasks">0</strong><span>Open tasks</span></div>
+  <div class="workspace-metric"><strong id="wsNextFocus">Academy</strong><span>Next focus area</span></div>
+ </div>
+ </div>
  <div class="vision-grid fade-in" style="margin-top:28px">
  <div class="vision-card"><div class="vision-icon"> </div><h3>Launch Checklist</h3><p>Homepage, course cards, payment button, support email, policy pages, and analytics are the minimum viable stack.</p></div>
  <div class="vision-card"><div class="vision-icon"> </div><h3>Trust Signals</h3><p>Security policy, refund clarity, instructor presence, and live support keep the product feeling serious.</p></div>
@@ -2954,8 +3180,25 @@ button:active, a:active, .btn:active, .course-card:active{
  </div>
  <div style="flex:1">
  <div class="sec-tag">Recent Notes</div>
+ <div class="memory-search-row" style="margin-top:10px">
+  <input id="memorySearchInput" class="search-input" type="search" oninput="renderMemoryNotes()" placeholder="Search notes, prompts, course ideas...">
+  <button class="btn btn-ghost" onclick="summarizeMemory()">AI Summary</button>
+  <button class="btn btn-ghost" onclick="clearMemorySearch()">Clear</button>
+ </div>
+ <div id="memorySummaryBox" class="memory-summary" style="display:none"></div>
  <div id="memoryNotesList" class="vision-grid" style="grid-template-columns:1fr;margin-top:10px"></div>
  </div>
+ </div>
+ <div class="memory-tools fade-in">
+  <div class="memory-head">
+   <div>
+    <div class="sec-tag">Prompt Vault</div>
+    <h3>Reusable prompts and recall actions</h3>
+    <p class="detail-note" style="margin:0">Save notes above, then search, summarise, send to AI, or delete them from this local Memory preview.</p>
+   </div>
+   <button class="btn btn-prime" onclick="seedMemoryVault()">Load Sample Prompts</button>
+  </div>
+  <div class="memory-result-list" id="memoryVaultList"></div>
  </div>
  </div>
 </div>
@@ -2994,6 +3237,13 @@ button:active, a:active, .btn:active, .course-card:active{
  <option value="low">Under 200</option>
  <option value="mid">200 400</option>
  <option value="high">400+</option>
+ </select>
+ <select class="fi" style="width:auto" onchange="filterAcademy()" id="ac-sort">
+ <option value="featured">Featured Sort</option>
+ <option value="rating">Highest Rated</option>
+ <option value="price-low">Price Low to High</option>
+ <option value="price-high">Price High to Low</option>
+ <option value="duration">Shortest Duration</option>
  </select>
  </div>
  <div class="vision-grid fade-in">
@@ -3050,6 +3300,13 @@ button:active, a:active, .btn:active, .course-card:active{
  <option value="low">Under 200</option>
  <option value="mid"> 200 400</option>
  <option value="high"> 400+</option>
+ </select>
+ <select class="fi" style="width:auto" onchange="filterC()" id="cf-sort">
+ <option value="featured">Featured Sort</option>
+ <option value="rating">Highest Rated</option>
+ <option value="price-low">Price Low to High</option>
+ <option value="price-high">Price High to Low</option>
+ <option value="duration">Shortest Duration</option>
  </select>
  </div>
  <div class="courses-grid fade-in" id="allCoursesGrid"></div>
@@ -3958,6 +4215,15 @@ function renderGrid(id, list){
  if(el) el.innerHTML=list.map(makeCard).join('');
 }
 
+function sortCourses(list, mode){
+ const sorted = [...list];
+ if(mode === 'rating') sorted.sort((a,b)=>(b.rating || 0) - (a.rating || 0));
+ if(mode === 'price-low') sorted.sort((a,b)=>(a.price || 0) - (b.price || 0));
+ if(mode === 'price-high') sorted.sort((a,b)=>(b.price || 0) - (a.price || 0));
+ if(mode === 'duration') sorted.sort((a,b)=>(Number(a.hours) || 0) - (Number(b.hours) || 0));
+ return sorted;
+}
+
 renderGrid('featuredGrid', COURSES.slice(0,3));
 renderGrid('allCoursesGrid', COURSES);
 renderGrid('academyGrid', COURSES);
@@ -3966,6 +4232,7 @@ function filterAcademy(){
  const cat=document.getElementById('ac-cat')?.value || 'all';
  const lvl=document.getElementById('ac-lvl')?.value || 'all';
  const pr=document.getElementById('ac-price')?.value || 'all';
+ const sort=document.getElementById('ac-sort')?.value || 'featured';
  const query=String(document.getElementById('ac-search')?.value || '').trim().toLowerCase();
  let list=[...COURSES];
  if(cat!=='all') list=list.filter(c=>c.cat===cat);
@@ -3974,6 +4241,7 @@ function filterAcademy(){
  if(pr==='mid') list=list.filter(c=>c.price>=200&&c.price<=400);
  if(pr==='high') list=list.filter(c=>c.price>400);
  if(query) list=list.filter(c=>[c.title,c.titleHi,c.cat,c.level,c.lang].join(' ').toLowerCase().includes(query));
+ list = sortCourses(list, sort);
  renderGrid('academyGrid', list);
 }
 
@@ -3993,19 +4261,43 @@ function setMemoryNotes(notes){
 
 function renderMemoryNotes(){
  const el = document.getElementById('memoryNotesList');
+ const vault = document.getElementById('memoryVaultList');
  if(!el) return;
+ const query = String(document.getElementById('memorySearchInput')?.value || '').trim().toLowerCase();
  const notes = getMemoryNotes();
+ const filtered = query
+   ? notes.filter(note => [note.title, note.body, note.kind].join(' ').toLowerCase().includes(query))
+   : notes;
  if(!notes.length){
    el.innerHTML = '<div class="vision-card"><h3>Nothing saved yet</h3><p>Add a note and it will appear here for quick recall.</p></div>';
+   if(vault) vault.innerHTML = '<div class="memory-note-card"><h3>Prompt vault is empty</h3><p>Load sample prompts or save a learning note to begin.</p></div>';
    return;
  }
- el.innerHTML = notes.slice(0, 6).map((note, index) => `
-   <div class="vision-card">
-     <div class="sec-tag" style="margin-bottom:10px">Note ${notes.length - index}</div>
-     <h3 style="margin-bottom:8px">${escapeHtml(note.title || 'Learning Note')}</h3>
-     <p style="margin:0">${escapeHtml(note.body || '')}</p>
+ if(!filtered.length){
+   el.innerHTML = '<div class="vision-card"><h3>No matching notes</h3><p>Try another search term or clear the search filter.</p></div>';
+   if(vault) vault.innerHTML = '';
+   return;
+ }
+ el.innerHTML = filtered.slice(0, 6).map((note, index) => `
+   <div class="memory-note-card">
+     <div class="sec-tag" style="margin-bottom:10px">${escapeHtml(note.kind || 'Note')} ${String(index + 1).padStart(2, '0')}</div>
+     <h3>${escapeHtml(note.title || 'Learning Note')}</h3>
+     <p>${escapeHtml(note.body || '')}</p>
+     <div class="memory-note-actions">
+      <button class="mini-action" onclick="sendMemoryToAI('${encodeMemoryValue(note.body || '')}')">Ask AI</button>
+      <button class="mini-action" onclick="copyMemoryNote('${encodeMemoryValue(note.body || '')}')">Copy</button>
+      <button class="mini-action" onclick="deleteMemoryNote('${encodeMemoryValue(note.id || note.createdAt || note.body || '')}')">Delete</button>
+     </div>
    </div>
  `).join('');
+ if(vault){
+   vault.innerHTML = filtered.slice(0, 5).map((note) => `
+    <div class="memory-note-card">
+     <h3>${escapeHtml(note.title || 'Prompt')}</h3>
+     <p>${escapeHtml(note.body || '')}</p>
+    </div>
+   `).join('');
+ }
 }
 
 function saveMemoryNote(){
@@ -4017,6 +4309,8 @@ function saveMemoryNote(){
  }
  const notes = getMemoryNotes();
  notes.unshift({
+   id: String(Date.now()),
+   kind: 'Learning Note',
    title: 'Saved ' + new Date().toLocaleDateString('en-IN', { day:'2-digit', month:'short' }),
    body: value
  });
@@ -4026,6 +4320,196 @@ function saveMemoryNote(){
  showToast('Memory note saved.');
 }
 renderMemoryNotes();
+
+function encodeMemoryValue(value){
+ try {
+  return btoa(unescape(encodeURIComponent(String(value || ''))));
+ } catch (err) {
+  return '';
+ }
+}
+
+function decodeMemoryValue(value){
+ try {
+  return decodeURIComponent(escape(atob(String(value || ''))));
+ } catch (err) {
+  return '';
+ }
+}
+
+function clearMemorySearch(){
+ const input = document.getElementById('memorySearchInput');
+ const summary = document.getElementById('memorySummaryBox');
+ if(input) input.value = '';
+ if(summary) {
+  summary.style.display = 'none';
+  summary.textContent = '';
+ }
+ renderMemoryNotes();
+}
+
+function deleteMemoryNote(encodedId){
+ const id = decodeMemoryValue(encodedId);
+ const notes = getMemoryNotes().filter(note => String(note.id || note.createdAt || note.body || '') !== id);
+ setMemoryNotes(notes);
+ renderMemoryNotes();
+ showToast('Memory note deleted.');
+}
+
+function copyMemoryNote(encodedBody){
+ const body = decodeMemoryValue(encodedBody);
+ if(navigator.clipboard?.writeText){
+  navigator.clipboard.writeText(body).then(() => showToast('Note copied.'));
+ } else {
+  showToast('Copy is unavailable in this browser.', 'warn');
+ }
+}
+
+function sendMemoryToAI(encodedBody){
+ const body = decodeMemoryValue(encodedBody);
+ openAI();
+ const input = document.getElementById('aiInp');
+ if(input) input.value = `Summarise this learning note and suggest the next action: ${body}`;
+}
+
+function summarizeMemory(){
+ const notes = getMemoryNotes();
+ const summary = document.getElementById('memorySummaryBox');
+ if(!summary) return;
+ if(!notes.length){
+  showToast('Save a note first.', 'warn');
+  return;
+ }
+ const words = notes.map(note => note.body || '').join(' ').split(/\s+/).filter(Boolean);
+ const latest = notes[0]?.title || 'latest note';
+ summary.style.display = 'block';
+ summary.textContent = `Memory summary: ${notes.length} saved item${notes.length > 1 ? 's' : ''}, about ${words.length} words captured. Latest context: ${latest}. Next action: open Studio, finish one micro-lesson, then save one focused note.`;
+}
+
+function seedMemoryVault(){
+ const notes = getMemoryNotes();
+ const samples = [
+  { id: 'prompt-research', kind: 'Prompt', title: 'Research Prompt', body: 'Act as a senior AI mentor. Explain this topic in simple Hindi + English, then give one project task and one quiz question.' },
+  { id: 'prompt-project', kind: 'Prompt', title: 'Project Feedback Prompt', body: 'Review this project idea for clarity, user value, monetization, and next MVP step. Keep feedback direct and actionable.' },
+  { id: 'prompt-recall', kind: 'Prompt', title: 'Recall Search Prompt', body: 'Find the most useful idea from my notes and turn it into a 5-minute learning plan.' }
+ ];
+ const existing = new Set(notes.map(note => note.id));
+ const merged = [...samples.filter(note => !existing.has(note.id)), ...notes];
+ setMemoryNotes(merged);
+ renderMemoryNotes();
+ showToast('Prompt vault loaded.');
+}
+
+function getWorkspaceTasks(){
+ try{
+  const raw = localStorage.getItem(WORKSPACE_TASKS_KEY);
+  const parsed = raw ? JSON.parse(raw) : [];
+  return Array.isArray(parsed) ? parsed : [];
+ }catch(_){
+  return [];
+ }
+}
+
+function setWorkspaceTasks(tasks){
+ try{
+  localStorage.setItem(WORKSPACE_TASKS_KEY, JSON.stringify((tasks || []).slice(0, 40)));
+ }catch(_){}
+}
+
+function stageLabel(stage){
+ return stage === 'done' ? 'Done' : stage === 'doing' ? 'Doing' : 'To Do';
+}
+
+function renderWorkspaceTasks(){
+ const todoList = document.getElementById('wsTodoList');
+ const doingList = document.getElementById('wsDoingList');
+ const doneList = document.getElementById('wsDoneList');
+ if(!todoList || !doingList || !doneList) return;
+ const tasks = getWorkspaceTasks();
+ const lists = { todo: todoList, doing: doingList, done: doneList };
+ Object.entries(lists).forEach(([stage, el]) => {
+  const stageTasks = tasks.filter(task => (task.stage || 'todo') === stage);
+  el.innerHTML = stageTasks.length
+   ? stageTasks.map(task => `
+    <div class="task-card ${stage === 'done' ? 'done' : ''}">
+     <strong>${escapeHtml(task.title || 'Untitled task')}</strong>
+     <span>${escapeHtml(task.area || 'Launch')} - ${stageLabel(stage)}</span>
+     <div class="task-actions">
+      ${stage !== 'todo' ? `<button class="mini-action" onclick="moveWorkspaceTask('${task.id}','todo')">To Do</button>` : ''}
+      ${stage !== 'doing' ? `<button class="mini-action" onclick="moveWorkspaceTask('${task.id}','doing')">Doing</button>` : ''}
+      ${stage !== 'done' ? `<button class="mini-action" onclick="moveWorkspaceTask('${task.id}','done')">Done</button>` : ''}
+      <button class="mini-action" onclick="deleteWorkspaceTask('${task.id}')">Delete</button>
+     </div>
+    </div>
+   `).join('')
+   : `<div class="task-card"><strong>No ${stageLabel(stage).toLowerCase()} tasks</strong><span>Add one above or load the MVP plan.</span></div>`;
+ });
+ const counts = {
+  todo: tasks.filter(task => task.stage === 'todo').length,
+  doing: tasks.filter(task => task.stage === 'doing').length,
+  done: tasks.filter(task => task.stage === 'done').length
+ };
+ const total = Math.max(1, tasks.length);
+ const completion = Math.round((counts.done / total) * 100);
+ const setText = (id, value) => { const el = document.getElementById(id); if(el) el.textContent = String(value); };
+ setText('wsTodoCount', counts.todo);
+ setText('wsDoingCount', counts.doing);
+ setText('wsDoneCount', counts.done);
+ setText('wsCompletion', `${tasks.length ? completion : 0}%`);
+ setText('wsActiveTasks', counts.todo + counts.doing);
+ setText('wsNextFocus', counts.doing ? 'Execution' : counts.todo ? 'Planning' : 'Review');
+}
+
+function addWorkspaceTask(){
+ const input = document.getElementById('workspaceTaskInput');
+ const stage = document.getElementById('workspaceTaskStage')?.value || 'todo';
+ const title = String(input?.value || '').trim();
+ if(!title){
+  showToast('Write a workspace task first.', 'warn');
+  return;
+ }
+ const tasks = getWorkspaceTasks();
+ tasks.unshift({
+  id: `task_${Date.now()}`,
+  title,
+  stage,
+  area: /course|lesson|academy/i.test(title) ? 'Academy' : /payment|checkout|razorpay/i.test(title) ? 'Payments' : /seo|blog|keyword/i.test(title) ? 'SEO' : 'Launch',
+  createdAt: new Date().toISOString()
+ });
+ setWorkspaceTasks(tasks);
+ if(input) input.value = '';
+ renderWorkspaceTasks();
+ trackEvent('workspace_task', { stage });
+ showToast('Workspace task added.');
+}
+
+function moveWorkspaceTask(id, stage){
+ const tasks = getWorkspaceTasks().map(task => task.id === id ? { ...task, stage } : task);
+ setWorkspaceTasks(tasks);
+ renderWorkspaceTasks();
+ trackEvent('workspace_task_move', { stage });
+}
+
+function deleteWorkspaceTask(id){
+ setWorkspaceTasks(getWorkspaceTasks().filter(task => task.id !== id));
+ renderWorkspaceTasks();
+ showToast('Workspace task deleted.');
+}
+
+function seedWorkspaceTasks(){
+ const existing = getWorkspaceTasks();
+ const existingIds = new Set(existing.map(task => task.id));
+ const sample = [
+  { id:'mvp_course_detail', title:'Finish one flagship course detail page with syllabus and preview lesson', stage:'doing', area:'Academy' },
+  { id:'mvp_checkout_test', title:'Test Razorpay checkout and payment verification on production', stage:'todo', area:'Payments' },
+  { id:'mvp_memory_search', title:'Use Memory search to collect learner questions and next content ideas', stage:'todo', area:'Memory' },
+  { id:'mvp_blog_keywords', title:'Publish one SEO blog targeting learn generative AI in Hindi', stage:'todo', area:'SEO' },
+  { id:'mvp_health', title:'Keep health endpoint and fallback page live for deployment stability', stage:'done', area:'Infrastructure' }
+ ];
+ setWorkspaceTasks([...sample.filter(task => !existingIds.has(task.id)), ...existing]);
+ renderWorkspaceTasks();
+ showToast('Workspace MVP plan loaded.');
+}
 
 // ===================== PREMIUM MOTION =====================
 function initLenis(){
@@ -4846,6 +5330,7 @@ const ENROLLMENTS_KEY = 'hr_enrollments';
 const STUDIO_STATE_KEY = 'hr_studio_state';
 const COMMUNITY_KEY = 'hr_community_posts';
 const ANALYTICS_KEY = 'hr_local_events';
+const WORKSPACE_TASKS_KEY = 'hr_workspace_tasks';
 const ADMIN_EMAIL = 'Hzzzx06@gmail.com';
 const PAGE_META = {
  home: {
@@ -5029,6 +5514,7 @@ function renderPage(name){
  const nl=document.getElementById(PAGE_TO_NAV[name] || '');
  if(nl) nl.classList.add('active');
  setPageMeta(name);
+ if(name === 'workspace') renderWorkspaceTasks();
  if(name === 'memory') renderMemoryNotes();
  if(name === 'academy') filterAcademy();
  if(name === 'studio') renderStudio();
@@ -5408,6 +5894,7 @@ function filterC(){
  const cat=document.getElementById('cf-cat').value;
  const lvl=document.getElementById('cf-lvl').value;
  const pr=document.getElementById('cf-price').value;
+ const sort=document.getElementById('cf-sort')?.value || 'featured';
  const query=String(document.getElementById('cf-search')?.value || '').trim().toLowerCase();
  let list=[...COURSES];
  if(cat!=='all') list=list.filter(c=>c.cat===cat);
@@ -5416,6 +5903,7 @@ function filterC(){
  if(pr==='mid') list=list.filter(c=>c.price>=200&&c.price<=400);
  if(pr==='high') list=list.filter(c=>c.price>400);
  if(query) list=list.filter(c=>[c.title,c.titleHi,c.cat,c.level,c.lang].join(' ').toLowerCase().includes(query));
+ list = sortCourses(list, sort);
  renderGrid('allCoursesGrid',list);
 }
 
