@@ -1981,6 +1981,122 @@ body.font-comfort .community-card span{
  flex-wrap:wrap;
  margin-top:12px;
 }
+.growth-wrap{
+ max-width:1240px;
+ margin:0 auto;
+ padding:100px 48px 80px;
+}
+.growth-hero{
+ display:grid;
+ grid-template-columns:minmax(0,1fr) minmax(320px,0.85fr);
+ gap:20px;
+ align-items:stretch;
+ margin-bottom:20px;
+}
+.growth-panel,
+.growth-card{
+ background:rgba(15,23,42,0.48);
+ border:1px solid rgba(148,163,184,0.18);
+ border-radius:var(--r);
+ padding:22px;
+ backdrop-filter:blur(18px);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.growth-panel h3{
+ font-size:clamp(26px,3vw,42px);
+ line-height:1.05;
+ margin:10px 0 12px;
+}
+.growth-panel p{
+ color:var(--ink2);
+ line-height:1.8;
+ max-width:70ch;
+}
+.growth-form{
+ display:grid;
+ gap:12px;
+}
+.growth-form-grid{
+ display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:10px;
+}
+.growth-kpi-grid,
+.keyword-grid{
+ display:grid;
+ grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:14px;
+ margin-top:18px;
+}
+.growth-kpi{
+ padding:16px;
+ border-radius:16px;
+ border:1px solid rgba(148,163,184,0.14);
+ background:rgba(255,255,255,0.035);
+}
+.growth-kpi strong{
+ display:block;
+ font-size:24px;
+ color:#fff;
+ line-height:1.1;
+}
+.growth-kpi span{
+ color:var(--ink3);
+ font-size:12px;
+}
+.keyword-grid{
+ grid-template-columns:repeat(3,minmax(0,1fr));
+}
+.keyword-card h4{
+ font-size:15px;
+ margin-bottom:10px;
+}
+.keyword-card ul{
+ list-style:none;
+ display:grid;
+ gap:8px;
+}
+.keyword-card li{
+ padding:8px 10px;
+ border-radius:999px;
+ background:rgba(255,255,255,0.04);
+ border:1px solid rgba(255,255,255,0.08);
+ color:var(--ink2);
+ font-size:12px;
+}
+.utm-output{
+ word-break:break-word;
+ padding:12px;
+ border-radius:14px;
+ background:rgba(3,0,20,0.74);
+ border:1px solid rgba(56,189,248,0.18);
+ color:#dffbff;
+ font-size:12px;
+ line-height:1.65;
+}
+.growth-timeline{
+ display:grid;
+ grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:14px;
+ margin-top:18px;
+}
+.growth-step{
+ padding:18px;
+ border-radius:16px;
+ background:rgba(255,255,255,0.04);
+ border:1px solid rgba(255,255,255,0.08);
+}
+.growth-step strong{
+ display:block;
+ color:#fff;
+ margin-bottom:6px;
+}
+.growth-step span{
+ display:block;
+ color:var(--ink2);
+ font-size:13px;
+ line-height:1.6;
+}
 
 /* ===================== COURSE DETAIL ===================== */
 .detail-layout{
@@ -2806,6 +2922,8 @@ button:active, a:active, .btn:active, .course-card:active{
  .detail-spotlight{grid-template-columns:1fr}
  .task-input-row,.memory-search-row{grid-template-columns:1fr}
  .workspace-board,.workspace-metrics{grid-template-columns:1fr}
+ .growth-wrap{padding:90px 18px 60px}
+ .growth-hero,.growth-form-grid,.growth-kpi-grid,.keyword-grid,.growth-timeline{grid-template-columns:1fr}
  .community-wrap{padding:90px 18px 60px}
  .community-hero{grid-template-columns:1fr}
  .community-grid{grid-template-columns:1fr}
@@ -2865,6 +2983,7 @@ button:active, a:active, .btn:active, .course-card:active{
  <li><a href="/academy" onclick="event.preventDefault();showPage('academy')" id="nl-academy">Academy</a></li>
  <li><a href="/studio" onclick="event.preventDefault();showPage('studio')" id="nl-studio">Studio</a></li>
  <li><a href="/community" onclick="event.preventDefault();showPage('community')" id="nl-community">Community</a></li>
+ <li><a href="/growth" onclick="event.preventDefault();showPage('growth')" id="nl-growth">Growth</a></li>
  <li><a href="/about" onclick="event.preventDefault();showPage('about')" id="nl-about">About</a></li>
  </ul>
  <div class="nav-btns">
@@ -2888,6 +3007,7 @@ button:active, a:active, .btn:active, .course-card:active{
  <a href="/academy" onclick="event.preventDefault();showPage('academy');toggleMenu()"> Academy</a>
  <a href="/studio" onclick="event.preventDefault();showPage('studio');toggleMenu()"> Studio</a>
  <a href="/community" onclick="event.preventDefault();showPage('community');toggleMenu()"> Community</a>
+ <a href="/growth" onclick="event.preventDefault();showPage('growth');toggleMenu()"> Growth</a>
  <a href="/about" onclick="event.preventDefault();showPage('about');toggleMenu()"> About</a>
  <a href="/login" onclick="event.preventDefault();showPage('login');toggleMenu()"> Login</a>
  <a href="#" onclick="event.preventDefault();toggleContrastMode()"> Contrast Mode</a>
@@ -3675,6 +3795,75 @@ button:active, a:active, .btn:active, .course-card:active{
     <span class="security-badge"><span class="dot"></span> Live Q&A</span>
     <span class="security-badge"><span class="dot"></span> Certificates</span>
    </div>
+  </div>
+ </div>
+</div>
+
+<!-- ===================== GROWTH / SEM PAGE ===================== -->
+<div class="page" id="page-growth">
+ <div class="growth-wrap">
+  <div class="growth-hero">
+   <section class="growth-panel fade-in">
+    <div class="sec-tag">Growth Engine</div>
+    <h3>SEM planner for course sales, lead capture, and measurable ROI.</h3>
+    <p>Build focused Google/Bing search campaigns around one course, one audience, and one promise. The planner below estimates traffic, leads, and revenue before budget is spent.</p>
+    <div class="growth-timeline">
+     <div class="growth-step"><strong>01 Goal</strong><span>Choose lead, sale, or course launch as the primary conversion.</span></div>
+     <div class="growth-step"><strong>02 Keywords</strong><span>Use transactional long-tail terms and negative keywords to protect budget.</span></div>
+     <div class="growth-step"><strong>03 Landing</strong><span>Send traffic to a matching course page, not a generic homepage.</span></div>
+     <div class="growth-step"><strong>04 Optimize</strong><span>Track CTR, CPC, conversion rate, CPA, and ROAS weekly.</span></div>
+    </div>
+   </section>
+   <aside class="growth-panel fade-in">
+    <div class="sec-tag">Campaign Builder</div>
+    <div class="growth-form">
+     <select id="semCourse" class="fi"></select>
+     <select id="semGoal" class="fi">
+      <option value="leads">Lead generation</option>
+      <option value="sales">Course sales</option>
+      <option value="waitlist">Early-access waitlist</option>
+     </select>
+     <div class="growth-form-grid">
+      <input id="semBudget" class="fi" type="number" min="500" step="100" value="5000" placeholder="Budget INR">
+      <input id="semCpc" class="fi" type="number" min="1" step="1" value="18" placeholder="Avg CPC INR">
+      <input id="semConv" class="fi" type="number" min="1" max="80" step="0.5" value="6" placeholder="Conversion %">
+      <input id="semAov" class="fi" type="number" min="0" step="50" value="799" placeholder="AOV INR">
+     </div>
+     <button class="btn btn-prime" onclick="generateSemPlan()">Generate SEM Plan</button>
+    </div>
+   </aside>
+  </div>
+  <div class="growth-kpi-grid fade-in" id="semKpiGrid"></div>
+  <div class="keyword-grid fade-in" style="margin-top:20px">
+   <div class="growth-card keyword-card">
+    <h4>Ad Groups</h4>
+    <ul id="semAdGroups"></ul>
+   </div>
+   <div class="growth-card keyword-card">
+    <h4>Keyword Seeds</h4>
+    <ul id="semKeywordList"></ul>
+   </div>
+   <div class="growth-card keyword-card">
+    <h4>Negative Keywords</h4>
+    <ul id="semNegativeList"></ul>
+   </div>
+  </div>
+  <div class="growth-hero fade-in" style="margin-top:20px">
+   <section class="growth-panel">
+    <div class="sec-tag">Ad Copy</div>
+    <h3 style="font-size:26px">Search ad variations ready for A/B testing</h3>
+    <div class="memory-result-list" id="semAdCopy"></div>
+   </section>
+   <aside class="growth-panel">
+    <div class="sec-tag">UTM Builder</div>
+    <div class="growth-form">
+     <input id="utmSource" class="fi" value="google" placeholder="utm_source">
+     <input id="utmCampaign" class="fi" value="humaix_academy_launch" placeholder="utm_campaign">
+     <input id="utmContent" class="fi" value="ad_a" placeholder="utm_content">
+     <button class="btn btn-ghost" onclick="buildUtmUrl()">Build Tracking URL</button>
+     <div class="utm-output" id="utmOutput">Tracking URL will appear here.</div>
+    </div>
+   </aside>
   </div>
  </div>
 </div>
@@ -5331,6 +5520,7 @@ const STUDIO_STATE_KEY = 'hr_studio_state';
 const COMMUNITY_KEY = 'hr_community_posts';
 const ANALYTICS_KEY = 'hr_local_events';
 const WORKSPACE_TASKS_KEY = 'hr_workspace_tasks';
+const SEM_PLAN_KEY = 'hr_sem_plan';
 const ADMIN_EMAIL = 'Hzzzx06@gmail.com';
 const PAGE_META = {
  home: {
@@ -5356,6 +5546,10 @@ const PAGE_META = {
  community: {
    title: 'Community Hub | HUMAIX REALM',
    description: 'Join the HUMAIX REALM community hub for peer learning, study groups, project reviews, and live AI-native support.'
+ },
+ growth: {
+   title: 'Growth & SEM Planner | HUMAIX REALM',
+   description: 'Plan search ads, keyword groups, UTM tracking, budgets, and ROI for HUMAIX REALM course growth campaigns.'
  },
  courses: {
    title: 'Courses | HUMAIX REALM',
@@ -5414,6 +5608,7 @@ const ROUTE_TO_PAGE = {
  '/academy': 'academy',
  '/studio': 'studio',
  '/community': 'community',
+ '/growth': 'growth',
  '/courses': 'courses',
   '/about': 'about',
   '/blog': 'blog',
@@ -5436,6 +5631,7 @@ const PAGE_TO_ROUTE = {
  academy: '/academy',
  studio: '/studio',
  community: '/community',
+ growth: '/growth',
  courses: '/courses',
  about: '/about',
  blog: '/blog',
@@ -5456,6 +5652,7 @@ const PAGE_TO_NAV = {
  academy: 'nl-academy',
  studio: 'nl-studio',
  community: 'nl-community',
+ growth: 'nl-growth',
  courses: 'nl-academy',
  about: 'nl-about',
  dashboard: 'nl-workspace'
@@ -5519,6 +5716,7 @@ function renderPage(name){
  if(name === 'academy') filterAcademy();
  if(name === 'studio') renderStudio();
  if(name === 'community') renderCommunityHub();
+ if(name === 'growth') renderSemPlanner();
  if(name === 'dashboard') renderDashboardData();
  if(name === 'admin') renderAdminAnalytics();
  if(name === 'detail') {
@@ -6261,8 +6459,146 @@ function renderAdminAnalytics(){
   <div class="adm-card"><div class="adm-ico"></div><div class="adm-val">${events.length}</div><div class="adm-lbl">Tracked Signals</div></div>
   <div class="adm-card"><div class="adm-ico"></div><div class="adm-val">${studio}</div><div class="adm-lbl">Studio Actions</div></div>
   <div class="adm-card"><div class="adm-ico"></div><div class="adm-val">${leads}</div><div class="adm-lbl">Community / Course Signals</div></div>
-  <div class="adm-card"><div class="adm-ico"></div><div class="adm-val">${enrolled}</div><div class="adm-lbl">Local Enrollments</div></div>
+ <div class="adm-card"><div class="adm-ico"></div><div class="adm-val">${enrolled}</div><div class="adm-lbl">Local Enrollments</div></div>
  `;
+}
+
+function getSemCourse(){
+ const id = Number(document.getElementById('semCourse')?.value || COURSES[0]?.id || 1);
+ return getCourseById(id) || COURSES[0];
+}
+
+function renderSemPlanner(){
+ const select = document.getElementById('semCourse');
+ if(select && !select.dataset.ready){
+  select.innerHTML = COURSES.map(course => `<option value="${course.id}">${course.title}</option>`).join('');
+  select.dataset.ready = 'true';
+ }
+ generateSemPlan(false);
+ buildUtmUrl(false);
+}
+
+function getSemKeywordSeeds(course){
+ const base = [
+  `learn ${course.title.toLowerCase()}`,
+  `${course.cat.toLowerCase()} course in hindi`,
+  `${course.cat.toLowerCase()} course with certificate`,
+  `best ${course.cat.toLowerCase()} course for beginners`,
+  `${course.title.toLowerCase()} online`
+ ];
+ const intent = course.cat === 'Generative AI'
+  ? ['learn generative ai in hindi', 'ai prompt engineering course india', 'ai tools course for students']
+  : course.cat === 'Cyber Security'
+   ? ['cyber security course in hindi', 'ethical hacking course for beginners', 'online security course with certificate']
+   : course.cat === 'Full-Stack'
+    ? ['full stack web development course hindi', 'learn web development with projects', 'react node course india']
+    : ['online tech course in hindi', 'career course with certificate', 'skill course for students'];
+ return Array.from(new Set([...base, ...intent])).slice(0, 8);
+}
+
+function generateSemPlan(showMessage = true){
+ const course = getSemCourse();
+ const goal = document.getElementById('semGoal')?.value || 'leads';
+ const budget = Math.max(0, Number(document.getElementById('semBudget')?.value || 0));
+ const cpc = Math.max(1, Number(document.getElementById('semCpc')?.value || 1));
+ const convRate = Math.max(0, Number(document.getElementById('semConv')?.value || 0)) / 100;
+ const aov = Math.max(0, Number(document.getElementById('semAov')?.value || course.price || 0));
+ const clicks = Math.floor(budget / cpc);
+ const conversions = Math.max(0, Math.round(clicks * convRate));
+ const revenue = goal === 'sales' ? conversions * aov : conversions * course.price;
+ const cpa = conversions ? Math.round(budget / conversions) : budget;
+ const roas = budget ? (revenue / budget).toFixed(2) : '0.00';
+ const keywordSeeds = getSemKeywordSeeds(course);
+ const negative = ['free', 'torrent', 'pdf only', 'crack', 'job vacancy', 'meaning', 'definition', 'cheap fake'];
+ const adGroups = [
+  `${course.cat} Hindi Learners`,
+  `${course.title} Certificate`,
+  `${course.cat} Beginner Projects`,
+  `${course.cat} Career Intent`
+ ];
+ const headlines = [
+  `${course.title} in Hindi + English`,
+  `Build Real ${course.cat} Skills`,
+  `Start ${course.cat} with HUMAIX REALM`
+ ];
+ const descriptions = [
+  `Project-led lessons, certificate access, and mobile-friendly learning for Indian students.`,
+  `Preview the learning studio, save notes, and enroll through secure checkout.`,
+  `Beginner-friendly roadmap with AI support, community, and practical outcomes.`
+ ];
+ const kpi = document.getElementById('semKpiGrid');
+ if(kpi){
+  kpi.innerHTML = [
+   ['Clicks', clicks.toLocaleString('en-IN')],
+   ['Conversions', conversions.toLocaleString('en-IN')],
+   ['CPA', `INR ${cpa.toLocaleString('en-IN')}`],
+   ['ROAS', `${roas}x`]
+  ].map(([label, value]) => `<div class="growth-kpi"><strong>${value}</strong><span>${label}</span></div>`).join('');
+ }
+ const fillList = (id, items) => {
+  const el = document.getElementById(id);
+  if(el) el.innerHTML = items.map(item => `<li>${escapeHtml(item)}</li>`).join('');
+ };
+ fillList('semAdGroups', adGroups);
+ fillList('semKeywordList', keywordSeeds);
+ fillList('semNegativeList', negative);
+ const copy = document.getElementById('semAdCopy');
+ if(copy){
+  copy.innerHTML = headlines.map((headline, index) => `
+   <div class="memory-note-card">
+    <h3>${escapeHtml(headline)}</h3>
+    <p>${escapeHtml(descriptions[index] || descriptions[0])}</p>
+    <div class="memory-note-actions"><button class="mini-action" onclick="copySemText('${encodeMemoryValue(`${headline} - ${descriptions[index] || descriptions[0]}`)}')">Copy Ad</button></div>
+   </div>
+  `).join('');
+ }
+ const plan = { courseId: course.id, goal, budget, cpc, convRate, aov, clicks, conversions, revenue, cpa, roas, keywordSeeds, negative, adGroups, updatedAt: new Date().toISOString() };
+ try{ localStorage.setItem(SEM_PLAN_KEY, JSON.stringify(plan)); }catch(_){}
+ if(showMessage) {
+  trackEvent('sem_plan', { courseId: course.id, goal, budget });
+  showToast('SEM plan generated.');
+ }
+}
+
+function buildUtmUrl(showMessage = true){
+ const course = getSemCourse();
+ const source = encodeURIComponent(String(document.getElementById('utmSource')?.value || 'google').trim() || 'google');
+ const campaign = encodeURIComponent(String(document.getElementById('utmCampaign')?.value || 'humaix_academy_launch').trim() || 'humaix_academy_launch');
+ const content = encodeURIComponent(String(document.getElementById('utmContent')?.value || 'ad_a').trim() || 'ad_a');
+ const url = `${window.location.origin}/course?course=${course.id}&utm_source=${source}&utm_medium=cpc&utm_campaign=${campaign}&utm_content=${content}`;
+ const output = document.getElementById('utmOutput');
+ if(output) output.textContent = url;
+ if(showMessage) {
+  if(navigator.clipboard?.writeText){
+   navigator.clipboard.writeText(url).then(() => showToast('Tracking URL copied.'));
+  } else {
+   showToast('Tracking URL built.');
+  }
+ }
+ return url;
+}
+
+function copySemText(encoded){
+ const text = decodeMemoryValue(encoded);
+ if(navigator.clipboard?.writeText){
+  navigator.clipboard.writeText(text).then(() => showToast('Ad copy copied.'));
+ } else {
+  showToast('Copy is unavailable in this browser.', 'warn');
+ }
+}
+
+function captureCampaignParams(){
+ const params = new URLSearchParams(window.location.search || '');
+ const source = params.get('utm_source');
+ const campaign = params.get('utm_campaign');
+ if(source || campaign){
+  trackEvent('utm_visit', {
+   source: source || '',
+   medium: params.get('utm_medium') || '',
+   campaign: campaign || '',
+   content: params.get('utm_content') || ''
+  });
+ }
 }
 
 function resumeCourse(courseId){
@@ -6835,6 +7171,7 @@ safeBoot('Hero scene', initHeroScene);
 safeBoot('Reel scene', initReelScene);
 loadConfig();
 checkAuth();
+captureCampaignParams();
 const initialRoute = getPageFromLocation();
 renderPage(initialRoute);
 const expectedRoute = PAGE_TO_ROUTE[initialRoute] || '/';

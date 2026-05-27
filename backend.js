@@ -387,6 +387,7 @@ app.get('/sitemap.xml', (req, res) => {
     '/academy',
     '/studio',
     '/community',
+    '/growth',
     '/courses',
     '/about',
     '/blog',
