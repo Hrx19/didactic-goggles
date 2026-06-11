@@ -1,0 +1,26 @@
+[
+  {
+    "id": "sem_1779955983566_a16d474c",
+    "userId": "",
+    "email": "",
+    "courseId": 1,
+    "courseTitle": "AI Productivity Sprint",
+    "goal": "sales",
+    "landingRoute": "/lp/ai-productivity",
+    "budget": 5000,
+    "cpc": 18,
+    "conversionRate": 0.06,
+    "aov": 0,
+    "clicks": 0,
+    "conversions": 0,
+    "revenue": 0,
+    "cpa": 0,
+    "roas": "",
+    "keywordSeeds": [
+      "learn ai in hindi"
+    ],
+    "negativeKeywords": [],
+    "adGroups": [],
+    "createdAt": "2026-05-28T08:13:03.566Z"
+  }
+]

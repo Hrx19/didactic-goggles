@@ -1,0 +1,30 @@
+[
+  {
+    "id": "tx_1779950313236_48046aa0",
+    "orderId": "manual_1779950313236",
+    "userId": "1779950313199",
+    "email": "live_1779950313126@example.com",
+    "courseId": 1,
+    "courseTitle": "AI Productivity Sprint",
+    "amount": 299,
+    "currency": "INR",
+    "status": "pending_manual_payment",
+    "paymentMethod": "upi_manual",
+    "createdAt": "2026-05-28T06:38:33.236Z",
+    "updatedAt": "2026-05-28T06:38:33.236Z"
+  },
+  {
+    "id": "tx_1779950244714_a10c8ca6",
+    "orderId": "manual_1779950244714",
+    "userId": "1779950244665",
+    "email": "buyer_1779950244641@example.com",
+    "courseId": 1,
+    "courseTitle": "AI Productivity Sprint",
+    "amount": 299,
+    "currency": "INR",
+    "status": "pending_manual_payment",
+    "paymentMethod": "upi_manual",
+    "createdAt": "2026-05-28T06:37:24.715Z",
+    "updatedAt": "2026-05-28T06:37:24.715Z"
+  }
+]

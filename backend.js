@@ -35,7 +35,7 @@ app.use((req, res, next) => {
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "script-src 'self' 'unsafe-inline' https://checkout.razorpay.com https://accounts.google.com https://cdn.jsdelivr.net",
       "connect-src 'self' https://checkout.razorpay.com https://accounts.google.com https://fonts.googleapis.com https://fonts.gstatic.com",
-      "frame-src https://checkout.razorpay.com https://accounts.google.com"
+      "frame-src https://checkout.razorpay.com https://accounts.google.com https://www.youtube.com https://youtube.com"
     ].join('; ')
   );
   next();
@@ -44,7 +44,7 @@ app.use((req, res, next) => {
 const baseUrl = (process.env.BASE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : `http://localhost:${port}`)).replace(/\/$/, '');
 const dataFile = path.join(__dirname, 'contacts.json');
 const usersFile = path.join(__dirname, 'users.json');
-const appShellFile = path.join(__dirname, 'uttarakhand-future-technology (2).html');
+const appShellFile = path.join(__dirname, 'app-shell.html');
 const aiKey = pickEnv(
   'OPENAI_API_KEY',
   'OPENAI_KEY',
@@ -125,7 +125,7 @@ function sendMaintenancePage(res, statusCode = 503) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HUMAIX REALM | Temporarily Unavailable</title>
+<title>HUMAIX ECHO REALM | Temporarily Unavailable</title>
 <style>
 body{margin:0;min-height:100vh;display:grid;place-items:center;background:#030014;color:#e2e8f0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
 main{width:min(560px,92vw);padding:32px;border:1px solid rgba(148,163,184,.22);border-radius:22px;background:rgba(15,23,42,.72);box-shadow:0 24px 90px rgba(0,0,0,.4)}
@@ -134,11 +134,14 @@ p{color:#cbd5e1;line-height:1.7}
 a{display:inline-flex;margin-top:14px;color:#38bdf8;font-weight:800;text-decoration:none}
 </style>
 </head>
-<body><main><h1>HUMAIX REALM</h1><p>The platform shell is temporarily unavailable. Please refresh in a moment. The health endpoint is active, so the service can recover cleanly after deployment updates.</p><a href="/">Try again</a></main></body>
+<body><main><h1>HUMAIX ECHO REALM</h1><p>The platform shell is temporarily unavailable. Please refresh in a moment. The health endpoint is active, so the service can recover cleanly after deployment updates.</p><a href="/">Try again</a></main></body>
 </html>`);
 }
 
 function sendAppShell(req, res) {
+  res.setHeader('Cache-Control', 'no-store, max-age=0, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
   if (!fs.existsSync(appShellFile)) {
     console.error('App shell file missing:', appShellFile);
     return sendMaintenancePage(res, 503);
@@ -192,7 +195,16 @@ if (hasRazorpayKeys) {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname));
+app.use(express.static(__dirname, {
+  setHeaders(res, filePath) {
+    const fileName = path.basename(filePath);
+    if (fileName === 'app-shell.html' || fileName === 'manifest.webmanifest' || fileName === 'service-worker.js') {
+      res.setHeader('Cache-Control', 'no-store, max-age=0, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+    }
+  }
+}));
 
 // Session
 app.use(session({
@@ -385,12 +397,8 @@ app.get('/sitemap.xml', (req, res) => {
     '/workspace',
     '/memory',
     '/academy',
-    '/studio',
-    '/community',
-    '/growth',
     '/courses',
     '/about',
-    '/blog',
     '/contact',
     '/privacy-policy',
     '/terms-of-service',
@@ -401,6 +409,10 @@ app.get('/sitemap.xml', (req, res) => {
     routes.map((route) => `<url><loc>${baseUrl}${route}</loc></url>`).join('') +
     `</urlset>`;
   res.type('application/xml').send(body);
+});
+
+app.get(['/studio', '/community', '/growth', '/blog'], (req, res) => {
+  res.redirect(301, '/academy');
 });
 
 app.get('/dashboard', (req, res) => {
@@ -736,7 +748,7 @@ function buildCourseList() {
 
 function buildSiteSummary() {
   return [
-    'HUMAIX REALM is a premium AI + tech learning website.',
+    'HUMAIX ECHO REALM is a premium AI + tech learning website.',
     'Founder/instructor shown on the site: Harish Singh.',
     'Primary contact: Hzzzx06@gmail.com.',
     'Main pages: Home, Courses, About, Blog, Contact, Login, Sign Up, Dashboard, Admin.',
@@ -760,7 +772,7 @@ function buildLocalAiReply(question) {
   const prefix = wantsHindi ? 'Bilkul. ' : '';
 
   if (!raw) {
-    return 'Ask me about any HUMAIX REALM course, fees, payment, roadmap, language, certificate, or support.';
+    return 'Ask me about any HUMAIX ECHO REALM course, fees, payment, roadmap, language, certificate, or support.';
   }
 
   if (/(site|website|about|home|home page|features|pages|founder|harish|who made|what is this|full details|details)/.test(text)) {
@@ -768,7 +780,7 @@ function buildLocalAiReply(question) {
   }
 
   if (/(all|list|courses|course|fees|price|pricing)/.test(text) && !course) {
-    return prefix + "HUMAIX REALM courses are available in Hindi + English:\n" + buildCourseList() + "\n\nBest beginner path: AI Productivity Sprint -> Python Foundations -> Data Science with AI. For security, choose Cyber Security Foundations first.";
+    return prefix + "HUMAIX ECHO REALM courses are available in Hindi + English:\n" + buildCourseList() + "\n\nBest beginner path: AI Productivity Sprint -> Python Foundations -> Data Science with AI. For security, choose Cyber Security Foundations first.";
   }
 
   if (course) {
@@ -795,7 +807,7 @@ function buildLocalAiReply(question) {
     return 'For earning-focused learning, start with AI Productivity Sprint, then choose Data Science with AI, Full-Stack Web Development, Creator Growth System, or Entrepreneurship Launch Lab depending on your goal.';
   }
 
-  return prefix + "Here is the practical HUMAIX REALM answer: tell me your current level and goal. For a fast first result, start with AI Productivity Sprint. For coding, choose Python Foundations or Full-Stack Web Development. For analytics, choose Data Science with AI. For security, choose Cyber Security Foundations. All courses are Hindi + English and include certificate access.";
+  return prefix + "Here is the practical HUMAIX ECHO REALM answer: tell me your current level and goal. For a fast first result, start with AI Productivity Sprint. For coding, choose Python Foundations or Full-Stack Web Development. For analytics, choose Data Science with AI. For security, choose Cyber Security Foundations. All courses are Hindi + English and include certificate access.";
 }
 app.post('/api/contact', rateLimiters.contact, (req, res) => {
   const { firstName, lastName, email, subject, message } = req.body;

@@ -1,0 +1,50 @@
+{
+  "1779949323661": {
+    "1": {
+      "id": 1,
+      "courseId": 1,
+      "title": "AI Productivity Sprint",
+      "category": "Technology",
+      "hours": "3.5",
+      "price": 299,
+      "progress": 25,
+      "status": "active",
+      "paid": false,
+      "paymentId": "",
+      "enrolledAt": "2026-05-28T06:22:03.703Z",
+      "updatedAt": "2026-05-28T06:22:03.703Z"
+    }
+  },
+  "1779950244665": {
+    "1": {
+      "id": 1,
+      "courseId": 1,
+      "title": "AI Productivity Sprint",
+      "category": "Technology",
+      "hours": "3.5",
+      "price": 299,
+      "progress": 0,
+      "status": "payment_pending",
+      "paid": false,
+      "orderId": "manual_1779950244714",
+      "enrolledAt": "2026-05-28T06:37:24.716Z",
+      "updatedAt": "2026-05-28T06:37:24.716Z"
+    }
+  },
+  "1779950313199": {
+    "1": {
+      "id": 1,
+      "courseId": 1,
+      "title": "AI Productivity Sprint",
+      "category": "Technology",
+      "hours": "3.5",
+      "price": 299,
+      "progress": 0,
+      "status": "payment_pending",
+      "paid": false,
+      "orderId": "manual_1779950313236",
+      "enrolledAt": "2026-05-28T06:38:33.237Z",
+      "updatedAt": "2026-05-28T06:38:33.237Z"
+    }
+  }
+}

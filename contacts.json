@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1779540548100,
+    "firstName": "",
+    "lastName": "",
+    "email": "codex-check-1779540547@example.com",
+    "subject": "General",
+    "message": "hello from smoke test",
+    "receivedAt": "2026-05-23T12:49:08.100Z"
+  },
+  {
+    "id": 1779540606452,
+    "firstName": "",
+    "lastName": "",
+    "email": "rate-test@example.com",
+    "subject": "General",
+    "message": "hello",
+    "receivedAt": "2026-05-23T12:50:06.452Z"
+  },
+  {
+    "id": 1779605495347,
+    "firstName": "Test",
+    "lastName": "User",
+    "email": "test@example.com",
+    "subject": "hello",
+    "message": "alert(1) Need help TABLE users;",
+    "receivedAt": "2026-05-24T06:51:35.347Z"
+  }
+]

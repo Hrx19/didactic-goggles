@@ -1,0 +1,24 @@
+{
+  "1779957447928": [
+    {
+      "id": "booking_1779957447984_8b9f936f",
+      "confirmation": "HRTR-AC6133",
+      "status": "reserved",
+      "paymentStatus": "pending",
+      "title": "Rishikesh Learning Travel Package Option 1",
+      "vendor": "HUMAIX Travel Desk",
+      "mode": "package",
+      "origin": "Delhi",
+      "destination": "Rishikesh",
+      "departDate": "2026-06-10",
+      "returnDate": "",
+      "travellers": 2,
+      "price": 2499,
+      "duration": "3 days",
+      "notes": "",
+      "createdAt": "2026-05-28T08:37:27.984Z",
+      "updatedAt": "2026-05-28T08:37:27.984Z",
+      "userId": "1779957447928"
+    }
+  ]
+}
