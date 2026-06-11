@@ -3149,8 +3149,7 @@ button:active, a:active, .btn:active, .course-card:active{
  <img class="hero-visual-poster" src="/logo.png?v=3" alt="Brand logo visual for HUMAIX ECHO REALM">
  <canvas id="heroScene" aria-hidden="true"></canvas>
  <div class="hero-visual-copy">
- <div class="status-chip"><span class="dot"></span> All Systems Operational</div>
- <div class="scene-label">Brand Logo Core</div>
+ <div class="scene-label">3D Brand Logo</div>
  </div>
  <div class="hero-brand-ribbon">
   <div class="logo-mark hero-logo-mark" aria-hidden="true"><img src="/logo.png?v=3" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"><span class="logo-fallback">HE</span></div>
@@ -3234,7 +3233,7 @@ button:active, a:active, .btn:active, .course-card:active{
  <div class="trust-shell glass-panel fade-in">
  <div>
  <div class="sec-tag">System Status</div>
- <h2 class="sec-title" style="margin-bottom:10px">All Systems Operational</h2>
+ <h2 class="sec-title" style="margin-bottom:10px">Brand Experience Live</h2>
  <p class="sec-sub" style="margin:0">The experience is designed to feel calm, premium, and dependable on phones, tablets, and desktops.</p>
  </div>
  <div class="security-badges">
@@ -5107,13 +5106,13 @@ group.scale.setScalar(window.matchMedia('(pointer:coarse)').matches ? 0.9 : 0.82
  portal.add(portalRing2);
 
  const logoPlate = new THREE.Group();
- logoPlate.position.set(0.22, 0.08, 1.78);
+ logoPlate.position.set(0.02, 0.0, 1.74);
  logoPlate.rotation.y = -0.18;
  logoPlate.rotation.x = 0.08;
  group.add(logoPlate);
 
  const logoBacking = new THREE.Mesh(
-   new THREE.CircleGeometry(1.65, 72),
+   new THREE.CircleGeometry(1.9, 72),
    new THREE.MeshBasicMaterial({
      color: 0x050816,
      transparent: true,
@@ -5122,11 +5121,11 @@ group.scale.setScalar(window.matchMedia('(pointer:coarse)').matches ? 0.9 : 0.82
      side: THREE.DoubleSide
    })
  );
- logoBacking.position.z = -0.12;
+ logoBacking.position.z = -0.18;
  logoPlate.add(logoBacking);
 
  const logoAura = new THREE.Mesh(
-   new THREE.TorusGeometry(1.82, 0.05, 16, 220),
+   new THREE.TorusGeometry(2.08, 0.056, 16, 220),
    new THREE.MeshBasicMaterial({
      color: 0x00e5ff,
      transparent: true,
@@ -5145,7 +5144,7 @@ group.scale.setScalar(window.matchMedia('(pointer:coarse)').matches ? 0.9 : 0.82
    depthWrite: false,
    depthTest: true
  }));
- logoSprite.scale.set(3.7, 2.46, 1);
+ logoSprite.scale.set(4.7, 3.1, 1);
  logoPlate.add(logoSprite);
 
  const logoLoader = new THREE.TextureLoader();
@@ -5432,9 +5431,10 @@ group.scale.setScalar(window.matchMedia('(pointer:coarse)').matches ? 0.9 : 0.82
    magenta.position.x = -6 + Math.cos(time * 0.55) * 1.2;
    magenta.position.y = -2 + Math.sin(time * 0.6) * 1.0;
    purple.position.x = Math.sin(time * 0.5) * 4.0;
-   logoPlate.rotation.z = Math.sin(time * 0.75) * 0.06;
-   logoPlate.position.y = 0.08 + Math.sin(time * 0.9) * 0.07;
-   logoPlate.position.x = 0.22 + Math.cos(time * 0.8) * 0.05;
+   logoPlate.rotation.z = Math.sin(time * 0.75) * 0.045;
+   logoPlate.position.y = Math.sin(time * 0.9) * 0.06;
+   logoPlate.position.x = Math.cos(time * 0.8) * 0.05;
+   logoPlate.scale.setScalar(1.08 + Math.sin(time * 1.15) * 0.03);
    logoAura.rotation.z += 0.01;
    renderer.render(scene, camera);
    requestAnimationFrame(animate);
