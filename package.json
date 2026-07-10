@@ -1,10 +1,11 @@
 {
-  "name": "uttarakhand-future-technology-site",
+  "name": "humaix-echo-realm",
   "version": "1.0.0",
-  "description": "Simple backend for HUMAIX REALM website",
+  "description": "Simple backend for HUMAIXO website",
   "main": "backend.js",
   "scripts": {
-    "start": "node backend.js"
+    "start": "node backend.js",
+    "setup:razorpay": "powershell -ExecutionPolicy Bypass -File scripts/set-razorpay-env.ps1"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
@@ -17,3 +18,4 @@
     "razorpay": "^2.9.6"
   }
 }
+

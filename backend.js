@@ -17,8 +17,8 @@ app.use((req, res, next) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()');
-  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=(self "https://checkout.razorpay.com")');
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
   if (req.secure || req.headers['x-forwarded-proto'] === 'https') {
     res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   }
@@ -29,13 +29,13 @@ app.use((req, res, next) => {
       "base-uri 'self'",
       "object-src 'none'",
       "frame-ancestors 'none'",
-      "form-action 'self'",
-      "img-src 'self' data: blob:",
+      "form-action 'self' https://checkout.razorpay.com https://api.razorpay.com https://*.razorpay.com",
+      "img-src 'self' data: blob: https://checkout.razorpay.com https://*.razorpay.com",
       "font-src 'self' data:",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      "script-src 'self' 'unsafe-inline' https://checkout.razorpay.com https://accounts.google.com https://cdn.jsdelivr.net",
-      "connect-src 'self' https://checkout.razorpay.com https://accounts.google.com https://fonts.googleapis.com https://fonts.gstatic.com",
-      "frame-src https://checkout.razorpay.com https://accounts.google.com https://www.youtube.com https://youtube.com"
+      "script-src 'self' 'unsafe-inline' https://checkout.razorpay.com https://*.razorpay.com https://accounts.google.com https://cdn.jsdelivr.net",
+      "connect-src 'self' https://checkout.razorpay.com https://api.razorpay.com https://*.razorpay.com https://accounts.google.com https://fonts.googleapis.com https://fonts.gstatic.com",
+      "frame-src https://checkout.razorpay.com https://api.razorpay.com https://*.razorpay.com https://accounts.google.com https://www.youtube.com https://youtube.com"
     ].join('; ')
   );
   next();
@@ -44,7 +44,11 @@ app.use((req, res, next) => {
 const baseUrl = (process.env.BASE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : `http://localhost:${port}`)).replace(/\/$/, '');
 const dataFile = path.join(__dirname, 'contacts.json');
 const usersFile = path.join(__dirname, 'users.json');
+const enrollmentsFile = path.join(__dirname, 'enrollments.json');
+const transactionsFile = path.join(__dirname, 'transactions.json');
 const appShellFile = path.join(__dirname, 'app-shell.html');
+const manifestFile = path.join(__dirname, 'manifest.webmanifest');
+const dataScienceNotesFile = path.join(__dirname, 'assets', 'notes', 'data-science-python-handbook.pdf');
 const aiKey = pickEnv(
   'OPENAI_API_KEY',
   'OPENAI_KEY',
@@ -115,8 +119,303 @@ function loginSession(req, user, res, callback) {
     if (regenErr) {
       return callback(regenErr);
     }
-    req.login(user, callback);
+    req.login(user, (loginErr) => {
+      if (!loginErr) setAuthCookie(res, user);
+      callback(loginErr);
+    });
   });
+}
+
+function parseCookies(req) {
+  return String(req.headers.cookie || '')
+    .split(';')
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .reduce((acc, part) => {
+      const index = part.indexOf('=');
+      if (index > -1) acc[decodeURIComponent(part.slice(0, index))] = decodeURIComponent(part.slice(index + 1));
+      return acc;
+    }, {});
+}
+
+function getAuthSecret() {
+  return process.env.SESSION_SECRET || 'uft-local-dev-secret-change-me';
+}
+
+function signValue(value) {
+  return crypto.createHmac('sha256', getAuthSecret()).update(value).digest('hex');
+}
+
+function buildAuthPayload(user, extra = {}) {
+  return {
+    id: user.id,
+    email: normalizeEmail(user.email || user.emails?.[0]?.value || ''),
+    firstName: user.firstName || '',
+    lastName: user.lastName || '',
+    displayName: user.displayName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email || 'Learner',
+    avatar: user.avatar || user.photos?.[0]?.value || '',
+    provider: user.provider || 'local',
+    ts: Date.now(),
+    ...extra
+  };
+}
+
+function encodeSignedPayload(payload) {
+  const encoded = Buffer.from(JSON.stringify(payload)).toString('base64url');
+  return `${encoded}.${signValue(encoded)}`;
+}
+
+function decodeSignedPayload(token) {
+  const [payload, signature] = String(token || '').split('.');
+  if (!payload || !signature || signValue(payload) !== signature) return null;
+  try {
+    return JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+  } catch (_) {
+    return null;
+  }
+}
+
+function setAuthCookie(res, user) {
+  const token = encodeSignedPayload(buildAuthPayload(user));
+  const parts = [
+    `hr_auth=${encodeURIComponent(token)}`,
+    'Path=/',
+    'HttpOnly',
+    'SameSite=Lax',
+    'Max-Age=86400'
+  ];
+  if (process.env.NODE_ENV === 'production') parts.push('Secure');
+  res.setHeader('Set-Cookie', parts.join('; '));
+}
+
+function clearAuthCookie(res) {
+  res.setHeader('Set-Cookie', 'hr_auth=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0');
+}
+
+function userFromAuthCookie(req) {
+  const data = decodeSignedPayload(parseCookies(req).hr_auth || '');
+  if (!data?.email) return null;
+  const users = loadUsers();
+  return users.find((user) =>
+    String(user.id) === String(data.id) ||
+    normalizeEmail(user.email || user.emails?.[0]?.value || '') === normalizeEmail(data.email || '')
+  ) || {
+    id: data.id,
+    email: data.email,
+    firstName: data.firstName || '',
+    lastName: data.lastName || '',
+    displayName: data.displayName || data.email,
+    avatar: data.avatar || '',
+    provider: data.provider || 'local'
+  };
+}
+
+function getAuthenticatedUser(req) {
+  if (req.isAuthenticated?.() && req.user) return req.user;
+  return userFromAuthCookie(req);
+}
+
+function createAccountToken(user) {
+  return encodeSignedPayload(buildAuthPayload(user, {
+    purpose: 'local-account',
+    passwordHash: user.passwordHash || '',
+    createdAt: user.createdAt || new Date().toISOString()
+  }));
+}
+
+function userFromAccountToken(token, email, password) {
+  const data = decodeSignedPayload(token);
+  if (!data || data.purpose !== 'local-account') return null;
+  if (normalizeEmail(data.email || '') !== normalizeEmail(email || '')) return null;
+  if (!verifyPassword(password, data.passwordHash)) return null;
+  return {
+    id: data.id,
+    email: data.email,
+    passwordHash: data.passwordHash,
+    firstName: data.firstName || '',
+    lastName: data.lastName || '',
+    displayName: data.displayName || data.email,
+    avatar: data.avatar || '',
+    provider: data.provider || 'local',
+    createdAt: data.createdAt || new Date().toISOString()
+  };
+}
+
+function createNotesDownloadToken(tx) {
+  return encodeSignedPayload({
+    purpose: 'notes-download',
+    productId: tx.productId,
+    orderId: tx.orderId,
+    paymentId: tx.paymentId,
+    exp: Date.now() + 180 * 24 * 60 * 60 * 1000
+  });
+}
+
+function verifyNotesDownloadToken(token, productId) {
+  const data = decodeSignedPayload(token);
+  if (!data || data.purpose !== 'notes-download') return null;
+  if (data.productId !== productId) return null;
+  if (!data.exp || Date.now() > Number(data.exp)) return null;
+  return data;
+}
+
+function createNotesPromoToken(productId) {
+  return encodeSignedPayload({
+    purpose: 'notes-promo',
+    productId,
+    amount: 1,
+    exp: Date.now() + 30 * 1000
+  });
+}
+
+function verifyNotesPromoToken(token, productId) {
+  const data = decodeSignedPayload(token);
+  if (!data || data.purpose !== 'notes-promo') return null;
+  if (data.productId !== productId) return null;
+  if (!data.exp || Date.now() > Number(data.exp)) return null;
+  if (Number(data.amount) !== 1) return null;
+  return data;
+}
+
+const LIVE_COURSE_PRODUCTS = {
+  3: {
+    productType: 'course',
+    courseId: 3,
+    title: 'Data Science',
+    amount: 499,
+    currency: 'INR',
+    status: 'live'
+  }
+};
+
+const NOTES_PRODUCTS = {
+  'notes-3': {
+    productType: 'notes',
+    productId: 'notes-3',
+    courseId: 3,
+    title: 'Data Science Handbook',
+    amount: 399,
+    originalAmount: 999,
+    currency: 'INR',
+    assetUrl: '/api/notes/download/notes-3',
+    filePath: dataScienceNotesFile,
+    status: 'available'
+  }
+};
+
+function loadTransactions() {
+  try {
+    if (!fs.existsSync(transactionsFile)) return { orders: {}, legacy: [] };
+    const raw = JSON.parse(fs.readFileSync(transactionsFile, 'utf8') || '{}');
+    if (Array.isArray(raw)) return { orders: {}, legacy: raw };
+    return {
+      orders: raw.orders && typeof raw.orders === 'object' ? raw.orders : {},
+      legacy: Array.isArray(raw.legacy) ? raw.legacy : []
+    };
+  } catch (err) {
+    console.error('Error reading transactions file:', err);
+    return { orders: {}, legacy: [] };
+  }
+}
+
+function saveTransactions(data) {
+  try {
+    fs.writeFileSync(transactionsFile, JSON.stringify(data || { orders: {}, legacy: [] }, null, 2));
+  } catch (err) {
+    console.error('Error writing transactions file:', err);
+  }
+}
+
+function paymentProductSnapshot(product) {
+  return {
+    productType: product.productType,
+    productId: product.productId || `course-${product.courseId}`,
+    courseId: product.courseId || '',
+    title: product.title,
+    amount: product.amount,
+    originalAmount: product.originalAmount || '',
+    currency: product.currency || 'INR',
+    assetUrl: product.assetUrl || '',
+    promoApplied: product.promoApplied ? '1' : ''
+  };
+}
+
+function transactionFromProduct(orderId, product, status = 'created') {
+  return {
+    id: `tx_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`,
+    orderId,
+    productType: product.productType,
+    productId: product.productId || `course-${product.courseId}`,
+    courseId: product.courseId || null,
+    title: product.title,
+    amount: Number(product.amount),
+    originalAmount: product.originalAmount || null,
+    currency: product.currency || 'INR',
+    assetUrl: product.assetUrl || '',
+    promoApplied: Boolean(product.promoApplied),
+    status,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  };
+}
+
+async function recoverTransactionFromRazorpayOrder(orderId) {
+  if (!razorpay || !orderId) return null;
+  try {
+    const order = await razorpay.orders.fetch(orderId);
+    const notes = order?.notes || {};
+    const productType = cleanText(notes.productType || '', 40).toLowerCase();
+    const productId = cleanText(notes.productId || '', 80).toLowerCase();
+    const courseId = Number(notes.courseId || 0);
+    const baseProduct =
+      productType === 'notes'
+        ? NOTES_PRODUCTS[productId || `notes-${courseId}`]
+        : LIVE_COURSE_PRODUCTS[courseId];
+    if (!baseProduct) return null;
+
+    const amount = Number(notes.amount || 0);
+    const expectedAmounts = new Set([
+      Number(baseProduct.amount),
+      ...(baseProduct.productType === 'notes' ? [1] : [])
+    ]);
+    if (!expectedAmounts.has(amount) || Math.round(amount * 100) !== Number(order.amount)) {
+      return null;
+    }
+
+    return transactionFromProduct(orderId, {
+      ...baseProduct,
+      amount,
+      promoApplied: String(notes.promoApplied || '') === '1'
+    });
+  } catch (err) {
+    console.error('Could not recover Razorpay order metadata:', err?.message || err);
+    return null;
+  }
+}
+
+function resolvePaymentProduct(body = {}) {
+  const productType = cleanText(body.productType || '', 40).toLowerCase();
+  const courseId = Number(body.courseId);
+  const productId = cleanText(body.productId || '', 80).toLowerCase();
+
+  if (productType === 'notes' || productId.startsWith('notes-')) {
+    const key = productId || `notes-${courseId}`;
+    const product = NOTES_PRODUCTS[key];
+    if (!product || product.status !== 'available') return null;
+    const promo = verifyNotesPromoToken(body.promoToken || '', key);
+    if (promo) {
+      return { ...product, amount: 1, promoAmount: 1, promoExpiresAt: promo.exp, promoApplied: true };
+    }
+    return { ...product };
+  }
+
+  if (productType === 'course' || courseId) {
+    const product = LIVE_COURSE_PRODUCTS[courseId];
+    if (!product || product.status !== 'live') return null;
+    return { ...product };
+  }
+
+  return null;
 }
 
 function sendMaintenancePage(res, statusCode = 503) {
@@ -125,7 +424,7 @@ function sendMaintenancePage(res, statusCode = 503) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HUMAIX ECHO REALM | Temporarily Unavailable</title>
+<title>HUMAIXO | Temporarily Unavailable</title>
 <style>
 body{margin:0;min-height:100vh;display:grid;place-items:center;background:#030014;color:#e2e8f0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
 main{width:min(560px,92vw);padding:32px;border:1px solid rgba(148,163,184,.22);border-radius:22px;background:rgba(15,23,42,.72);box-shadow:0 24px 90px rgba(0,0,0,.4)}
@@ -134,7 +433,7 @@ p{color:#cbd5e1;line-height:1.7}
 a{display:inline-flex;margin-top:14px;color:#38bdf8;font-weight:800;text-decoration:none}
 </style>
 </head>
-<body><main><h1>HUMAIX ECHO REALM</h1><p>The platform shell is temporarily unavailable. Please refresh in a moment. The health endpoint is active, so the service can recover cleanly after deployment updates.</p><a href="/">Try again</a></main></body>
+<body><main><h1>HUMAIXO</h1><p>The platform shell is temporarily unavailable. Please refresh in a moment. The health endpoint is active, so the service can recover cleanly after deployment updates.</p><a href="/">Try again</a></main></body>
 </html>`);
 }
 
@@ -190,11 +489,61 @@ if (hasRazorpayKeys) {
     razorpay = null;
   }
 } else {
-  console.warn('Razorpay keys are not configured or invalid. Payment endpoints will be disabled.');
+  console.warn('Razorpay credentials are not configured or invalid. Payment endpoints will be disabled.');
 }
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.get('/manifest.webmanifest', (req, res) => {
+  res.type('application/manifest+json');
+  res.setHeader('Cache-Control', 'no-store, max-age=0, must-revalidate');
+  res.sendFile(manifestFile);
+});
+
+app.use('/assets/notes', (req, res) => {
+  res.status(403).json({ error: 'Notes are available only after successful payment.' });
+});
+
+const BLOCKED_STATIC_BASENAMES = new Set([
+  'backend.js',
+  'package.json',
+  'package-lock.json',
+  'vercel.json',
+  'users.json',
+  'contacts.json',
+  'feedback.json',
+  'enrollments.json',
+  'transactions.json',
+  'newsletters.json',
+  'memory-notes.json',
+  'workspace-tasks.json',
+  'sem-plans.json',
+  'travel-bookings.json',
+  'travel-searches.json',
+  'HUMAIX_REALM_BACKEND_AUDIT.md',
+  'SECURITY.md'
+]);
+
+app.use((req, res, next) => {
+  let pathname = '/';
+  try {
+    pathname = decodeURIComponent(new URL(req.originalUrl, 'http://localhost').pathname);
+  } catch (_) {
+    pathname = req.path || '/';
+  }
+  const basename = path.basename(pathname);
+  const blocked =
+    pathname.startsWith('/.') ||
+    pathname.startsWith('/scripts/') ||
+    BLOCKED_STATIC_BASENAMES.has(basename) ||
+    /^\/(?:.*\/)?[^/]*\.(?:env|log|md|map)$/i.test(pathname);
+  if (blocked) {
+    return res.status(404).type('text/plain').send('Not found');
+  }
+  next();
+});
+
 app.use(express.static(__dirname, {
   setHeaders(res, filePath) {
     const fileName = path.basename(filePath);
@@ -213,6 +562,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
+    httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     maxAge: 24 * 60 * 60 * 1000
@@ -281,6 +631,7 @@ app.get('/auth/google/callback', (req, res, next) => {
 });
 
 app.get('/logout', (req, res) => {
+  clearAuthCookie(res);
   req.logout(() => {
     res.redirect('/');
   });
@@ -333,7 +684,7 @@ function verifyPassword(password, storedHash) {
 function publicUser(user) {
   return {
     id: user.id,
-    displayName: user.displayName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email || 'Student',
+    displayName: user.displayName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email || 'Learner',
     email: user.email || user.emails?.[0]?.value || '',
     firstName: user.firstName || '',
     lastName: user.lastName || '',
@@ -344,8 +695,9 @@ function publicUser(user) {
 }
 
 app.get('/api/user', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.json(publicUser(req.user));
+  const user = getAuthenticatedUser(req);
+  if (user) {
+    res.json(publicUser(user));
   } else {
     res.status(401).json({ error: 'Not authenticated' });
   }
@@ -355,6 +707,11 @@ app.get('/api/config', (req, res) => {
   res.json({
     razorpayKeyId: razorpayKeyId || '',
     paymentEnabled: Boolean(razorpay && razorpayKeyId),
+    razorpayKeyPresent: Boolean(razorpayKeyId),
+    razorpaySecretPresent: Boolean(razorpayKeySecret),
+    paymentStatus: Boolean(razorpay && razorpayKeyId)
+      ? 'Razorpay checkout is active.'
+      : 'Online checkout is temporarily unavailable.',
     upiId,
     googleEnabled: Boolean(hasGoogleOAuth),
     googleDirectEnabled: Boolean(hasGoogleClientId),
@@ -396,8 +753,10 @@ app.get('/sitemap.xml', (req, res) => {
     '/',
     '/workspace',
     '/memory',
+    '/security-lab',
     '/academy',
     '/courses',
+    '/@Deep',
     '/about',
     '/contact',
     '/privacy-policy',
@@ -416,20 +775,21 @@ app.get(['/studio', '/community', '/growth', '/blog'], (req, res) => {
 });
 
 app.get('/dashboard', (req, res) => {
-  if (!req.isAuthenticated()) {
+  if (!getAuthenticatedUser(req)) {
     return res.redirect('/#login');
   }
-  return res.redirect('/workspace');
+  return res.sendFile(appShellFile);
 });
 
 app.get('/admin', (req, res) => {
-  if (!req.isAuthenticated()) {
+  const user = getAuthenticatedUser(req);
+  if (!user) {
     return res.redirect('/#login');
   }
-  if (!isAdminUser(req.user)) {
+  if (!isAdminUser(user)) {
     return res.status(403).send('Admin access restricted.');
   }
-  return res.redirect('/#admin');
+  return res.sendFile(appShellFile);
 });
 
 app.post('/api/signup', rateLimiters.auth, (req, res) => {
@@ -438,8 +798,8 @@ app.post('/api/signup', rateLimiters.auth, (req, res) => {
   if (!normalizedEmail || !password) {
     return res.status(400).json({ error: 'Email and password are required.' });
   }
-  if (String(password).length < 6) {
-    return res.status(400).json({ error: 'Password must be at least 6 characters.' });
+  if (String(password).length < 8) {
+    return res.status(400).json({ error: 'Password must be at least 8 characters.' });
   }
 
   const users = loadUsers();
@@ -466,19 +826,22 @@ app.post('/api/signup', rateLimiters.auth, (req, res) => {
       console.error('Signup login error:', err);
       return res.status(500).json({ error: 'Signup failed.' });
     }
-    res.json({ user: publicUser(user) });
+    res.json({ user: publicUser(user), accountToken: createAccountToken(user) });
   });
 });
 
 app.post('/api/login', rateLimiters.auth, (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, accountToken } = req.body;
   const normalizedEmail = normalizeEmail(email);
   if (!normalizedEmail || !password) {
     return res.status(400).json({ error: 'Email and password are required.' });
   }
 
   const users = loadUsers();
-  const user = users.find(u => normalizeEmail(u.email) === normalizedEmail);
+  let user = users.find(u => normalizeEmail(u.email) === normalizedEmail);
+  if (!user && accountToken) {
+    user = userFromAccountToken(accountToken, normalizedEmail, password);
+  }
   const passwordMatches =
     user &&
     (verifyPassword(password, user.passwordHash) ||
@@ -500,7 +863,7 @@ app.post('/api/login', rateLimiters.auth, (req, res) => {
       console.error('Login error:', err);
       return res.status(500).json({ error: 'Login failed.' });
     }
-    res.json({ user: publicUser(user) });
+    res.json({ user: publicUser(user), accountToken: createAccountToken(user) });
   });
 });
 
@@ -563,7 +926,7 @@ app.post('/api/auth/google-token', rateLimiters.auth, async (req, res) => {
         console.error('Google token login error:', err);
         return res.status(500).json({ error: 'Google login failed.' });
       }
-      res.json({ user: publicUser(user) });
+      res.json({ user: publicUser(user), accountToken: createAccountToken(user) });
     });
   } catch (err) {
     console.error('Google token auth error:', err);
@@ -572,6 +935,7 @@ app.post('/api/auth/google-token', rateLimiters.auth, async (req, res) => {
 });
 
 app.post('/api/logout', (req, res) => {
+  clearAuthCookie(res);
   req.logout(() => {
     req.session.destroy(() => {
       res.json({ ok: true });
@@ -583,6 +947,13 @@ app.post('/api/ai', rateLimiters.ai, async (req, res) => {
   const { system, messages } = req.body;
   const lastUserMessage = [...(messages || [])].reverse().find((message) => message.role !== 'assistant')?.content || '';
   const fallbackAiReply = buildLocalAiReply(lastUserMessage);
+  const safetySystem = [
+    'Cyber safety rule: help only with owned systems, private labs, CTFs, toy examples, defensive checklists, secure coding, log review, responsible disclosure, and vulnerability report writing.',
+    'Refuse requests to hack real targets, public websites, accounts, Wi-Fi, phones, payment systems, credentials, malware, phishing, bypassing security, exfiltration, persistence, evasion, or unauthorized exploitation.',
+    'For lost or stolen devices, provide only official recovery steps such as Google Find My Device, Apple Find My, SIM blocking, account security, IMEI/serial documentation, and police report guidance. Do not provide secret tracking, phone-number tracing, SIM tracking, doxxing, stalking, account hacking, or surveillance.',
+    'When refusing, redirect to a legal sandbox, CTF, defensive checklist, or responsible report template.'
+  ].join(' ');
+  const effectiveSystem = `${safetySystem}\n\n${cleanText(system || 'You are a helpful assistant.', 6000)}`;
   if (!aiKey && !anthropicKey) {
     return res.json({
       reply: fallbackAiReply,
@@ -607,7 +978,7 @@ app.post('/api/ai', rateLimiters.ai, async (req, res) => {
         },
         body: JSON.stringify({
           model: anthropicModel,
-          system: system || 'You are a helpful assistant.',
+          system: effectiveSystem,
           messages: normalizedMessages,
           max_tokens: 900
         })
@@ -669,7 +1040,7 @@ app.post('/api/ai', rateLimiters.ai, async (req, res) => {
         },
         body: JSON.stringify({
           model,
-          instructions: system || 'You are a helpful assistant.',
+          instructions: effectiveSystem,
           input: normalizedMessages,
           max_output_tokens: 800,
           temperature: 0.7
@@ -726,35 +1097,76 @@ app.post('/api/ai', rateLimiters.ai, async (req, res) => {
 });
 
 const courseCatalog = [
-  { title: 'AI Productivity Sprint', price: 299, original: 1499, hours: '3.5', category: 'Technology', bestFor: 'focus, workflow, prompt routines, student productivity' },
-  { title: 'Data Science with AI', price: 399, original: 1999, hours: '5', category: 'Data Science', bestFor: 'analytics, charts, portfolio project, AI-assisted insights' },
-  { title: 'Cyber Security Foundations', price: 499, original: 2499, hours: '6', category: 'Cyber Security', bestFor: 'online safety, secure habits, beginner security awareness' },
-  { title: 'Creator Growth System', price: 249, original: 1299, hours: '4', category: 'Digital Marketing', bestFor: 'content planning, audience growth, creator income systems' },
-  { title: 'Python Foundations', price: 249, original: 999, hours: '5.5', category: 'Programming', bestFor: 'coding basics, logic, first scripts, automation' },
-  { title: 'English for Builders', price: 129, original: 699, hours: '4.5', category: 'Languages', bestFor: 'speaking confidence, interviews, clients, community' },
-  { title: 'Generative AI Builder Track', price: 799, original: 3499, hours: '8', category: 'Generative AI', bestFor: 'prompt systems, AI workflows, mini-products, automation' },
-  { title: 'Full-Stack Web Development', price: 999, original: 4499, hours: '10', category: 'Full-Stack', bestFor: 'frontend, backend, databases, auth, deployment' },
-  { title: 'Blockchain and Web3 Foundations', price: 699, original: 2999, hours: '7', category: 'Web3', bestFor: 'wallet safety, tokens, smart contracts, web3 basics' },
-  { title: 'Ethical Hacking Practice Lab', price: 899, original: 3999, hours: '9', category: 'Cyber Security', bestFor: 'defensive labs, responsible disclosure, audit notes' },
-  { title: 'Product Management for Builders', price: 599, original: 2499, hours: '6', category: 'Product', bestFor: 'MVP planning, product specs, validation, launch feedback' },
-  { title: 'Entrepreneurship Launch Lab', price: 799, original: 3499, hours: '8', category: 'Entrepreneurship', bestFor: 'offer design, funnels, lead capture, first revenue roadmap' }
+  { title: 'Basic to Advanced English', price: 299, original: 1499, hours: '8', category: 'English Communication', status: 'Coming Soon', bestFor: 'grammar, vocabulary, speaking confidence, communication' },
+  { title: 'Python for Beginner', price: 399, original: 1999, hours: '7', category: 'Python Programming', status: 'Coming Soon', bestFor: 'coding basics, logic, loops, functions, beginner projects' },
+  { title: 'Data Science', price: 499, original: 2499, hours: '9', category: 'Data Science', status: 'Live Now', bestFor: 'Python data analysis, charts, datasets, portfolio project' },
+  { title: 'Video Editing for Beginner', price: 349, original: 1799, hours: '6', category: 'Video Editing', status: 'Coming Soon', bestFor: 'clean cuts, captions, reels, audio, creator workflow' },
+  { title: 'Vibe Coding & Web Development', price: 599, original: 2999, hours: '10', category: 'Web Development', status: 'Coming Soon', bestFor: 'websites, frontend layout, creative coding, landing pages' },
+  { title: 'Life Circle & Life Journey', price: 249, original: 1299, hours: '5', category: 'Life Skills', status: 'Coming Soon', bestFor: 'habits, mindset, discipline, direction, personal growth' }
 ];
 
 function buildCourseList() {
   return courseCatalog
-    .map((course) => `${course.title} - INR ${course.price}, ${course.hours} hrs, ${course.category}, Hindi + English`)
+    .map((course) => `${course.title} - ${course.status}, ${course.status === 'Live Now' ? `INR ${course.price}, ` : ''}${course.hours} hrs, ${course.category}, beginner-friendly English`)
     .join('\n');
+}
+
+function loadEnrollments() {
+  try {
+    if (!fs.existsSync(enrollmentsFile)) return {};
+    const parsed = JSON.parse(fs.readFileSync(enrollmentsFile, 'utf8') || '{}');
+    return parsed && typeof parsed === 'object' ? parsed : {};
+  } catch (err) {
+    console.error('Error reading enrollments file:', err);
+    return {};
+  }
+}
+
+function saveEnrollments(enrollments) {
+  try {
+    fs.writeFileSync(enrollmentsFile, JSON.stringify(enrollments || {}, null, 2));
+  } catch (err) {
+    console.error('Error writing enrollments file:', err);
+  }
+}
+
+function getUserEnrollmentKey(user) {
+  return String(user?.id || normalizeEmail(user?.email || '') || '');
 }
 
 function buildSiteSummary() {
   return [
-    'HUMAIX ECHO REALM is a premium AI + tech learning website.',
+    'HUMAIXO is a premium AI + tech learning website.',
     'Founder/instructor shown on the site: Harish Singh.',
     'Primary contact: Hzzzx06@gmail.com.',
-    'Main pages: Home, Courses, About, Blog, Contact, Login, Sign Up, Dashboard, Admin.',
-    'Key features: premium hero design, Hindi + English courses, course thumbnails, AI assistant, Razorpay checkout, contact form, feedback form, and downloadable-style learning experience.',
-    'Course benefits: lifetime access, certificate of completion, mobile/tablet access, downloadable resources, WhatsApp support group, and 30-day money-back guarantee.'
+    'Main pages: Home, Academy, Security Lab, Courses, Notes, About, Contact, Login, Sign Up, and Dashboard.',
+    'Key features: premium hero design, beginner-friendly courses, ethical security practice lab, course thumbnails, AI assistant, Razorpay checkout, contact form, feedback form, paid notes, and a learner dashboard.',
+    'Course benefits: account-based course access, mobile/tablet access, learning resources, email support for payment/access issues, and certificates after eligible course completion.'
   ].join('\n');
+}
+
+function isCyberSecurityTopic(text) {
+  return /(hack|hacking|ethical hacking|security|cyber|ctf|vulnerability|owasp|pentest|penetration|xss|sql injection|csrf|authentication|authorization|malware|phishing|exploit|bypass|password|credential|wifi|server|website|phone|account)/i.test(text || '');
+}
+
+function isLostDeviceTopic(text) {
+  return /(lost|stolen|chori|chor|theft|track|trace|location|find my phone|find my device|imei|sim|number|mobile|phone)/i.test(text || '');
+}
+
+function buildLostDeviceReply() {
+  return 'I cannot secretly track a person, phone number, live location, SIM, WhatsApp, account, or device. That can violate privacy and law.\n\nLegal recovery steps:\n1. Android: use Google Find My Device from google.com/android/find.\n2. iPhone: use Apple Find My from icloud.com/find.\n3. Mark the device lost, ring/secure/erase only through the official account.\n4. Change your Google/Apple/email passwords and revoke unknown sessions.\n5. Block the SIM through your mobile operator.\n6. Keep IMEI/serial number, invoice, last known place/time, and file a police report.\n7. If a location appears in an official app, share it with police; do not confront anyone yourself.\n\nUse the Lost Device Recovery section on the Security Lab page to create a report draft and checklist.';
+}
+
+function isUnsafeCyberRequest(text) {
+  return /(hack|attack|exploit|bypass|crack|steal|phish|malware|ransomware|keylogger|credential|password|otp|session|cookie|token|wifi|instagram|facebook|gmail|whatsapp|bank|payment|server|website|phone|device|ddos|botnet)/i.test(text || '') &&
+    !/(own|owned|my app|my website|my server|lab|sandbox|ctf|toy|demo|authorized|permission|defensive|checklist|report|learn|practice|secure coding|owasp)/i.test(text || '');
+}
+
+function buildSafeCyberReply(question) {
+  if (isUnsafeCyberRequest(question)) {
+    return 'I cannot help hack real targets, accounts, public websites, Wi-Fi, phones, payment systems, credentials, malware, phishing, bypassing security, or anything without clear permission.\n\nSafe alternative: use the Ethical Security Lab for owned systems, CTFs, toy examples, defensive checklists, secure coding review, log review, and responsible vulnerability reports.\n\nTry this prompt: "I own a demo login page. Give me a beginner-safe authentication security checklist and a responsible report template."';
+  }
+  return 'Ethical Security Lab safe plan:\n\n1. Scope: confirm the system is yours, a private lab, or a CTF challenge.\n2. Rules: do not test public targets or real users without written permission.\n3. Checklist: review authentication, authorization, input validation, secure headers, error messages, dependency updates, logging, and backup readiness.\n4. Practice safely: use dummy accounts, toy examples, and non-sensitive data.\n5. Report: write title, scope, impact, safe reproduction notes, evidence, severity, recommended fix, and retest status.\n\nIf you want, ask for a CTF-style lesson, secure-code checklist, or vulnerability report template.';
 }
 
 function findCourseByText(text) {
@@ -767,12 +1179,19 @@ function findCourseByText(text) {
 function buildLocalAiReply(question) {
   const raw = String(question || '').trim();
   const text = raw.toLowerCase();
-  const wantsHindi = /hindi|hinglish/.test(text);
   const course = findCourseByText(text);
-  const prefix = wantsHindi ? 'Bilkul. ' : '';
+  const prefix = '';
 
   if (!raw) {
-    return 'Ask me about any HUMAIX ECHO REALM course, fees, payment, roadmap, language, certificate, or support.';
+    return 'Ask me about any HUMAIXO course, fees, payment, roadmap, language, certificate, or support.';
+  }
+
+  if (isLostDeviceTopic(text)) {
+    return buildLostDeviceReply();
+  }
+
+  if (isCyberSecurityTopic(text)) {
+    return buildSafeCyberReply(raw);
   }
 
   if (/(site|website|about|home|home page|features|pages|founder|harish|who made|what is this|full details|details)/.test(text)) {
@@ -780,34 +1199,37 @@ function buildLocalAiReply(question) {
   }
 
   if (/(all|list|courses|course|fees|price|pricing)/.test(text) && !course) {
-    return prefix + "HUMAIX ECHO REALM courses are available in Hindi + English:\n" + buildCourseList() + "\n\nBest beginner path: AI Productivity Sprint -> Python Foundations -> Data Science with AI. For security, choose Cyber Security Foundations first.";
+    return prefix + "Current launch status: Data Science is launched. Other courses are visible as Coming Soon roadmap items.\n\n" + buildCourseList();
   }
 
   if (course) {
-    return prefix + course.title + " is a " + course.hours + "-hour " + course.category + " course in Hindi + English. Fee: INR " + course.price + " (original INR " + course.original + "). It is best for " + course.bestFor + ". Open the course card, preview the Studio, then tap Pay Securely for Razorpay checkout.";
+    if (course.status !== 'Live Now') {
+      return prefix + course.title + " is marked Coming Soon. It is a planned " + course.hours + "-hour " + course.category + " course in beginner-friendly English, best for " + course.bestFor + ". For now, only Data Science is open for enrollment.";
+    }
+    return prefix + course.title + " is live now. It is a " + course.hours + "-hour " + course.category + " course in beginner-friendly English. Fee: INR " + course.price + " (original INR " + course.original + "). It is best for " + course.bestFor + ". Open the course card, then tap Pay Securely for Razorpay checkout.";
   }
 
   if (/(payment|pay|upi|razorpay|checkout)/.test(text)) {
-    return 'Payment is handled through Razorpay Secure Checkout. Open any course, tap Pay Securely, complete checkout using UPI, card, net banking, or wallet, and keep the payment ID for confirmation.';
+    return 'Payment is prepared through Razorpay Secure Checkout for the launched Data Science course. Other courses are Coming Soon until launch content is ready.';
   }
 
   if (/(certificate|certificat)/.test(text)) {
-    return 'Every listed course includes lifetime access and a certificate of completion after finishing the lessons and exercises.';
+    return 'Certificates are designed to unlock after eligible course completion. The site avoids public certificate claims until course work is actually completed.';
   }
 
-  if (/(language|english|hindi|medium)/.test(text)) {
-    return 'Courses are planned in Hindi + English, so beginners can understand concepts in Hindi/Hinglish while learning English technical terms.';
+  if (/(language|english|medium)/.test(text)) {
+    return 'Courses are written in clear, beginner-friendly English with simple technical explanations.';
   }
 
   if (/(contact|support|help|email|whatsapp)/.test(text)) {
-    return 'For support, use the Contact page or email Hzzzx06@gmail.com. You can also follow the WhatsApp channel linked on the site.';
+    return 'For support, use the Contact page or email Hzzzx06@gmail.com. Payment and access issues should include the order ID if available.';
   }
 
   if (/(career|job|earn|earning|income)/.test(text)) {
-    return 'For earning-focused learning, start with AI Productivity Sprint, then choose Data Science with AI, Full-Stack Web Development, Creator Growth System, or Entrepreneurship Launch Lab depending on your goal.';
+    return 'For the current launch, start with Data Science because it is the launched course. English, Python for Beginner, Video Editing, Web Development, and Life Skills are Coming Soon.';
   }
 
-  return prefix + "Here is the practical HUMAIX ECHO REALM answer: tell me your current level and goal. For a fast first result, start with AI Productivity Sprint. For coding, choose Python Foundations or Full-Stack Web Development. For analytics, choose Data Science with AI. For security, choose Cyber Security Foundations. All courses are Hindi + English and include certificate access.";
+  return prefix + "Here is the practical HUMAIXO answer: Data Science is launched right now. Other tracks are visible as Coming Soon roadmap items and will open later.";
 }
 app.post('/api/contact', rateLimiters.contact, (req, res) => {
   const { firstName, lastName, email, subject, message } = req.body;
@@ -861,7 +1283,7 @@ app.get('/api/contacts', (req, res) => {
 });
 
 app.post('/api/feedback', rateLimiters.contact, (req, res) => {
-  const { course, rating, review } = req.body;
+  const { course, review } = req.body;
   if (!course || !review) {
     return res.status(400).json({ error: 'Course and review are required.' });
   }
@@ -879,7 +1301,6 @@ app.post('/api/feedback', rateLimiters.contact, (req, res) => {
   feedbacks.push({
     id: Date.now(),
     course: cleanText(course, 160),
-    rating: rating || 5,
     review: cleanText(review, 4000),
     submittedAt: new Date().toISOString()
   });
@@ -891,7 +1312,7 @@ app.post('/api/feedback', rateLimiters.contact, (req, res) => {
     return res.status(500).json({ error: 'Unable to save feedback.' });
   }
 
-  console.log('New feedback received:', { course, rating, review });
+  console.log('New course question received:', { course, review });
   res.status(201).json({ status: 'ok', message: 'Feedback received.' });
 });
 
@@ -900,22 +1321,25 @@ app.post('/api/create-order', rateLimiters.payment, async (req, res) => {
     return res.status(500).json({ error: 'Payment gateway is not configured on the server.' });
   }
 
-  const amount = Number(req.body.amount);
-  const currency = req.body.currency || 'INR';
-  console.log('Creating order for amount:', amount, 'currency:', currency);
-  if (!Number.isFinite(amount) || amount <= 0) {
-    return res.status(400).json({ error: 'Invalid amount' });
+  const product = resolvePaymentProduct(req.body || {});
+  if (!product) {
+    return res.status(400).json({ error: 'This item is not available for checkout yet.' });
+  }
+  if (product.productType === 'course' && !getAuthenticatedUser(req)) {
+    return res.status(401).json({ error: 'Login required before course checkout.' });
   }
 
   try {
     const options = {
-      amount: Math.round(amount * 100),
-      currency,
-      receipt: `receipt_${Date.now()}`
+      amount: Math.round(product.amount * 100),
+      currency: product.currency || 'INR',
+      receipt: `hr_${product.productType}_${Date.now()}`,
+      notes: paymentProductSnapshot(product)
     };
-    console.log('Razorpay options:', options);
     const order = await razorpay.orders.create(options);
-    console.log('Order created:', order);
+    const txData = loadTransactions();
+    txData.orders[order.id] = transactionFromProduct(order.id, product);
+    saveTransactions(txData);
     res.json(order);
   } catch (error) {
     const reason =
@@ -932,7 +1356,25 @@ app.post('/api/create-order', rateLimiters.payment, async (req, res) => {
   }
 });
 
-app.post('/api/verify-payment', rateLimiters.payment, (req, res) => {
+app.get('/api/notes/promo-token', rateLimiters.payment, (req, res) => {
+  const productId = cleanText(req.query.productId || 'notes-3', 80).toLowerCase();
+  const product = NOTES_PRODUCTS[productId];
+  if (!product || product.status !== 'available') {
+    return res.status(404).json({ error: 'Promo is not available for this notes pack.' });
+  }
+  const token = createNotesPromoToken(productId);
+  const data = verifyNotesPromoToken(token, productId);
+  res.json({
+    productId,
+    promoToken: token,
+    promoPrice: 1,
+    offerPrice: product.amount,
+    actualPrice: product.originalAmount,
+    expiresAt: data.exp
+  });
+});
+
+app.post('/api/verify-payment', rateLimiters.payment, async (req, res) => {
   if (!razorpayKeySecret) {
     return res.status(500).json({ error: 'Payment verification is not configured on the server.' });
   }
@@ -962,7 +1404,104 @@ app.post('/api/verify-payment', rateLimiters.payment, (req, res) => {
     return res.status(400).json({ error: 'Payment signature verification failed.' });
   }
 
-  res.json({ ok: true, paymentId, orderId });
+  const txData = loadTransactions();
+  let tx = txData.orders[orderId];
+  if (!tx) {
+    tx = await recoverTransactionFromRazorpayOrder(orderId);
+  }
+  if (!tx) {
+    return res.status(400).json({ error: 'Payment verified, but product metadata was not found. Please contact support with your payment ID.' });
+  }
+  tx.status = 'paid';
+  tx.paymentId = paymentId;
+  tx.verifiedAt = new Date().toISOString();
+  tx.updatedAt = new Date().toISOString();
+  txData.orders[orderId] = tx;
+  saveTransactions(txData);
+
+  const downloadToken = tx.productType === 'notes' ? createNotesDownloadToken(tx) : '';
+  const downloadUrl = downloadToken ? `/api/notes/download/${encodeURIComponent(tx.productId)}?token=${encodeURIComponent(downloadToken)}` : '';
+  res.json({ ok: true, paymentId, orderId, product: { ...tx, downloadUrl }, downloadUrl });
+});
+
+app.get('/api/notes/download/:productId', (req, res) => {
+  const productId = cleanText(req.params.productId || '', 80).toLowerCase();
+  const product = NOTES_PRODUCTS[productId];
+  const tokenData = verifyNotesDownloadToken(req.query.token || '', productId);
+  if (!product || !tokenData) {
+    return res.status(403).type('text/plain').send('Payment verification is required before downloading these notes.');
+  }
+  if (!fs.existsSync(product.filePath)) {
+    return res.status(404).type('text/plain').send('Notes file is temporarily unavailable.');
+  }
+  res.setHeader('Cache-Control', 'private, no-store');
+  res.download(product.filePath, 'humaix-data-science-handbook.pdf');
+});
+
+app.get('/api/enrollments', (req, res) => {
+  const user = getAuthenticatedUser(req);
+  if (!user) {
+    return res.status(401).json({ error: 'Login required.' });
+  }
+  const key = getUserEnrollmentKey(user);
+  const all = loadEnrollments();
+  res.json(all[key] || {});
+});
+
+app.post('/api/enrollments/grant', rateLimiters.payment, async (req, res) => {
+  const user = getAuthenticatedUser(req);
+  if (!user) {
+    return res.status(401).json({ error: 'Login required.' });
+  }
+  const courseId = Number(req.body?.courseId);
+  const title = cleanText(req.body?.title || '', 160);
+  const paymentId = cleanText(req.body?.paymentId || '', 160);
+  const orderId = cleanText(req.body?.orderId || '', 160);
+  if (!courseId || !paymentId || !orderId) {
+    return res.status(400).json({ error: 'Verified payment details are required before course access is granted.' });
+  }
+  const key = getUserEnrollmentKey(user);
+  const txData = loadTransactions();
+  let tx = txData.orders[orderId];
+  if (!tx) {
+    tx = await recoverTransactionFromRazorpayOrder(orderId);
+    if (tx && tx.paymentId !== paymentId) {
+      tx.status = 'paid';
+      tx.paymentId = paymentId;
+      tx.verifiedAt = tx.verifiedAt || new Date().toISOString();
+      tx.updatedAt = new Date().toISOString();
+      txData.orders[orderId] = tx;
+    }
+  }
+  if (!tx || tx.status !== 'paid' || tx.paymentId !== paymentId || tx.productType !== 'course' || Number(tx.courseId) !== courseId) {
+    return res.status(403).json({ error: 'Course access can be granted only after a verified matching payment.' });
+  }
+  if (tx.claimedBy && tx.claimedBy !== key) {
+    return res.status(403).json({ error: 'This payment has already been linked to another account.' });
+  }
+  tx.claimedBy = key;
+  tx.grantedAt = tx.grantedAt || new Date().toISOString();
+  tx.updatedAt = new Date().toISOString();
+  saveTransactions(txData);
+
+  const all = loadEnrollments();
+  const userEnrollments = all[key] || {};
+  const now = new Date().toISOString();
+  userEnrollments[String(courseId)] = {
+    id: courseId,
+    courseId,
+    title: title || `Course ${courseId}`,
+    progress: Math.max(0, Math.min(100, Number(req.body?.progress) || 0)),
+    paid: true,
+    status: 'active',
+    paymentId,
+    orderId,
+    enrolledAt: userEnrollments[String(courseId)]?.enrolledAt || now,
+    updatedAt: now
+  };
+  all[key] = userEnrollments;
+  saveEnrollments(all);
+  res.json({ ok: true, enrollments: userEnrollments });
 });
 
 app.use((err, req, res, next) => {
@@ -984,3 +1523,5 @@ if (require.main === module) {
 } else {
   module.exports = app;
 }
+
+

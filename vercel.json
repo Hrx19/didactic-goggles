@@ -8,6 +8,7 @@
         "includeFiles": [
           "assets/**",
           "*.html",
+          "*.js",
           "*.jpeg",
           "*.jpg",
           "*.png",

@@ -1,10 +1,12 @@
-﻿const CACHE_VERSION = 'humaix-echo-realm-v3';
+const CACHE_VERSION = 'humaixo-v31';
 const APP_SHELL = [
   '/',
   '/offline.html',
   '/manifest.webmanifest',
-  '/logo.png?v=3',
+  '/logo.png?v=5',
+  '/assets/her-logo.png?v=5',
   '/assets/ai-tech-hero.png',
+  '/assets/hero-ai-lab.png',
   '/assets/humaix-og.png'
 ];
 
@@ -61,4 +63,3 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
-
