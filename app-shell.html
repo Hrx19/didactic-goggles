@@ -3803,12 +3803,11 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
 </div>
 <ul class="nav-links">
  <li><a href="/" onclick="event.preventDefault();showPage('home')" id="nl-home">Home</a></li>
- <li><a href="/academy" onclick="event.preventDefault();showPage('academy')" id="nl-academy">Academy</a></li>
- <li><a href="/workspace" onclick="event.preventDefault();showPage('workspace')" id="nl-workspace">Workspace</a></li>
- <li><a href="/memory" onclick="event.preventDefault();showPage('memory')" id="nl-memory">Memory</a></li>
- <li><a href="/security-lab" onclick="event.preventDefault();showPage('security')" id="nl-security">Security Lab</a></li>
+ <li><a href="/academy" onclick="event.preventDefault();showPage('academy')" id="nl-academy">Courses</a></li>
  <li><a href="/notes" onclick="event.preventDefault();showPage('notes')" id="nl-notes">Notes</a></li>
  <li><a href="/about" onclick="event.preventDefault();showPage('about')" id="nl-about">About</a></li>
+ <li><a href="/blog" onclick="event.preventDefault();showPage('blog')" id="nl-blog">Blog</a></li>
+ <li><a href="/contact" onclick="event.preventDefault();showPage('contact')" id="nl-contact">Contact</a></li>
  </ul>
  <div class="nav-btns">
   <button id="navAuthBtn" class="btn btn-ghost" onclick="showPage('login')">Login</button>
@@ -3820,12 +3819,11 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
 
 <div class="mobile-menu" id="mMenu">
  <a href="/" onclick="event.preventDefault();showPage('home');closeMenu()"> Home</a>
-<a href="/academy" onclick="event.preventDefault();showPage('academy');closeMenu()"> Academy</a>
-<a href="/workspace" onclick="event.preventDefault();showPage('workspace');closeMenu()"> Workspace</a>
-<a href="/memory" onclick="event.preventDefault();showPage('memory');closeMenu()"> Memory</a>
-<a href="/security-lab" onclick="event.preventDefault();showPage('security');closeMenu()"> Security Lab</a>
- <a href="/notes" onclick="event.preventDefault();showPage('notes');closeMenu()"> Notes</a>
+<a href="/academy" onclick="event.preventDefault();showPage('academy');closeMenu()"> Courses</a>
+<a href="/notes" onclick="event.preventDefault();showPage('notes');closeMenu()"> Notes</a>
 <a href="/about" onclick="event.preventDefault();showPage('about');closeMenu()"> About</a>
+<a href="/blog" onclick="event.preventDefault();showPage('blog');closeMenu()"> Blog</a>
+<a href="/contact" onclick="event.preventDefault();showPage('contact');closeMenu()"> Contact</a>
  <a href="/login" onclick="event.preventDefault();showPage('login');closeMenu()"> Login</a>
 </div>
 
@@ -3837,18 +3835,18 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
 
 <div class="hero-inner">
  <div class="hero-copy">
- <div class="hero-kicker">AI Academy / Brand Studio</div>
- <h1><span class="hero-title-grad">LEARN AI WITH CLARITY. BUILD REAL PROJECTS. CREATE PORTFOLIO-READY WORK.</span></h1>
- <p class="hero-sub">HUMAIXO is a focused learning space where practical AI courses, workspace tools, and memory systems help beginners turn curiosity into real output.</p>
+ <div class="hero-kicker">Online AI + Digital Skills Academy</div>
+ <h1><span class="hero-title-grad">LEARN PRACTICAL AI AND DIGITAL SKILLS IN HINDI + ENGLISH.</span></h1>
+ <p class="hero-sub">HUMAIXO. (Humaix Echo Realm) helps beginners build real projects, practice with guided notes, and unlock paid course access through secure checkout.</p>
  <div class="hero-actions">
- <button class="btn btn-prime btn-xl" onclick="showPage('academy')">Browse Academy</button>
- <button class="btn btn-ghost btn-lg" onclick="showPage('signup')">Get Free Starter Kit</button>
- <button class="btn btn-ghost btn-lg" onclick="showPage('workspace')">Open Workspace</button>
+ <button class="btn btn-prime btn-xl" onclick="showPage('academy')">Explore Courses</button>
+ <button class="btn btn-ghost btn-lg" onclick="showPage('detail')">Watch Free Lesson</button>
+ <button class="btn btn-ghost btn-lg" onclick="showPage('notes')">Buy Notes</button>
  </div>
  <div class="hero-signal-strip">
  <div class="signal-card"><span>01</span><strong>Learn</strong><em>Flagship courses with clear outcomes and beginner-friendly support.</em></div>
- <div class="signal-card"><span>02</span><strong>Build</strong><em>Workspace tasks, notes, and progress in one calm flow.</em></div>
- <div class="signal-card"><span>03</span><strong>Ship</strong><em>Secure checkout, certificates, and founder-led support.</em></div>
+ <div class="signal-card"><span>02</span><strong>Preview</strong><em>Watch the intro and review the course details before payment.</em></div>
+ <div class="signal-card"><span>03</span><strong>Unlock</strong><em>Secure checkout unlocks paid notes and eligible course access.</em></div>
  </div>
  </div>
 <div class="hero-side">
@@ -4256,7 +4254,7 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
  </div>
  <div class="courses-grid fade-in" id="allCoursesGrid"></div>
  </div>
- <footer><div class="ft-inner"><div class="ft-bot"><span> 2026 HUMAIXO</span><button class="btn btn-ghost" onclick="showPage('home')"> Back to Home</button></div></div></footer>
+ <footer><div class="ft-inner"><div class="ft-bot"><span> 2026 HUMAIXO. (Humaix Echo Realm)</span><button class="btn btn-ghost" onclick="showPage('home')"> Back to Home</button></div></div></footer>
 </div>
 
 <!-- ===================== COURSE DETAIL PAGE ===================== -->
@@ -4396,7 +4394,7 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
  </div>
  <div class="courses-grid fade-in" id="notesGrid"></div>
  </div>
- <footer><div class="ft-inner"><div class="ft-bot"><span>2026 HUMAIXO</span><button class="btn btn-ghost" onclick="showPage('academy')">Back to Academy</button></div></div></footer>
+ <footer><div class="ft-inner"><div class="ft-bot"><span>2026 HUMAIXO. (Humaix Echo Realm)</span><button class="btn btn-ghost" onclick="showPage('academy')">Back to Academy</button></div></div></footer>
 </div>
 
 <!-- ===================== ETHICAL SECURITY LAB PAGE ===================== -->
@@ -4520,13 +4518,13 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
  </ul>
  <div style="display:flex;gap:12px;margin-top:32px;flex-wrap:wrap">
  <button class="btn btn-prime btn-lg" onclick="showPage('academy')">Explore Academy</button>
- <a class="btn btn-ghost btn-lg" href="mailto:Hzzzx06@gmail.com"> Contact HUMAIX</a>
+ <a class="btn btn-ghost btn-lg" href="mailto:Hzzzx06@gmail.com"> Contact Support</a>
  </div>
  </div>
  </div>
  </div>
  </section>
- <footer><div class="ft-inner"><div class="ft-bot"><span> 2026 HUMAIXO Harish Singh</span><button class="btn btn-ghost" onclick="showPage('home')"> Home</button></div></div></footer>
+ <footer><div class="ft-inner"><div class="ft-bot"><span> 2026 HUMAIXO. (Humaix Echo Realm)</span><button class="btn btn-ghost" onclick="showPage('home')"> Home</button></div></div></footer>
 </div>
 
 <!-- ===================== BLOG PAGE ===================== -->
@@ -4535,17 +4533,17 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
  <div class="sec-inner">
  <div class="sec-head fade-in">
  <div class="sec-tag">Blog</div>
- <h2 class="sec-title">Learn & Grow</h2>
- <p class="sec-sub">Tips, guides and insights to help you build a better future online.</p>
+ <h2 class="sec-title">Launch Notes and Learning Guides</h2>
+ <p class="sec-sub">Beginner-friendly articles are being prepared. These previews show the topics that will become full guides before public scale.</p>
  </div>
  <div class="blog-grid fade-in">
- <div class="blog-card"><div class="blog-thumb" style="background:linear-gradient(135deg,#0a1020,#111d36)"> </div><div class="blog-body"><div class="blog-meta"><span class="blog-cat">Data Science</span><span>Jan 2026</span><span>8 min read</span></div><h3 class="blog-title">How to Start Data Science in 2026</h3><p class="blog-exc">A beginner-friendly roadmap for learning Python basics, practicing with charts, and building your first portfolio-style project.</p><span class="blog-read" onclick="showToast('Blog opening...')">Read More</span></div></div>
- <div class="blog-card"><div class="blog-thumb" style="background:linear-gradient(135deg,#1a001a,#2d0040)"> </div><div class="blog-body"><div class="blog-meta"><span class="blog-cat">AI Learning</span><span>Jan 2026</span><span>6 min read</span></div><h3 class="blog-title">How Beginners Can Use AI Without Getting Lost</h3><p class="blog-exc">Simple ways to use AI for study, notes, planning, and project practice while still thinking clearly yourself.</p><span class="blog-read" onclick="showToast('Blog opening...')">Read More</span></div></div>
- <div class="blog-card"><div class="blog-thumb" style="background:linear-gradient(135deg,#001a00,#003300)"> </div><div class="blog-body"><div class="blog-meta"><span class="blog-cat">Web Development</span><span>Jan 2026</span><span>7 min read</span></div><h3 class="blog-title">What Every Beginner Website Needs Before Launch</h3><p class="blog-exc">A simple checklist for clear copy, mobile spacing, trust sections, and a useful call-to-action.</p><span class="blog-read" onclick="showToast('Blog opening...')">Read More</span></div></div>
+ <div class="blog-card"><div class="blog-thumb" style="background:linear-gradient(135deg,#0a1020,#111d36)"> </div><div class="blog-body"><div class="blog-meta"><span class="blog-cat">Data Science</span><span>Planned 2026</span><span>Guide Preview</span></div><h3 class="blog-title">How to Start Data Science in 2026</h3><p class="blog-exc">A beginner-friendly roadmap for learning Python basics, practicing with charts, and building your first portfolio-style project.</p><span class="blog-read" onclick="showToast('Full article coming soon. The course and paid notebook are available from Notes/Courses.', 'warn')">Coming Soon</span></div></div>
+ <div class="blog-card"><div class="blog-thumb" style="background:linear-gradient(135deg,#1a001a,#2d0040)"> </div><div class="blog-body"><div class="blog-meta"><span class="blog-cat">AI Learning</span><span>Planned 2026</span><span>Guide Preview</span></div><h3 class="blog-title">How Beginners Can Use AI Without Getting Lost</h3><p class="blog-exc">Simple ways to use AI for study, notes, planning, and project practice while still thinking clearly yourself.</p><span class="blog-read" onclick="showToast('Full article coming soon. Follow the course roadmap for now.', 'warn')">Coming Soon</span></div></div>
+ <div class="blog-card"><div class="blog-thumb" style="background:linear-gradient(135deg,#001a00,#003300)"> </div><div class="blog-body"><div class="blog-meta"><span class="blog-cat">Web Development</span><span>Planned 2026</span><span>Guide Preview</span></div><h3 class="blog-title">What Every Beginner Website Needs Before Launch</h3><p class="blog-exc">A simple checklist for clear copy, mobile spacing, trust sections, and a useful call-to-action.</p><span class="blog-read" onclick="showToast('Full article coming soon. This preview is not a published article yet.', 'warn')">Coming Soon</span></div></div>
  </div>
  </div>
  </section>
- <footer><div class="ft-inner"><div class="ft-bot"><span> 2026 HUMAIXO</span><button class="btn btn-ghost" onclick="showPage('home')"> Home</button></div></div></footer>
+ <footer><div class="ft-inner"><div class="ft-bot"><span> 2026 HUMAIXO. (Humaix Echo Realm)</span><button class="btn btn-ghost" onclick="showPage('home')"> Home</button></div></div></footer>
 </div>
 
 <!-- ===================== CONTACT PAGE ===================== -->
@@ -4579,7 +4577,7 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
  </div>
  </div>
  </section>
- <footer><div class="ft-inner"><div class="ft-bot"><span> 2026 HUMAIXO <a href="mailto:Hzzzx06@gmail.com" style="color:var(--sky)">Hzzzx06@gmail.com</a></span><button class="btn btn-ghost" onclick="showPage('home')"> Home</button></div></div></footer>
+ <footer><div class="ft-inner"><div class="ft-bot"><span> 2026 HUMAIXO. (Humaix Echo Realm)</span><button class="btn btn-ghost" onclick="showPage('home')"> Home</button></div></div></footer>
 </div>
 
 <!-- ===================== LOGIN PAGE ===================== -->
@@ -4596,7 +4594,7 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
  <form id="loginForm" onsubmit="doLogin(event)">
  <div id="googleLoginBtn" class="google-btn-shell"></div>
  <div class="auth-soc"><button type="button" class="soc-btn google-redirect" onclick="startGoogleAuth()">Continue with Google</button></div>
- <div class="auth-note" id="loginGoogleNote">Google sign-in appears only when configured on this deployment. Email access is ready now.</div>
+<div class="auth-note" id="loginGoogleNote" style="display:none"></div>
  <div class="auth-div">or continue with email</div>
  <div class="fg"><label class="fl">Email</label><input id="loginEmail" name="email" class="fi" placeholder="you@example.com" type="email" required></div>
  <div class="fg"><label class="fl">Password</label><input id="loginPassword" name="password" class="fi" placeholder=" " type="password" required></div>
@@ -4623,7 +4621,7 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
  <div id="googleSignupBtn" class="google-btn-shell"></div>
  <button type="button" class="soc-btn google-redirect" onclick="startGoogleAuth()">Request with Google</button>
  </div>
- <div class="auth-note" id="signupGoogleNote">Google sign-in appears when configured on this deployment. Otherwise request access with email.</div>
+<div class="auth-note" id="signupGoogleNote" style="display:none"></div>
  <div class="auth-div">or request with email</div>
  <form id="signupForm" onsubmit="doSignup(event)">
  <div class="fr"><div class="fg"><label class="fl">First Name</label><input class="fi" name="firstName" placeholder="Harish" type="text" required></div><div class="fg"><label class="fl">Last Name</label><input class="fi" name="lastName" placeholder="Singh" type="text" required></div></div>
@@ -4754,7 +4752,7 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
    <section class="growth-panel fade-in">
     <div class="sec-tag">Growth Engine</div>
     <h3>SEM planner for course sales, lead capture, and measurable ROI.</h3>
-    <p>Build focused Google/Bing search campaigns around one course, one audience, and one promise. The planner below estimates traffic, leads, and revenue before budget is spent.</p>
+    <p>Build focused Google/Bing search campaigns around one course, one audience, and one promise. The planner below estimates traffic, leads, and possible sales value before budget is spent.</p>
     <div class="growth-timeline">
      <div class="growth-step"><strong>01 Goal</strong><span>Choose lead, sale, or course launch as the primary conversion.</span></div>
      <div class="growth-step"><strong>02 Keywords</strong><span>Use transactional long-tail terms and negative keywords to protect budget.</span></div>
@@ -4892,8 +4890,8 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
 <!-- ===================== ADMIN PAGE ===================== -->
 <div class="page" id="page-admin">
  <div class="adm-head">
-<div style="display:flex;align-items:center;gap:14px"><div class="logo-mark"><img src="/logo.png?v=5" alt="HUMAIXO logo" onerror="this.onerror=null;this.src='/assets/her-logo.png?v=5'"><span class="logo-fallback">HX</span></div><div><div class="logo-name"><span>HUMAIXO.</span><em>(Humaix Echo Realm)</em></div><div class="logo-tag">Admin Panel</div></div></div>
- <div style="display:flex;gap:12px;align-items:center"><div style="font-size:13px;color:var(--ink2)">Logged in as <strong>HUMAIX Admin</strong> <a href="mailto:Hzzzx06@gmail.com" style="color:var(--sky)">Hzzzx06@gmail.com</a></div><button class="btn btn-ghost" onclick="showPage('home')"> View Site</button></div>
+<div style="display:flex;align-items:center;gap:14px"><div class="logo-mark"><img src="/logo.png?v=5" alt="HUMAIXO logo" onerror="this.onerror=null;this.src='/assets/her-logo.png?v=5'"><span class="logo-fallback">HX</span></div><div><div class="logo-name"><span>HUMAIXO.</span><em>(Humaix Echo Realm)</em></div><div class="logo-tag">Restricted Area</div></div></div>
+ <div style="display:flex;gap:12px;align-items:center"><div style="font-size:13px;color:var(--ink2)">Admin access requires a verified role.</div><button class="btn btn-ghost" onclick="showPage('home')"> View Site</button></div>
  </div>
  <div class="adm-layout">
  <aside class="sidebar" style="top:64px;height:calc(100vh - 64px)">
@@ -4907,7 +4905,7 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
  <div class="sb-item" onclick="showToast(' Payments...')"><span class="sb-ico"> </span>Payments</div>
  </aside>
  <div style="padding:40px">
- <div style="margin-bottom:32px"><h2 style="font-size:28px;font-weight:800;margin-bottom:4px">Dashboard Overview</h2><p style="color:var(--ink2);font-size:14px">Contact: <a href="mailto:Hzzzx06@gmail.com" style="color:var(--sky)">Hzzzx06@gmail.com</a></p></div>
+ <div style="margin-bottom:32px"><h2 style="font-size:28px;font-weight:800;margin-bottom:4px">Restricted Admin Console</h2><p style="color:var(--ink2);font-size:14px">Private operational tools are visible only after role verification.</p></div>
  <div class="adm-cards">
  <div class="adm-card"><div class="adm-ico"> </div><div class="adm-val">Setup</div><div class="adm-lbl">Learner Access</div></div>
  <div class="adm-card"><div class="adm-ico"> </div><div class="adm-val">6</div><div class="adm-lbl">Catalog Items</div></div>
@@ -4991,7 +4989,7 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
    </div>
   </div>
  </section>
- <footer><div class="ft-inner"><div class="ft-bot"><span> 2026 HUMAIXO</span><button class="btn btn-ghost" onclick="showPage('home')"> Back to Home</button></div></div></footer>
+ <footer><div class="ft-inner"><div class="ft-bot"><span> 2026 HUMAIXO. (Humaix Echo Realm)</span><button class="btn btn-ghost" onclick="showPage('home')"> Back to Home</button></div></div></footer>
 </div>
 
 <div class="page" id="page-terms">
@@ -5013,7 +5011,7 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
    </div>
   </div>
  </section>
- <footer><div class="ft-inner"><div class="ft-bot"><span> 2026 HUMAIXO</span><button class="btn btn-ghost" onclick="showPage('home')"> Back to Home</button></div></div></footer>
+ <footer><div class="ft-inner"><div class="ft-bot"><span> 2026 HUMAIXO. (Humaix Echo Realm)</span><button class="btn btn-ghost" onclick="showPage('home')"> Back to Home</button></div></div></footer>
 </div>
 
 <div class="page" id="page-refund">
@@ -5035,7 +5033,7 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
    </div>
   </div>
  </section>
- <footer><div class="ft-inner"><div class="ft-bot"><span> 2026 HUMAIXO</span><button class="btn btn-ghost" onclick="showPage('home')"> Back to Home</button></div></div></footer>
+ <footer><div class="ft-inner"><div class="ft-bot"><span> 2026 HUMAIXO. (Humaix Echo Realm)</span><button class="btn btn-ghost" onclick="showPage('home')"> Back to Home</button></div></div></footer>
 </div>
 
 <!-- ===================== VIDEO MODAL ===================== -->
@@ -6932,11 +6930,11 @@ const COMMUNITY_KEY = 'hr_community_posts';
 const ANALYTICS_KEY = 'hr_local_events';
 const WORKSPACE_TASKS_KEY = 'hr_workspace_tasks';
 const SEM_PLAN_KEY = 'hr_sem_plan';
-const ADMIN_EMAIL = 'Hzzzx06@gmail.com';
+const SUPPORT_EMAIL = 'Hzzzx06@gmail.com';
 const PAGE_META = {
 home: {
-   title: 'HUMAIXO. (Humaix Echo Realm) | Evolving Humanity through Intelligent Ecosystems',
-   description: 'HUMAIXO. (Humaix Echo Realm) is a spatial AI academy blending premium learning, 3D product storytelling, and future Workspace and Memory layers.'
+   title: 'HUMAIXO. (Humaix Echo Realm) | Practical AI and Digital Skills Academy',
+   description: 'HUMAIXO. (Humaix Echo Realm) helps beginners learn practical AI and digital skills with guided courses, notes, secure checkout, and learner support.'
 },
 workspace: {
    title: 'Workspace | HUMAIXO. (Humaix Echo Realm)',
@@ -7082,6 +7080,8 @@ const PAGE_TO_NAV = {
  courses: 'nl-academy',
  notes: 'nl-notes',
  about: 'nl-about',
+ blog: 'nl-blog',
+ contact: 'nl-contact',
  dashboard: 'nl-workspace'
 };
 
@@ -7237,11 +7237,15 @@ function updateGoogleAuthUi(){
  const loginShell = document.getElementById('googleLoginBtn');
  const signupShell = document.getElementById('googleSignupBtn');
  const hasGoogle = Boolean(googleDirectEnabled || googleRedirectEnabled);
- const text = googleStatusText || (hasGoogle
-   ? 'Google sign-in is available on this deployment.'
-   : 'Email access is active. Google sign-in will appear once deployment config is connected.');
- if (noteLogin) noteLogin.textContent = text;
- if (noteSignup) noteSignup.textContent = text;
+ const text = googleStatusText || 'Google sign-in is available on this deployment.';
+ if (noteLogin) {
+  noteLogin.textContent = hasGoogle ? text : '';
+  noteLogin.style.display = hasGoogle ? 'block' : 'none';
+ }
+ if (noteSignup) {
+  noteSignup.textContent = hasGoogle ? text : '';
+  noteSignup.style.display = hasGoogle ? 'block' : 'none';
+ }
  if (loginShell) loginShell.style.display = hasGoogle ? 'block' : 'none';
  if (signupShell) signupShell.style.display = hasGoogle ? 'block' : 'none';
   document.querySelectorAll('.google-redirect').forEach(link => {
@@ -8203,6 +8207,13 @@ function trackEvent(type, data = {}){
 function renderAdminAnalytics(){
  const panel = document.getElementById('adminAnalyticsPanel');
  if(!panel) return;
+ if(!isAdmin){
+  panel.innerHTML = `
+   <div class="adm-card"><div class="adm-ico"></div><div class="adm-val">Private</div><div class="adm-lbl">Role required</div></div>
+   <div class="adm-card"><div class="adm-ico"></div><div class="adm-val">Hidden</div><div class="adm-lbl">No public analytics</div></div>
+  `;
+  return;
+ }
  const events = readAnalyticsEvents();
  const learning = events.filter(e => e.type === 'course_preview' || e.type === 'lesson_complete' || e.type === 'quiz_submit').length;
  const leads = events.filter(e => e.type === 'course_view' || e.type === 'newsletter_signup').length;
@@ -8257,9 +8268,9 @@ function generateSemPlan(showMessage = true){
  const aov = Math.max(0, Number(document.getElementById('semAov')?.value || course.price || 0));
  const clicks = Math.floor(budget / cpc);
  const conversions = Math.max(0, Math.round(clicks * convRate));
- const revenue = goal === 'sales' ? conversions * aov : conversions * course.price;
+ const estimatedSalesValue = goal === 'sales' ? conversions * aov : conversions * course.price;
  const cpa = conversions ? Math.round(budget / conversions) : budget;
- const roas = budget ? (revenue / budget).toFixed(2) : '0.00';
+ const roas = budget ? (estimatedSalesValue / budget).toFixed(2) : '0.00';
  const keywordSeeds = getSemKeywordSeeds(course);
  const negative = ['free', 'torrent', 'pdf only', 'crack', 'job vacancy', 'meaning', 'definition', 'cheap fake'];
  const adGroups = [
@@ -8304,7 +8315,7 @@ function generateSemPlan(showMessage = true){
    </div>
   `).join('');
  }
- const plan = { courseId: course.id, goal, budget, cpc, convRate, aov, clicks, conversions, revenue, cpa, roas, keywordSeeds, negative, adGroups, updatedAt: new Date().toISOString() };
+ const plan = { courseId: course.id, goal, budget, cpc, convRate, aov, clicks, conversions, estimatedSalesValue, cpa, roas, keywordSeeds, negative, adGroups, updatedAt: new Date().toISOString() };
  try{ localStorage.setItem(SEM_PLAN_KEY, JSON.stringify(plan)); }catch(_){}
  if(showMessage) {
   trackEvent('sem_plan', { courseId: course.id, goal, budget });
@@ -8428,7 +8439,7 @@ function showDashboardPanel(type){
    cards: [
     ['Profile', `${userName} (${getLearnerInitials()})`],
     ['Email', currentUser?.email || 'Email connected after login'],
-    ['Support', 'Hzzzx06@gmail.com']
+    ['Support', SUPPORT_EMAIL]
    ],
    action: `<button class="btn btn-ghost" onclick="showToast('Profile editing will be connected after launch.', 'warn')">Edit Profile Soon</button>`
   }
@@ -8897,7 +8908,7 @@ Give direct answers first, then practical steps.
 Known HUMAIXO details:
 - Brand: HUMAIXO. (Humaix Echo Realm).
 - Founder/instructor shown on site: Harish Singh.
-- Contact email: Hzzzx06@gmail.com.
+- Contact email: ${SUPPORT_EMAIL}.
 - Courses include mobile-friendly access, resources, support guidance, and the policies shown on the site.
 - Payment: Razorpay Secure Checkout for UPI, Cards, Net Banking, Wallets.
 - Current mini-catalog: Basic to Advanced English, Python for Beginner, Data Science, Video Editing for Beginner, Vibe Coding & Web Development, and Life Circle & Life Journey.

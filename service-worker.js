@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'humaixo-v36';
+const CACHE_VERSION = 'humaixo-v37';
 const APP_SHELL = [
   '/',
   '/offline.html',

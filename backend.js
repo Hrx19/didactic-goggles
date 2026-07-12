@@ -63,7 +63,8 @@ const aiProvider = (pickEnv('AI_PROVIDER') || (anthropicKey && !aiKey ? 'anthrop
 const aiModel = pickEnv('OPENAI_MODEL', 'AI_MODEL') || 'gpt-4o-mini';
 const anthropicModel = pickEnv('ANTHROPIC_MODEL', 'CLAUDE_MODEL') || 'claude-3-5-sonnet-latest';
 const upiId = pickEnv('UPI_ID', 'PAYMENT_UPI_ID') || 'uft@upi';
-const adminEmail = normalizeEmail(pickEnv('ADMIN_EMAIL') || 'Hzzzx06@gmail.com');
+const adminEmail = normalizeEmail(pickEnv('ADMIN_EMAIL') || '');
+const publicSupportEmail = pickEnv('PUBLIC_SUPPORT_EMAIL', 'SUPPORT_EMAIL') || 'Hzzzx06@gmail.com';
 
 function pickEnv(...names) {
   for (const name of names) {
@@ -1187,11 +1188,11 @@ function getUserEnrollmentKey(user) {
 
 function buildSiteSummary() {
   return [
-    'HUMAIXO is a premium AI + tech learning website.',
+    'HUMAIXO. (Humaix Echo Realm) is a practical AI + digital skills learning website.',
     'Founder/instructor shown on the site: Harish Singh.',
-    'Primary contact: Hzzzx06@gmail.com.',
+    `Primary support contact: ${publicSupportEmail}.`,
     'Main pages: Home, Academy, Security Lab, Courses, Notes, About, Contact, Login, Sign Up, and Dashboard.',
-    'Key features: premium hero design, beginner-friendly courses, ethical security practice lab, course thumbnails, AI assistant, Razorpay checkout, contact form, feedback form, paid notes, and a learner dashboard.',
+    'Key features: beginner-friendly courses, secure Razorpay checkout, paid notes, contact form, AI assistant, and clear preview pages. Workspace, Memory, and Community are preview layers while the core course flow is strengthened.',
     'Course benefits: account-based course access, mobile/tablet access, learning resources, email support for payment/access issues, and certificates after eligible course completion.'
   ].join('\n');
 }
@@ -1273,7 +1274,7 @@ function buildLocalAiReply(question) {
   }
 
   if (/(contact|support|help|email|whatsapp)/.test(text)) {
-    return 'For support, use the Contact page or email Hzzzx06@gmail.com. Payment and access issues should include the order ID if available.';
+    return `For support, use the Contact page or email ${publicSupportEmail}. Payment and access issues should include the order ID if available.`;
   }
 
   if (/(career|job|earn|earning|income)/.test(text)) {
