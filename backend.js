@@ -31,9 +31,9 @@ app.use((req, res, next) => {
       "frame-ancestors 'none'",
       "form-action 'self' https://checkout.razorpay.com https://api.razorpay.com https://*.razorpay.com",
       "img-src 'self' data: blob: https://checkout.razorpay.com https://*.razorpay.com",
-      "font-src 'self' data:",
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      "script-src 'self' 'unsafe-inline' https://checkout.razorpay.com https://*.razorpay.com https://accounts.google.com https://cdn.jsdelivr.net",
+      "font-src 'self' data: https://cdn.jsdelivr.net",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net",
+      "script-src 'self' 'unsafe-inline' https://checkout.razorpay.com https://*.razorpay.com https://accounts.google.com https://cdn.jsdelivr.net https://cdn.tailwindcss.com",
       "connect-src 'self' https://checkout.razorpay.com https://api.razorpay.com https://*.razorpay.com https://accounts.google.com https://fonts.googleapis.com https://fonts.gstatic.com",
       "frame-src https://checkout.razorpay.com https://api.razorpay.com https://*.razorpay.com https://accounts.google.com https://www.youtube.com https://youtube.com"
     ].join('; ')
@@ -1504,6 +1504,9 @@ app.get('/api/notes/download/:productId', (req, res) => {
     return res.status(404).type('text/plain').send('Notes file is temporarily unavailable.');
   }
   res.setHeader('Cache-Control', 'private, no-store');
+  if (path.extname(product.filePath).toLowerCase() === '.html') {
+    return res.type('html').sendFile(product.filePath);
+  }
   res.download(product.filePath, product.downloadName || 'humaix-handbook.pdf');
 });
 

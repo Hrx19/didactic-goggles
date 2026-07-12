@@ -11,5 +11,18 @@
     "fileName": "data-science-python-handbook.pdf",
     "downloadName": "humaixo-data-science-handbook.pdf",
     "status": "available"
+  },
+  {
+    "productId": "data-science-notebook-a-to-z",
+    "courseId": 3,
+    "title": "Data Science Notebook (A to Z)",
+    "subtitle": "Interactive project-style notebook for beginner-friendly Data Science practice.",
+    "category": "Data Skills",
+    "price": 199,
+    "originalAmount": 199,
+    "currency": "INR",
+    "fileName": "data-science-notebook-a-to-z.html",
+    "downloadName": "humaixo-data-science-notebook-a-to-z.html",
+    "status": "available"
   }
 ]
