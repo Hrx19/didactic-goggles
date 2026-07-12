@@ -48,6 +48,8 @@ const enrollmentsFile = path.join(__dirname, 'enrollments.json');
 const transactionsFile = path.join(__dirname, 'transactions.json');
 const appShellFile = path.join(__dirname, 'app-shell.html');
 const manifestFile = path.join(__dirname, 'manifest.webmanifest');
+const handbooksFile = path.join(__dirname, 'handbooks.json');
+const notesAssetsDir = path.join(__dirname, 'assets', 'notes');
 const dataScienceNotesFile = path.join(__dirname, 'assets', 'notes', 'data-science-python-handbook.pdf');
 const aiKey = pickEnv(
   'OPENAI_API_KEY',
@@ -262,6 +264,48 @@ function verifyNotesDownloadToken(token, productId) {
 const NOTES_PROMO_AMOUNT = 2;
 const NOTES_PROMO_DURATION_MS = 10 * 60 * 1000;
 
+function resolveNotesAsset(fileName) {
+  const cleanName = path.basename(String(fileName || ''));
+  if (!cleanName || cleanName !== String(fileName || '')) return null;
+  const resolved = path.resolve(notesAssetsDir, cleanName);
+  const root = path.resolve(notesAssetsDir) + path.sep;
+  return resolved.startsWith(root) ? resolved : null;
+}
+
+function loadConfiguredHandbooks() {
+  try {
+    if (!fs.existsSync(handbooksFile)) return {};
+    const parsed = JSON.parse(fs.readFileSync(handbooksFile, 'utf8') || '[]');
+    const list = Array.isArray(parsed) ? parsed : parsed.handbooks;
+    if (!Array.isArray(list)) return {};
+    return list.reduce((map, item) => {
+      const productId = cleanText(item.productId || item.id || '', 80).toLowerCase();
+      const filePath = resolveNotesAsset(item.fileName || item.file || '');
+      const amount = Number(item.amount || item.price || 399);
+      if (!productId || !filePath || !amount || amount < 1) return map;
+      map[productId] = {
+        productType: 'notes',
+        productId,
+        courseId: Number(item.courseId || 0) || null,
+        title: cleanText(item.title || 'Paid Handbook', 120),
+        amount,
+        originalAmount: Number(item.originalAmount || item.orig || amount) || amount,
+        currency: cleanText(item.currency || 'INR', 10).toUpperCase(),
+        assetUrl: `/api/notes/download/${encodeURIComponent(productId)}`,
+        filePath,
+        downloadName: cleanText(item.downloadName || `${productId}.pdf`, 120),
+        category: cleanText(item.category || 'Project Handbook', 80),
+        subtitle: cleanText(item.subtitle || 'Paid project handbook with practical steps and revision support.', 180),
+        status: item.status === 'coming-soon' ? 'coming-soon' : 'available'
+      };
+      return map;
+    }, {});
+  } catch (err) {
+    console.error('Error reading handbooks config:', err);
+    return {};
+  }
+}
+
 function createNotesPromoToken(productId) {
   return encodeSignedPayload({
     purpose: 'notes-promo',
@@ -302,8 +346,12 @@ const NOTES_PRODUCTS = {
     currency: 'INR',
     assetUrl: '/api/notes/download/notes-3',
     filePath: dataScienceNotesFile,
+    downloadName: 'humaixo-data-science-handbook.pdf',
+    category: 'Data Skills',
+    subtitle: 'Paid handbook for Data Science: Python revision points, practice flow, and project guidance.',
     status: 'available'
-  }
+  },
+  ...loadConfiguredHandbooks()
 };
 
 function loadTransactions() {
@@ -1377,6 +1425,24 @@ app.get('/api/notes/promo-token', rateLimiters.payment, (req, res) => {
   });
 });
 
+app.get('/api/notes/products', (_req, res) => {
+  const products = Object.values(NOTES_PRODUCTS)
+    .filter((product) => product.status === 'available')
+    .map((product) => ({
+      productId: product.productId,
+      courseId: product.courseId || '',
+      title: product.title,
+      amount: product.amount,
+      originalAmount: product.originalAmount || product.amount,
+      currency: product.currency || 'INR',
+      assetUrl: product.assetUrl,
+      category: product.category || 'Course Notes',
+      subtitle: product.subtitle || 'Paid handbook with practical revision support.',
+      status: product.status
+    }));
+  res.json({ products });
+});
+
 app.post('/api/verify-payment', rateLimiters.payment, async (req, res) => {
   if (!razorpayKeySecret) {
     return res.status(500).json({ error: 'Payment verification is not configured on the server.' });
@@ -1438,7 +1504,7 @@ app.get('/api/notes/download/:productId', (req, res) => {
     return res.status(404).type('text/plain').send('Notes file is temporarily unavailable.');
   }
   res.setHeader('Cache-Control', 'private, no-store');
-  res.download(product.filePath, 'humaix-data-science-handbook.pdf');
+  res.download(product.filePath, product.downloadName || 'humaix-handbook.pdf');
 });
 
 app.get('/api/enrollments', (req, res) => {

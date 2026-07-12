@@ -4932,7 +4932,7 @@ const DATA_SCIENCE_NOTES_PRICE = 399;
 const DATA_SCIENCE_NOTES_ORIG = 999;
 const DATA_SCIENCE_NOTES_PROMO_PRICE = 2;
 const DATA_SCIENCE_NOTES_URL = '/api/notes/download/notes-3';
-const NOTES_PACKS = COURSES.map((course) => ({
+const DEFAULT_NOTES_PACKS = COURSES.map((course) => ({
  id: `notes-${course.id}`,
  courseId: course.id,
  title: course.id === 3 ? 'Data Science Handbook' : `${course.title} Notes`,
@@ -4944,6 +4944,7 @@ const NOTES_PACKS = COURSES.map((course) => ({
  status: course.id === 3 ? 'PDF Available' : 'Coming Soon',
  assetUrl: course.id === 3 ? DATA_SCIENCE_NOTES_URL : ''
 }));
+let NOTES_PACKS = [...DEFAULT_NOTES_PACKS];
 let selectedProduct = null;
 let notesPromoToken = '';
 let notesPromoExpiresAt = 0;
@@ -5184,7 +5185,13 @@ function renderGrid(id, list){
 }
 
 function makeNotesCard(pack){
- const course = getCourseById(pack.courseId) || COURSES[0];
+ const course = getCourseById(pack.courseId) || {
+  id: Number(pack.courseId || 99),
+  cat: pack.cat || 'Project Handbook',
+  bg: pack.bg || 'linear-gradient(135deg,#06121f,#111827 54%,#22d3ee)',
+  thumbPos: pack.thumbPos || 'center',
+  thumbText: pack.title || 'Paid Handbook'
+ };
  const media = getCourseMedia(course);
  const displayPrice = getNotesDisplayPrice(pack);
  const priceLabel = getNotesPriceLabel(pack);
@@ -5196,7 +5203,7 @@ function makeNotesCard(pack){
    <div class="c-thumb-overlay"></div>
   </div>
   <div class="c-body">
-   <div class="c-cat">${escapeHtml(course.cat)}</div>
+   <div class="c-cat">${escapeHtml(pack.cat || course.cat)}</div>
    <h3 class="c-title">${escapeHtml(pack.title)}</h3>
   <div class="c-status">${escapeHtml(priceLabel)} Notes Pack</div>
    <div class="c-meta-row">
@@ -5208,7 +5215,7 @@ function makeNotesCard(pack){
    <div class="c-instructor">${escapeHtml(pack.subtitle)}</div>
    <div class="c-footer">
     <div><span class="c-price"> ${displayPrice}</span>${pack.orig && pack.orig > displayPrice ? `<span class="c-orig"> ${pack.orig}</span>` : '<span class="c-orig"> Notes only</span>'}</div>
-    <button class="btn-enroll" ${pack.assetUrl ? `onclick="event.stopPropagation();buyNotesPack(${course.id})"` : 'disabled aria-disabled="true"'}>${pack.assetUrl ? `Buy Notes INR ${displayPrice}` : 'Coming Soon'}</button>
+    <button class="btn-enroll" ${pack.assetUrl ? `onclick='event.stopPropagation();buyNotesPack(${JSON.stringify(pack.id)})'` : 'disabled aria-disabled="true"'}>${pack.assetUrl ? `Buy Notes INR ${displayPrice}` : 'Coming Soon'}</button>
    </div>
   </div>
  </article>`;
@@ -5241,6 +5248,42 @@ function getNotesPriceLabel(pack){
   return `INR ${price} Flash Offer`;
  }
  return `INR ${price}`;
+}
+
+function normaliseHandbookProduct(product){
+ const productId = String(product.productId || product.id || '').trim();
+ if(!productId) return null;
+ const courseId = Number(product.courseId || 0) || 0;
+ const course = getCourseById(courseId);
+ return {
+  id: productId,
+  courseId,
+  title: product.title || 'Paid Handbook',
+  subtitle: product.subtitle || 'Paid project handbook with practical steps and revision support.',
+  price: Number(product.amount || product.price || 399),
+  orig: Number(product.originalAmount || product.orig || product.amount || 399),
+  status: product.status === 'coming-soon' ? 'Coming Soon' : 'PDF Available',
+  assetUrl: product.assetUrl || `/api/notes/download/${encodeURIComponent(productId)}`,
+  cat: product.category || course?.cat || 'Project Handbook',
+  bg: course?.bg || 'linear-gradient(135deg,#06121f,#111827 54%,#22d3ee)',
+  thumbPos: course?.thumbPos || 'center'
+ };
+}
+
+async function loadPaidHandbookProducts(){
+ try{
+  const resp = await fetch('/api/notes/products');
+  if(!resp.ok) throw new Error('Handbook product list unavailable');
+  const data = await resp.json();
+  const serverPacks = (data.products || []).map(normaliseHandbookProduct).filter(Boolean);
+  if(!serverPacks.length) return;
+  const byId = new Map(DEFAULT_NOTES_PACKS.map((pack) => [String(pack.id), pack]));
+  serverPacks.forEach((pack) => byId.set(String(pack.id), { ...(byId.get(String(pack.id)) || {}), ...pack }));
+  NOTES_PACKS = [...byId.values()];
+  renderNotesStore();
+ }catch(err){
+  console.warn('Paid handbook products could not be loaded', err);
+ }
 }
 
 function refreshNotesPromoUi(){
@@ -5290,8 +5333,12 @@ async function startNotesFlashOffer(){
  }
 }
 
-function buyNotesPack(courseId){
- const pack = NOTES_PACKS.find((item) => Number(item.courseId) === Number(courseId)) || NOTES_PACKS[0];
+function buyNotesPack(identifier){
+ const wanted = String(identifier || '').trim();
+ const numericId = Number(identifier);
+ const pack = NOTES_PACKS.find((item) => String(item.id) === wanted)
+  || NOTES_PACKS.find((item) => Number(item.courseId) === numericId)
+  || NOTES_PACKS[0];
  if(!pack.assetUrl){
  showToast('This notes pack is coming soon. Only Data Science notes are available right now.', 'warn');
   return;
@@ -8429,7 +8476,7 @@ async function payWithRazorpay(){
   productType: product.type,
   productId: product.id || (product.type === 'notes' ? `notes-${product.courseId}` : `course-${product.courseId}`),
   courseId: product.courseId || null,
-  promoToken: product.type === 'notes' && isNotesPromoActive() ? (product.promoToken || notesPromoToken) : ''
+  promoToken: product.type === 'notes' && isDataScienceNotesPack(product) && isNotesPromoActive() ? (product.promoToken || notesPromoToken) : ''
  })
  });
  const order = await response.json();
@@ -9038,6 +9085,7 @@ async function bootHumaixoApp(){
  safeBoot('Hero scene', initHeroScene);
  safeBoot('Reel scene', initReelScene);
  await loadConfig();
+ await loadPaidHandbookProducts();
  startNotesFlashOffer();
  await checkAuth();
  captureCampaignParams();

@@ -1,0 +1,15 @@
+[
+  {
+    "productId": "notes-3",
+    "courseId": 3,
+    "title": "Data Science Handbook",
+    "subtitle": "Paid handbook for Data Science: Python revision points, practice flow, and project guidance.",
+    "category": "Data Skills",
+    "price": 399,
+    "originalAmount": 999,
+    "currency": "INR",
+    "fileName": "data-science-python-handbook.pdf",
+    "downloadName": "humaixo-data-science-handbook.pdf",
+    "status": "available"
+  }
+]
