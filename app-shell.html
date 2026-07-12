@@ -380,28 +380,39 @@ nav.scrolled{
 }
 .logo-name{
  font-family:'Space Grotesk','Outfit',sans-serif;
- font-weight:900;
- font-size:13px;
- line-height:1.02;
- letter-spacing:0.12em;
- text-transform:uppercase;
+ line-height:1;
  display:flex;
  flex-direction:column;
  align-items:flex-start;
- background:linear-gradient(90deg,#f8fafc 0%,#7dd3fc 26%,#c084fc 68%,#ff7ab8 100%);
- -webkit-background-clip:text;
- -webkit-text-fill-color:transparent;
- background-clip:text;
- text-shadow:0 0 24px rgba(0,229,255,0.14);
 }
 .logo-name span,.logo-name em{
  display:block;
  font-style:normal;
 }
+.logo-name span{
+ font-size:clamp(14px,1.25vw,17px);
+ font-weight:900;
+ letter-spacing:0.13em;
+ text-transform:uppercase;
+ background:linear-gradient(90deg,#f8fafc 0%,#7dd3fc 34%,#c084fc 74%,#ff7ab8 100%);
+ -webkit-background-clip:text;
+ -webkit-text-fill-color:transparent;
+ background-clip:text;
+ text-shadow:0 0 24px rgba(0,229,255,0.16);
+ white-space:nowrap;
+}
 .logo-name em{
- letter-spacing:0.18em;
- font-size:11px;
- margin-top:2px;
+ margin-top:4px;
+ font-size:clamp(7.5px,0.72vw,9.5px);
+ font-weight:700;
+ letter-spacing:0.08em;
+ text-transform:none;
+ color:rgba(226,232,240,0.74);
+ -webkit-text-fill-color:rgba(226,232,240,0.74);
+ max-width:150px;
+ white-space:nowrap;
+ overflow:hidden;
+ text-overflow:ellipsis;
 }
 .logo-tag{
  font-size:8px;
@@ -3526,6 +3537,10 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
  .hero-visual{min-height:250px}
  .hero-brand-ribbon{display:none}
  .hero-orbit-card{left:14px;right:14px;bottom:14px;max-width:none}
+ .logo-name span{font-size:13px;letter-spacing:0.1em}
+ .logo-name em{font-size:7px;max-width:118px;letter-spacing:0.04em}
+ .logo-row{gap:8px}
+ .logo-row .logo-mark{width:52px;height:34px}
  .motion-reel{grid-template-columns:1fr;gap:10px}
  .motion-stage{min-height:150px}
  .motion-stack{grid-template-rows:auto;grid-template-columns:1fr}
