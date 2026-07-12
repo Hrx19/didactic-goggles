@@ -17,7 +17,7 @@ app.use((req, res, next) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=(self "https://checkout.razorpay.com")');
+  res.setHeader('Permissions-Policy', 'camera=(self), microphone=(self), geolocation=(), payment=(self "https://checkout.razorpay.com")');
   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
   if (req.secure || req.headers['x-forwarded-proto'] === 'https') {
     res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
@@ -259,12 +259,15 @@ function verifyNotesDownloadToken(token, productId) {
   return data;
 }
 
+const NOTES_PROMO_AMOUNT = 2;
+const NOTES_PROMO_DURATION_MS = 10 * 60 * 1000;
+
 function createNotesPromoToken(productId) {
   return encodeSignedPayload({
     purpose: 'notes-promo',
     productId,
-    amount: 1,
-    exp: Date.now() + 30 * 1000
+    amount: NOTES_PROMO_AMOUNT,
+    exp: Date.now() + NOTES_PROMO_DURATION_MS
   });
 }
 
@@ -273,7 +276,7 @@ function verifyNotesPromoToken(token, productId) {
   if (!data || data.purpose !== 'notes-promo') return null;
   if (data.productId !== productId) return null;
   if (!data.exp || Date.now() > Number(data.exp)) return null;
-  if (Number(data.amount) !== 1) return null;
+  if (Number(data.amount) !== NOTES_PROMO_AMOUNT) return null;
   return data;
 }
 
@@ -376,7 +379,7 @@ async function recoverTransactionFromRazorpayOrder(orderId) {
     const amount = Number(notes.amount || 0);
     const expectedAmounts = new Set([
       Number(baseProduct.amount),
-      ...(baseProduct.productType === 'notes' ? [1] : [])
+      ...(baseProduct.productType === 'notes' ? [1, NOTES_PROMO_AMOUNT] : [])
     ]);
     if (!expectedAmounts.has(amount) || Math.round(amount * 100) !== Number(order.amount)) {
       return null;
@@ -404,7 +407,7 @@ function resolvePaymentProduct(body = {}) {
     if (!product || product.status !== 'available') return null;
     const promo = verifyNotesPromoToken(body.promoToken || '', key);
     if (promo) {
-      return { ...product, amount: 1, promoAmount: 1, promoExpiresAt: promo.exp, promoApplied: true };
+      return { ...product, amount: NOTES_PROMO_AMOUNT, promoAmount: NOTES_PROMO_AMOUNT, promoExpiresAt: promo.exp, promoApplied: true };
     }
     return { ...product };
   }
@@ -1367,7 +1370,7 @@ app.get('/api/notes/promo-token', rateLimiters.payment, (req, res) => {
   res.json({
     productId,
     promoToken: token,
-    promoPrice: 1,
+    promoPrice: NOTES_PROMO_AMOUNT,
     offerPrice: product.amount,
     actualPrice: product.originalAmount,
     expiresAt: data.exp

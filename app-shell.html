@@ -4145,7 +4145,7 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
  <div class="sec-head fade-in" style="text-align:left;margin-bottom:24px">
  <div class="sec-tag">Notes Store</div>
  <h2 class="sec-title">Premium notes packs for fast revision</h2>
- <p class="sec-sub" id="notesStoreIntro">Buy focused notes without login. Data Science Handbook actual price is INR 999 and the regular offer price is INR 399. A 30-second launch flash offer may show INR 1 while active.</p>
+ <p class="sec-sub" id="notesStoreIntro">Buy focused notes without login. Data Science Handbook actual price is INR 999 and the regular offer price is INR 399. A 10-minute launch flash offer may show INR 2 while active.</p>
  </div>
  <div class="status-shell glass-panel fade-in" style="margin-bottom:26px">
   <div>
@@ -4878,13 +4878,20 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
  </div>
  </div>
  <div class="voice-lab" id="voiceLab">
+  <div class="voice-title"><strong>Accessibility Avatar</strong><span>Voice controls for this website</span></div>
   <div class="voice-row">
    <input id="voiceWakeName" class="voice-name" placeholder="Avatar name" value="Echo">
    <button class="ai-icon-btn" type="button" title="Set avatar image" onclick="document.getElementById('avatarImageInput')?.click()">Avatar</button>
    <button class="ai-icon-btn" type="button" title="Voice command" onclick="startVoiceAssistant()">Mic</button>
   </div>
   <input id="avatarImageInput" type="file" accept="image/*" hidden onchange="setAiAvatarImage(event)">
-  <div class="voice-status" id="voiceStatus">Say the avatar name, then ask a question or say: open academy, open notes, show data science.</div>
+  <div class="voice-actions">
+   <button class="ai-qbtn" type="button" onclick="handleVoiceCommand('open academy')">Open Academy</button>
+   <button class="ai-qbtn" type="button" onclick="handleVoiceCommand('show data science intro')">Data Science Intro</button>
+   <button class="ai-qbtn" type="button" onclick="handleVoiceCommand('open security lab')">Security Lab</button>
+  </div>
+  <div class="voice-status" id="voiceStatus">Say the avatar name, then ask a question or say: open academy, open notes, fill contact message.</div>
+  <div class="voice-scope">For safety, the avatar controls this website only. Phone-wide control requires the device's built-in accessibility tools.</div>
  </div>
  <div class="ai-msgs" id="aiMsgs">
  <div class="ai-msg bot">Ask me anything about HUMAIXO: courses, fees, beginner learning paths, founder, payment, certificates, or which path fits you best.</div>
@@ -4923,7 +4930,7 @@ const FEATURED_COURSES = FEATURED_COURSE_IDS.map((id) => COURSES.find((course) =
 const NOTES_PRICE = 99;
 const DATA_SCIENCE_NOTES_PRICE = 399;
 const DATA_SCIENCE_NOTES_ORIG = 999;
-const DATA_SCIENCE_NOTES_PROMO_PRICE = 1;
+const DATA_SCIENCE_NOTES_PROMO_PRICE = 2;
 const DATA_SCIENCE_NOTES_URL = '/api/notes/download/notes-3';
 const NOTES_PACKS = COURSES.map((course) => ({
  id: `notes-${course.id}`,
@@ -5244,13 +5251,13 @@ function refreshNotesPromoUi(){
  const btn = document.getElementById('notesHeroBuyBtn');
  if(btn){
   btn.textContent = isNotesPromoActive()
-   ? `Buy Data Science Notes - INR 1 (${getNotesPromoSeconds()}s)`
+   ? `Buy Data Science Notes - INR 2 (${getNotesPromoSeconds()}s)`
    : 'Buy Data Science Notes - INR 399';
  }
  const intro = document.getElementById('notesStoreIntro');
  if(intro){
-  intro.textContent = isNotesPromoActive()
-   ? `Flash offer active for ${getNotesPromoSeconds()} seconds: Data Science Handbook at INR 1. Actual price INR 999, regular offer INR 399.`
+ intro.textContent = isNotesPromoActive()
+   ? `Flash offer active for ${getNotesPromoSeconds()} seconds: Data Science Handbook at INR 2. Actual price INR 999, regular offer INR 399.`
    : 'Buy focused notes without login. Data Science Handbook actual price is INR 999 and the regular offer price is INR 399. Other notes are Coming Soon.';
  }
  renderNotesStore();
@@ -5263,7 +5270,7 @@ function refreshNotesPromoUi(){
 
 async function startNotesFlashOffer(){
  try{
-  const used = localStorage.getItem('humaixo_notes_flash_used') === '1';
+  const used = localStorage.getItem('humaixo_notes_flash_2_for_10m_used') === '1';
   if(used) {
    refreshNotesPromoUi();
    return;
@@ -5273,7 +5280,7 @@ async function startNotesFlashOffer(){
   if(!resp.ok || !data.promoToken || !data.expiresAt) throw new Error(data.error || 'Promo unavailable');
   notesPromoToken = data.promoToken;
   notesPromoExpiresAt = Number(data.expiresAt);
-  localStorage.setItem('humaixo_notes_flash_used', '1');
+  localStorage.setItem('humaixo_notes_flash_2_for_10m_used', '1');
   refreshNotesPromoUi();
   if(notesPromoInterval) clearInterval(notesPromoInterval);
   notesPromoInterval = setInterval(refreshNotesPromoUi, 1000);
@@ -7321,7 +7328,7 @@ function renderDetailCourse(id){
  if(notesCopy) notesCopy.textContent = hasAccess
   ? 'Your course notes are unlocked. Save lesson notes inside Memory and continue from the Learning Studio.'
  : c.id === 3
-   ? `Data Science Handbook is available as a separate paid notes pack. Actual price INR 999, regular offer price INR 399${isNotesPromoActive() ? ', flash price INR 1 for a few seconds' : ''}. It is not a free download.`
+   ? `Data Science Handbook is available as a separate paid notes pack. Actual price INR 999, regular offer price INR 399${isNotesPromoActive() ? ', flash price INR 2 for 10 minutes' : ''}. It is not a free download.`
    : 'Each course includes its own focused notes after purchase. Extra premium notes packs can be purchased separately when available.';
  if(notesList){
   const notes = c.id === 3 ? [
