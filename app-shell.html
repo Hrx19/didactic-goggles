@@ -921,6 +921,181 @@ section{scroll-margin-top:90px}
  background:var(--emerald);
  box-shadow:0 0 12px rgba(52,211,153,0.9);
 }
+.record-section{
+ padding-top:80px;
+}
+.record-ledger{
+ position:relative;
+ overflow:hidden;
+ border-radius:30px;
+ padding:34px;
+ background:
+  linear-gradient(90deg, rgba(255,111,145,0.14) 0 2px, transparent 2px 100%) 84px 0/100% 100%,
+  repeating-linear-gradient(0deg, rgba(59,130,246,0.14) 0 1px, transparent 1px 34px),
+  linear-gradient(135deg,#fff8e6,#f8efe0 54%,#e7d7c0);
+ color:#1f2937;
+ border:1px solid rgba(255,255,255,0.22);
+ box-shadow:0 34px 90px rgba(2,8,23,0.45), inset 0 0 70px rgba(120,53,15,0.08);
+}
+.record-ledger::before{
+ content:"HUMAIXO";
+ position:absolute;
+ inset:auto auto 24px 42%;
+ transform:rotate(-16deg);
+ font-family:'Space Grotesk','Outfit',sans-serif;
+ font-size:clamp(54px,9vw,120px);
+ font-weight:900;
+ letter-spacing:0.12em;
+ color:rgba(185,28,28,0.055);
+ pointer-events:none;
+ white-space:nowrap;
+}
+.record-ledger::after{
+ content:"ACCESS VERIFIED";
+ position:absolute;
+ right:34px;
+ bottom:34px;
+ transform:rotate(-10deg);
+ padding:12px 18px;
+ border:3px double rgba(185,28,28,0.48);
+ border-radius:12px;
+ color:rgba(185,28,28,0.7);
+ font-size:12px;
+ font-weight:900;
+ letter-spacing:0.18em;
+ text-transform:uppercase;
+}
+.record-top{
+ position:relative;
+ z-index:1;
+ display:flex;
+ justify-content:space-between;
+ gap:18px;
+ align-items:flex-start;
+ border-bottom:2px solid rgba(31,41,55,0.22);
+ padding-bottom:18px;
+ margin-bottom:18px;
+}
+.record-brand{
+ display:flex;
+ gap:12px;
+ align-items:center;
+}
+.record-brand img{
+ width:54px;
+ height:54px;
+ border-radius:16px;
+ object-fit:cover;
+ box-shadow:0 16px 28px rgba(2,8,23,0.18);
+}
+.record-brand strong{
+ display:block;
+ font-size:18px;
+ letter-spacing:0.08em;
+ text-transform:uppercase;
+}
+.record-brand span,.record-meta{
+ color:#64748b;
+ font-size:12px;
+ font-weight:800;
+ letter-spacing:0.08em;
+ text-transform:uppercase;
+}
+.record-title{
+ position:relative;
+ z-index:1;
+ display:grid;
+ grid-template-columns:minmax(0,1fr) auto;
+ gap:18px;
+ align-items:end;
+ margin-bottom:18px;
+}
+.record-title h3{
+ font-size:clamp(28px,4vw,46px);
+ color:#0f172a;
+ line-height:1;
+ letter-spacing:-0.04em;
+}
+.record-title p{
+ color:#475569;
+ max-width:600px;
+ line-height:1.8;
+ font-weight:700;
+}
+.record-id{
+ border:1px solid rgba(15,23,42,0.16);
+ background:rgba(255,255,255,0.42);
+ border-radius:16px;
+ padding:12px 14px;
+ font-weight:900;
+ color:#0f172a;
+ min-width:190px;
+ text-align:center;
+}
+.record-table{
+ position:relative;
+ z-index:1;
+ display:grid;
+ grid-template-columns:0.8fr 1.5fr 0.9fr 0.9fr;
+ border:1px solid rgba(15,23,42,0.22);
+ background:rgba(255,255,255,0.22);
+}
+.record-cell{
+ min-height:56px;
+ padding:14px;
+ border-right:1px solid rgba(15,23,42,0.18);
+ border-bottom:1px solid rgba(15,23,42,0.18);
+ font-size:14px;
+ line-height:1.5;
+}
+.record-cell:nth-child(4n){border-right:0}
+.record-head{
+ background:rgba(15,23,42,0.08);
+ color:#0f172a;
+ font-weight:900;
+ letter-spacing:0.1em;
+ text-transform:uppercase;
+ font-size:11px;
+}
+.record-pill-row{
+ position:relative;
+ z-index:1;
+ display:flex;
+ flex-wrap:wrap;
+ gap:10px;
+ margin-top:18px;
+ padding-right:180px;
+}
+.record-pill{
+ display:inline-flex;
+ align-items:center;
+ gap:8px;
+ border-radius:999px;
+ padding:9px 12px;
+ background:rgba(15,23,42,0.06);
+ border:1px solid rgba(15,23,42,0.12);
+ color:#334155;
+ font-size:12px;
+ font-weight:900;
+}
+.record-redacted{
+ display:inline-block;
+ min-width:90px;
+ height:10px;
+ border-radius:99px;
+ background:linear-gradient(90deg,#94a3b8,#334155);
+ opacity:0.65;
+ vertical-align:middle;
+}
+.record-note{
+ position:relative;
+ z-index:1;
+ margin-top:16px;
+ color:#64748b;
+ font-size:12px;
+ line-height:1.7;
+ max-width:760px;
+}
 .status-link{
  display:inline-flex;
  align-items:center;
@@ -3354,8 +3529,15 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
  .motion-reel{grid-template-columns:1fr;gap:10px}
  .motion-stage{min-height:150px}
  .motion-stack{grid-template-rows:auto;grid-template-columns:1fr}
- .layer-section,.courses-section,.trust-section{padding:82px 18px}
+ .layer-section,.courses-section,.trust-section,.record-section{padding:82px 18px}
  .bento-grid,.proof-grid{grid-template-columns:1fr}
+ .record-ledger{padding:24px 18px;border-radius:22px}
+ .record-ledger::after{position:relative;right:auto;bottom:auto;display:inline-flex;margin-top:18px}
+ .record-top,.record-title{grid-template-columns:1fr;display:grid}
+ .record-table{grid-template-columns:1fr}
+ .record-cell{border-right:0}
+ .record-head{display:none}
+ .record-pill-row{padding-right:0}
  .bento-card--large{grid-row:auto;min-height:unset}
  .trust-shell,.status-shell{flex-direction:column;align-items:flex-start}
  .security-badges{justify-content:flex-start}
@@ -3704,12 +3886,54 @@ h1,h2,h3,h4,h5,h6,.logo-name,.logo-tag,.hero-title-grad,.sec-title,.c-title,.blo
  <div class="bento-mark" aria-hidden="true"><img src="/logo.png?v=5" alt=""></div>
 </article>
  </div>
- </div>
- </section>
+</div>
+</section>
 
- <section class="courses-section">
- <div class="sec-inner">
- <div class="sec-head fade-in">
+<section class="record-section">
+<div class="sec-inner">
+<div class="record-ledger fade-in">
+ <div class="record-top">
+  <div class="record-brand">
+   <img src="/logo.png?v=5" alt="HUMAIXO logo">
+   <div><strong>HUMAIXO Echo Realm</strong><span>Learning Access Ledger</span></div>
+  </div>
+  <div class="record-meta">Preview Record / No Private Data</div>
+ </div>
+ <div class="record-title">
+  <div>
+   <h3>Every paid item should feel recorded, clear, and traceable.</h3>
+   <p>A document-inspired access layer for courses, notebooks, and handbooks: clean status, verified checkout, support-ready order details, and no confusing demo claims.</p>
+  </div>
+  <div class="record-id">Record ID: HR-2026-001</div>
+ </div>
+ <div class="record-table" aria-label="Learning access record preview">
+  <div class="record-cell record-head">Item</div>
+  <div class="record-cell record-head">Access Rule</div>
+  <div class="record-cell record-head">Status</div>
+  <div class="record-cell record-head">Support</div>
+  <div class="record-cell">Data Science Notebook</div>
+  <div class="record-cell">Unlocks after Razorpay payment verification</div>
+  <div class="record-cell">Paid Access</div>
+  <div class="record-cell">Email + order ID</div>
+  <div class="record-cell">Course Lessons</div>
+  <div class="record-cell">Preview first, full access after purchase</div>
+  <div class="record-cell">Course Locked</div>
+  <div class="record-cell"><span class="record-redacted"></span></div>
+ </div>
+ <div class="record-pill-row">
+  <span class="record-pill">Secure checkout</span>
+  <span class="record-pill">Signed download links</span>
+  <span class="record-pill">Policy pages visible</span>
+  <span class="record-pill">Private learner data protected</span>
+ </div>
+ <p class="record-note">This section is inspired by official document clarity, but it does not display land records, personal records, or private PDF data. It shows how HUMAIXO keeps paid learning access simple and support-ready.</p>
+</div>
+</div>
+</section>
+
+<section class="courses-section">
+<div class="sec-inner">
+<div class="sec-head fade-in">
  <div class="sec-tag">Featured Courses</div>
  <h2 class="sec-title">A focused academy for real beginner skills</h2>
  <p class="sec-sub">Data Science is open for secure checkout now. The other flagship tracks are visible as a clear Coming Soon roadmap.</p>
